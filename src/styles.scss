@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import './assets/styles/cmic-palette.scss';
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+
+$afiliados-app-primary: mat-palette($cmic-primary, 500);
+$afiliados-app-accent: mat-palette($cmic-secondary, 300, 500, 800);
+
+
+$afiliados-app-warn: mat-palette($mat-red);
+
+
+$afiliados-app-theme: mat-light-theme((
+  color: (
+    primary: $afiliados-app-primary,
+    accent: $afiliados-app-accent,
+    warn: $afiliados-app-warn,
+  )
+));
+
+
+@include angular-material-theme($afiliados-app-theme);
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

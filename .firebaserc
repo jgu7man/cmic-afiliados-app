@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "cmic-platform": {
+      "hosting": {
+        "afiliados-app": [
+          "cmic-platform"
+        ]
+      }
+    }
+  }
+}

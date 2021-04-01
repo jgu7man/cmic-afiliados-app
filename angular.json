@@ -123,9 +123,16 @@
               "devServerTarget": "afiliados-app:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
   },
-  "defaultProject": "afiliados-app"
+  "defaultProject": "afiliados-app",
+  "cli": {
+    "analytics": "003aa16e-db49-4bbc-b929-2a29fe780c67"
+  }
 }
