@@ -5,8 +5,13 @@ import { PublicComponent } from './public.component';
 
 const routes: Routes = [
   {
-    path: '', component: PublicComponent, data: {page: 'inicio'}
-  }];
+    path: '', component: PublicComponent, data: { page: 'inicio' }
+  },
+  {
+    path: 'afiliados',
+    loadChildren: () => import('../public/afiliados/afiliados.module').then(m => m.AfiliadosModule)
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
