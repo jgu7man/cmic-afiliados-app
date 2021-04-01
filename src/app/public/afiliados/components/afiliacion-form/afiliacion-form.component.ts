@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DatosGenerales } from '../../afiliados.model';
 
 @Component({
   selector: 'g-afiliados-form',
@@ -8,27 +8,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AfiliacionFormComponent implements OnInit {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  first:string = ''
+  // REVIEW La forma de cargarlos los datos con clase hace más simple su iniciación
+  public datosGenerales: DatosGenerales
 
-  constructor(private _formBuilder: FormBuilder) {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
-    this.firstFormGroup.hasError('')
+  constructor() {
+    this.datosGenerales = new DatosGenerales('','','','','','','','');
   }
 
 
   ngOnInit(): void {
   }
 
-  get errors() {
-    console.log( this.firstFormGroup.errors )
-    return
-  }
+
 
 }

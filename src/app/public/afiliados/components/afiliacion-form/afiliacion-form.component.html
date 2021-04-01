@@ -1,13 +1,14 @@
 <mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
+  <mat-step>
     <form>
       <ng-template matStepLabel>Fill out your name</ng-template>
       <mat-form-field>
         <mat-label>Name</mat-label>
+        <!-- Al cargar en forma de clase, los datos ya tienen un valor por default, en este caso es un string vacio ('') -->
         <input
         matInput
         placeholder="Last name, First name"
-        [(ngModel)]="first"
+        [(ngModel)]="datosGenerales.RFC"
         name="first"
         #firsty="ngModel"
         required>
@@ -20,8 +21,8 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
+  <mat-step >
+    <form >
       <ng-template matStepLabel>Fill out your address</ng-template>
       <mat-form-field>
         <mat-label>Address</mat-label>
