@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AfiliadoModel, AutorizacionesAfiliado, iContactoAfiliado, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliado, ContactoAfiliado } from '../../models/afiliados.model';
+import { GdevCache } from '@jgu7man/gdev-tools';
+import { AfiliadoModel, AutorizacionesAfiliado, iContactoAfiliado, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliado, ContactoAfiliado, iUserAfiliado } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { AfiliadosService } from '../../services/afiliados.service';
   styleUrls: ['./afiliacion-form.component.scss'],
 })
 export class AfiliacionFormComponent implements OnInit {
+  // public user: iUserAfiliado
 
   public contactoModel: iContactoAfiliado
   public dirPublica: iDireccion
@@ -25,8 +27,11 @@ export class AfiliacionFormComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    public afiliados_: AfiliadosService
+    public afiliados_: AfiliadosService,
+    private _cache: GdevCache
   ) {
+    // Se obtiene el usuario del cache
+    // this.user = this._cache.getDataKey<iUserAfiliado>('user')
     this.dirPublica = {
       calle: '',
       num_ext: '',
@@ -50,7 +55,6 @@ export class AfiliacionFormComponent implements OnInit {
     this.representanteLegal = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)
     this.director = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)
     this.autorizaciones = {
-
       retencion_para_capacitacion: false,
       aviso_privacidad: false
     }

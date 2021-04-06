@@ -7,6 +7,7 @@ import { AfiliacionFormComponent } from './components/afiliacion-form/afiliacion
 
 const routes: Routes = [
   { path: '', component: AfiliadosComponent, children: [
+    { path: '', pathMatch: 'full', redirectTo: 'registro' },
     { path: 'registro', component: AfiliacionFormComponent },
     { path: 'elegir-actividades', component: ActividadesFormComponent },
   ] }

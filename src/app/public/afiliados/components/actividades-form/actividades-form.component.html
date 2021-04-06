@@ -1,1 +1,204 @@
-<p>actividades-form works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col s12 l5">
+      <mat-vertical-stepper [linear]="true" #stepper>
+
+        <!-- Catálogos -->
+        <mat-step *ngFor="let catalogo of actividades_.Catalogos; index as index">
+
+            <ng-template matStepLabel>Catálogo de {{catalogo.nombre}}</ng-template>
+            <p class="instruction"> {{catalogo.instrucciones}} </p>
+
+            <div class="row">
+
+              <!-- Filtrar por especialidad -->
+              <div class="col s12 m6">
+                <mat-select
+                placeholder="Elige una opción"
+                name="especialidad"
+                [(ngModel)]="especialidadSelected"
+                [disabled]="afiliadoIntereses.tipos_de_obra.length == 3">
+                  <mat-option *ngFor="let especialidad of catalogo.especialidades"
+                  [value]="especialidad">
+                    {{especialidad.nombre}}
+                  </mat-option>
+                </mat-select>
+              </div>
+
+              <!-- Elegir actividad -->
+              <div class="col s12 m6" *ngIf="especialidadSelected">
+                <mat-select
+                placeholder="Elige una opción"
+                name="actividad"
+                [disabled]="afiliadoIntereses.tipos_de_obra.length == 3"
+                (selectionChange)="onSelectActividad(catalogo.id, $event)"
+                >
+                  <mat-option *ngFor="let actividad of especialidadSelected.actividades" [value]="actividad">
+                    {{actividad.codigo}} {{actividad.nombre}}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12">
+                <mat-chip-list aria-label="Actividades seleccionadas">
+                  <mat-chip *ngFor="let actividad of afiliadoIntereses[catalogo.id]"
+                  [selectable]="true"
+                   [removable]="true" (removed)="removeActividad(catalogo.id, actividad)"
+                  >
+                    {{actividad.nombre}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+
+            <div>
+              <button mat-button matStepperPrevious
+              *ngIf="index != 0"
+              >Atrás</button>
+              <button mat-button matStepperNext
+              [disabled]="afiliadoIntereses.tipos_de_obra.length < 3"
+              (click)="afiliados_.savePartialAfiliado('intereses',  afiliadoIntereses)"
+              >Siguiente</button>
+            </div>
+        </mat-step>
+
+        <!-- Contacto 1 -->
+        <mat-step>
+          <p>
+            Estimado afiliado, a la CMIC y susInstituciones les interesa tener mejor comunicación con su empresa de forma adecuada, para ello le solicitamos nosindique los datos de los contactos para recibir información.
+          </p>
+          <ng-template matStepLabel>Contacto 1 para recibir información</ng-template>
+          <form #contacto1="ngForm">
+            <div class="row">
+              <div class="col s12">
+                <mat-form-field>
+                  <mat-label>Nombre</mat-label>
+                  <input matInput placeholder="" [(ngModel)]="afiliadoIntereses.contacto_1.nombre" name="nombre" #nombre="ngModel" required>
+                  <mat-error *ngIf="nombre.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label> Teléfono</mat-label>
+                  <input matInput placeholder="Ingrese teléfono" [(ngModel)]="afiliadoIntereses.contacto_1.telefono" name="telefono"
+                    #telefono="ngModel" required>
+
+                  <mat-error *ngIf="telefono.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col s12">
+
+                <mat-form-field>
+                  <mat-label>Puesto</mat-label>
+                  <input matInput placeholder="" [(ngModel)]="afiliadoIntereses.contacto_1.puesto" name="puesto"
+                    #puesto="ngModel" required>
+
+                  <mat-error *ngIf="puesto.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>E-mail</mat-label>
+                  <input matInput placeholder="Ingrese email" [(ngModel)]="afiliadoIntereses.contacto_1.email" type="email" name="email"
+                    #email="ngModel" required>
+
+                  <mat-error *ngIf="email.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col s12">
+                <mat-select placeholder="Elige las opciones que creas convenientes" [(ngModel)]="afiliadoIntereses.contacto_1.intereses" name="item" multiple>
+                  <mat-option *ngFor="let item of actividades_.ListaDeIntereses" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+          </form>
+          <button mat-button matStepperPrevious
+          >Atrás</button>
+          <button mat-button matStepperNext
+          [disabled]="contacto1.form.invalid"
+          >Siguiente</button>
+        </mat-step>
+
+
+        <!-- Contacto 2 -->
+        <mat-step>
+          <ng-template matStepLabel>Contacto 1 para recibir información</ng-template>
+          <form #contacto2="ngForm">
+            <div class="row">
+              <div class="col s12">
+                <mat-form-field >
+                  <mat-label>Nombre</mat-label>
+                  <input matInput placeholder="" [(ngModel)]="afiliadoIntereses.contacto_1.nombre" name="nombre" #contacto2nombre="ngModel" >
+
+
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label> Teléfono</mat-label>
+                  <input matInput placeholder="Ingrese teléfono" [(ngModel)]="afiliadoIntereses.contacto_1.telefono" name="telefono"
+                    #contacto2telefono="ngModel" >
+
+                  </mat-form-field>
+              </div>
+
+              <div class="col s12">
+                <mat-form-field >
+                  <mat-label>Puesto</mat-label>
+                  <input matInput placeholder="" [(ngModel)]="afiliadoIntereses.contacto_1.puesto" name="puesto"
+                    #contacto2puesto="ngModel" >
+
+
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>E-mail</mat-label>
+                  <input matInput placeholder="Ingrese email" [(ngModel)]="afiliadoIntereses.contacto_1.email" type="email" name="email"
+                    #contacto2email="ngModel" >
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col s12">
+                <mat-select placeholder="Elige las opciones que creas convenientes" [(ngModel)]="afiliadoIntereses.contacto_1.intereses" name="item" multiple>
+                  <mat-option *ngFor="let item of actividades_.ListaDeIntereses" [value]="item">
+                    {{item}}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+
+
+
+
+            <button mat-button matStepperPrevious
+            >Atrás</button>
+            <button mat-button matStepperNext
+            [disabled]="contacto2.form.invalid"
+            >Siguiente</button>
+          </form>
+        </mat-step>
+
+
+        <!-- TODO Agregar la validación de los permisos en con checkbox para el consentimiento y la veracidad en un modal -->
+      </mat-vertical-stepper>
+
+    </div>
+  </div>
+</div>

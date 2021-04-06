@@ -1,3 +1,12 @@
+import { Actividad } from "./actividades.model";
+
+export interface iUserAfiliado {
+  RFC: string;
+  email: string;
+  contrasena: string;
+}
+
+
 export class AfiliadoModel {
   constructor(
     public generales: DatosGeneralesAfiliado,
@@ -18,7 +27,6 @@ export class DatosGeneralesAfiliado {
     public fisica_apellido_pat: string,
     public fisica_apellido_mat: string,
     public moral_nombre: string,
-
   )
   {}
 }
@@ -75,4 +83,25 @@ export interface AutorizacionesAfiliado {
 }
 
 
-export type PartialAfiliado = DatosGeneralesAfiliado |  DireccionAfiliado | RepresentanteAfiliado | AutorizacionesAfiliado
+export interface ContactoInteres{
+  intereses: string[],
+  nombre: string,
+  telefono: string,
+  puesto: string,
+  email: string
+}
+
+export class Intereses {
+  constructor(
+    public tipos_de_obra: Actividad[],
+    public servicios_profesionales: Actividad[],
+    public fuentes_de_trabajo: Actividad[],
+    public contacto_1: ContactoInteres,
+    public contacto_2: ContactoInteres,
+    public recibir_info: boolean,
+    public veracidad_datos: boolean
+  ){}
+}
+
+
+export type PartialAfiliado = DatosGeneralesAfiliado | DireccionAfiliado | RepresentanteAfiliado | AutorizacionesAfiliado | Intereses

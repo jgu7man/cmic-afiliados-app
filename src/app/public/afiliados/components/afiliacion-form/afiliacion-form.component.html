@@ -1,552 +1,549 @@
-<mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step>
+<div class="container">
+  <div class="row">
+    <div class="col s12 l5">
+      <mat-vertical-stepper [linear]="true" #stepper>
+        <mat-step>
 
-    <!-- REVIEW Se debe encapsular las secciones del formulario -->
-    <form #generalesForm="ngForm" >
-      <!-- REVIEW Procurar etiquetar cada campo -->
-      <ng-template matStepLabel>Datos Generales</ng-template>
+          <!-- REVIEW Se debe encapsular las secciones del formulario -->
+          <form #generalesForm="ngForm" >
+            <!-- REVIEW Procurar etiquetar cada campo -->
+            <ng-template matStepLabel>Datos Generales</ng-template>
 
-      <!-- R.F.C. -->
-      <div>
-        <mat-form-field>
-          <mat-label>R.F.C.</mat-label>
-          <input matInput placeholder="Ingrese R.F.C." [(ngModel)]="generales.RFC" name="rfc" #rfc="ngModel"
-            required>
-          <mat-error *ngIf="rfc.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
+            <!-- Nombre (s) -->
+            <div>
+              <mat-form-field>
+                <mat-label>Nombre(s)</mat-label>
+                <input matInput placeholder="Ingrese Nombre" [(ngModel)]="generales.fisica_nombre" name="fisica_nombre"
+                  #fisica_nombre="ngModel" required>
+                <mat-error *ngIf="fisica_nombre.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Apellido Paterno</mat-label>
+                <input matInput placeholder="Ingrese Apellido Paterno" [(ngModel)]="generales.fisica_apellido_pat"
+                  name="fisica_apellido_pat" #fisica_apellido_pat="ngModel" required>
+                <mat-error *ngIf="fisica_apellido_pat.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Apellido Materno</mat-label>
+                <input matInput placeholder="Ingrese Apellido Materno" [(ngModel)]="generales.fisica_apellido_mat"
+                  name="fisica_apellido_mat" #fisica_apellido_mat="ngModel" required>
+                <mat-error *ngIf="fisica_apellido_mat.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Persona Moral</mat-label>
+                <input matInput placeholder="Ingrese Persona Moral" [(ngModel)]="generales.moral_nombre"
+                  name="moral_nombre" #moral_nombre="ngModel" required>
+                <mat-error *ngIf="moral_nombre.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
 
-      <!-- Nombre (s) -->
-      <div>
-        <mat-form-field>
-          <mat-label>Nombre(s)</mat-label>
-          <input matInput placeholder="Ingrese Nombre" [(ngModel)]="generales.fisica_nombre" name="fisica_nombre"
-            #fisica_nombre="ngModel" required>
-          <mat-error *ngIf="fisica_nombre.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Apellido Paterno</mat-label>
-          <input matInput placeholder="Ingrese Apellido Paterno" [(ngModel)]="generales.fisica_apellido_pat"
-            name="fisica_apellido_pat" #fisica_apellido_pat="ngModel" required>
-          <mat-error *ngIf="fisica_apellido_pat.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Apellido Materno</mat-label>
-          <input matInput placeholder="Ingrese Apellido Materno" [(ngModel)]="generales.fisica_apellido_mat"
-            name="fisica_apellido_mat" #fisica_apellido_mat="ngModel" required>
-          <mat-error *ngIf="fisica_apellido_mat.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Persona Moral</mat-label>
-          <input matInput placeholder="Ingrese Persona Moral" [(ngModel)]="generales.moral_nombre"
-            name="moral_nombre" #moral_nombre="ngModel" required>
-          <mat-error *ngIf="moral_nombre.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-
-        <!-- REVIEW Validar cada sección de formulario -->
-        <button mat-button matStepperNext
-        [disabled]="!generalesForm.form.valid"
-        (click)="afiliados_.savePartialAfiliado(generales.RFC, generales)"
-        >Siguiente</button>
-      </div>
-    </form>
-  </mat-step>
+              <!-- REVIEW Validar cada sección de formulario encapsulado -->
+              <!-- Ya que el service de afiliados es "public", hacemos el llamado de la función desde el HTML-->
+              <!-- Para guardar la parte del formulario, es necesario asignar un nombre de campo -->
+              <button mat-button matStepperNext
+              [disabled]="!generalesForm.form.valid"
+              (click)="afiliados_.savePartialAfiliado('datos_generales', generales)"
+              >Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
 
 
-  <!-- DOMICILIO -->
-  <mat-step>
-    <form>
-      <ng-template matStepLabel>Domicilio</ng-template>
-      <div>
-        <mat-form-field>
-          <mat-label>Domicilio Fiscal</mat-label>
-          <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.publica.calle" name="calle"
-            #calle="ngModel" required>
-          <mat-error *ngIf="calle.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Número exterior</mat-label>
-          <input matInput placeholder="Ingrese número exterior" [(ngModel)]="direccion.publica.num_ext" name="num_ext"
-            #num_ext="ngModel" required>
-          <mat-error *ngIf="num_ext.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Número Interno</mat-label>
-          <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.publica.num_int" name="num_int"
-            #num_int="ngModel" required>
-          <mat-error *ngIf="num_int.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
+        <!-- DOMICILIO -->
+        <mat-step>
+          <form>
+            <ng-template matStepLabel>Domicilio</ng-template>
+            <div>
+              <mat-form-field>
+                <mat-label>Domicilio Fiscal</mat-label>
+                <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.publica.calle" name="calle"
+                  #calle="ngModel" required>
+                <mat-error *ngIf="calle.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Número exterior</mat-label>
+                <input matInput placeholder="Ingrese número exterior" [(ngModel)]="direccion.publica.num_ext" name="num_ext"
+                  #num_ext="ngModel" required>
+                <mat-error *ngIf="num_ext.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Número Interno</mat-label>
+                <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.publica.num_int" name="num_int"
+                  #num_int="ngModel" required>
+                <mat-error *ngIf="num_int.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-      <div>
-        <mat-form-field>
-          <mat-label>Colonia</mat-label>
-          <input matInput placeholder="Ingrese colonia" [(ngModel)]="direccion.publica.colonia" name="colonia"
-            #colonia="ngModel" required>
-          <mat-error *ngIf="colonia.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Colonia</mat-label>
+                <input matInput placeholder="Ingrese colonia" [(ngModel)]="direccion.publica.colonia" name="colonia"
+                  #colonia="ngModel" required>
+                <mat-error *ngIf="colonia.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-      <div>
-        <mat-form-field>
-          <mat-label>Código Postal</mat-label>
-          <input matInput placeholder="Ingrese codigo postal" [(ngModel)]="direccion.publica.codigo_postal"
-            name="codigo_postal" #codigo_postal="ngModel" required>
-          <mat-error *ngIf="codigo_postal.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-
-      <!-- Datos de correspondencia -->
-      <div>
-        <mat-slide-toggle [checked]="addCorrespondencia" name="addcorrespondencia"
-          #codigo_postal="ngModel" [(ngModel)]="addCorrespondencia">
-          Añadir Domicilio de Correspondencia (opcional)
-        </mat-slide-toggle>
-      </div>
-
-      <!-- REVIEW Los datos de correspondencia no son obligatorios -->
-      <div *ngIf="addCorrespondencia">
-        <legend>Datos de Correspondencia</legend>
-        <div>
-          <mat-form-field>
-            <mat-label>Domicilio Fiscal</mat-label>
-            <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.correspondencia.calle"
-              name="correspondencia_calle" #correspondencia_calle="ngModel" required>
-            <mat-error *ngIf="correspondencia_calle.hasError('required')">
-              Este campo es necesario
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label> Número exterior</mat-label>
-            <input matInput placeholder="Ingrese número exterior" [(ngModel)]="direccion.correspondencia.num_ext"
-              name="correspondencia_num_ext" #correspondencia_num_ext="ngModel" required>
-            <mat-error *ngIf="correspondencia_num_ext.hasError('required')">
-              Este campo es necesario
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field>
-            <mat-label> Número Interno</mat-label>
-            <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.correspondencia.num_int"
-              name="correspondencia_num_int" #correspondencia_num_int="ngModel" required>
-            <mat-error *ngIf="correspondencia_num_int.hasError('required')">
-              Este campo es necesario
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div>
-          <mat-form-field>
-            <mat-label> Colonia</mat-label>
-            <input matInput placeholder="Ingrese colonia" [(ngModel)]="direccion.correspondencia.colonia"
-              name="correspondencia_colonia" #correspondencia_colonia="ngModel" required>
-            <mat-error *ngIf="correspondencia_colonia.hasError('required')">
-              Este campo es necesario
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div>
-          <mat-form-field>
-            <mat-label> Código Postal</mat-label>
-            <input matInput placeholder="Ingrese codigo postal"
-              [(ngModel)]="direccion.correspondencia.codigo_postal" name="correspondencia_codigo_postal"
-              #correspondencia_codigo_postal="ngModel" required>
-            <mat-error *ngIf="correspondencia_codigo_postal.hasError('required')">
-              Este campo es necesario
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div>
-        <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext>Siguiente</button>
-      </div>
-    </form>
-  </mat-step>
+            <div>
+              <mat-form-field>
+                <mat-label>Código Postal</mat-label>
+                <input matInput placeholder="Ingrese codigo postal" [(ngModel)]="direccion.publica.codigo_postal"
+                  name="codigo_postal" #codigo_postal="ngModel" required>
+                <mat-error *ngIf="codigo_postal.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
 
 
-  <!-- DATOS DE CONTACTO -->
-  <mat-step>
-    <ng-template matStepLabel>Datos de contacto</ng-template>
+            <!-- Datos de correspondencia -->
+            <div>
+              <mat-slide-toggle [checked]="addCorrespondencia" name="addcorrespondencia"
+                #codigo_postal="ngModel" [(ngModel)]="addCorrespondencia">
+                Añadir Domicilio de Correspondencia (opcional)
+              </mat-slide-toggle>
+            </div>
+
+            <!-- REVIEW Los datos de correspondencia no son obligatorios -->
+            <div *ngIf="addCorrespondencia">
+              <legend>Datos de Correspondencia</legend>
+              <div>
+                <mat-form-field>
+                  <mat-label>Domicilio Fiscal</mat-label>
+                  <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.correspondencia.calle"
+                    name="correspondencia_calle" #correspondencia_calle="ngModel" required>
+                  <mat-error *ngIf="correspondencia_calle.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label> Número exterior</mat-label>
+                  <input matInput placeholder="Ingrese número exterior" [(ngModel)]="direccion.correspondencia.num_ext"
+                    name="correspondencia_num_ext" #correspondencia_num_ext="ngModel" required>
+                  <mat-error *ngIf="correspondencia_num_ext.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label> Número Interno</mat-label>
+                  <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.correspondencia.num_int"
+                    name="correspondencia_num_int" #correspondencia_num_int="ngModel" required>
+                  <mat-error *ngIf="correspondencia_num_int.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label> Colonia</mat-label>
+                  <input matInput placeholder="Ingrese colonia" [(ngModel)]="direccion.correspondencia.colonia"
+                    name="correspondencia_colonia" #correspondencia_colonia="ngModel" required>
+                  <mat-error *ngIf="correspondencia_colonia.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field>
+                  <mat-label> Código Postal</mat-label>
+                  <input matInput placeholder="Ingrese codigo postal"
+                    [(ngModel)]="direccion.correspondencia.codigo_postal" name="correspondencia_codigo_postal"
+                    #correspondencia_codigo_postal="ngModel" required>
+                  <mat-error *ngIf="correspondencia_codigo_postal.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div>
+              <button mat-button matStepperPrevious>Atrás</button>
+              <button mat-button matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
 
 
-    <div>
-      <div>
-        <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
-          <mat-label> Lada</mat-label>
-          <input matInput placeholder="" [(ngModel)]="contacto.lada_telefono" name="lada_telefono"
-            #lada_telefono="ngModel" required>
+        <!-- DATOS DE CONTACTO -->
+        <mat-step>
+          <ng-template matStepLabel>Datos de contacto</ng-template>
 
-          <mat-error *ngIf="lada_telefono.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label> Teléfono</mat-label>
-          <input matInput placeholder="Ingrese teléfono" [(ngModel)]="contacto.telefono" name="telefono"
-            #telefono="ngModel" required>
 
-          <mat-error *ngIf="telefono.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
+          <div>
+            <div>
+              <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
+                <mat-label> Lada</mat-label>
+                <input matInput placeholder="" [(ngModel)]="contacto.lada_telefono" name="lada_telefono"
+                  #lada_telefono="ngModel" required>
 
-      <div>
-        <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
-          <mat-label>Lada</mat-label>
-          <input matInput placeholder="" [(ngModel)]="contacto.lada_celular" name="lada_celular"
-            #lada_celular="ngModel" required>
+                <mat-error *ngIf="lada_telefono.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label> Teléfono</mat-label>
+                <input matInput placeholder="Ingrese teléfono" [(ngModel)]="contacto.telefono" name="telefono"
+                  #telefono="ngModel" required>
 
-          <mat-error *ngIf="lada_celular.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Celular</mat-label>
-          <input matInput placeholder="Ingrese teléfono" [(ngModel)]="contacto.celular" name="celular"
-            #celular="ngModel" required>
+                <mat-error *ngIf="telefono.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-          <mat-error *ngIf="celular.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>E-mail</mat-label>
-          <input matInput placeholder="Ingrese email" [(ngModel)]="contacto.email" type="email" name="email"
-            #email="ngModel" required>
+            <div>
+              <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
+                <mat-label>Lada</mat-label>
+                <input matInput placeholder="" [(ngModel)]="contacto.lada_celular" name="lada_celular"
+                  #lada_celular="ngModel" required>
 
-          <mat-error *ngIf="email.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Página Web</mat-label>
-          <input matInput placeholder="Ingrese url de pagina web" [(ngModel)]="contacto.pagina_web"
-            name="pagina_web" #pagina_web="ngModel" >
-          </mat-form-field>
-      </div>
-      <div>
-        <mat-checkbox [checked]="contacto.mostrar_en_directorios"
-          [(ngModel)]="contacto.mostrar_en_directorios">Autorizo que los datos marcados con asterisco*
-          aparezcan en los
-          directorios “de Especialidades CMIC” así como en “Oportunidades de Negocio”</mat-checkbox>
-      </div>
+                <mat-error *ngIf="lada_celular.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Celular</mat-label>
+                <input matInput placeholder="Ingrese teléfono" [(ngModel)]="contacto.celular" name="celular"
+                  #celular="ngModel" required>
+
+                <mat-error *ngIf="celular.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput placeholder="Ingrese email" [(ngModel)]="contacto.email" type="email" name="email"
+                  #email="ngModel" required>
+
+                <mat-error *ngIf="email.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Página Web</mat-label>
+                <input matInput placeholder="Ingrese url de pagina web" [(ngModel)]="contacto.pagina_web"
+                  name="pagina_web" #pagina_web="ngModel" >
+                </mat-form-field>
+            </div>
+            <div>
+              <mat-checkbox [checked]="contacto.mostrar_en_directorios"
+                [(ngModel)]="contacto.mostrar_en_directorios">Autorizo que los datos marcados con asterisco*
+                aparezcan en los
+                directorios “de Especialidades CMIC” así como en “Oportunidades de Negocio”</mat-checkbox>
+            </div>
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-button matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- REPRESENTANTE LEGAL -->
+        <mat-step>
+          <ng-template matStepLabel>Datos de representante legal</ng-template>
+          <div>
+            <div>
+              <mat-form-field>
+                <mat-label>Nombre(s)</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.nombre" name="legal_nombre"
+                  #legal_nombre="ngModel" required>
+
+                <mat-error *ngIf="legal_nombre.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Apellido Paterno</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.apellido_pat" name="legal_apellido_pat"
+                  #legal_apellido_pat="ngModel" required>
+
+                <mat-error *ngIf="legal_apellido_pat.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Apellido Materno</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.apellido_mat" name="legal_apellido_mat"
+                  #legal_apellido_mat="ngModel" required>
+
+                <mat-error *ngIf="legal_apellido_mat.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Título y/o profesión</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.titulo" name="legal_titulo"
+                  #legal_titulo="ngModel" required>
+
+                <mat-error *ngIf="legal_titulo.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Sexo</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.sexo" name="legal_sexo" #legal_sexo="ngModel"
+                  required>
+
+                <mat-error *ngIf="legal_sexo.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.fecha_nacimiento"
+                  name="legal_fecha_nacimiento" #legal_fecha_nacimiento="ngModel" required>
+
+                <mat-error *ngIf="legal_fecha_nacimiento.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
+                <mat-label> Lada</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.contacto.lada_telefono" name="legal_lada_telefono"
+                  #legal_lada_telefono="ngModel" required>
+
+                <mat-error *ngIf="legal_lada_telefono.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label> Teléfono</mat-label>
+                <input matInput placeholder="Ingrese teléfono" [(ngModel)]="representanteLegal.contacto.telefono"
+                  name="legal_telefono" #legal_telefono="ngModel" required>
+
+                <mat-error *ngIf="legal_telefono.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
+                <mat-label> Lada</mat-label>
+                <input matInput placeholder="" [(ngModel)]="representanteLegal.contacto.lada_celular" name="legal_lada_celular"
+                  #legal_lada_celular="ngModel" required>
+
+                <mat-error *ngIf="legal_lada_celular.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label> Celular</mat-label>
+                <input matInput placeholder="Ingrese celular" [(ngModel)]="representanteLegal.contacto.celular" name="legal_celular"
+                  #legal_celular="ngModel" required>
+
+                <mat-error *ngIf="legal_celular.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput placeholder="Ingrese email" [(ngModel)]="representanteLegal.contacto.email" name="legal_email"
+                  #legal_email="ngModel" required>
+                <mat-error *ngIf="legal_email.hasError('required')"></mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-button matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- DIRECTOR GENERAL -->
+        <mat-step>
+          <ng-template matStepLabel>Datos de director general</ng-template>
+          <mat-checkbox [checked]="director_igual_legal" [(ngModel)]="director_igual_legal">
+            ¿Los datos son los mismos que del representante?</mat-checkbox>
+          <div *ngIf="!director_igual_legal">
+
+            <div>
+              <mat-form-field>
+                <mat-label>Nombre(s)</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.nombre" name="director_nombre"
+                  #director_nombre="ngModel">
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Apellido Paterno</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.apellido_pat" name="director_apellido_pat"
+                  #director_apellido_pat="ngModel" >
+
+
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Apellido Materno</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.apellido_mat" name="director_apellido_mat"
+                  #director_apellido_mat="ngModel">
+
+
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Título y/o profesión</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.titulo" name="director_titulo"
+                  #director_titulo="ngModel" >
+
+                <mat-error *ngIf="director_titulo.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Sexo</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.sexo" name="director_sexo"
+                  #director_sexo="ngModel">
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.fecha_nacimiento"
+                  name="director_fecha_nacimiento" #director_fecha_nacimiento="ngModel">
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
+                <mat-label> Lada</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.contacto.lada_telefono"
+                  name="director_lada_telefono" #director_lada_telefono="ngModel" required>
+
+                <mat-error *ngIf="director_lada_telefono.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label> Teléfono</mat-label>
+                <input matInput placeholder="Ingrese teléfono" [(ngModel)]="director.contacto.telefono"
+                  name="director_telefono" #director_telefono="ngModel" required>
+
+                <mat-error *ngIf="director_telefono.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
+                <mat-label> Lada</mat-label>
+                <input matInput placeholder="" [(ngModel)]="director.contacto.lada_celular" name="director_lada_celular"
+                  #director_lada_celular="ngModel" required>
+
+                <mat-error *ngIf="director_lada_celular.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label> Celular</mat-label>
+                <input matInput placeholder="Ingrese celular" [(ngModel)]="director.contacto.celular"
+                  name="director_celular" #director_celular="ngModel" required>
+
+                <mat-error *ngIf="director_celular.hasError('required')">
+                  Este campo es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput placeholder="Ingrese email" [(ngModel)]="director.contacto.email" name="director_email"
+                  #director_email="ngModel" required>
+                <mat-error *ngIf="director_email.hasError('required')"></mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-button matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- TÉRMINOS Y CONDICIONES -->
+        <mat-step>
+          <ng-template matStepLabel>Términos y condiciones</ng-template>
+
+          <div>
+            <mat-checkbox [checked]="autorizaciones.aviso_privacidad"
+              [(ngModel)]="autorizaciones.aviso_privacidad">
+              Otorgo mi consentimiento ante el aviso y privacidad </mat-checkbox>
+
+            <button mat-button (click)="OpenPrivacidad()">(ver aqui)</button>
+          </div>
+          <div>
+            <mat-checkbox [checked]="autorizaciones.retencion_para_capacitacion"
+              [(ngModel)]="autorizaciones.retencion_para_capacitacion">
+              Otorgo mi consentimiento Autorización de retención para capacitación</mat-checkbox>
+            <button mat-button (click)="OpenRetencion()">(ver aqui)</button>
+          </div>
+
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-button matStepperNext [routerLink]="['elegir-actividades']" >Siguiente</button>
+          </div>
+
+        </mat-step>
+      </mat-vertical-stepper>
+
+      <!--div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div-->
+
     </div>
-    <div>
-      <button mat-button matStepperPrevious>Atrás</button>
-      <button mat-button matStepperNext>Siguiente</button>
-    </div>
-  </mat-step>
-
-
-  <!-- REPRESENTANTE LEGAL -->
-  <mat-step>
-    <ng-template matStepLabel>Datos de representante legal</ng-template>
-    <div>
-      <div>
-        <mat-form-field>
-          <mat-label>Nombre(s)</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.nombre" name="legal_nombre"
-            #legal_nombre="ngModel" required>
-
-          <mat-error *ngIf="legal_nombre.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Apellido Paterno</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.apellido_pat" name="legal_apellido_pat"
-            #legal_apellido_pat="ngModel" required>
-
-          <mat-error *ngIf="legal_apellido_pat.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Apellido Materno</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.apellido_mat" name="legal_apellido_mat"
-            #legal_apellido_mat="ngModel" required>
-
-          <mat-error *ngIf="legal_apellido_mat.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Título y/o profesión</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.titulo" name="legal_titulo"
-            #legal_titulo="ngModel" required>
-
-          <mat-error *ngIf="legal_titulo.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Sexo</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.sexo" name="legal_sexo" #legal_sexo="ngModel"
-            required>
-
-          <mat-error *ngIf="legal_sexo.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Fecha de nacimiento</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.fecha_nacimiento"
-            name="legal_fecha_nacimiento" #legal_fecha_nacimiento="ngModel" required>
-
-          <mat-error *ngIf="legal_fecha_nacimiento.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
-          <mat-label> Lada</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.contacto.lada_telefono" name="legal_lada_telefono"
-            #legal_lada_telefono="ngModel" required>
-
-          <mat-error *ngIf="legal_lada_telefono.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label> Teléfono</mat-label>
-          <input matInput placeholder="Ingrese teléfono" [(ngModel)]="representanteLegal.contacto.telefono"
-            name="legal_telefono" #legal_telefono="ngModel" required>
-
-          <mat-error *ngIf="legal_telefono.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
-          <mat-label> Lada</mat-label>
-          <input matInput placeholder="" [(ngModel)]="representanteLegal.contacto.lada_celular" name="legal_lada_celular"
-            #legal_lada_celular="ngModel" required>
-
-          <mat-error *ngIf="legal_lada_celular.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label> Celular</mat-label>
-          <input matInput placeholder="Ingrese celular" [(ngModel)]="representanteLegal.contacto.celular" name="legal_celular"
-            #legal_celular="ngModel" required>
-
-          <mat-error *ngIf="legal_celular.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>E-mail</mat-label>
-          <input matInput placeholder="Ingrese email" [(ngModel)]="representanteLegal.contacto.email" name="legal_email"
-            #legal_email="ngModel" required>
-          <mat-error *ngIf="legal_email.hasError('required')"></mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div>
-      <button mat-button matStepperPrevious>Atrás</button>
-      <button mat-button matStepperNext>Siguiente</button>
-    </div>
-  </mat-step>
-
-
-  <!-- DIRECTOR GENERAL -->
-  <mat-step>
-    <ng-template matStepLabel>Datos de director general</ng-template>
-    <mat-checkbox [checked]="director_igual_legal" [(ngModel)]="director_igual_legal">
-      ¿Los datos son los mismos que del representante?</mat-checkbox>
-    <div *ngIf="!director_igual_legal">
-
-      <div>
-        <mat-form-field>
-          <mat-label>Nombre(s)</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.nombre" name="director_nombre"
-            #director_nombre="ngModel">
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Apellido Paterno</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.apellido_pat" name="director_apellido_pat"
-            #director_apellido_pat="ngModel" >
-
-
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Apellido Materno</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.apellido_mat" name="director_apellido_mat"
-            #director_apellido_mat="ngModel">
-
-
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Título y/o profesión</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.titulo" name="director_titulo"
-            #director_titulo="ngModel" >
-
-          <mat-error *ngIf="director_titulo.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Sexo</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.sexo" name="director_sexo"
-            #director_sexo="ngModel">
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>Fecha de nacimiento</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.fecha_nacimiento"
-            name="director_fecha_nacimiento" #director_fecha_nacimiento="ngModel">
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
-          <mat-label> Lada</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.contacto.lada_telefono"
-            name="director_lada_telefono" #director_lada_telefono="ngModel" required>
-
-          <mat-error *ngIf="director_lada_telefono.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label> Teléfono</mat-label>
-          <input matInput placeholder="Ingrese teléfono" [(ngModel)]="director.contacto.telefono"
-            name="director_telefono" #director_telefono="ngModel" required>
-
-          <mat-error *ngIf="director_telefono.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field [style.width.px]="60" [style.margin-right.px]="5">
-          <mat-label> Lada</mat-label>
-          <input matInput placeholder="" [(ngModel)]="director.contacto.lada_celular" name="director_lada_celular"
-            #director_lada_celular="ngModel" required>
-
-          <mat-error *ngIf="director_lada_celular.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label> Celular</mat-label>
-          <input matInput placeholder="Ingrese celular" [(ngModel)]="director.contacto.celular"
-            name="director_celular" #director_celular="ngModel" required>
-
-          <mat-error *ngIf="director_celular.hasError('required')">
-            Este campo es necesario
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>E-mail</mat-label>
-          <input matInput placeholder="Ingrese email" [(ngModel)]="director.contacto.email" name="director_email"
-            #director_email="ngModel" required>
-          <mat-error *ngIf="director_email.hasError('required')"></mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div>
-      <button mat-button matStepperPrevious>Atrás</button>
-      <button mat-button matStepperNext>Siguiente</button>
-    </div>
-  </mat-step>
-
-
-  <!-- TÉRMINOS Y CONDICIONES -->
-  <mat-step>
-    <ng-template matStepLabel>Términos y condiciones</ng-template>
-
-    <div>
-      <mat-checkbox [checked]="autorizaciones.aviso_privacidad"
-        [(ngModel)]="autorizaciones.aviso_privacidad">
-        Otorgo mi consentimiento ante el aviso y privacidad </mat-checkbox>
-
-      <button mat-button (click)="OpenPrivacidad()">(ver aqui)</button>
-    </div>
-    <div>
-      <mat-checkbox [checked]="autorizaciones.retencion_para_capacitacion"
-        [(ngModel)]="autorizaciones.retencion_para_capacitacion">
-        Otorgo mi consentimiento Autorización de retención para capacitación</mat-checkbox>
-      <button mat-button (click)="OpenRetencion()">(ver aqui)</button>
-    </div>
-
-    <div>
-      <button mat-button matStepperPrevious>Atrás</button>
-      <button mat-button matStepperNext [routerLink]="['elegir-actividades']" >Siguiente</button>
-    </div>
-
-  </mat-step>
-</mat-vertical-stepper>
-
-<!--div>
-  <button mat-button matStepperPrevious>Back</button>
-  <button mat-button (click)="stepper.reset()">Reset</button>
-</div-->
+  </div>
+</div>

@@ -1,5 +1,9 @@
 @import './assets/styles/cmic-palette.scss';
 @import '~@angular/material/theming';
+@import '~@jgu7man/gdev-tools/styles/responsive';
+@import '~@jgu7man/gdev-tools/styles/colors';
+@import '~@jgu7man/gdev-tools/styles/normalize';
+@import '~@jgu7man/gdev-tools/styles/text';
 
 @include mat-core();
 
@@ -26,3 +30,5 @@ $afiliados-app-theme: mat-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+mat-form-field {width: 100%;}
