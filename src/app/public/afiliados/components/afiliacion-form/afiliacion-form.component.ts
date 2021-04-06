@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AfiliadoModel, AutorizacionesModel, ContactoModel, CorrespondenciaModel, DatosGeneralesModel, DirectorModel, RepresentanteLegalModel } from '../../afiliados.model';
+import { AfiliadoModel, AutorizacionesAfiliado, iContactoAfiliado, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliado, ContactoAfiliado } from '../../models/afiliados.model';
+import { AfiliadosService } from '../../services/afiliados.service';
 
 @Component({
   selector: 'g-afiliados-form',
@@ -8,27 +9,55 @@ import { AfiliadoModel, AutorizacionesModel, ContactoModel, CorrespondenciaModel
   styleUrls: ['./afiliacion-form.component.scss'],
 })
 export class AfiliacionFormComponent implements OnInit {
-  // REVIEW La forma de cargarlos los datos con clase hace más simple su iniciación
+
+  public contactoModel: iContactoAfiliado
+  public dirPublica: iDireccion
+  // MODEL
   public afiliado: AfiliadoModel
-  public datosGenerales: DatosGeneralesModel
-  public correspondencia: CorrespondenciaModel
-  public contacto: ContactoModel
-  public representanteLegal: RepresentanteLegalModel
-  public director: DirectorModel
-  public autorizaciones: AutorizacionesModel
+  public generales: DatosGeneralesAfiliado
+  public direccion: DireccionAfiliado
+  public contacto: ContactoAfiliado
+  public representanteLegal: RepresentanteAfiliado
+  public director: RepresentanteAfiliado
+  public autorizaciones: AutorizacionesAfiliado
+  public addCorrespondencia: boolean = false
+  public director_igual_legal: boolean = false
 
-  constructor(public dialog: MatDialog) {
+  constructor(
+    public dialog: MatDialog,
+    public afiliados_: AfiliadosService
+  ) {
+    this.dirPublica = {
+      calle: '',
+      num_ext: '',
+      num_int: '',
+      colonia: '',
+      codigo_postal: '',
+      entidad_federativa: '',
+      municipio_alcaldia: '',
+    }
+    this.contactoModel = {
+      lada_telefono:'',
+      telefono:'',
+      lada_celular:'',
+      celular:'',
+      email:'',
+      pagina_web:'',
+    }
+    this.generales = new DatosGeneralesAfiliado('', '', '', '', '', )
+    this.direccion = { publica: this.dirPublica, correspondencia: this.dirPublica }
+    this.contacto = {mostrar_en_directorios: false, ...this.contactoModel}
+    this.representanteLegal = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)
+    this.director = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)
+    this.autorizaciones = {
 
-    this.datosGenerales = new DatosGeneralesModel('', '', '', '', '', '', '', '', '', '', '', '')
-    this.correspondencia = new CorrespondenciaModel(false, '', '', '', '', '','','')
-    this.contacto = new ContactoModel('', '', '', '', '', '')
-    this.representanteLegal = new RepresentanteLegalModel('', '', '', '', '', '', '', '', '', '', '', false)
-    this.director = new DirectorModel('', '', '', '', '', '', '', '', '', '', '')
-    this.autorizaciones = new AutorizacionesModel(false, false, false)
+      retencion_para_capacitacion: false,
+      aviso_privacidad: false
+    }
     this.afiliado = new AfiliadoModel(
-      this.datosGenerales,
-      this.correspondencia,
-      this.contacto,
+      this.generales,
+      this.direccion,
+      this.contactoModel,
       this.representanteLegal,
       this.director,
       this.autorizaciones,
@@ -41,17 +70,19 @@ export class AfiliacionFormComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogPrivacidad);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-      // TODO Capturar el evento de aceptar en el model y validar el formulario
+      if (result) this.autorizaciones.aviso_privacidad = true
     });
   }
   OpenRetencion(): void {
     const dialogRef = this.dialog.open(DialogRetencion);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      if (result) this.autorizaciones.retencion_para_capacitacion = true
     });
   }
+
+
+
 }
 
 @Component({

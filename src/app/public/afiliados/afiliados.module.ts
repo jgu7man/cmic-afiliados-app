@@ -7,10 +7,11 @@ import { AfiliacionFormComponent, DialogPrivacidad, DialogRetencion } from './co
 import { MaterialModule } from 'src/shared/material.module';
 import { FirebaseModule } from 'src/shared/firebase.module';
 import { ComunesModule } from 'src/shared/comunes.module';
+import { ActividadesFormComponent } from './components/actividades-form/actividades-form.component';
 
 
 @NgModule({
-  declarations: [AfiliadosComponent, AfiliacionFormComponent, DialogPrivacidad, DialogRetencion],
+  declarations: [AfiliadosComponent, AfiliacionFormComponent, DialogPrivacidad, DialogRetencion, ActividadesFormComponent],
   imports: [
     CommonModule,
     AfiliadosRoutingModule,
