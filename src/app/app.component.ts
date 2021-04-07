@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GdevCache } from '@jgu7man/gdev-tools';
+import { GdevCache } from 'gdev-cache';
 
 @Component({
   selector: 'g-root',

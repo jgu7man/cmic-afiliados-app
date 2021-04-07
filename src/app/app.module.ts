@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FirebaseModule } from 'src/shared/firebase.module';
 import { MaterialModule } from 'src/shared/material.module';
+import { GdevModule } from './gdev/gdev.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MaterialModule } from 'src/shared/material.module';
     BrowserAnimationsModule,
     FirebaseModule,
     MaterialModule,
+    GdevModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

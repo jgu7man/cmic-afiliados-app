@@ -1,9 +1,7 @@
 @import './assets/styles/cmic-palette.scss';
 @import '~@angular/material/theming';
-@import '~@jgu7man/gdev-tools/styles/responsive';
-@import '~@jgu7man/gdev-tools/styles/colors';
-@import '~@jgu7man/gdev-tools/styles/normalize';
-@import '~@jgu7man/gdev-tools/styles/text';
+@import '~gdev-colors/styles/colors.css';
+@import '~gdev-responsive/styles/responsive.scss';
 
 @include mat-core();
 

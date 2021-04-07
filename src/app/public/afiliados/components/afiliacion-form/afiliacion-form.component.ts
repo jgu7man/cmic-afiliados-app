@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { GdevCache } from '@jgu7man/gdev-tools';
+import { GdevCache } from 'gdev-cache';
 import { AfiliadoModel, AutorizacionesAfiliado, iContactoAfiliado, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliado, ContactoAfiliado, iUserAfiliado } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 

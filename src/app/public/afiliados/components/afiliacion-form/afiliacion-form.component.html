@@ -56,7 +56,7 @@
               <!-- Ya que el service de afiliados es "public", hacemos el llamado de la función desde el HTML-->
               <!-- Para guardar la parte del formulario, es necesario asignar un nombre de campo -->
               <button mat-button matStepperNext
-              [disabled]="!generalesForm.form.valid"
+              [disabled]="generalesForm.form.invalid"
               (click)="afiliados_.savePartialAfiliado('datos_generales', generales)"
               >Siguiente</button>
             </div>

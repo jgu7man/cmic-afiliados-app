@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { GdevCache } from '@jgu7man/gdev-tools';
+import { GdevCache } from 'gdev-cache';
 import { iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class AfiliadosService {
 
     this._afs.collection('afiliados')
       // Agregamos una llave dinámica que asignará el nombre del campo obtenido del parámetro de la función
-      .doc(user.RFC).update({
+      .doc(user?.RFC).update({
         [field]: { ...partialAafiliado }
       })
       .then(() => {
