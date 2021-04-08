@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GdevCache } from 'gdev-cache';
 import { AfiliadoModel, AutorizacionesAfiliado, iContactoAfiliado, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliado, ContactoAfiliado, iUserAfiliado } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
-
+import {take} from 'rxjs/operators'
 @Component({
   selector: 'g-afiliados-form',
   templateUrl: './afiliacion-form.component.html',
@@ -24,6 +24,8 @@ export class AfiliacionFormComponent implements OnInit {
   public autorizaciones: AutorizacionesAfiliado
   public addCorrespondencia: boolean = false
   public director_igual_legal: boolean = false
+
+
 
   constructor(
     public dialog: MatDialog,
@@ -73,7 +75,7 @@ export class AfiliacionFormComponent implements OnInit {
   OpenPrivacidad(): void {
     const dialogRef = this.dialog.open(DialogPrivacidad);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(take(1)) .subscribe((result) => {
       if (result) this.autorizaciones.aviso_privacidad = true
     });
   }

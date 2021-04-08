@@ -8,16 +8,19 @@ import { MaterialModule } from 'src/shared/material.module';
 import { FirebaseModule } from 'src/shared/firebase.module';
 import { ComunesModule } from 'src/shared/comunes.module';
 import { ActividadesFormComponent } from './components/actividades-form/actividades-form.component';
+import { AfiliadosLoginComponent } from './components/afiliados-login/afiliados-login.component';
+import { GdevAuthModule } from 'gdev-auth';
 
 
 @NgModule({
-  declarations: [AfiliadosComponent, AfiliacionFormComponent, DialogPrivacidad, DialogRetencion, ActividadesFormComponent],
+  declarations: [AfiliadosComponent, AfiliacionFormComponent, DialogPrivacidad, DialogRetencion, ActividadesFormComponent, AfiliadosLoginComponent],
   imports: [
     CommonModule,
     AfiliadosRoutingModule,
     MaterialModule,
     FirebaseModule,
-    ComunesModule
+    ComunesModule,
+    GdevAuthModule,
   ]
 })
 export class AfiliadosModule { }

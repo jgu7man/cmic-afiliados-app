@@ -66,7 +66,7 @@
 
         <!-- DOMICILIO -->
         <mat-step>
-          <form>
+          <form #domicilio="ngForm">
             <ng-template matStepLabel>Domicilio</ng-template>
             <div>
               <mat-form-field>
@@ -137,30 +137,23 @@
                 <mat-form-field>
                   <mat-label>Domicilio Fiscal</mat-label>
                   <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.correspondencia.calle"
-                    name="correspondencia_calle" #correspondencia_calle="ngModel" required>
-                  <mat-error *ngIf="correspondencia_calle.hasError('required')">
-                    Este campo es necesario
-                  </mat-error>
+                    name="correspondencia_calle" #correspondencia_calle="ngModel">
                 </mat-form-field>
               </div>
               <div>
                 <mat-form-field>
                   <mat-label> Número exterior</mat-label>
                   <input matInput placeholder="Ingrese número exterior" [(ngModel)]="direccion.correspondencia.num_ext"
-                    name="correspondencia_num_ext" #correspondencia_num_ext="ngModel" required>
-                  <mat-error *ngIf="correspondencia_num_ext.hasError('required')">
-                    Este campo es necesario
-                  </mat-error>
+                    name="correspondencia_num_ext" #correspondencia_num_ext="ngModel" >
+
                 </mat-form-field>
               </div>
               <div>
                 <mat-form-field>
                   <mat-label> Número Interno</mat-label>
                   <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.correspondencia.num_int"
-                    name="correspondencia_num_int" #correspondencia_num_int="ngModel" required>
-                  <mat-error *ngIf="correspondencia_num_int.hasError('required')">
-                    Este campo es necesario
-                  </mat-error>
+                    name="correspondencia_num_int" #correspondencia_num_int="ngModel" >
+
                 </mat-form-field>
               </div>
 
@@ -168,10 +161,8 @@
                 <mat-form-field>
                   <mat-label> Colonia</mat-label>
                   <input matInput placeholder="Ingrese colonia" [(ngModel)]="direccion.correspondencia.colonia"
-                    name="correspondencia_colonia" #correspondencia_colonia="ngModel" required>
-                  <mat-error *ngIf="correspondencia_colonia.hasError('required')">
-                    Este campo es necesario
-                  </mat-error>
+                    name="correspondencia_colonia" #correspondencia_colonia="ngModel" >
+
                 </mat-form-field>
               </div>
 
@@ -180,16 +171,16 @@
                   <mat-label> Código Postal</mat-label>
                   <input matInput placeholder="Ingrese codigo postal"
                     [(ngModel)]="direccion.correspondencia.codigo_postal" name="correspondencia_codigo_postal"
-                    #correspondencia_codigo_postal="ngModel" required>
-                  <mat-error *ngIf="correspondencia_codigo_postal.hasError('required')">
-                    Este campo es necesario
-                  </mat-error>
+                    #correspondencia_codigo_postal="ngModel" >
+
                 </mat-form-field>
               </div>
             </div>
             <div>
               <button mat-button matStepperPrevious>Atrás</button>
-              <button mat-button matStepperNext>Siguiente</button>
+              <button mat-button matStepperNext
+              [disabled]="domicilio.form.invalid"
+              >Siguiente</button>
             </div>
           </form>
         </mat-step>
