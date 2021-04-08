@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { GdevCache } from 'gdev-cache';
 import { iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
 
@@ -9,8 +11,10 @@ import { iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
 export class AfiliadosService {
 
   constructor(
+    private _auth: AngularFireAuth,
     private _afs: AngularFirestore,
-    private _cache: GdevCache
+    private _cache: GdevCache,
+    private _router: Router
   ) { }
 
 
@@ -33,4 +37,31 @@ export class AfiliadosService {
         console.log('Datos guardados')
       })
   }
+
+
+  async registAfiliado({ email, contrasena, RFC }: iUserAfiliado) {
+    try {
+      const userCredentials = await this._auth.createUserWithEmailAndPassword(email, contrasena)
+        .catch(error => {
+        throw {mensaje: 'No se pudo crear el usuario', error}
+      })
+
+      const userRef = this._afs.collection('afiliados').doc(RFC)
+        .collection('managers').doc(userCredentials.user?.uid)
+
+      userRef.set(<iUserAfiliado>{ email, RFC })
+        .catch(error => {
+        throw {mensaje: 'No se pudo guardar en base de datos', error}
+        })
+
+      console.log('usuario registrado')
+      this._cache.updateData('user', userCredentials.user)
+      this._router.navigate(['/afiliados/registro'])
+    } catch (e) {
+      alert('No se pudo autenticar')
+      console.error(e)
+    }
+  }
+
+
 }
