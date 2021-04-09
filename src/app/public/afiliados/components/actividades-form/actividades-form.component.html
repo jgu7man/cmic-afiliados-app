@@ -17,7 +17,7 @@
                 placeholder="Elige una opción"
                 name="especialidad"
                 [(ngModel)]="especialidadSelected"
-                [disabled]="afiliadoIntereses.tipos_de_obra.length == 3">
+                [disabled]="afiliadoIntereses[catalogo.id].length == 3">
                   <mat-option *ngFor="let especialidad of catalogo.especialidades"
                   [value]="especialidad">
                     {{especialidad.nombre}}
@@ -30,7 +30,7 @@
                 <mat-select
                 placeholder="Elige una opción"
                 name="actividad"
-                [disabled]="afiliadoIntereses.tipos_de_obra.length == 3"
+                [disabled]="afiliadoIntereses[catalogo.id].length == 3"
                 (selectionChange)="onSelectActividad(catalogo.id, $event)"
                 >
                   <mat-option *ngFor="let actividad of especialidadSelected.actividades" [value]="actividad">
@@ -58,7 +58,7 @@
               *ngIf="index != 0"
               >Atrás</button>
               <button mat-button matStepperNext
-              [disabled]="afiliadoIntereses.tipos_de_obra.length < 3"
+              [disabled]="afiliadoIntereses[catalogo.id].length < 3"
               (click)="afiliados_.savePartialAfiliado('intereses',  afiliadoIntereses)"
               >Siguiente</button>
             </div>
@@ -120,11 +120,14 @@
 
             <div class="row">
               <div class="col s12">
-                <mat-select placeholder="Elige las opciones que creas convenientes" [(ngModel)]="afiliadoIntereses.contacto_1.intereses" name="item" multiple>
-                  <mat-option *ngFor="let item of actividades_.ListaDeIntereses" [value]="item">
-                    {{item}}
-                  </mat-option>
-                </mat-select>
+                <mat-form-field>
+                  <mat-label>Intereses del Contacto 1</mat-label>
+                  <mat-select placeholder="Elige las opciones que creas convenientes" [(ngModel)]="afiliadoIntereses.contacto_1.intereses" name="item" multiple>
+                    <mat-option *ngFor="let item of actividades_.ListaDeIntereses" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
 
@@ -139,7 +142,7 @@
 
         <!-- Contacto 2 -->
         <mat-step>
-          <ng-template matStepLabel>Contacto 1 para recibir información</ng-template>
+          <ng-template matStepLabel>Contacto 2 para recibir información</ng-template>
           <form #contacto2="ngForm">
             <div class="row">
               <div class="col s12">
@@ -176,19 +179,21 @@
 
             <div class="row">
               <div class="col s12">
-                <mat-select placeholder="Elige las opciones que creas convenientes" [(ngModel)]="afiliadoIntereses.contacto_1.intereses" name="item" multiple>
-                  <mat-option *ngFor="let item of actividades_.ListaDeIntereses" [value]="item">
-                    {{item}}
-                  </mat-option>
-                </mat-select>
+                <mat-form-field>
+                  <mat-label>Intereses del Contacto 2</mat-label>
+                  <mat-select placeholder="Elige las opciones que creas convenientes" [(ngModel)]="afiliadoIntereses.contacto_1.intereses" name="item" multiple>
+                    <mat-option *ngFor="let item of actividades_.ListaDeIntereses" [value]="item">
+                      {{item}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
 
 
 
 
-            <button mat-button matStepperPrevious
-            >Atrás</button>
+            <button mat-button matStepperPrevious>Atrás</button>
             <button mat-button matStepperNext
             [disabled]="contacto2.form.invalid"
             >Siguiente</button>

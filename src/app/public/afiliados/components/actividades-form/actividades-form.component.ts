@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { GdevCache } from 'gdev-cache';
-import { Especialidad, Catalogo, Actividad, catalogoName } from '../../models/actividades.model';
+import { Especialidad,  Actividad, catalogoName } from '../../models/actividades.model';
 import { ContactoInteres, DatosGeneralesAfiliado, Intereses } from '../../models/afiliados.model';
 import { ActividadesService } from '../../services/actividades.service';
 import { AfiliadosService } from '../../services/afiliados.service';

@@ -56,7 +56,7 @@ export class AfiliadosService {
 
       console.log('usuario registrado')
       this._cache.updateData('user', userCredentials.user)
-      this._router.navigate(['/afiliados/registro'])
+      this._router.navigate(['/afiliados/afiliacion'])
     } catch (e) {
       alert('No se pudo autenticar')
       console.error(e)

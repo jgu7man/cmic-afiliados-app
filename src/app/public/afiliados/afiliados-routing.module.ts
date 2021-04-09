@@ -9,7 +9,7 @@ import { AfiliadosLoginComponent } from './components/afiliados-login/afiliados-
 const routes: Routes = [
   { path: '', component: AfiliadosComponent, children: [
     { path: '', pathMatch: 'full', redirectTo: 'registro' },
-    { path: 'registro', component: AfiliacionFormComponent },
+    { path: 'afiliacion', component: AfiliacionFormComponent },
     { path: 'elegir-actividades', component: ActividadesFormComponent },
     { path: 'login', component: AfiliadosLoginComponent },
   ] }
