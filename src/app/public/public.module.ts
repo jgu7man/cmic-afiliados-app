@@ -15,7 +15,7 @@ import { ComunesModule } from 'src/shared/comunes.module';
     PublicRoutingModule,
     MaterialModule,
     FirebaseModule,
-    ComunesModule
-  ]
+    ComunesModule,
+  ],
 })
-export class PublicModule { }
+export class PublicModule {}

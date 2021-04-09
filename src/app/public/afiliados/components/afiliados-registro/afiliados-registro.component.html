@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12 l5">
+            <h1 [style.fontSize.px]="55" [style.fontWeight]="900">REGISTRO</h1>
+            <p [style.fontSize.px]="20">Regístrate aquí y promueve tus servicios</p>
+            <form [formGroup]="afiliado" [style.marginTop.px]="45" (ngSubmit)="registrarAfiliado()">
+
+                <mat-form-field [style.marginTop.px]="15">
+                    <mat-label>R.F.C.</mat-label>
+                    <input matInput placeholder="Ingrese R.F.C" formControlName="RFC" required>
+                    <mat-error *ngIf="afiliado.hasError('required', 'RFC')">
+                        Por favor Ingrese el R.F.C
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field [style.marginTop.px]="15">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput placeholder="Ingrese correo electrónico" formControlName="email" type="email"
+                        required>
+                    <mat-error *ngIf="afiliado.hasError('required', 'email')">
+                        Por favor ingrese su correo electrónico
+                    </mat-error>
+                    <mat-error *ngIf="afiliado.hasError('email', 'email')">
+                        Solo se permite correos electrónicos
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field [style.marginTop.px]="15">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput placeholder="Ingrese su contraseña" formControlName="contrasena"
+                        [type]="hide ? 'password' : 'text'" required>
+                    <mat-error *ngIf="afiliado.hasError('required', 'contrasena')">
+                        Por favor ingrese su contraseña
+                    </mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field [style.marginTop.px]="15">
+                    <mat-label>Confirme contraseña</mat-label>
+                    <input matInput placeholder="Confirme su contraseña" formControlName="confcontrasena"
+                        [type]="hide ? 'password' : 'text'" required>
+                    <!--[errorStateMatcher]="matcher"-->
+                    <mat-error *ngIf="afiliado.hasError('required','confcontrasena')">
+                        Por favor confirme su contraseña
+                    </mat-error>
+                    <mat-error *ngIf="afiliado.hasError('notSame')">
+                        La contraseña ingresada debe ser igual
+                    </mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div>
+                    <mat-checkbox formControlName="aviso_privacidad" name="aviso_privacidad">Acepto la política de
+                        privacidad </mat-checkbox>
+                    <button mat-button (click)="OpenPrivacidadRegistro()">(ver aqui)</button>
+                </div>
+                <div class="center">
+                    <button [style.paddingTop.px]="5" [style.paddingBottom.px]="5" [style.paddingRight.px]="35"
+                        [style.paddingLeft.px]="35" [disabled]="afiliado.invalid" mat-raised-button
+                        color="primary">REGISTRO</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
