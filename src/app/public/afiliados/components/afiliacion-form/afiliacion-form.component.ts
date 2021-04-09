@@ -14,6 +14,7 @@ export class AfiliacionFormComponent implements OnInit {
 
   public contactoModel: iContactoAfiliado
   public dirPublica: iDireccion
+  public dirCorrespondencia: iDireccion
   // MODEL
   public afiliado: AfiliadoModel
   public generales: DatosGeneralesAfiliado
@@ -43,6 +44,15 @@ export class AfiliacionFormComponent implements OnInit {
       entidad_federativa: '',
       municipio_alcaldia: '',
     }
+    this.dirCorrespondencia = {
+      calle: '',
+      num_ext: '',
+      num_int: '',
+      colonia: '',
+      codigo_postal: '',
+      entidad_federativa: '',
+      municipio_alcaldia: '',
+    }
     this.contactoModel = {
       lada_telefono:'',
       telefono:'',
@@ -52,7 +62,7 @@ export class AfiliacionFormComponent implements OnInit {
       pagina_web:'',
     }
     this.generales = new DatosGeneralesAfiliado('', '', '', '', '', )
-    this.direccion = { publica: this.dirPublica, correspondencia: this.dirPublica }
+    this.direccion = { publica: this.dirPublica, correspondencia: this.dirCorrespondencia }
     this.contacto = {mostrar_en_directorios: false, ...this.contactoModel}
     this.representanteLegal = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)
     this.director = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)

@@ -27,4 +27,4 @@ import { GdevResponsiveModule } from 'gdev-responsive';
     GdevResponsiveModule
   ]
 })
-export class PublicModule { }
+export class PublicModule {}

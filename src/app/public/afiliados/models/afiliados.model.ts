@@ -1,6 +1,7 @@
 import { Actividad } from "./actividades.model";
 
 export interface iUserAfiliado {
+  uid?: string;
   RFC: string;
   email: string;
   contrasena: string;
@@ -104,4 +105,4 @@ export class Intereses {
 }
 
 
-export type PartialAfiliado = DatosGeneralesAfiliado | DireccionAfiliado | RepresentanteAfiliado | AutorizacionesAfiliado | Intereses
+export type PartialAfiliado = DatosGeneralesAfiliado | DireccionAfiliado | RepresentanteAfiliado | AutorizacionesAfiliado | Intereses |ContactoAfiliado
