@@ -1,6 +1,8 @@
-<div class="container">
+<div id="login-container">
+</div>
+<div class="container" strechHeight>
     <div class="row">
-        <div class="col s12 l5">
+        <div class="col s12 l4">
             <h1>REGISTRO</h1>
             <p>Regístrate aquí y promueve tus servicios</p>
             <form [formGroup]="afiliado"  (ngSubmit)="registrarAfiliado()">
@@ -80,6 +82,10 @@
                       REGISTRO
                     </button>
                 </div>
+
+
+                <p>¿Ya tienes cuenta?</p>
+                <a [routerLink]="['/afiliados/login']">Inicia Sesión aquí</a>
             </form>
 
         </div>

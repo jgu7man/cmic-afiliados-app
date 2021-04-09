@@ -10,7 +10,7 @@ import {take} from 'rxjs/operators'
   styleUrls: ['./afiliacion-form.component.scss'],
 })
 export class AfiliacionFormComponent implements OnInit {
-  // public user: iUserAfiliado
+  public user: iUserAfiliado
 
   public contactoModel: iContactoAfiliado
   public dirPublica: iDireccion
@@ -34,7 +34,9 @@ export class AfiliacionFormComponent implements OnInit {
     private _cache: GdevCache
   ) {
     // Se obtiene el usuario del cache
-    // this.user = this._cache.getDataKey<iUserAfiliado>('user')
+    let user = this._cache.getDataKey<iUserAfiliado>('user')
+    this.user = user ? user : { RFC: '', email: '' }
+
     this.dirPublica = {
       calle: '',
       num_ext: '',
@@ -61,7 +63,7 @@ export class AfiliacionFormComponent implements OnInit {
       email:'',
       pagina_web:'',
     }
-    this.generales = new DatosGeneralesAfiliado('', '', '', '', '', )
+    this.generales = new DatosGeneralesAfiliado(this.user.RFC, '', '', '', '', )
     this.direccion = { publica: this.dirPublica, correspondencia: this.dirCorrespondencia }
     this.contacto = {mostrar_en_directorios: false, ...this.contactoModel}
     this.representanteLegal = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)

@@ -12,11 +12,12 @@ const routes: Routes = [
     path: '',
     component: AfiliadosComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'login' },
+      { path: '', pathMatch: 'full', redirectTo: 'perfil' },
       { path: 'afiliacion', component: AfiliacionFormComponent },
       { path: 'elegir-actividades', component: ActividadesFormComponent },
       { path: 'login', component: AfiliadosLoginComponent },
       { path: 'registro', component: AfiliadosRegistroComponent },
+      { path: 'perfil', component: AfiliadosRegistroComponent },
     ],
   },
 ];

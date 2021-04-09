@@ -4,7 +4,7 @@ export interface iUserAfiliado {
   uid?: string;
   RFC: string;
   email: string;
-  contrasena: string;
+  contrasena?: string;
 }
 
 

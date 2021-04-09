@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
 import { GdevCache } from 'gdev-cache';
+import { AfiliadosService } from '../../services/afiliados.service';
 
 @Component({
   templateUrl: './afiliados-login.component.html',
@@ -10,9 +12,13 @@ export class AfiliadosLoginComponent implements OnInit {
 
   constructor(
     private _authService: GdevAuthService,
-    private _cache: GdevCache
+    private _cache: GdevCache,
+    private _afiliados: AfiliadosService,
+    private _router: Router
   ) {
-    
+    this._afiliados.afiliado$.subscribe(user => {
+      if (user) { this._router.navigate(['/afiliados']) }
+    })
    }
 
   ngOnInit(): void {

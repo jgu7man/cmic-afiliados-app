@@ -7,9 +7,10 @@
           <!-- REVIEW Se debe encapsular las secciones del formulario -->
           <form #generalesForm="ngForm">
             <!-- REVIEW Procurar etiquetar cada campo -->
-            <ng-template matStepLabel>Datos Generales</ng-template>
+            <ng-template matStepLabel>Datos Generales de la empresa</ng-template>
 
-            <!-- Nombre (s) -->
+            <ng-container *ngIf="user.RFC.length == 13; else moral">
+              <!-- Nombre (s) -->
             <div>
               <mat-form-field>
                 <mat-label>Nombre(s)</mat-label>
@@ -40,16 +41,20 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div>
-              <mat-form-field>
-                <mat-label>Persona Moral</mat-label>
-                <input matInput placeholder="Ingrese Persona Moral" [(ngModel)]="generales.moral_nombre"
-                  name="moral_nombre" #moral_nombre="ngModel" required>
-                <mat-error *ngIf="moral_nombre.hasError('required')">
-                  Este campo es necesario
-                </mat-error>
-              </mat-form-field>
-            </div>
+            </ng-container>
+            <ng-template #moral>
+              <div>
+                <mat-form-field>
+                  <mat-label>Persona Moral</mat-label>
+                  <input matInput placeholder="Ingrese Persona Moral" [(ngModel)]="generales.moral_nombre"
+                    name="moral_nombre" #moral_nombre="ngModel" required>
+                  <mat-error *ngIf="moral_nombre.hasError('required')">
+                    Este campo es necesario
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </ng-template>
+
             <div>
 
               <!-- REVIEW Validar cada sección de formulario encapsulado -->
@@ -90,10 +95,8 @@
               <mat-form-field>
                 <mat-label>Número Interno</mat-label>
                 <input matInput placeholder="Ingrese domicilio fiscal" [(ngModel)]="direccion.publica.num_int"
-                  name="num_int" #num_int="ngModel" required>
-                <mat-error *ngIf="num_int.hasError('required')">
-                  Este campo es necesario
-                </mat-error>
+                  name="num_int" #num_int="ngModel">
+
               </mat-form-field>
             </div>
 
@@ -533,7 +536,7 @@
               <button mat-button matStepperPrevious>Atrás</button>
               <button [disabled]="terminos.form.invalid"
                 (click)="afiliados_.savePartialAfiliado('representante_legal', representanteLegal)" mat-button
-                matStepperNext [routerLink]="['elegir-actividades']">Siguiente</button>
+                matStepperNext [routerLink]="['/afiliados/elegir-actividades']">Siguiente</button>
             </div>
           </form>
         </mat-step>
