@@ -13,7 +13,7 @@ const routes: Routes = [
     component: AfiliadosComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'login' },
-      { path: 'registro-paso-1', component: AfiliacionFormComponent },
+      { path: 'afiliacion', component: AfiliacionFormComponent },
       { path: 'elegir-actividades', component: ActividadesFormComponent },
       { path: 'login', component: AfiliadosLoginComponent },
       { path: 'registro', component: AfiliadosRegistroComponent },

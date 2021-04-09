@@ -1,21 +1,29 @@
 <div class="container">
     <div class="row">
         <div class="col s12 l5">
-            <h1 [style.fontSize.px]="55" [style.fontWeight]="900">REGISTRO</h1>
-            <p [style.fontSize.px]="20">Regístrate aquí y promueve tus servicios</p>
-            <form [formGroup]="afiliado" [style.marginTop.px]="45" (ngSubmit)="registrarAfiliado()">
+            <h1>REGISTRO</h1>
+            <p>Regístrate aquí y promueve tus servicios</p>
+            <form [formGroup]="afiliado"  (ngSubmit)="registrarAfiliado()">
 
-                <mat-form-field [style.marginTop.px]="15">
+                <mat-form-field >
                     <mat-label>R.F.C.</mat-label>
-                    <input matInput placeholder="Ingrese R.F.C" formControlName="RFC" required>
-                    <mat-error *ngIf="afiliado.hasError('required', 'RFC')">
-                        Por favor Ingrese el R.F.C
+                    <input matInput placeholder="Ingrese R.F.C. Alfanumérico. No se permiten símbolos" [formControl]="rfcCtrl" required name="rfc" minlength="12" maxlength="13" oninput="this.value = this.value.toUpperCase()" >
+                    <mat-error *ngIf="rfcCtrl.hasError('required', 'RFC')">
+                      Por favor Ingrese el R.F.C de su empresa.
+                    </mat-error>
+                    <mat-error *ngIf="rfcCtrl.hasError('minlength')">
+                      El RFC debe contener al menos 12 caracteres.
+                    </mat-error>
+                    <mat-error *ngIf="rfcCtrl.hasError('maxlength')">
+                      El RFC de una persona física puede tener máximo 13 caracteres
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field [style.marginTop.px]="15">
+
+
+                <mat-form-field >
                     <mat-label>Correo Electrónico</mat-label>
                     <input matInput placeholder="Ingrese correo electrónico" formControlName="email" type="email"
-                        required>
+                        required name="email">
                     <mat-error *ngIf="afiliado.hasError('required', 'email')">
                         Por favor ingrese su correo electrónico
                     </mat-error>
@@ -24,10 +32,10 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field [style.marginTop.px]="15">
+                <mat-form-field >
                     <mat-label>Contraseña</mat-label>
                     <input matInput placeholder="Ingrese su contraseña" formControlName="contrasena"
-                        [type]="hide ? 'password' : 'text'" required>
+                        [type]="hide ? 'password' : 'text'" required name="contrasena">
                     <mat-error *ngIf="afiliado.hasError('required', 'contrasena')">
                         Por favor ingrese su contraseña
                     </mat-error>
@@ -37,11 +45,11 @@
                     </button>
                 </mat-form-field>
 
-                <mat-form-field [style.marginTop.px]="15">
+                <mat-form-field >
                     <mat-label>Confirme contraseña</mat-label>
                     <input matInput placeholder="Confirme su contraseña" formControlName="confcontrasena"
-                        [type]="hide ? 'password' : 'text'" required>
-                    <!--[errorStateMatcher]="matcher"-->
+                        [type]="hide ? 'password' : 'text'" required [errorStateMatcher]="matcher" name="confirma">
+
                     <mat-error *ngIf="afiliado.hasError('required','confcontrasena')">
                         Por favor confirme su contraseña
                     </mat-error>
@@ -53,15 +61,24 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
+
+
                 <div>
-                    <mat-checkbox formControlName="aviso_privacidad" name="aviso_privacidad">Acepto la política de
-                        privacidad </mat-checkbox>
-                    <button mat-button (click)="OpenPrivacidadRegistro()">(ver aqui)</button>
+                    <mat-checkbox
+                    formControlName="aviso_privacidad"
+                    name="aviso_privacidad">
+                      Acepto la política de privacidad
+                    </mat-checkbox>
+                    <a mat-button (click)="OpenPrivacidadRegistro()">(ver aqui)</a>
                 </div>
                 <div class="center">
-                    <button [style.paddingTop.px]="5" [style.paddingBottom.px]="5" [style.paddingRight.px]="35"
-                        [style.paddingLeft.px]="35" [disabled]="afiliado.invalid" mat-raised-button
-                        color="primary">REGISTRO</button>
+                    <button
+                    [disabled]="afiliado.invalid"
+                    (click)="registrarAfiliado()"
+                    mat-raised-button
+                    color="primary">
+                      REGISTRO
+                    </button>
                 </div>
             </form>
 

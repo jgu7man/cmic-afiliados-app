@@ -43,6 +43,7 @@ export class AfiliadosRegistroComponent implements OnInit {
   };
   hide = true;
   matcher = new MyErrorStateMatcher();
+  rfcCtrl: FormControl
 
   constructor(
     public formBuilder: FormBuilder,
@@ -51,7 +52,7 @@ export class AfiliadosRegistroComponent implements OnInit {
   ) {
     this.afiliado = this.formBuilder.group(
       {
-        RFC: ['', [Validators.required]],
+        RFC: this.rfcCtrl = new FormControl( '', [Validators.required, Validators.minLength(12), Validators.maxLength(13)]),
         email: ['', [Validators.required, Validators.email]],
         contrasena: ['', [Validators.required]],
         confcontrasena: ['', [Validators.required]],
@@ -66,7 +67,7 @@ export class AfiliadosRegistroComponent implements OnInit {
     console.log(this.usuario) */
 
     this._afiliadosService.registAfiliado(
-      this.afiliado.getRawValue() as iUserAfiliado
+      this.afiliado.value as iUserAfiliado
     );
   }
   checkPasswords(group: FormGroup) {
@@ -88,6 +89,9 @@ export class AfiliadosRegistroComponent implements OnInit {
 
   ngOnInit(): void {}
 }
+
+
+
 
 @Component({
   selector: 'dialog-privacidad',

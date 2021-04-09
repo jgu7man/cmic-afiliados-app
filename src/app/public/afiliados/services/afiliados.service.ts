@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
 
@@ -13,7 +14,8 @@ export class AfiliadosService {
     private _auth: AngularFireAuth,
     private _afs: AngularFirestore,
     private _cache: GdevCache,
-    private _router: Router
+    private _router: Router,
+    private _alert: GdevAlert
   ) {}
 
   /**
@@ -29,9 +31,6 @@ export class AfiliadosService {
     this._afs
       .collection('afiliados')
       .doc(user?.RFC)
-      .collection('managers')
-      // Agregamos una llave dinámica que asignará el nombre del campo obtenido del parámetro de la función
-      .doc(user?.uid)
       .update({
         [field]: { ...partialAafiliado },
       })
@@ -43,28 +42,37 @@ export class AfiliadosService {
   async registAfiliado(afiliado: iUserAfiliado) {
     const { email, contrasena, RFC } = afiliado;
     try {
-      const userCredentials = await this._auth
-        .createUserWithEmailAndPassword(email, contrasena)
-        .catch((error) => {
-          throw { mensaje: 'No se pudo crear el usuario', error };
+
+      const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref
+      const afiliadoDoc = await afiliadoRef.get();
+      if (afiliadoDoc.exists) {
+        throw {message: 'Esta empresa ya está registrada. Si necesitas accesos, contacta a un administrador de la empresa o con CMIC directamente'}
+      } else {
+        const userCredentials = await this._auth
+          .createUserWithEmailAndPassword(email, contrasena)
+          .catch((error) => {
+            throw { message: 'No se pudo crear el usuario', error };
+          });
+
+        afiliadoRef.set({creado: new Date()})
+
+        const userRef = afiliadoRef.collection('managers')
+          .doc(userCredentials.user?.uid);
+
+        userRef.set({ email, RFC, registrado: new Date() }).catch((error) => {
+          throw { message: 'No se pudo guardar en base de datos', error };
         });
 
-      const userRef = this._afs
-        .collection('afiliados')
-        .doc(RFC)
-        .collection('managers')
-        .doc(userCredentials.user?.uid);
+        afiliado.uid = userCredentials.user?.uid;
+        console.log('usuario registrado');
+        this._alert.sendFloatNotification('Usuario registrado')
+        this._cache.updateData('user', afiliado);
+        this._router.navigate(['/afiliados/registro-paso-1']);
 
-      userRef.set(<iUserAfiliado>{ email, RFC }).catch((error) => {
-        throw { mensaje: 'No se pudo guardar en base de datos', error };
-      });
+      }
 
-      afiliado.uid = userCredentials.user?.uid;
-      console.log('usuario registrado');
-      this._cache.updateData('user', afiliado);
-      this._router.navigate(['/afiliados/registro-paso-1']);
     } catch (e) {
-      alert('No se pudo autenticar');
+      this._alert.sendMessageAlert(e.message)
       console.error(e);
     }
   }

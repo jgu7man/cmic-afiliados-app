@@ -250,7 +250,7 @@
               </div>
               <div>
                 <mat-checkbox [checked]="contacto.mostrar_en_directorios" [(ngModel)]="contacto.mostrar_en_directorios"
-                  name="mostrar_en_directorios">
+                  name="mostrar_en_directorios" name="directorios">
                   Autorizo que los datos marcados con asterisco*
                   aparezcan en los
                   directorios “de Especialidades CMIC” así como en “Oportunidades de Negocio”</mat-checkbox>
@@ -399,8 +399,8 @@
         <!-- DIRECTOR GENERAL -->
         <mat-step>
           <ng-template matStepLabel>Datos de director general</ng-template>
-          <form #representantegeneralform="ngForm">
-            <mat-checkbox [checked]="director_igual_legal" [(ngModel)]="director_igual_legal">
+          <form #directorForm="ngForm">
+            <mat-checkbox [checked]="director_igual_legal" [(ngModel)]="director_igual_legal" name="director_igual">
               ¿Los datos son los mismos que del representante?</mat-checkbox>
             <div *ngIf="!director_igual_legal">
 
@@ -505,7 +505,7 @@
             </div>
             <div>
               <button mat-button matStepperPrevious>Atrás</button>
-              <button [disabled]="representantegeneralform.form.invalid"
+              <button [disabled]="directorForm.form.invalid"
                 (click)="afiliados_.savePartialAfiliado('representante_legal', representanteLegal)" mat-button
                 matStepperNext>Siguiente</button>
             </div>
@@ -518,20 +518,20 @@
           <ng-template matStepLabel>Términos y condiciones</ng-template>
           <form #terminos="ngForm">
             <div>
-              <mat-checkbox [checked]="autorizaciones.aviso_privacidad" [(ngModel)]="autorizaciones.aviso_privacidad">
-                Otorgo mi consentimiento ante el aviso y privacidad </mat-checkbox> 
+              <mat-checkbox [checked]="autorizaciones.aviso_privacidad" [(ngModel)]="autorizaciones.aviso_privacidad" name="privacidad" required>
+                Otorgo mi consentimiento ante el aviso y privacidad </mat-checkbox>
               <button mat-button (click)="OpenPrivacidad()">(ver aqui)</button>
             </div>
             <div>
               <mat-checkbox [checked]="autorizaciones.retencion_para_capacitacion"
-                [(ngModel)]="autorizaciones.retencion_para_capacitacion">
+                [(ngModel)]="autorizaciones.retencion_para_capacitacion" name="retencion" required>
                 Otorgo mi consentimiento Autorización de retención para capacitación</mat-checkbox>
               <button mat-button (click)="OpenRetencion()">(ver aqui)</button>
             </div>
 
             <div>
               <button mat-button matStepperPrevious>Atrás</button>
-              <button [disabled]="representantegeneralform.form.invalid"
+              <button [disabled]="terminos.form.invalid"
                 (click)="afiliados_.savePartialAfiliado('representante_legal', representanteLegal)" mat-button
                 matStepperNext [routerLink]="['elegir-actividades']">Siguiente</button>
             </div>
