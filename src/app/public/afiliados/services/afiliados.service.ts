@@ -4,7 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
-import { iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AfiliadoModel, iAfiliadoModel, iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
 
 @Injectable({
   providedIn: 'root',
@@ -42,11 +44,13 @@ export class AfiliadosService {
   async registAfiliado(afiliado: iUserAfiliado) {
     const { email, contrasena, RFC } = afiliado;
     try {
-
-      const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref
+      const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
       const afiliadoDoc = await afiliadoRef.get();
       if (afiliadoDoc.exists) {
-        throw {message: 'Esta empresa ya está registrada. Si necesitas accesos, contacta a un administrador de la empresa o con CMIC directamente'}
+        throw {
+          message:
+            'Esta empresa ya está registrada. Si necesitas accesos, contacta a un administrador de la empresa o con CMIC directamente',
+        };
       } else {
         const userCredentials = await this._auth
           .createUserWithEmailAndPassword(email, contrasena)
@@ -54,9 +58,10 @@ export class AfiliadosService {
             throw { message: 'No se pudo crear el usuario', error };
           });
 
-        afiliadoRef.set({creado: new Date()})
+        afiliadoRef.set({ creado: new Date() });
 
-        const userRef = afiliadoRef.collection('managers')
+        const userRef = afiliadoRef
+          .collection('managers')
           .doc(userCredentials.user?.uid);
 
         userRef.set({ email, RFC, registrado: new Date() }).catch((error) => {
@@ -65,15 +70,22 @@ export class AfiliadosService {
 
         afiliado.uid = userCredentials.user?.uid;
         console.log('usuario registrado');
-        this._alert.sendFloatNotification('Usuario registrado')
+        this._alert.sendFloatNotification('Usuario registrado');
         this._cache.updateData('user', afiliado);
-        this._router.navigate(['/afiliados/registro-paso-1']);
-
+        this._router.navigate(['/afiliados/afiliacion']);
       }
-
+      /*
+      console.log('usuario registrado')
+      this._cache.updateData('user', userCredentials.user)
+      this._router.navigate(['/afiliados/afiliacion'])*/
     } catch (e) {
-      this._alert.sendMessageAlert(e.message)
+      this._alert.sendMessageAlert(e.message);
       console.error(e);
     }
+  } 
+
+  getperfilAfiliado():Observable<iAfiliadoModel>{
+    const afiliado = this._cache.getDataKey<iUserAfiliado>('user');
+    return this._afs.collection('afiliados').doc(afiliado?.RFC).get().pipe(map((doc) => doc.data() as iAfiliadoModel));
   }
 }

@@ -1,0 +1,55 @@
+<div id="red-bar"></div>
+<mat-toolbar class="mat-elevation-z5">
+  <div class="logo-container" [routerLink]="['/']">
+    <img src="/assets/img/cmic-logo-h.png" alt="logo CMIC">
+    <!-- <span class="logo-legend">
+      <b>
+        Cámara Mexicana de la<br>
+        Industria de la Construcción
+      </b>
+    </span> -->
+  </div>
+  <div class="buscador-container">
+    <!-- <input type="text"> -->
+    <mat-form-field appearance="outline">
+      <mat-label><i class="fas fa-search"></i> Buscar</mat-label>
+      <input
+      matInput
+      type="text"
+      name="name"
+      [formControl]="buscadorCtrl"
+      >
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div>
+    <a class="topbar-item" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
+    <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="afiliadoMenu" [routerLinkActive]="'active'">
+        Afiliado
+    </a>
+    <mat-menu #afiliadoMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/afiliados/login']">
+            Inciar sesión
+        </button>
+        <button mat-menu-item [routerLink]="['/afiliados/registro']">
+            Registrarse
+        </button>
+    </mat-menu>
+    <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="clienteMenu" [routerLinkActive]="'active'">
+        Cliente
+    </a>
+    <mat-menu #clienteMenu="matMenu">
+        <button mat-menu-item>
+            Inciar sesión
+        </button>
+        <button mat-menu-item>
+            Registrarse
+        </button>
+
+    </mat-menu>
+  </div>
+</mat-toolbar>

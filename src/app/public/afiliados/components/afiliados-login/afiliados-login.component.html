@@ -1,7 +1,23 @@
-<gdev-login-card
-signInTitle="Iniciar sesión"
-passwordLabel="Contraseña"
-forgotPasswordLabel="Olvidé mi contraseña"
-signInButton="Iniciar"
-
-></gdev-login-card>
+<div id="login-container">
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col s4 center">
+      <h1 class="center">Bienvenido afiliado</h1>
+      <gdev-login-card
+      signInTitle="Inicia sesión como afiliado"
+      passwordLabel="Contraseña"
+      forgotPasswordLabel=""
+      signInButton="Iniciar"
+      (onSubmit)="onSubmit($event)"
+      ></gdev-login-card>
+      <p class="center">
+        ¿Aún no estás registrado?
+      </p>
+      <button mat-raised-button color='accent'
+      [routerLink]="['/afiliados/registro']"
+      >Registrarse</button>
+    </div>
+    <div class="col s8" id="login-image"></div>
+  </div>
+</div>
