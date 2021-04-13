@@ -28,28 +28,35 @@
   </div>
   <div>
     <a class="topbar-item" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
-    <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="afiliadoMenu" [routerLinkActive]="'active'">
-        Afiliado
-    </a>
-    <mat-menu #afiliadoMenu="matMenu">
-        <button mat-menu-item [routerLink]="['/afiliados/login']">
-            Inciar sesión
-        </button>
-        <button mat-menu-item [routerLink]="['/afiliados/registro']">
-            Registrarse
-        </button>
-    </mat-menu>
-    <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="clienteMenu" [routerLinkActive]="'active'">
-        Cliente
-    </a>
-    <mat-menu #clienteMenu="matMenu">
-        <button mat-menu-item>
-            Inciar sesión
-        </button>
-        <button mat-menu-item>
-            Registrarse
-        </button>
 
-    </mat-menu>
+    <ng-container *ngIf="logged; else unlogged">
+      <button mat-button (click)="auth_.singOut()">Cerrar Sesión</button>
+    </ng-container>
+    <ng-template #unlogged>
+      <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="afiliadoMenu" [routerLinkActive]="'active'">
+          Afiliado
+      </a>
+      <mat-menu #afiliadoMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/afiliados/login']">
+              Inciar sesión
+          </button>
+          <button mat-menu-item [routerLink]="['/afiliados/registro']">
+              Registrarse
+          </button>
+      </mat-menu>
+      <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="clienteMenu" [routerLinkActive]="'active'">
+          Cliente
+      </a>
+      <mat-menu #clienteMenu="matMenu">
+          <button mat-menu-item>
+              Inciar sesión
+          </button>
+          <button mat-menu-item>
+              Registrarse
+          </button>
+
+      </mat-menu>
+
+    </ng-template>
   </div>
 </mat-toolbar>

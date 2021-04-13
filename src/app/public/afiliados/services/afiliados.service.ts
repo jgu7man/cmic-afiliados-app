@@ -24,10 +24,14 @@ export class AfiliadosService {
   ) {
     this.afiliado$ = this._afAuth.authState.pipe(
       switchMap(user => user ?
-      this._afs.collectionGroup<iUserAfiliado>('managers', ref => ref.where('email', '==', user.email))
-        .get().pipe(map(list => list.docs[0].data()))
+      this.retriveManager(user.email as string)
       : of(null)
       ))
+  }
+
+  retriveManager(email:string) {
+    return this._afs.collectionGroup<iUserAfiliado>('managers', ref => ref.where('email', '==', email))
+    .get().pipe(map(list => list.docs[0].data()))
   }
 
   /**
@@ -96,6 +100,12 @@ export class AfiliadosService {
 
   getperfilAfiliado():Observable<iAfiliadoModel>{
     const afiliado = this._cache.getDataKey<iUserAfiliado>('user');
-    return this._afs.collection('afiliados').doc(afiliado?.RFC).get().pipe(map((doc) => doc.data() as iAfiliadoModel));
+    console.log( afiliado )
+    return this._afs.collection('afiliados')
+      .doc(afiliado?.RFC)
+      .get()
+      .pipe(
+        map((doc) => doc.data() as iAfiliadoModel)
+      );
   }
 }

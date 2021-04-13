@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
 import { GdevCache } from 'gdev-cache';
+import { take } from 'rxjs/operators';
 import { AfiliadosService } from '../../services/afiliados.service';
 
 @Component({
@@ -26,10 +27,16 @@ export class AfiliadosLoginComponent implements OnInit {
 
   onSubmit(fields:  GdevLoginFields)  {
 		this._authService.emailSignIn(fields.email,  fields.password)
-    // This emit a Promise with firebase.User
       .then(user => {
         console.log(user)
-        this._cache.updateData('user', user)
+        if (user) {
+          this._afiliados.retriveManager(user.email as string)
+          .pipe(take(1)).subscribe(
+            dataUser => this._cache.updateData('user', dataUser)
+          )
+        } else {
+
+        }
       })
 	}
 
