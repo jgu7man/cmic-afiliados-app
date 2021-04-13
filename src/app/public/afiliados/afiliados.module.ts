@@ -11,10 +11,11 @@ import { ActividadesFormComponent } from './components/actividades-form/activida
 import { AfiliadosLoginComponent } from './components/afiliados-login/afiliados-login.component';
 import { GdevAuthModule } from 'gdev-auth';
 import { AfiliadosRegistroComponent, DialogPrivacidadRegistro } from './components/afiliados-registro/afiliados-registro.component';
+import { AfiliadosPerfilComponent } from './components/afiliados-perfil/afiliados-perfil.component';
 
 
 @NgModule({
-  declarations: [AfiliadosComponent, AfiliacionFormComponent, DialogPrivacidad,DialogPrivacidadRegistro, DialogRetencion, ActividadesFormComponent, AfiliadosLoginComponent, AfiliadosRegistroComponent],
+  declarations: [AfiliadosComponent, AfiliacionFormComponent, DialogPrivacidad,DialogPrivacidadRegistro, DialogRetencion, ActividadesFormComponent, AfiliadosLoginComponent, AfiliadosRegistroComponent, AfiliadosPerfilComponent],
   imports: [
     CommonModule,
     AfiliadosRoutingModule,

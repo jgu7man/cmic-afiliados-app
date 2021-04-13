@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+        <section class="col s12 l4">
+            <article>
+                <img width="50%" height="175px" src="http://tritonshall.com/wp-content/themes/photobook/images/blank.png" alt="Cargar Logo" style="margin-bottom: 15px;">
+                <h1>{{afiliado.datos_generales?.moral_nombre}}</h1>
+                <h2>Fundador</h2>
+            </article>
+            <article>
+                <p>Ubicación</p>
+                <p>{{afiliado.domicilio?.publica?.calle}}</p>
+            </article>
+            <article>
+                <p>Contacto</p>
+                <p>Tel.{{afiliado.contacto?.telefono}}</p>
+                <p>{{afiliado.contacto?.email}}</p>
+                <p>{{afiliado.contacto?.pagina_web}}</p>
+            </article>
+        </section>
+        <div class="col s12 l8">
+            <img width="100%" height="200px" src="http://tritonshall.com/wp-content/themes/photobook/images/blank.png" alt="Cargar Imagen de Portada" style="margin-bottom: 15px;">
+
+
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        ¿Quiénes Somos?
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-form-field class="example-full-width">
+                    <textarea rows="3" matInput placeholder="Escribe un texto sobre la empresa"></textarea>
+                </mat-form-field>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel style="margin-top:5px">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Experiencia
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel style="margin-top:5px">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Capacidad Contable
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+
+            </mat-expansion-panel>
+        </div>
+    </div>
+</div>

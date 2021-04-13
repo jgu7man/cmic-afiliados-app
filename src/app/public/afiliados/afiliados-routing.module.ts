@@ -6,6 +6,7 @@ import { ActividadesFormComponent } from './components/actividades-form/activida
 import { AfiliacionFormComponent } from './components/afiliacion-form/afiliacion-form.component';
 import { AfiliadosLoginComponent } from './components/afiliados-login/afiliados-login.component';
 import { AfiliadosRegistroComponent } from './components/afiliados-registro/afiliados-registro.component';
+import { AfiliadosPerfilComponent } from './components/afiliados-perfil/afiliados-perfil.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'afiliacion', component: AfiliacionFormComponent },
       { path: 'elegir-actividades', component: ActividadesFormComponent },
       { path: 'login', component: AfiliadosLoginComponent },
+      { path: 'perfil', component: AfiliadosPerfilComponent },
       { path: 'registro', component: AfiliadosRegistroComponent },
       { path: 'perfil', component: AfiliadosRegistroComponent },
     ],
