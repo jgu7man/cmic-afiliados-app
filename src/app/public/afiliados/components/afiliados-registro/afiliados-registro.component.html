@@ -5,7 +5,7 @@
         <div class="col s12 l4">
             <h1>REGISTRO</h1>
             <p>Regístrate aquí y promueve tus servicios</p>
-            <form [formGroup]="afiliado"  (ngSubmit)="registrarAfiliado()">
+            <form [formGroup]="afiliado" >
 
                 <mat-form-field >
                     <mat-label>R.F.C.</mat-label>
@@ -76,7 +76,7 @@
                 <div class="center">
                     <button
                     [disabled]="afiliado.invalid"
-                    (click)="registrarAfiliado()"
+                    (click)="onSubmit()"
                     mat-raised-button
                     color="primary">
                       REGISTRO

@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { iUserAfiliado } from '../../models/afiliados.model';
@@ -48,8 +49,12 @@ export class AfiliadosRegistroComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private _afiliadosService: AfiliadosService
+    private _afiliadosService: AfiliadosService,
+    private _router: Router
   ) {
+    this._afiliadosService.afiliado$.subscribe(user => {
+      if (user) { this._router.navigate(['/afiliados']) }
+    })
     this.afiliado = this.formBuilder.group(
       {
         RFC: this.rfcCtrl = new FormControl( '', [Validators.required, Validators.minLength(12), Validators.maxLength(13)]),
@@ -61,7 +66,8 @@ export class AfiliadosRegistroComponent implements OnInit {
       { validator: this.checkPasswords }
     );
   }
-  registrarAfiliado(): void {
+  onSubmit(): void {
+
     /*  console.log(this.afiliado.getRawValue());
     this.usuario = this.afiliado.getRawValue() as iUserAfiliado;
     console.log(this.usuario) */

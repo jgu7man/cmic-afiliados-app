@@ -10,9 +10,8 @@ import { AfiliadosService } from '../../services/afiliados.service';
   styleUrls: ['./afiliados-perfil.component.scss'],
 })
 export class AfiliadosPerfilComponent implements OnInit {
-  afiliado: iAfiliadoModel = {
-
-  };
+  afiliado: iAfiliadoModel = {};
+  somos: string = 'Escribe un contenido acerca de la empresa'
 
   constructor(
     private _afiliadosService: AfiliadosService,

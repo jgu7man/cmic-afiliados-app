@@ -74,6 +74,7 @@ export class AfiliadosService {
 
         afiliadoRef.set({ creado: new Date() });
 
+
         const userRef = afiliadoRef
           .collection('managers')
           .doc(userCredentials.user?.uid);

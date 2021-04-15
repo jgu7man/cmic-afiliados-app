@@ -29,6 +29,7 @@
     "gdev-colors": "0.0.2",
     "gdev-loading": "0.0.2",
     "gdev-responsive": "0.0.4",
+    "ngx-dropzone": "^3.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
