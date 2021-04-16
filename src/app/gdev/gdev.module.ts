@@ -5,6 +5,7 @@ import { GdevAuthModule } from 'gdev-auth';
 import { GdevCacheModule } from 'gdev-cache';
 import { GdevLoadingModule } from 'gdev-loading';
 import { GdevResponsiveModule } from 'gdev-responsive';
+import { GdevStorageModule } from './gdev-storage/gdev-storage.module';
 
 
 
@@ -12,6 +13,7 @@ import { GdevResponsiveModule } from 'gdev-responsive';
   declarations: [],
   imports: [
     CommonModule,
+    GdevStorageModule,
   ], exports: [
     GdevAlertModule,
     GdevAuthModule,

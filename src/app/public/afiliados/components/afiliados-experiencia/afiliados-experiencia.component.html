@@ -1,6 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s12 m1">
+      <button mat-icon-button (click)="location_.back()">
+          <i class="fas fa-arrow-left fa-lg"></i>
+      </button>
+    </div>
+    <div class="col s12 m11">
 
       <mat-card>
         <mat-card-header>
@@ -22,7 +27,7 @@
             </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
+          <button mat-button [disabled]="extractCtrl.invalid" (click)="onUpdateInfo()">Guardar</button>
         </mat-card-actions>
       </mat-card>
 
@@ -167,52 +172,18 @@
 
                 <div class="row">
                   <div class="col s12">
-                    <ng-container *ngIf="!showDropzone; else dropzone">
-                      <button mat-raised-button color='accent'
-                      (click)="showDropzone = !showDropzone"
-                      >Subir Evidencia</button>
-                    </ng-container>
-                    <ng-template #dropzone >
-                      <div class="row">
-                        <div class="col s12">
-
-                          <ngx-dropzone (change)="onSelect($event)">
-                            <ngx-dropzone-label>Deja caer los archivos</ngx-dropzone-label>
-                            <ngx-dropzone-preview
-                              *ngFor="let f of files"
-                              [removable]="true"
-                              (removed)="onRemove(f)"
-                            >
-                              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                            </ngx-dropzone-preview>
-                          </ngx-dropzone>
-
-                        </div>
-                      </div>
-
-                      <div class="uploading-area" *ngIf="uploadingFiles">
-                        <mat-progress-bar *ngIf="UploadedPercent"
-                          mode="determinate"
-                          [value]="UploadedPercent"
-                        ></mat-progress-bar>
-                      </div>
-
-                      <div class="row">
-                        <div class="col s12 center">
-                          <button mat-raised-button color='primary'
-                          (click)="loadFiles()" >Subir</button>
-                        </div>
-                      </div>
-
-
-                    </ng-template>
-
+                    <gdev-upload-files
+                    [path]="path"
+                    [metadata]="metadata"
+                    [uploadButton]="false"
+                    ></gdev-upload-files>
                   </div>
                 </div>
 
               </mat-card-content>
               <mat-card-actions>
-                <button mat-raised-button color='primary'>Guardar</button>
+                <button mat-raised-button color='primary'
+                (click)="onSetProyecto()">Guardar</button>
               </mat-card-actions>
             </mat-card>
           </form>

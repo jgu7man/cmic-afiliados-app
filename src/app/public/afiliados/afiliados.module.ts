@@ -17,6 +17,7 @@ import { AfiliadosRegistroComponent, DialogPrivacidadRegistro } from './componen
 import { AfiliadosPerfilComponent } from './components/afiliados-perfil/afiliados-perfil.component';
 import { AfiliadosAdminComponent } from './components/afiliados-admin/afiliados-admin.component';
 import { AfiliadosExperienciaComponent } from './components/afiliados-experiencia/afiliados-experiencia.component';
+import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { AfiliadosExperienciaComponent } from './components/afiliados-experienci
     FirebaseModule,
     ComunesModule,
     GdevAuthModule,
+    GdevStorageModule,
     NgxDropzoneModule,
   ],
   schemas: [

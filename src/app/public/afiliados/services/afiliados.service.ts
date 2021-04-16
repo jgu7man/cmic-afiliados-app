@@ -103,10 +103,10 @@ export class AfiliadosService {
     const afiliado = this._cache.getDataKey<iUserAfiliado>('user');
     console.log( afiliado )
     return this._afs.collection('afiliados')
-      .doc(afiliado?.RFC)
-      .get()
-      .pipe(
-        map((doc) => doc.data() as iAfiliadoModel)
-      );
+      .doc(afiliado?.RFC).get()
+      .pipe(map((doc) => doc.data() as iAfiliadoModel));
   }
+
+
+
 }
