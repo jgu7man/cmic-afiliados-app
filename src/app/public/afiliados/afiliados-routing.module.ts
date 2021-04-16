@@ -9,6 +9,10 @@ import { AfiliadosRegistroComponent } from './components/afiliados-registro/afil
 import { AfiliadosPerfilComponent } from './components/afiliados-perfil/afiliados-perfil.component';
 import { AfiliadosAdminComponent } from './components/afiliados-admin/afiliados-admin.component';
 import { AfiliadosExperienciaComponent } from './components/afiliados-experiencia/afiliados-experiencia.component';
+import { AfiliadosCapacidadContableComponent } from './components/afiliados-capacidad-contable/afiliados-capacidad-contable.component';
+import { AfiliadosEquipoMaquinariaComponent } from './components/afiliados-equipo-maquinaria/afiliados-equipo-maquinaria.component';
+import { AfiliadosRecursosHumanosComponent } from './components/afiliados-recursos-humanos/afiliados-recursos-humanos.component';
+import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
 
 const routes: Routes = [
   {
@@ -21,6 +25,10 @@ const routes: Routes = [
       { path: '', component: AfiliadosAdminComponent, children:[
         { path: 'perfil', component: AfiliadosPerfilComponent },
         { path: 'experiencia', component: AfiliadosExperienciaComponent },
+        { path: 'capacidad-contable', component: AfiliadosCapacidadContableComponent },
+        { path: 'equipo-maquinaria', component: AfiliadosEquipoMaquinariaComponent },
+        { path: 'recursos-humanos', component: AfiliadosRecursosHumanosComponent },
+        { path: 'certificaciones-especializaciones', component: AfiliadosCertificacionesEspecializacionesComponent },
       ] },
     ],
   },

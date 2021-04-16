@@ -120,7 +120,8 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-action-row>
-            <button mat-raised-button color='primary' >Editar</button>
+            <a [routerLink]="['../capacidad-contable']"
+            mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel>
 
@@ -132,7 +133,8 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-action-row>
-            <button mat-raised-button color='primary' >Editar</button>
+            <a [routerLink]="['../equipo-maquinaria']"
+            mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel>
 
@@ -144,19 +146,21 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-action-row>
-            <button mat-raised-button color='primary' >Editar</button>
+            <a [routerLink]="['../recursos-humanos']"
+            mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel>
 
         <!-- Certificaciones panel -->
         <mat-expansion-panel #certPanel style="margin-top: 5px">
           <mat-expansion-panel-header>
-            <mat-panel-title> Certificaciones y espcializaciones </mat-panel-title>
+            <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
             <mat-panel-description>
             </mat-panel-description>
           </mat-expansion-panel-header>
           <mat-action-row>
-            <button mat-raised-button color='primary' >Editar</button>
+            <a [routerLink]="['../certificaciones-especializaciones']"
+            mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel>
 
