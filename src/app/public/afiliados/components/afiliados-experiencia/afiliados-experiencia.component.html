@@ -1,28 +1,29 @@
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s12 m1">
+      <button mat-icon-button (click)="location_.back()">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </button>
+    </div>
+    <div class="col s12 m11">
 
       <mat-card>
         <mat-card-header>
           <mat-card-title>Experiencia de la empresa</mat-card-title>
           <mat-card-subtitle>
-            En este apartado, puedes agregar la experiencia que tiene tu empresa, de manera que tus clientes puedan revisar tu trabajo.
+            En este apartado, puedes agregar la experiencia que tiene tu empresa, de manera que tus clientes puedan
+            revisar tu trabajo.
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <mat-form-field>
-              <mat-label>Extracto</mat-label>
-              <textarea
-              placeholder="Explica en breves palabras la experiencia que la empresa tiene"
-              matInput
-              type="text"
-              name="name"
-              [formControl]="extractCtrl"
-              ></textarea>
-            </mat-form-field>
+          <mat-form-field>
+            <mat-label>Extracto</mat-label>
+            <textarea placeholder="Explica en breves palabras la experiencia que la empresa tiene" matInput type="text"
+              name="name" [formControl]="extractCtrl"></textarea>
+          </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
+          <button mat-button [disabled]="extractCtrl.invalid" (click)="onUpdateInfo()">Guardar</button>
         </mat-card-actions>
       </mat-card>
 
@@ -40,28 +41,18 @@
                 <mat-card-title>
                   <mat-form-field>
                     <mat-label>Nombre</mat-label>
-                    <input
-                    matInput
-                    type="text"
-                    name="nombre"
-                    formControlName="nombre"
-                    >
+                    <input matInput type="text" name="nombre" formControlName="nombre">
                     <mat-error *ngIf="proyectoForm.hasError('required', 'nombre')">
-                    Este dato es necesario
+                      Este dato es necesario
                     </mat-error>
                   </mat-form-field>
                 </mat-card-title>
                 <mat-card-subtitle>
                   <mat-form-field>
                     <mat-label>Monto</mat-label>
-                    <input
-                    matInput
-                    type="text"
-                    name="monto"
-                    formControlName="monto"
-                    >
+                    <input matInput type="text" name="monto" formControlName="monto">
                     <mat-error *ngIf="proyectoForm.hasError('required', 'monto')">
-                    Este dato es necesario
+                      Este dato es necesario
                     </mat-error>
                   </mat-form-field>
                 </mat-card-subtitle>
@@ -73,83 +64,48 @@
                     <div class="col s12 l8">
                       <mat-form-field>
                         <mat-label>Calle</mat-label>
-                        <input
-                        matInput
-                        type="text"
-                        name="calle"
-                        formControlName="calle"
-                        >
+                        <input matInput type="text" name="calle" formControlName="calle">
                       </mat-form-field>
                     </div>
                     <div class="col s6 l2">
                       <mat-form-field>
                         <mat-label>Num. Ext.</mat-label>
-                        <input
-                        matInput
-                        type="text"
-                        name="num_ext"
-                        formControlName="num_ext"
-                        >
+                        <input matInput type="text" name="num_ext" formControlName="num_ext">
                       </mat-form-field>
                     </div>
 
                     <div class="col s6 l2">
                       <mat-form-field>
                         <mat-label>Num. Int.</mat-label>
-                        <input
-                        matInput
-                        type="text"
-                        name="num_int"
-                        formControlName="num_int"
-                        >
+                        <input matInput type="text" name="num_int" formControlName="num_int">
                       </mat-form-field>
                     </div>
 
                     <div class="col s8">
                       <mat-form-field>
                         <mat-label>Colonia</mat-label>
-                        <input
-                        matInput
-                        type="text"
-                        name="colonia"
-                        formControlName="colonia"
-                        >
+                        <input matInput type="text" name="colonia" formControlName="colonia">
                       </mat-form-field>
                     </div>
 
                     <div class="col s4">
                       <mat-form-field>
                         <mat-label>Código Postal</mat-label>
-                        <input
-                        matInput
-                        type="text"
-                        name="codigo_postal"
-                        formControlName="codigo_postal"
-                        >
+                        <input matInput type="text" name="codigo_postal" formControlName="codigo_postal">
                       </mat-form-field>
                     </div>
 
                     <div class="col s12">
                       <mat-form-field>
                         <mat-label>Municipio</mat-label>
-                        <input
-                        matInput
-                        type="text"
-                        name="municipio"
-                        formControlName="municipio_alcaldia"
-                        >
+                        <input matInput type="text" name="municipio" formControlName="municipio_alcaldia">
                       </mat-form-field>
                     </div>
 
                     <div class="col s12">
                       <mat-form-field>
                         <mat-label>Entidad Federativa</mat-label>
-                        <input
-                        matInput
-                        type="text"
-                        name="entidad_federativa"
-                        formControlName="entidad_federativa"
-                        >
+                        <input matInput type="text" name="entidad_federativa" formControlName="entidad_federativa">
                       </mat-form-field>
                     </div>
 
@@ -167,52 +123,13 @@
 
                 <div class="row">
                   <div class="col s12">
-                    <ng-container *ngIf="!showDropzone; else dropzone">
-                      <button mat-raised-button color='accent'
-                      (click)="showDropzone = !showDropzone"
-                      >Subir Evidencia</button>
-                    </ng-container>
-                    <ng-template #dropzone >
-                      <div class="row">
-                        <div class="col s12">
-
-                          <ngx-dropzone (change)="onSelect($event)">
-                            <ngx-dropzone-label>Deja caer los archivos</ngx-dropzone-label>
-                            <ngx-dropzone-preview
-                              *ngFor="let f of files"
-                              [removable]="true"
-                              (removed)="onRemove(f)"
-                            >
-                              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                            </ngx-dropzone-preview>
-                          </ngx-dropzone>
-
-                        </div>
-                      </div>
-
-                      <div class="uploading-area" *ngIf="uploadingFiles">
-                        <mat-progress-bar *ngIf="UploadedPercent"
-                          mode="determinate"
-                          [value]="UploadedPercent"
-                        ></mat-progress-bar>
-                      </div>
-
-                      <div class="row">
-                        <div class="col s12 center">
-                          <button mat-raised-button color='primary'
-                          (click)="loadFiles()" >Subir</button>
-                        </div>
-                      </div>
-
-
-                    </ng-template>
-
+                    <gdev-upload-files [path]="path" [metadata]="metadata" [uploadButton]="false"></gdev-upload-files>
                   </div>
                 </div>
 
               </mat-card-content>
               <mat-card-actions>
-                <button mat-raised-button color='primary'>Guardar</button>
+                <button mat-raised-button color='primary' (click)="onSetProyecto()">Guardar</button>
               </mat-card-actions>
             </mat-card>
           </form>

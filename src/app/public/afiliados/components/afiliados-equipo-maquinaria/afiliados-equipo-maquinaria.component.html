@@ -1,30 +1,81 @@
 <div class="container">
-    <div class="row">
-        <div class="col s12">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Equipo y Maquinaria de la empresa</mat-card-title>
-                  <mat-card-subtitle>
-                    En este apartado, puedes agregar los equipos y maquinarias que tiene tu empresa, de manera que tus clientes puedan revisar sus equipos.
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-form-field>
-                      <mat-label>Extracto</mat-label>
-                      <textarea
-                      placeholder="Explica en breves palabras la experiencia que la empresa tiene"
-                      matInput
-                      type="text"
-                      name="name"
-                      [formControl]="extractCtrl"
-                      ></textarea>
-                    </mat-form-field>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
-                </mat-card-actions>
-              </mat-card>
-
-        </div>
+  <div class="row">
+    <div class="col s12 m1">
+      <button mat-icon-button (click)="location_.back()">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </button>
     </div>
+    <div class="col s12 m11">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Equipo y Maquinaria</mat-card-title>
+          <mat-card-subtitle>
+            En este apartado, puedes registrar tus equipos y maquinarias, de manera que tus clientes
+            puedan revisar tus equipos y maquinarias.
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>Extracto</mat-label>
+            <textarea placeholder="Explica en breves palabras la experiencia que la empresa tiene" matInput type="text"
+              name="name" [formControl]="extractCtrl"></textarea>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <mat-card>
+            <mat-card-title>Maquinarias</mat-card-title>
+            <mat-card-subtitle>
+              Agregar nuevos equipos o maquinarias a tu lista
+            </mat-card-subtitle>
+            <mat-card-header>
+
+            </mat-card-header>
+            <mat-card-content>
+              <!-- Ubicación del proyecto -->
+              <div class="row">
+                <form [formGroup]="eqpmaqForm">
+                  <div class="col s12 l8">
+                    <mat-form-field>
+                      <mat-label>Nombre</mat-label>
+                      <input matInput type="text" name="nombre" formControlName="nombre">
+                      <mat-error *ngIf="eqpmaqForm.hasError('required', 'nombre')">
+                        Este dato es necesario
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Modelo</mat-label>
+                      <input matInput type="text" name="modelo" formControlName="modelo">
+                      <mat-error *ngIf="eqpmaqForm.hasError('required', 'modelo')">
+                        Este dato es necesario
+                      </mat-error>
+                    </mat-form-field>
+
+                    <mat-checkbox name="propio" formControlName="propio" [checked]="propio">¿Es Propio?</mat-checkbox>
+                    <mat-checkbox name="comprobacion" formControlName="comprobacion" [checked]="comprobacion">Comprobación</mat-checkbox>
+                      
+                    <mat-form-field>
+                      <mat-label>Evidencia</mat-label>
+                      <input matInput type="text" name="evidencia" formControlName="evidencia">
+                      <mat-hint>Opcional</mat-hint>
+                    </mat-form-field>
+                  </div>
+                </form>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button [disabled]="eqpmaqForm.invalid">Guardar</button>
+            </mat-card-actions>
+          </mat-card>
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+  </div>
 </div>

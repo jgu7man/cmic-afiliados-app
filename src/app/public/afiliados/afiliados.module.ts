@@ -21,6 +21,7 @@ import { AfiliadosCapacidadContableComponent } from './components/afiliados-capa
 import { AfiliadosEquipoMaquinariaComponent } from './components/afiliados-equipo-maquinaria/afiliados-equipo-maquinaria.component';
 import { AfiliadosRecursosHumanosComponent } from './components/afiliados-recursos-humanos/afiliados-recursos-humanos.component';
 import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
+import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { AfiliadosCertificacionesEspecializacionesComponent } from './components
     FirebaseModule,
     ComunesModule,
     GdevAuthModule,
+    GdevStorageModule,
     NgxDropzoneModule,
   ],
   schemas: [

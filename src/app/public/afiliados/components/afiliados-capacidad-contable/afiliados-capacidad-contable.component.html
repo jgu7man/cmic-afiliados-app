@@ -1,30 +1,82 @@
 <div class="container">
-    <div class="row">
-        <div class="col s12">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Capacidad contable de la empresa</mat-card-title>
-                  <mat-card-subtitle>
-                    En este apartado, puedes agregar la capacidad contable que tiene tu empresa, de manera que tus clientes puedan revisar tu trabajo.
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-form-field>
-                      <mat-label>Extracto</mat-label>
-                      <textarea
-                      placeholder="Explica en breves palabras la experiencia que la empresa tiene"
-                      matInput
-                      type="text"
-                      name="name"
-                      [formControl]="extractCtrl"
-                      ></textarea>
-                    </mat-form-field>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
-                </mat-card-actions>
-              </mat-card>
-
-        </div>
+  <div class="row">
+    <div class="col s12 m1">
+      <button mat-icon-button (click)="location_.back()">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </button>
     </div>
+    <div class="col s12 m11">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Capacidad contable de la empresa</mat-card-title>
+          <mat-card-subtitle>
+            En este apartado, puedes agregar la capacidad contable que tiene tu empresa, de manera que tus clientes
+            puedan revisar tu trabajo.
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>Extracto</mat-label>
+            <textarea placeholder="Explica en breves palabras la experiencia que la empresa tiene" matInput type="text"
+              name="name" [formControl]="extractCtrl"></textarea>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Declaraciones</mat-card-title>
+          <mat-card-subtitle>Agrega proyectos a tu lista de experiencia</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+          <mat-card>
+            <mat-card-content>
+              <!-- Ubicación del proyecto -->
+              <div class="row">
+                <form [formGroup]="capcontableform">
+                  <div class="col s4">
+                    <mat-form-field>
+                      <mat-label>Año</mat-label>
+                      <input matInput type="text" name="year" formControlName="year">
+                      <mat-error *ngIf="capcontableform.hasError('required', 'year')">
+                        Este dato es necesario
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col s4">
+                    <mat-form-field>
+                      <mat-label>Ingreso</mat-label>
+                      <input matInput type="text" name="ingreso" formControlName="ingreso">
+                      <mat-error *ngIf="capcontableform.hasError('required', 'ingreso')">
+                        Este dato es necesario
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col s4">
+                    <mat-form-field>
+                      <mat-label>Evidencia</mat-label>
+                      <input matInput type="text" name="evidencia" formControlName="evidencia">
+                      <mat-error *ngIf="capcontableform.hasError('required', 'evidencia')">
+                        Este dato es necesario
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                </form>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button [disabled]="capcontableform.invalid">Guardar</button>
+            </mat-card-actions>
+          </mat-card>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>
