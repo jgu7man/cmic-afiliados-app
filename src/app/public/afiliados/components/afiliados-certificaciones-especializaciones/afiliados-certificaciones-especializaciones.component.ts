@@ -5,7 +5,7 @@ import { GdevLoading } from 'gdev-loading';
 import { Location } from '@angular/common';
 import { iUserAfiliado } from '../../models/afiliados.model';
 import { PerfilesService } from '../../services/perfiles.service';
-import { CertificacionModel, iCertificaciones } from '../../models/perfiles.model';
+import { iCertificacion, iCertificaciones } from '../../models/perfiles.model';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 @Component({
   templateUrl: './afiliados-certificaciones-especializaciones.component.html',
@@ -19,7 +19,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
   RFC: string
   path: string
   metadata: any
-  items: CertificacionModel[] = []
+  items: iCertificacion[] = []
 
   constructor(
     private _loading: GdevLoading,
@@ -44,7 +44,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
     this.metadata = { RFC, email }
     this.perfiles_.getInfoDoc<iCertificaciones>(this.RFC, 'certificaciones')
       .then(data => this.extractCtrl.setValue(data.extract))
-    this.perfiles_.getInfoCollection<CertificacionModel>(this.RFC, 'certificaciones')
+    this.perfiles_.getInfoCollection<iCertificacion>(this.RFC, 'certificaciones')
     .subscribe(items => this.items = items)
   }
   ngOnInit(): void { }

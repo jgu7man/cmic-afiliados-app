@@ -1,12 +1,13 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { GdevCache } from 'gdev-cache';
 import { GdevLoading } from 'gdev-loading';
 import { Subscription } from 'rxjs';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { iUserAfiliado } from '../../models/afiliados.model';
+import { iExperiencia, iProyecto } from '../../models/perfiles.model';
 import { PerfilesService } from '../../services/perfiles.service';
 
 @Component({
@@ -19,13 +20,16 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
   proyectoForm: FormGroup;
   path: string
   metadata: any
-  private RFC:string
+  private RFC: string
+  items: iProyecto[] = []
+  editingItem?: number
 
   constructor(
     private _storage: GdevStorage,
     private _cache: GdevCache,
     public location_: Location,
-    private _perfiles: PerfilesService
+    private _perfiles: PerfilesService,
+    private _loading: GdevLoading
   ) {
     this.extractCtrl = new FormControl('', [Validators.required])
     this.proyectoForm = new FormGroup({
@@ -41,15 +45,35 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
         entidad_federativa: new FormControl('', [Validators.required]),
       }, [Validators.required]),
       privado: new FormControl(false),
-      evidencia: new FormControl([]),
+      evidencia: new FormArray([
+        new FormControl({})
+      ], ),
     })
+
     const { RFC, email }: iUserAfiliado = this._cache.getDataKey('user') as iUserAfiliado
     this.path = `afiliados/${RFC}/experiencia`
     this.metadata = { RFC, email }
     this.RFC = RFC ? RFC : ''
+
+    this._perfiles.getInfoDoc<iExperiencia>(this.RFC, 'experiencia')
+    .then(({extract}) => this.extractCtrl.setValue(extract))
+    this._perfiles.getInfoCollection<iProyecto>(this.RFC, 'experiencia')
+      .subscribe(items => {
+        console.log( items )
+        this.items = items
+      })
    }
 
   ngOnInit(): void {
+  }
+
+  get evidencias(): FormArray{
+    return this.proyectoForm.get('evidencia') as FormArray
+  }
+
+  async onEditItem(item: iProyecto, index: number) {
+    this.proyectoForm.setValue(item)
+    this.editingItem = index
   }
 
   onUpdateInfo() {
@@ -58,6 +82,8 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
     })
   }
 
+
+
   onSetProyecto() {
     this._storage.upload().subscribe(files => {
       this.proyectoForm.patchValue({ evidencia: files })
@@ -65,9 +91,15 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
         .then(() => {
           console.log( 'done!' )
           this.proyectoForm.reset()
+          delete this.editingItem
         })
     })
   }
+
+  removeGalleryImg(index:number) {
+    this.evidencias.removeAt(index)
+  }
+
 
 
   ngOnDestroy() {

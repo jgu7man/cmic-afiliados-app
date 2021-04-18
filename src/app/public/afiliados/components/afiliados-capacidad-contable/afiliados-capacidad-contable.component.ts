@@ -1,12 +1,15 @@
+import { iCapContable } from './../../models/perfiles.model';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormArrayName, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GdevCache } from 'gdev-cache';
 import { GdevLoading } from 'gdev-loading';
+import { orderBy } from 'lodash';
+import { map } from 'rxjs/operators';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { iUserAfiliado } from '../../models/afiliados.model';
-import { iDeclaracionModel } from '../../models/perfiles.model';
+import { iDeclaracion } from '../../models/perfiles.model';
 import { PerfilesService } from '../../services/perfiles.service';
 //import { StorageService } from 'Src/app/gdev/gdev-storage/gdev-storage.module';
 
@@ -60,6 +63,18 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     this.RFC = RFC
     this.path = `afiliados/${RFC}/cap-contable`
     this.metadata = { RFC, email }
+
+    this._perfiles.getInfoDoc<iCapContable>(this.RFC, 'cap-contable')
+    .then(({extract, capacidad})=> this.capContableForm.setValue({extract, capacidad}))
+
+    this._perfiles.getInfoCollection(this.RFC, 'cap-contable')
+      .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
+      .subscribe(items => {
+        items.forEach((item, i )=> {
+          this.declaracionesList.at(i).patchValue(item)
+          this.declaracionesList.at(i).markAsPristine()
+      })
+    })
   }
 
   ngOnInit(): void { }
@@ -68,9 +83,9 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     return this.declaracionesForm.get('declaraciones') as FormArray;
   }
 
-  onUploadedFile(file: iUploadedFile, index: number): void {
+  onUploadedFile(files: iUploadedFile[], index: number): void {
     let list = this.declaracionesForm.get(['declaraciones']) as FormArray;
-    list.at(index).patchValue({ evidencia: file })
+    list.at(index).patchValue({ evidencia: files[0] })
     this._storage.files = []
   }
 

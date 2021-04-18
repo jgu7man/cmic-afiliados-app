@@ -4,11 +4,10 @@ import { iUploadedFile } from "src/app/gdev/gdev-storage/storage.model";
 
 export interface iExperiencia {
   extract: string,
-  // proyectos: iProyectoModel[],
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface iProyectoModel {
+export interface iProyecto {
   nombre: string,
   monto: string,
   ubicacion: iDireccion,
@@ -17,14 +16,13 @@ export interface iProyectoModel {
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface iContabilidad {
-  // declaraciones: iDeclaracionModel[],
+export interface iCapContable {
   capacidad: number
   extract: string
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface iDeclaracionModel {
+export interface iDeclaracion {
   year: number,
   ingreso: number,
   evidencia: iUploadedFile
@@ -33,11 +31,10 @@ export interface iDeclaracionModel {
 
 export interface iMaquinariaEquipo {
   extract: string,
-  // items: iMaqEquipModel[]
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface iMaqEquipModel {
+export interface iMaqEquipItem {
   nombre: string,
   modelo: string,
   propio: boolean,
@@ -52,11 +49,10 @@ export interface iRecHumanos {
   capacidad_proyecto: number;
   hombres: number;
   mujeres: number;
-  // team: MemberModel[]
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface MemberModel {
+export interface iMemberModel {
   nombre: string,
   cargo: string,
   contacto?: string
@@ -65,28 +61,27 @@ export interface MemberModel {
 
 export interface iCertificaciones {
   extract: string,
-  // certificados: CertificacionModel[]
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface CertificacionModel {
+export interface iCertificacion {
   nombre: string,
   aval: string,
-  miembro: MemberModel,
+  miembro: iMemberModel,
   evidencia?: iUploadedFile
   updated?: Date | firebase.firestore.Timestamp
 }
 
 export type PerfilDoc =
 | iExperiencia
-| iContabilidad
+| iCapContable
 | iMaquinariaEquipo
 | iRecHumanos
 | iCertificaciones
 
 export type PerfilCol =
-| iProyectoModel
-| iDeclaracionModel
-| iMaqEquipModel
-| MemberModel
-| CertificacionModel
+| iProyecto
+| iDeclaracion
+| iMaqEquipItem
+| iMemberModel
+| iCertificacion

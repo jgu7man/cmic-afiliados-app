@@ -5,7 +5,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GdevCache } from 'gdev-cache';
 import { GdevStorage } from '../../../../gdev/gdev-storage/storage-service.service';
 import { PerfilesService } from '../../services/perfiles.service';
-import { iRecHumanos, MemberModel } from '../../models/perfiles.model';
+import { iRecHumanos, iMemberModel } from '../../models/perfiles.model';
 import { GdevAlert } from 'gdev-alert';
 
 @Component({
@@ -19,7 +19,7 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
   RFC: string
   path: string
   metadata: any
-  items: MemberModel[] = []
+  items: iMemberModel[] = []
   constructor(
     private _storage: GdevStorage,
     private _cache: GdevCache,
@@ -50,7 +50,7 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
         const {extract, planta_fija, capacidad_proyecto, hombres, mujeres} = data
         this.rrhhForm.setValue({extract,planta_fija,capacidad_proyecto,hombres,mujeres,})
       })
-    this.perfiles_.getInfoCollection<MemberModel>(this.RFC, 'recursos-humanos')
+    this.perfiles_.getInfoCollection<iMemberModel>(this.RFC, 'recursos-humanos')
     .subscribe(items => this.items = items)
   }
 

@@ -11,7 +11,7 @@ import { GdevCache } from 'gdev-cache';
 import { GdevLoading } from 'gdev-loading';
 import { PerfilesService } from '../../services/perfiles.service';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
-import { iMaqEquipModel } from '../../models/perfiles.model';
+import { iMaqEquipItem } from '../../models/perfiles.model';
 @Component({
   templateUrl: './afiliados-equipo-maquinaria.component.html',
   styleUrls: ['./afiliados-equipo-maquinaria.component.scss'],
@@ -24,7 +24,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
   path: string
   metadata: any
 
-  items: iMaqEquipModel[] = []
+  items: iMaqEquipItem[] = []
 
   constructor(
     private _loading: GdevLoading,
@@ -47,7 +47,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
     this.RFC = RFC
     this.path = `afiliados/${RFC}/maquinaria-equipo`
     this.metadata = { RFC, email }
-    this.perfiles_.getInfoCollection<iMaqEquipModel>(this.RFC, 'maquinaria-equipo')
+    this.perfiles_.getInfoCollection<iMaqEquipItem>(this.RFC, 'maquinaria-equipo')
     .subscribe(items => this.items = items)
   }
 

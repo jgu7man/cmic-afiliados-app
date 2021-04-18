@@ -45,8 +45,10 @@ export class PerfilesService {
     const ref = this._afs.collection<T>(`afiliados/${rfc}/info/${doc}/items`)
     return ref.valueChanges().pipe(
       map(list => list.map((item: any) => {
-        let updated = item['updated'] as firebase.firestore.Timestamp
-        item['updated'] = new Date(updated.seconds * 1000)
+        if (item['updated']) {
+          let updated = item['updated'] as firebase.firestore.Timestamp
+          item['updated'] = new Date(updated.seconds * 1000)
+        }
         return item as T
       }))
     )
