@@ -84,4 +84,10 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
         list.at(index).markAsPristine()
     })
   }
+
+
+  saveCapContable() {
+    this._perfiles.updateInfoDoc(this.RFC, 'cap-contable', this.capContableForm.value)
+    this.capContableForm.markAsPristine()
+  }
 }

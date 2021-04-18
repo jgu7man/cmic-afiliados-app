@@ -19,15 +19,16 @@ export class PerfilesService {
   async updateInfoDoc(rfc: string, doc: string, data: any) {
     data = pickBy(data, identity)
     const ref = this._afs.doc(`afiliados/${rfc}/info/${doc}`).ref
-    await ref.set({...data, updated: new Date()}, { merge: true })
+    await ref.set({ ...data, updated: new Date() }, { merge: true })
+    this._alert.sendFloatNotification('Guardado')
     return
   }
 
-  async getInfoDoc<PerfilDoc>(rfc: string, doc: string, ) {
+  async getInfoDoc<T>(rfc: string, doc: string, ) {
     const ref = this._afs.doc(`afiliados/${rfc}/info/${doc}`).ref
     var infoDoc = await ref.get()
-    var data:PerfilDoc = infoDoc.data() as PerfilDoc
-    data['updated' as keyof PerfilDoc] = infoDoc.get('updated').toDate()
+    var data:T = infoDoc.data() as T
+    data['updated' as keyof T] = infoDoc.get('updated').toDate()
     return data
   }
 
@@ -40,13 +41,13 @@ export class PerfilesService {
     return
   }
 
-  getInfoCollection(rfc: string, doc: string) {
-    const ref = this._afs.collection<PerfilCol>(`afiliados/${rfc}/info/${doc}/items`)
+  getInfoCollection<T>(rfc: string, doc: string) {
+    const ref = this._afs.collection<T>(`afiliados/${rfc}/info/${doc}/items`)
     return ref.valueChanges().pipe(
-      map(list => list.map(item => {
+      map(list => list.map((item: any) => {
         let updated = item['updated'] as firebase.firestore.Timestamp
-        item['updated' as keyof PerfilCol] = new Date(updated.seconds * 1000)
-        return item
+        item['updated'] = new Date(updated.seconds * 1000)
+        return item as T
       }))
     )
   }

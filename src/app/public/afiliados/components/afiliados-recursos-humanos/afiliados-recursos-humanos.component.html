@@ -1,98 +1,164 @@
 <div class="container">
-    <div class="row">
-        <div class="col s12 m1">
-            <button mat-icon-button (click)="location_.back()">
-                <i class="fas fa-arrow-left fa-lg"></i>
-            </button>
-        </div>
-        <div class="col s12 m11">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>Recursos Humanos de la empresa</mat-card-title>
-                    <mat-card-subtitle>
-                        En este apartado, puedes agregar la recursos humanos que tiene tu empresa, de manera que tus
-                        clientes
-                        puedan revisar tu trabajo.
-                    </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-form-field>
-                        <mat-label>Extracto</mat-label>
-                        <textarea placeholder="Explica en breves palabras la experiencia que la empresa tiene" matInput
-                            type="text" name="name" [formControl]="extractCtrl"></textarea>
-                    </mat-form-field>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
-                </mat-card-actions>
-            </mat-card>
-            <form [formGroup]="rrhhForm">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>Recursos Humanos de la empresa</mat-card-title>
-                        <mat-card-subtitle>
-                            En este apartado, puedes agregar la capacidad contable que tiene tu empresa, de manera que
-                            tus
-                            clientes
-                            puedan revisar tu trabajo.
-                            <mat-form-field>
-                                <mat-label>Planta Fija</mat-label>
-                                <input matInput type="text" name="planta_fija" formControlName="planta_fija">
-                            </mat-form-field>
-
-                            <mat-form-field>
-                                <mat-label>Capacidad Proyecto</mat-label>
-                                <input matInput type="text" name="capacidad_proyecto"
-                                    formControlName="capacidad_proyecto">
-                            </mat-form-field>
-
-
-                            <mat-form-field>
-                                <mat-label>Hombres</mat-label>
-                                <input matInput type="text" name="hombres" formControlName="hombres">
-                            </mat-form-field>
-
-                            <mat-form-field>
-                                <mat-label>Mujeres</mat-label>
-                                <input matInput type="text" name="mujeres" formControlName="mujeres">
-                            </mat-form-field>
-                        </mat-card-subtitle>
-
-                    </mat-card-header>
-
-                    <mat-card-content>
-                     
-                        <mat-card>
-                            <mat-card-header>
-                                <mat-card-title>Team</mat-card-title>
-                                <mat-card-subtitle>Añadir a nuevo trabajador al team</mat-card-subtitle>
-    
-                            </mat-card-header>
-                            <form formGroupName="team">
-                                <mat-form-field>
-                                    <mat-label>Nombre</mat-label>
-                                    <input matInput type="text" name="nombre" formControlName="nombre">
-                                </mat-form-field>
-
-                                <mat-form-field>
-                                    <mat-label>Cargo</mat-label>
-                                    <input matInput type="text" name="cargo" formControlName="cargo">
-                                </mat-form-field>
-
-                                <mat-form-field>
-                                    <mat-label>Contacto</mat-label>
-                                    <input matInput type="text" name="contacto" formControlName="contacto">
-                                </mat-form-field>
-                            </form>
-                        </mat-card>
-
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-raised-button color='primary'>Guardar</button>
-                    </mat-card-actions>
-                </mat-card>
-
-            </form>
-        </div>
+  <div class="row">
+    <div class="col s12 m1">
+      <button mat-icon-button (click)="location_.back()">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </button>
     </div>
+    <div class="col s12 m11">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Recursos Humanos de la empresa</mat-card-title>
+          <mat-card-subtitle>
+            En este apartado, puedes agregar la recursos humanos que tiene tu
+            empresa, de manera que tus clientes puedan conocer a tu equipo.
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="rrhhForm">
+            <div class="row">
+              <div class="col s12">
+                <mat-form-field>
+                  <mat-label>Extracto</mat-label>
+                  <textarea
+                    placeholder="Explica en breves palabras la experiencia que la empresa tiene"
+                    matInput
+                    type="text"
+                    name="name"
+                    formControlName="extract"
+                    required
+                  ></textarea>
+                </mat-form-field>
+              </div>
+
+              <div class="col s12 m6 l3">
+                <mat-form-field>
+                  <mat-label>Planta Fija</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="planta_fija"
+                    formControlName="planta_fija"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="col s12 m6 l3">
+                <mat-form-field>
+                  <mat-label>Capacidad por proyecto</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="capacidad_proyecto"
+                    formControlName="capacidad_proyecto"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="col s12 m6 l3">
+                <mat-form-field>
+                  <mat-label>Hombres</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="hombres"
+                    formControlName="hombres"
+                  />
+                </mat-form-field>
+              </div>
+
+              <div class="col s12 m6 l3">
+                <mat-form-field>
+                  <mat-label>Mujeres</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="mujeres"
+                    formControlName="mujeres"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button [disabled]="rrhhForm.invalid && rrhhForm.pristine"
+          (click)="onSaveInfo()">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Directorio</mat-card-title>
+          <mat-card-subtitle>
+            Agrega miembros de tu empresa que consideres que es importante
+            que tu cliente tenga forma de contactarlo
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div class="row"
+          *ngFor="let item of items">
+            <div class="col s12">
+              <mat-card>
+                <mat-card-header>
+                  <mat-card-title> {{item.nombre}} </mat-card-title>
+                  <mat-card-subtitle> {{item.cargo}} </mat-card-subtitle>
+                  <mat-chip-list>
+                    <mat-chip [cdkCopyToClipboard]="item.contacto"
+                    (cdkCopyToClipboardCopied)="alert_.sendFloatNotification('Contacto copiado al portapapeles')" > {{item.contacto}} </mat-chip>
+                  </mat-chip-list>
+                </mat-card-header>
+              </mat-card>
+            </div>
+          </div>
+
+          <!-- Agregar miembro del equipo -->
+          <mat-card>
+            <form [formGroup]="memberForm">
+              <mat-card-content>
+                <mat-form-field>
+                  <mat-label>Nombre</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="nombre"
+                    formControlName="nombre"
+                    required
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Cargo</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="cargo"
+                    formControlName="cargo"
+                    required
+                  />
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Contacto</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    name="contacto"
+                    formControlName="contacto"
+                    required
+                  />
+                </mat-form-field>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-raised-button color="primary" [disabled]="memberForm.invalid && memberForm.pristine" (click)="onSaveItem()">Guardar</button>
+              </mat-card-actions>
+            </form>
+            </mat-card>
+          </mat-card-content>
+        </mat-card>
+    </div>
+  </div>
 </div>

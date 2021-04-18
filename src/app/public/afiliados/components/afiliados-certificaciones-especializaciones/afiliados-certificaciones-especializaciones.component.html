@@ -18,38 +18,80 @@
         <mat-card-content>
           <mat-form-field>
             <mat-label>Extracto</mat-label>
-            <textarea placeholder="Explica en breves palabras la experiencia que la empresa tiene" matInput type="text"
+            <textarea placeholder="Explica en breves palabras las certificaciones con las que cuenta la empresa" matInput type="text"
               name="extractCtrl" [formControl]="extractCtrl"></textarea>
           </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button [disabled]="extractCtrl.invalid">Guardar</button>
+          <button mat-button [disabled]="extractCtrl.invalid && extractCtrl.pristine"
+          (click)="onSaveInfo()">Guardar</button>
         </mat-card-actions>
       </mat-card>
+
+      <!-- Certificaciones -->
       <mat-card>
         <mat-card-content>
+
+          <div class="row" *ngFor="let item of items">
+            <div class="col s12">
+              <mat-card>
+                <mat-card-header>
+                  <mat-card-title>{{item.nombre}}</mat-card-title>
+                  <mat-card-subtitle> {{item.aval}} </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>Persona certificada: {{item.miembro}}</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+
+
+          <!-- Agregar certificaciones -->
           <form [formGroup]="cerespForm">
-            <mat-form-field>
-              <mat-label>Nombre</mat-label>
-              <input matInput type="text" name="nombre" formControlName="nombre" />
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Aval</mat-label>
-              <input matInput type="text" name="aval" formControlName="aval" />
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Miembro</mat-label>
-              <input matInput type="text" name="miembro" formControlName="miembro" />
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Evidencia</mat-label>
-              <input matInput type="text" name="evidencia" formControlName="evidencia" />
-            </mat-form-field>
+            <mat-card>
+              <mat-card-content>
+                <div class="row">
+
+                  <div class="col s12">
+                    <mat-form-field>
+                      <mat-label>Nombre</mat-label>
+                      <input matInput type="text" name="nombre" formControlName="nombre" required />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col s12">
+                    <mat-form-field>
+                      <mat-label>Aval</mat-label>
+                      <input matInput type="text" name="aval" formControlName="aval" required />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col s12">
+                    <mat-form-field>
+                      <mat-label>Miembro</mat-label>
+                      <input matInput type="text" name="miembro" formControlName="miembro" required />
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col s12">
+                    <gdev-upload-files
+                    [uploadButton]="false"
+                    [path]="path"
+                    [metadata]="metadata"
+                    [toggleButtonLabel]="'Agrega evidencia'">
+                    </gdev-upload-files>
+                  </div>
+
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button [disabled]="cerespForm.invalid && cerespForm.pristine"
+                (click)="onSaveItem()">Guardar</button>
+              </mat-card-actions>
+            </mat-card>
           </form>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button [disabled]="cerespForm.invalid">Guardar</button>
-        </mat-card-actions>
       </mat-card>
     </div>
   </div>

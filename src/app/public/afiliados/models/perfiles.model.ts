@@ -4,7 +4,7 @@ import { iUploadedFile } from "src/app/gdev/gdev-storage/storage.model";
 
 export interface iExperiencia {
   extract: string,
-  proyectos: iProyectoModel[],
+  // proyectos: iProyectoModel[],
   updated?: Date | firebase.firestore.Timestamp
 }
 
@@ -18,7 +18,7 @@ export interface iProyectoModel {
 }
 
 export interface iContabilidad {
-  declaraciones: iDeclaracionModel[],
+  // declaraciones: iDeclaracionModel[],
   capacidad: number
   extract: string
   updated?: Date | firebase.firestore.Timestamp
@@ -33,7 +33,7 @@ export interface iDeclaracionModel {
 
 export interface iMaquinariaEquipo {
   extract: string,
-  items: iMaqEquipModel[]
+  // items: iMaqEquipModel[]
   updated?: Date | firebase.firestore.Timestamp
 }
 
@@ -52,7 +52,7 @@ export interface iRecHumanos {
   capacidad_proyecto: number;
   hombres: number;
   mujeres: number;
-  team: MemberModel[]
+  // team: MemberModel[]
   updated?: Date | firebase.firestore.Timestamp
 }
 
@@ -65,7 +65,7 @@ export interface MemberModel {
 
 export interface iCertificaciones {
   extract: string,
-  certificados: CertificacionModel[]
+  // certificados: CertificacionModel[]
   updated?: Date | firebase.firestore.Timestamp
 }
 

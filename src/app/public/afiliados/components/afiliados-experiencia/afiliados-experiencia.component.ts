@@ -60,7 +60,6 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
 
   onSetProyecto() {
     this._storage.upload().subscribe(files => {
-      console.log( files )
       this.proyectoForm.patchValue({ evidencia: files })
       this._perfiles.setInfoItem(this.RFC, 'experiencia', this.proyectoForm.value)
         .then(() => {
