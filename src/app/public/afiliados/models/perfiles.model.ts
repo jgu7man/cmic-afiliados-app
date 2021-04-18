@@ -1,5 +1,6 @@
 import { iDireccion } from "./afiliados.model";
 import firebase from "firebase/app"
+import { iUploadedFile } from "src/app/gdev/gdev-storage/storage.model";
 
 export interface iExperiencia {
   extract: string,
@@ -12,7 +13,7 @@ export interface iProyectoModel {
   monto: string,
   ubicacion: iDireccion,
   privado: boolean,
-  evidencia: string[],
+  evidencia: iUploadedFile[],
   updated?: Date | firebase.firestore.Timestamp
 }
 
@@ -26,7 +27,7 @@ export interface iContabilidad {
 export interface iDeclaracionModel {
   year: number,
   ingreso: number,
-  evidencia: string
+  evidencia: iUploadedFile
   updated?: Date | firebase.firestore.Timestamp
 }
 
@@ -41,7 +42,7 @@ export interface iMaqEquipModel {
   modelo: string,
   propio: boolean,
   comprobacion: boolean,
-  evidencia?: string
+  evidencia?: iUploadedFile[]
   updated?: Date | firebase.firestore.Timestamp
 }
 
@@ -72,7 +73,7 @@ export interface CertificacionModel {
   nombre: string,
   aval: string,
   miembro: MemberModel,
-  evidencia?: string
+  evidencia?: iUploadedFile
   updated?: Date | firebase.firestore.Timestamp
 }
 

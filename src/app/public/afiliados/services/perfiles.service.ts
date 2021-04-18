@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { PerfilDoc, PerfilCol } from '../models/perfiles.model';
 import firebase from 'firebase/app'
 import { identity, pickBy } from 'lodash';
+import { GdevAlert } from 'gdev-alert';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class PerfilesService {
 
   constructor(
     private _afs: AngularFirestore,
+    private _alert: GdevAlert
   ) { }
 
   async updateInfoDoc(rfc: string, doc: string, data: any) {
@@ -33,7 +35,8 @@ export class PerfilesService {
   async setInfoItem(rfc: string, doc: string, data: any, itemId?: string,) {
     data = pickBy(data, identity)
     const ref = this._afs.collection(`afiliados/${rfc}/info/${doc}/items`).ref
-    await ref.doc(itemId).set({...data, updated: new Date()}, { merge: true })
+    await ref.doc(itemId).set({ ...data, updated: new Date() }, { merge: true })
+    this._alert.sendFloatNotification(`${doc} guardado`)
     return
   }
 

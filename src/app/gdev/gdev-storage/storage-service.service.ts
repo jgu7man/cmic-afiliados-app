@@ -65,15 +65,15 @@ export class GdevStorage {
 
     task.snapshotChanges().pipe(
       finalize(() => {
-        console.log( 'subid' )
           ref.getDownloadURL().subscribe((url) => {
             // Response
-            console.log( url )
-            this.fileUploadedStatus$.next({
-              fileName, url, metadata,
+            let uploadedFile: iUploadedFile = {
+              fileName, url,
               uploadedState: true,
               uploaded: new Date(),
-            })
+            }
+            if (metadata) uploadedFile['metadata'] = metadata
+            this.fileUploadedStatus$.next(uploadedFile)
 
 
           });

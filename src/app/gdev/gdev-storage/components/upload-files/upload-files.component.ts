@@ -21,6 +21,9 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   @Input() prefixName: string
   @Input() metadata?: Object
 
+  @Input() multiple: boolean = true
+  @Input() maxFileSize?: number
+
   @Input() showDropzone: boolean = false
   @Input() uploadButton: boolean = true
   @Input() uploadStatus: boolean = true
@@ -79,11 +82,8 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
             if (fileInfo.uploadedState === true){
               this.cantUploaded = ++this.cantUploaded
               this.uploadedFiles.push(fileInfo)
-              console.log( fileInfo )
             }
-            console.log( this.storage_.files.length, this.cantUploaded )
             if (this.storage_.files.length === this.cantUploaded) {
-              console.log( this.uploadedFiles )
               this.uploadComplete.emit(this.uploadedFiles)
               this.storage_.uploadComplete$.next(this.uploadedFiles)
             }
