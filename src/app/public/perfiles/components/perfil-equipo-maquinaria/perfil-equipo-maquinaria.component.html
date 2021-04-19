@@ -1,0 +1,34 @@
+<div *ngIf="items$">
+  <div class="row"
+  *ngFor="let item of items$ |async" >
+    <div class="col s12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title> {{item.nombre}} </mat-card-title>
+          <mat-card-subtitle> Modelo: <span class="data-text">{{item.modelo}}</span> </mat-card-subtitle>
+          <mat-chip-list>
+            <mat-chip *ngIf="item.comprobacion"> Comprobable </mat-chip>
+            <mat-chip *ngIf="item.propio"> Propio </mat-chip>
+          </mat-chip-list>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Evidencia
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+              <div class="col s12 m6 l4" *ngFor="let img of item.evidencia">
+                <mat-card>
+                  <img mat-card-image [src]="img.url" [alt]="img.fileName">
+                </mat-card>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+</div>

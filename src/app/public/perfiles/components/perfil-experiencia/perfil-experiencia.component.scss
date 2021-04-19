@@ -1,0 +1,22 @@
+.container {
+  max-width: 66.66%;
+}
+
+::ng-deep {
+  .mat-card-header-text {
+    margin: 0 16px;
+    width: 100%;
+  }
+  .proyecto-content{
+    font-size: small;
+    p {
+      margin: 0
+    }
+  }
+
+}
+
+.proyect-gallery {
+  max-height: 414px;
+  overflow: auto;
+}

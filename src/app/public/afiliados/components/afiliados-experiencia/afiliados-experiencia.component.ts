@@ -56,7 +56,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
     this.RFC = RFC ? RFC : ''
 
     this._perfiles.getInfoDoc<iExperiencia>(this.RFC, 'experiencia')
-    .then(({extract}) => this.extractCtrl.setValue(extract))
+    .then(data =>{ if (data) this.extractCtrl.setValue(data.extract)})
     this._perfiles.getInfoCollection<iProyecto>(this.RFC, 'experiencia')
       .subscribe(items => {
         console.log( items )

@@ -65,7 +65,12 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     this.metadata = { RFC, email }
 
     this._perfiles.getInfoDoc<iCapContable>(this.RFC, 'cap-contable')
-    .then(({extract, capacidad})=> this.capContableForm.setValue({extract, capacidad}))
+      .then(data => {
+        if (data) {
+          const { extract, capacidad } = data
+          this.capContableForm.setValue({ extract, capacidad })
+        }
+      })
 
     this._perfiles.getInfoCollection(this.RFC, 'cap-contable')
       .pipe(map(items => orderBy(items, ['year'], ['desc'])) )

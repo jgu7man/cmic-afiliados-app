@@ -22,6 +22,8 @@ import { AfiliadosEquipoMaquinariaComponent } from './components/afiliados-equip
 import { AfiliadosRecursosHumanosComponent } from './components/afiliados-recursos-humanos/afiliados-recursos-humanos.component';
 import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
 import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module';
+import { PerfilesModule } from '../perfiles/perfiles.module';
+import { AfiliadoSidebarComponent } from './components/afiliado-sidebar/afiliado-sidebar.component';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module
     AfiliadosEquipoMaquinariaComponent,
     AfiliadosRecursosHumanosComponent,
     AfiliadosCertificacionesEspecializacionesComponent,
+    AfiliadoSidebarComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +54,7 @@ import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module
     GdevAuthModule,
     GdevStorageModule,
     NgxDropzoneModule,
+    PerfilesModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

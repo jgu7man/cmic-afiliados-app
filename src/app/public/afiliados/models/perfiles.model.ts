@@ -2,6 +2,12 @@ import { iDireccion } from "./afiliados.model";
 import firebase from "firebase/app"
 import { iUploadedFile } from "src/app/gdev/gdev-storage/storage.model";
 
+export interface iPerfil {
+  somos: string,
+  perfilImg?: iUploadedFile,
+  bannerImg?: iUploadedFile
+}
+
 export interface iExperiencia {
   extract: string,
   updated?: Date | firebase.firestore.Timestamp
@@ -17,7 +23,7 @@ export interface iProyecto {
 }
 
 export interface iCapContable {
-  capacidad: number
+  capacidad: any
   extract: string
   updated?: Date | firebase.firestore.Timestamp
 }

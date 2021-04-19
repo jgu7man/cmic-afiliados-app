@@ -27,9 +27,13 @@ export class PerfilesService {
   async getInfoDoc<T>(rfc: string, doc: string, ) {
     const ref = this._afs.doc(`afiliados/${rfc}/info/${doc}`).ref
     var infoDoc = await ref.get()
-    var data:T = infoDoc.data() as T
-    data['updated' as keyof T] = infoDoc.get('updated').toDate()
-    return data
+    if (infoDoc.exists) {
+      var data: T = infoDoc.data() as T
+      data['updated' as keyof T] = infoDoc.get('updated').toDate()
+      return data
+    } else {
+      return
+    }
   }
 
 

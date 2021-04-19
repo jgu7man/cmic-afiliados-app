@@ -1,0 +1,121 @@
+<mat-drawer-container>
+  <!-- NAVIGATION SIDEBAR -->
+  <mat-drawer mode="side" opened="true" position="end" id="navigation-bar">
+
+  </mat-drawer>
+
+  <!-- PERFIL -->
+  <mat-drawer-content>
+    <div class="container">
+      <div class="row">
+
+        <!-- Sidebar -->
+        <section class="col s12 l4" id="perfil-sidebar">
+          <g-perfil-sidebar
+          [afiliado]="afiliado"
+          [personal]="perfilOutput.personal"
+          ></g-perfil-sidebar>
+        </section>
+
+        <!-- Empresa Content -->
+        <div class="col s12 l8">
+          <img
+            width="100%"
+            height="200px"
+            src="/assets/img/cmic-perfil-banner.jpg"
+            alt="Cargar Imagen de Portada"
+            style="margin-bottom: 15px"
+          />
+
+          <mat-accordion>
+
+              <mat-card>
+                <mat-card-header>
+                  <mat-card-title>¿Quiénes Somos?</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  {{perfil.somos}}
+                </mat-card-content>
+              </mat-card>
+
+
+
+            <!-- Experiencia panel -->
+            <mat-expansion-panel #expPanel style="margin-top: 5px">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Experiencia </mat-panel-title>
+                <mat-panel-description>
+                  {{perfilOutput.experiencia}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <g-perfil-experiencia
+              [rfc]="RFC"
+              (extract$)="perfilOutput.experiencia = $event"
+              ></g-perfil-experiencia>
+            </mat-expansion-panel>
+
+
+            <!-- Contabilidad panel -->
+            <mat-expansion-panel #contaPanel style="margin-top: 5px">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Capacidad Contable </mat-panel-title>
+                <mat-panel-description>
+                  {{perfilOutput.conta}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <g-perfil-cap-contable
+              [rfc]="RFC"
+              (extract$)="perfilOutput.conta = $event"
+              ></g-perfil-cap-contable>
+            </mat-expansion-panel>
+
+            <!-- Equipo y maquinaria panel -->
+            <mat-expansion-panel #maqPanel style="margin-top: 5px">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Equipo y maquinaria </mat-panel-title>
+                <mat-panel-description>
+                  {{perfilOutput.eqmaq}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <g-perfil-equipo-maquinaria [rfc]="RFC"></g-perfil-equipo-maquinaria>
+            </mat-expansion-panel>
+
+            <!-- Recursos humanos panel -->
+            <mat-expansion-panel #rhPanel style="margin-top: 5px">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Recursos Humanos </mat-panel-title>
+                <mat-panel-description>
+                  {{perfilOutput.rrhh}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <g-perfil-recursos-humanos
+              [rfc]="RFC"
+              (extract$)="perfilOutput.rrhh = $event"
+              (recursos$)="perfilOutput.personal = $event"
+              ></g-perfil-recursos-humanos>
+
+            </mat-expansion-panel>
+
+            <!-- Certificaciones panel -->
+            <mat-expansion-panel #certPanel style="margin-top: 5px">
+              <mat-expansion-panel-header>
+                <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
+                <mat-panel-description>
+                  {{perfilOutput.cert}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <g-perfil-certificaciones
+              [rfc]="RFC"
+              (extract$)="perfilOutput.cert"
+              ></g-perfil-certificaciones>
+            </mat-expansion-panel>
+
+
+
+          </mat-accordion>
+        </div>
+      </div>
+    </div>
+
+  </mat-drawer-content>
+</mat-drawer-container>

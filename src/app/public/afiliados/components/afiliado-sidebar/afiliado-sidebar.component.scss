@@ -1,0 +1,18 @@
+.links-container {
+  padding: 5%;
+  // color: #fff !important;
+  display: flex;
+  flex-direction: column;
+  .collection {
+    display: flex;
+    flex-direction: column;
+    .collection-item {
+      padding: .4em .7em;
+      color: #e30513 !important;
+      font-weight: 600 !important;
+    }
+    &:hover {
+      text-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+  }
+}

@@ -43,7 +43,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
     this.path = `afiliados/${RFC}/certificaciones`
     this.metadata = { RFC, email }
     this.perfiles_.getInfoDoc<iCertificaciones>(this.RFC, 'certificaciones')
-      .then(data => this.extractCtrl.setValue(data.extract))
+      .then(data =>{ if(data) this.extractCtrl.setValue(data.extract)})
     this.perfiles_.getInfoCollection<iCertificacion>(this.RFC, 'certificaciones')
     .subscribe(items => this.items = items)
   }

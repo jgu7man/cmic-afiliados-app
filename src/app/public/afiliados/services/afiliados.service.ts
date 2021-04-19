@@ -99,11 +99,9 @@ export class AfiliadosService {
     }
   }
 
-  getperfilAfiliado():Observable<iAfiliadoModel>{
-    const afiliado = this._cache.getDataKey<iUserAfiliado>('user');
-    console.log( afiliado )
+  getPerfilAfiliado(RFC: string):Observable<iAfiliadoModel>{
     return this._afs.collection('afiliados')
-      .doc(afiliado?.RFC).get()
+      .doc(RFC).get()
       .pipe(map((doc) => doc.data() as iAfiliadoModel));
   }
 

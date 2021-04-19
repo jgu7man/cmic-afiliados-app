@@ -47,8 +47,10 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
     this.metadata = { RFC, email }
     this.perfiles_.getInfoDoc<iRecHumanos>(this.RFC, 'recursos-humanos')
       .then(data => {
-        const {extract, planta_fija, capacidad_proyecto, hombres, mujeres} = data
-        this.rrhhForm.setValue({extract,planta_fija,capacidad_proyecto,hombres,mujeres,})
+        if (data) {
+          const {extract, planta_fija, capacidad_proyecto, hombres, mujeres} = data
+          this.rrhhForm.setValue({extract,planta_fija,capacidad_proyecto,hombres,mujeres,})
+        }
       })
     this.perfiles_.getInfoCollection<iMemberModel>(this.RFC, 'recursos-humanos')
     .subscribe(items => this.items = items)
