@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
+import { AfiliadoModel, emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil, iRecHumanos } from 'src/app/public/afiliados/models/perfiles.model';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
 import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
@@ -13,7 +13,7 @@ import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.serv
 })
 export class MainPerfilComponent implements OnInit {
 
-  afiliado: iAfiliadoModel = {};
+  afiliado: AfiliadoModel = emptyAfiliado;
   perfil: iPerfil = {somos:''}
   RFC: string
   perfilOutput = {

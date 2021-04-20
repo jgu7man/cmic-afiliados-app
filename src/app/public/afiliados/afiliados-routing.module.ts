@@ -13,6 +13,7 @@ import { AfiliadosCapacidadContableComponent } from './components/afiliados-capa
 import { AfiliadosEquipoMaquinariaComponent } from './components/afiliados-equipo-maquinaria/afiliados-equipo-maquinaria.component';
 import { AfiliadosRecursosHumanosComponent } from './components/afiliados-recursos-humanos/afiliados-recursos-humanos.component';
 import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
+import { EditarInformacionComponent } from './components/editar-informacion/editar-informacion.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
         { path: 'equipo-maquinaria', component: AfiliadosEquipoMaquinariaComponent },
         { path: 'recursos-humanos', component: AfiliadosRecursosHumanosComponent },
         { path: 'certificaciones-especializaciones', component: AfiliadosCertificacionesEspecializacionesComponent },
-      ] },
+        { path: 'editar-afiliado', component: EditarInformacionComponent  },
+      ]},
     ],
   },
   { path: 'login', component: AfiliadosLoginComponent },

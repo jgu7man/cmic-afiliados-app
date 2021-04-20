@@ -42,6 +42,7 @@ export class AfiliadosService {
    */
   savePartialAfiliado(field: string, partialAafiliado: PartialAfiliado) {
     // Obtenemos del local storage la información del usuario
+    console.log( partialAafiliado )
     const user = this._cache.getDataKey<iUserAfiliado>('user');
 
     this._afs
@@ -99,10 +100,10 @@ export class AfiliadosService {
     }
   }
 
-  getPerfilAfiliado(RFC: string):Observable<iAfiliadoModel>{
+  getPerfilAfiliado(RFC: string):Observable<AfiliadoModel>{
     return this._afs.collection('afiliados')
-      .doc(RFC).get()
-      .pipe(map((doc) => doc.data() as iAfiliadoModel));
+      .doc<AfiliadoModel>(RFC).get()
+      .pipe(map((doc) => doc.data() as AfiliadoModel))
   }
 
 

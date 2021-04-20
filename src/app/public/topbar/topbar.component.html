@@ -30,7 +30,20 @@
     <a class="topbar-item" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
 
     <ng-container *ngIf="logged; else unlogged">
-      <button mat-button (click)="auth_.singOut()">Cerrar Sesión</button>
+
+      <a  class="topbar-item"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
+          Afiliado
+      </a>
+      <mat-menu #unloggedMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/afiliados/perfil']">
+              Administrar Perfil
+          </button>
+          <button mat-menu-item (click)="auth_.singOut()">
+              Cerrar Sesión
+          </button>
+
+      </mat-menu>
+
     </ng-container>
     <ng-template #unlogged>
       <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="afiliadoMenu" [routerLinkActive]="'active'">

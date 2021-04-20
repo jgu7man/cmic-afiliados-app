@@ -1,7 +1,8 @@
+import { emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GdevCache } from 'gdev-cache';
-import { AfiliadoModel, AutorizacionesAfiliado, iContactoAfiliado, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliado, ContactoAfiliado, iUserAfiliado } from '../../models/afiliados.model';
+import { AfiliadoModel, iContacto, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliadoModel, ContactoAfiliado, iUserAfiliado, AfiliadoProperty } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 import {take} from 'rxjs/operators'
 @Component({
@@ -12,17 +13,8 @@ import {take} from 'rxjs/operators'
 export class AfiliacionFormComponent implements OnInit {
   public user: iUserAfiliado
 
-  public contactoModel: iContactoAfiliado
-  public dirPublica: iDireccion
-  public dirCorrespondencia: iDireccion
   // MODEL
-  public afiliado: AfiliadoModel
-  public generales: DatosGeneralesAfiliado
-  public direccion: DireccionAfiliado
-  public contacto: ContactoAfiliado
-  public representanteLegal: RepresentanteAfiliado
-  public director: RepresentanteAfiliado
-  public autorizaciones: AutorizacionesAfiliado
+  public afiliado: AfiliadoModel = emptyAfiliado
   public addCorrespondencia: boolean = false
   public director_igual_legal: boolean = false
 
@@ -37,67 +29,21 @@ export class AfiliacionFormComponent implements OnInit {
     let user = this._cache.getDataKey<iUserAfiliado>('user')
     this.user = user ? user : { RFC: '', email: '' }
 
-    this.dirPublica = {
-      calle: '',
-      num_ext: '',
-      num_int: '',
-      colonia: '',
-      codigo_postal: '',
-      entidad_federativa: '',
-      municipio_alcaldia: '',
-    }
-    this.dirCorrespondencia = {
-      calle: '',
-      num_ext: '',
-      num_int: '',
-      colonia: '',
-      codigo_postal: '',
-      entidad_federativa: '',
-      municipio_alcaldia: '',
-    }
-    this.contactoModel = {
-      lada_telefono:'',
-      telefono:'',
-      lada_celular:'',
-      celular:'',
-      email:'',
-      pagina_web:'',
-    }
-    this.generales = new DatosGeneralesAfiliado(this.user.RFC, '', '', '', '', )
-    this.direccion = { publica: this.dirPublica, correspondencia: this.dirCorrespondencia }
-    this.contacto = {mostrar_en_directorios: false, ...this.contactoModel}
-    this.representanteLegal = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)
-    this.director = new RepresentanteAfiliado('', '', '', '', '', '', this.contactoModel)
-    this.autorizaciones = {
-      retencion_para_capacitacion: false,
-      aviso_privacidad: false
-    }
-    this.afiliado = new AfiliadoModel(
-      this.generales,
-      this.direccion,
-      this.contactoModel,
-      this.representanteLegal,
-      this.director,
-      this.autorizaciones,
-    )
+
+
+
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  OpenPrivacidad(): void {
-    const dialogRef = this.dialog.open(DialogPrivacidad);
-
-    dialogRef.afterClosed().pipe(take(1)) .subscribe((result) => {
-      if (result) this.autorizaciones.aviso_privacidad = true
-    });
+  onChanges(form: AfiliadoProperty, data: any) {
+    console.log( form, data )
+    this.afiliado[form] = data
+    console.log( this.afiliado )
+    console.log( this.afiliado[form] )
   }
-  OpenRetencion(): void {
-    const dialogRef = this.dialog.open(DialogRetencion);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.autorizaciones.retencion_para_capacitacion = true
-    });
-  }
+
 
 
 

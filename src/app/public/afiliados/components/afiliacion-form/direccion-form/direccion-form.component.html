@@ -1,0 +1,158 @@
+<form [formGroup]="dirPublicaForm">
+
+  <div class="row">
+
+      <div class="col s12 m8">
+        <mat-form-field appearance="outline">
+          <mat-label>Domicilio Fiscal</mat-label>
+          <input matInput placeholder="Ingrese domicilio fiscal" formControlName="calle"
+            name="calle"  required>
+          <mat-error *ngIf="dirPublicaForm.hasError('required', 'calle')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col s6 m2">
+        <mat-form-field appearance="outline">
+          <mat-label>No. Ext.</mat-label>
+          <input matInput placeholder="Ingrese número exterior" formControlName="num_ext"
+            name="num_ext"  required>
+          <mat-error *ngIf="dirPublicaForm.hasError('required', 'num_ext')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col s6 m2">
+        <mat-form-field appearance="outline">
+          <mat-label>No. Int</mat-label>
+          <input matInput placeholder="Ingrese domicilio fiscal" formControlName="num_int"
+            name="num_int" >
+        </mat-form-field>
+      </div>
+
+      <div class="col s12 m8">
+        <mat-form-field appearance="outline">
+          <mat-label>Colonia</mat-label>
+          <input matInput placeholder="Ingrese colonia" formControlName="colonia" name="colonia"
+              required>
+          <mat-error *ngIf="dirPublicaForm.hasError('required', 'colonia')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col s12 m4">
+        <mat-form-field appearance="outline">
+          <mat-label>Código Postal</mat-label>
+          <input matInput placeholder="Ingrese codigo postal" formControlName="codigo_postal"
+            name="codigo_postal"  required>
+          <mat-error *ngIf="dirPublicaForm.hasError('required', 'codigo_postal')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col s12 m6">
+        <mat-form-field appearance="outline">
+          <mat-label>Municipio</mat-label>
+          <input matInput placeholder="Ingrese municipio" formControlName="municipio_alcaldia"
+            name="municipio_alcaldia" required>
+          <mat-error *ngIf="dirPublicaForm.hasError('required', 'municipio_alcaldia')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col s12 m6">
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <input matInput placeholder="Ingrese una entidad federativa" formControlName="entidad_federativa"
+            name="entidad_federativa"  required>
+          <mat-error *ngIf="dirPublicaForm.hasError('required', 'entidad_federativa')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+      </div>
+  </div>
+
+
+</form>
+
+
+  <div class="row">
+    <div class="col s12">
+      <mat-slide-toggle [checked]="addCorrespondencia" name="addcorrespondencia"
+        [(ngModel)]="addCorrespondencia">
+        Añadir Domicilio de Correspondencia (opcional)
+      </mat-slide-toggle>
+    </div>
+  </div>
+
+<form [formGroup]="correspondenciaForm">
+  <ng-container *ngIf="addCorrespondencia">
+    <div class="row">
+
+        <div class="col s12 m8">
+          <mat-form-field appearance="outline">
+            <mat-label>Domicilio Fiscal</mat-label>
+            <input matInput placeholder="Ingrese domicilio fiscal" formControlName="calle"
+              name="calle"  required>
+          </mat-form-field>
+        </div>
+
+        <div class="col s6 m2">
+          <mat-form-field appearance="outline">
+            <mat-label>Número exterior</mat-label>
+            <input matInput placeholder="Ingrese número exterior" formControlName="num_ext"
+              name="num_ext"  required>
+          </mat-form-field>
+        </div>
+
+        <div class="col s6 m2">
+          <mat-form-field appearance="outline">
+            <mat-label>Número Interno</mat-label>
+            <input matInput placeholder="Ingrese domicilio fiscal" formControlName="num_int"
+              name="num_int" >
+          </mat-form-field>
+        </div>
+
+        <div class="col s12 m8">
+          <mat-form-field appearance="outline">
+            <mat-label>Colonia</mat-label>
+            <input matInput placeholder="Ingrese colonia" formControlName="colonia" name="colonia"
+                required>
+          </mat-form-field>
+        </div>
+
+        <div class="col s12 m4">
+          <mat-form-field appearance="outline">
+            <mat-label>Código Postal</mat-label>
+            <input matInput placeholder="Ingrese codigo postal" formControlName="codigo_postal"
+              name="codigo_postal"  required>
+          </mat-form-field>
+        </div>
+
+        <div class="col s12 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Municipio</mat-label>
+            <input matInput placeholder="Ingrese municipio" formControlName="municipio_alcaldia"
+              name="municipio_alcaldia"  required>
+          </mat-form-field>
+        </div>
+
+        <div class="col s12 m6">
+          <mat-form-field appearance="outline">
+            <mat-label>Entidad federativa</mat-label>
+            <input matInput placeholder="Ingrese entidad federativa" formControlName="entidad_federativa"
+              name="entidad_federativa"  required>
+          </mat-form-field>
+        </div>
+    </div>
+  </ng-container>
+
+</form>
+
+
+

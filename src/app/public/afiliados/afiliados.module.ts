@@ -24,6 +24,11 @@ import { AfiliadosCertificacionesEspecializacionesComponent } from './components
 import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module';
 import { PerfilesModule } from '../perfiles/perfiles.module';
 import { AfiliadoSidebarComponent } from './components/afiliado-sidebar/afiliado-sidebar.component';
+import { EditarInformacionComponent } from './components/editar-informacion/editar-informacion.component';
+import { DatosGeneralesFormComponent } from './components/afiliacion-form/datos-generales-form/datos-generales-form.component';
+import { DireccionFormComponent } from './components/afiliacion-form/direccion-form/direccion-form.component';
+import { ContactoFormComponent } from './components/afiliacion-form/contacto-form/contacto-form.component';
+import { RepresentanteFormComponent } from './components/afiliacion-form/representante-form/representante-form.component';
 
 
 @NgModule({
@@ -44,6 +49,11 @@ import { AfiliadoSidebarComponent } from './components/afiliado-sidebar/afiliado
     AfiliadosRecursosHumanosComponent,
     AfiliadosCertificacionesEspecializacionesComponent,
     AfiliadoSidebarComponent,
+    EditarInformacionComponent,
+    DatosGeneralesFormComponent,
+    DireccionFormComponent,
+    ContactoFormComponent,
+    RepresentanteFormComponent,
   ],
   imports: [
     CommonModule,

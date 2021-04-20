@@ -9,36 +9,40 @@ export interface iUserAfiliado {
 
 export class AfiliadoModel {
   constructor(
-    public generales: DatosGeneralesAfiliado,
-    public direccion: DireccionAfiliado,
-    public contacto: iContactoAfiliado,
-    public representateLegal: RepresentanteAfiliado,
+    public datos_generales: DatosGeneralesAfiliado,
+    public domicilio: DireccionAfiliadoModel,
+    public contacto: ContactoAfiliado,
+    public representante_legal: RepresentanteAfiliado,
     public director: RepresentanteAfiliado,
-    public autorizaciones: AutorizacionesAfiliado
   ) {}
 }
 
+
+
 export interface iAfiliadoModel {
-  datos_generales?: DatosGeneralesAfiliado;
-  domicilio?: DireccionAfiliado;
-  contacto?: iContactoAfiliado;
-  representante_legal?: RepresentanteAfiliado;
-  director?: RepresentanteAfiliado;    
+  datos_generales: DatosGeneralesAfiliado;
+  domicilio: DireccionAfiliadoModel;
+  contacto: ContactoAfiliado;
+  representante_legal: RepresentanteAfiliado;
+  director: RepresentanteAfiliado;
 }
 
 export class DatosGeneralesAfiliado {
   constructor(
     public RFC: string,
-    public fisica_nombre: string,
-    public fisica_apellido_pat: string,
-    public fisica_apellido_mat: string,
-    public moral_nombre: string
+    public comercial_nombre: string,
+    public fisica_nombre?: string,
+    public fisica_apellido_pat?: string,
+    public fisica_apellido_mat?: string,
+    public moral_nombre?: string,
   ) {}
 }
 
-export interface DireccionAfiliado {
-  publica: iDireccion;
-  correspondencia: iDireccion;
+export class DireccionAfiliadoModel {
+  constructor(
+    public publica: iDireccion,
+    public correspondencia: iDireccion,
+  ){}
 }
 
 export interface iDireccion {
@@ -51,16 +55,14 @@ export interface iDireccion {
   municipio_alcaldia: string;
 }
 
-export interface iContactoAfiliado {
-  lada_telefono: string;
+export interface iContacto {
   telefono: string;
-  lada_celular: string;
   celular: string;
   email: string;
   pagina_web?: string;
 }
 
-export interface ContactoAfiliado extends iContactoAfiliado {
+export interface ContactoAfiliado extends iContacto {
   mostrar_en_directorios: boolean;
 }
 
@@ -72,14 +74,11 @@ export class RepresentanteAfiliado {
     public titulo: string,
     public sexo: string,
     public fecha_nacimiento: string,
-    public contacto: iContactoAfiliado
+    public contacto: iContacto
   ) {}
 }
 
-export interface AutorizacionesAfiliado {
-  retencion_para_capacitacion: boolean;
-  aviso_privacidad: boolean;
-}
+
 
 export interface ContactoInteres {
   intereses: string[];
@@ -103,8 +102,44 @@ export class Intereses {
 
 export type PartialAfiliado =
   | DatosGeneralesAfiliado
-  | DireccionAfiliado
+  | DireccionAfiliadoModel
   | RepresentanteAfiliado
-  | AutorizacionesAfiliado
   | Intereses
   | ContactoAfiliado;
+
+export type AfiliadoProperty =
+| "datos_generales"
+| "domicilio"
+| "contacto"
+| "representante_legal"
+| "director"
+
+
+export const emptyDireccion = {
+  calle:'',
+  num_ext:'',
+  num_int:'',
+  colonia:'',
+  codigo_postal:'',
+  entidad_federativa:'',
+  municipio_alcaldia:'',
+}
+
+export const emptyContacto = {
+  telefono: '',
+  celular: '',
+  email: '',
+  pagina_web:'',
+}
+
+export const emptyAfiliado: AfiliadoModel = new AfiliadoModel(
+  new DatosGeneralesAfiliado('', ''),
+  new DireccionAfiliadoModel(emptyDireccion, emptyDireccion ),
+  {
+    ...emptyContacto,
+    mostrar_en_directorios: false
+  },
+  new RepresentanteAfiliado('','','','','','', emptyContacto),
+  new RepresentanteAfiliado('', '', '', '', '', '', emptyContacto),
+
+);

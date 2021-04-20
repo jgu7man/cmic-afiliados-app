@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { take } from 'rxjs/operators';
-import { iAfiliadoModel, iUserAfiliado } from '../../models/afiliados.model';
+import { AfiliadoModel, emptyAfiliado, iAfiliadoModel, iUserAfiliado } from '../../models/afiliados.model';
 import { iRecHumanos } from '../../models/perfiles.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 
@@ -12,7 +12,7 @@ import { AfiliadosService } from '../../services/afiliados.service';
   styleUrls: ['./afiliados-perfil.component.scss'],
 })
 export class AfiliadosPerfilComponent implements OnInit {
-  afiliado: iAfiliadoModel = {};
+  afiliado: AfiliadoModel = emptyAfiliado;
   somos: string = 'Escribe un contenido acerca de la empresa'
   RFC: string
 
@@ -42,6 +42,7 @@ export class AfiliadosPerfilComponent implements OnInit {
     }
     this._afiliadosService.getPerfilAfiliado(this.RFC).subscribe((data) => {
       console.log(data);
+      // TODO Poner un estado CARGANDO y apagarlo aquí
       if (data) {
         this.afiliado = data;
         this.RFC = data.datos_generales?.RFC as string;

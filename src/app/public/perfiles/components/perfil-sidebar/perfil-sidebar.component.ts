@@ -1,6 +1,7 @@
+import { DireccionAfiliadoModel } from './../../../afiliados/models/afiliados.model';
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
+import { AfiliadoModel, DatosGeneralesAfiliado, iAfiliadoModel, emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iRecHumanos } from 'src/app/public/afiliados/models/perfiles.model';
 
 @Component({
@@ -11,8 +12,10 @@ import { iRecHumanos } from 'src/app/public/afiliados/models/perfiles.model';
 })
 export class PerfilSidebarComponent implements OnInit {
 
-  private _afiliado : BehaviorSubject<iAfiliadoModel> = new BehaviorSubject({});
-  @Input() set afiliado(variable: iAfiliadoModel) { this._afiliado.next(variable); }
+  private _afiliado: BehaviorSubject<AfiliadoModel> = new BehaviorSubject(
+    emptyAfiliado
+  );
+  @Input() set afiliado(variable: AfiliadoModel) { this._afiliado.next(variable); }
   get afiliado() { return this._afiliado.getValue() }
 
   @Input() personal: iRecHumanos = {} as iRecHumanos;
