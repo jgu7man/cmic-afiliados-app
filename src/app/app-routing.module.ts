@@ -10,6 +10,8 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
+  { path: 'perfiles', loadChildren: () => import('./public/perfiles/perfiles.module').then(m => m.PerfilesModule) },
+
 
 ];
 

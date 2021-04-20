@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col s12">
+    <mat-accordion *ngIf="items$">
+      <div class="proyect-item"
+      *ngFor="let item of items$ | async; index as i">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{item.nombre}}</mat-panel-title>
+          <mat-panel-description>Monto del proyecto: <span class="data-text">${{item.monto}}</span></mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-card-content class="proyecto-content">
+          <div class="row">
+            <div class="col s12 m4">
+              <p><b>Ubicado en:</b></p>
+              <p> {{item.ubicacion.calle}} {{item.ubicacion.num_ext}} {{item.ubicacion.num_int}} </p>
+              <p> {{item.ubicacion.colonia}} {{item.ubicacion.codigo_postal}} </p>
+              <p> {{item.ubicacion.municipio_alcaldia}} {{item.ubicacion.entidad_federativa}} </p>
+            </div>
+            <div class="col s12 m8 proyect-gallery">
+              <div class="row">
+                <div class="col s12 m6 l4" *ngFor="let img of item.evidencia">
+                  <mat-card>
+                    <img mat-card-image [src]="img.url" [alt]="img.fileName">
+                  </mat-card>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-expansion-panel>
+      </div>
+
+    </mat-accordion>
+  </div>
+</div>
+

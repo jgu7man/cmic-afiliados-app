@@ -1,0 +1,41 @@
+#hero {
+  background-image: url(/assets/img/cmic-hero.png);
+  background-size: cover;
+  background-position: center bottom;
+  .container {
+    margin-top: 0;
+    margin-bottom:-1em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height:88vh;
+    h1 {
+      font-size: 5em;
+      line-height: 1.1;
+      max-width: 60%;
+      font-weight: 900;
+      text-shadow: 2px 2px 2px rgb(0 0 0 / 30%);
+    }
+    h2 {
+      font-size: 2em;
+      text-shadow: 2px 2px 2px rgb(0 0 0 / 30%);
+    }
+  }
+}
+
+
+#botones button {
+  margin-right: 3em;
+  border: solid 2px #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 1.5em;
+  padding: 5px 15px;
+  text-shadow: 1px 1px 3px rgb(0 0 0 / 70%);
+  &:hover{
+    background:#e20512;
+    border-color: rgba(0, 0, 0, 0);
+    text-shadow: none;
+    border-radius: 6px;
+  }
+}

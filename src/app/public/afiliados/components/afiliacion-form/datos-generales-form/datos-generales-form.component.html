@@ -1,0 +1,59 @@
+<div class="row">
+  <form [formGroup]="generalesForm">
+    <ng-container *ngIf="(RFC$ | async)?.length == 13; else moral">
+    <div class="col s12 m8">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre(s)</mat-label>
+        <input matInput placeholder="Ingrese Nombre" formControlName="fisica_nombre" name="fisica_nombre"
+          required>
+        <mat-error *ngIf="generalesForm.hasError('required', 'fisica_nombre')">
+          Este campo es necesario
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col s12 m6">
+      <mat-form-field appearance="outline">
+        <mat-label>Apellido Paterno</mat-label>
+        <input matInput placeholder="Ingrese Apellido Paterno" formControlName="fisica_apellido_pat"
+          name="fisica_apellido_pat" required>
+        <mat-error *ngIf="generalesForm.hasError('required', 'fisica_apellido_pat')">
+          Este campo es necesario
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col s12 m6">
+      <mat-form-field appearance="outline">
+        <mat-label>Apellido Materno</mat-label>
+        <input matInput placeholder="Ingrese Apellido Materno" formControlName="fisica_apellido_mat"
+          name="fisica_apellido_mat" required>
+        <mat-error *ngIf="generalesForm.hasError('required', 'fisica_apellido_mat')">
+          Este campo es necesario
+        </mat-error>
+      </mat-form-field>
+    </div>
+    </ng-container>
+    <ng-template #moral>
+      <div class="col s12">
+        <mat-form-field appearance="outline">
+          <mat-label>Persona Moral</mat-label>
+          <input matInput placeholder="Ingrese Persona Moral" formControlName="moral_nombre"
+            name="moral_nombre" required>
+          <mat-error *ngIf="generalesForm.hasError('required', 'moral_nombre')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </ng-template>
+
+    <div class="col s12">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre comercial</mat-label>
+        <input matInput placeholder="Ingrese el nombre comercial de la empresa" formControlName="comercial_nombre"
+          name="comercial_nombre">
+
+      </mat-form-field>
+    </div>
+
+  </form>
+
+</div>

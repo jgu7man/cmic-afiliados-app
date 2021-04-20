@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AfiliadosService } from './services/afiliados.service';
 
 @Component({
   selector: 'g-afiliados',
@@ -9,9 +11,13 @@ export class AfiliadosComponent implements OnInit {
 
 
 
-  constructor() { }
+  constructor(
+
+  ) {
+  }
 
   ngOnInit(): void {
+
   }
 
 }

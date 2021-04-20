@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col s12">
+    <p> Capacidad por proyecto: <span class="data-text">
+      {{capacidad.capacidad}}
+    </span> </p>
+  </div>
+  <div class="col s12" *ngIf="declaraciones">
+    <mat-card *ngFor="let declaracion of declaraciones">
+      <mat-card-header>
+        <mat-card-title> {{ declaracion.year}} </mat-card-title>
+        <mat-card-subtitle> {{declaracion.ingreso}} </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

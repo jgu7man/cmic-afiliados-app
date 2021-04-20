@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GdevCache } from 'gdev-cache';
 
 @Component({
   selector: 'g-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'afiliados-app';
+  constructor(
+    private _cache: GdevCache,
+  ) {
+    this._cache.cacheTagName = 'cmic-data';
+    this._cache.storage = 'local'
+  }
 }

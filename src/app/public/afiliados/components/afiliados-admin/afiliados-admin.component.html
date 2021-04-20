@@ -1,0 +1,12 @@
+<mat-drawer-container autosize [hasBackdrop]="false" >
+
+  <mat-drawer #sidenav mode="side" opened="true" id="sidenav">
+    <g-afiliado-sidebar></g-afiliado-sidebar>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+
+
+</mat-drawer-container>

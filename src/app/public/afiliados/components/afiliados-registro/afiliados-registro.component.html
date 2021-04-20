@@ -1,0 +1,93 @@
+<div id="login-container">
+</div>
+<div class="container" strechHeight>
+    <div class="row">
+        <div class="col s12 l4">
+            <h1>REGISTRO</h1>
+            <p>Regístrate aquí y promueve tus servicios</p>
+            <form [formGroup]="afiliado" >
+
+                <mat-form-field >
+                    <mat-label>R.F.C.</mat-label>
+                    <input matInput placeholder="Ingrese R.F.C. Alfanumérico. No se permiten símbolos" [formControl]="rfcCtrl" required name="rfc" minlength="12" maxlength="13" oninput="this.value = this.value.toUpperCase()" >
+                    <mat-error *ngIf="rfcCtrl.hasError('required', 'RFC')">
+                      Por favor Ingrese el R.F.C de su empresa.
+                    </mat-error>
+                    <mat-error *ngIf="rfcCtrl.hasError('minlength')">
+                      El RFC debe contener al menos 12 caracteres.
+                    </mat-error>
+                    <mat-error *ngIf="rfcCtrl.hasError('maxlength')">
+                      El RFC de una persona física puede tener máximo 13 caracteres
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field >
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput placeholder="Ingrese correo electrónico" formControlName="email" type="email"
+                        required name="email">
+                    <mat-error *ngIf="afiliado.hasError('required', 'email')">
+                        Por favor ingrese su correo electrónico
+                    </mat-error>
+                    <mat-error *ngIf="afiliado.hasError('email', 'email')">
+                        Solo se permite correos electrónicos
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field >
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput placeholder="Ingrese su contraseña" formControlName="contrasena"
+                        [type]="hide ? 'password' : 'text'" required name="contrasena">
+                    <mat-error *ngIf="afiliado.hasError('required', 'contrasena')">
+                        Por favor ingrese su contraseña
+                    </mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field >
+                    <mat-label>Confirme contraseña</mat-label>
+                    <input matInput placeholder="Confirme su contraseña" formControlName="confcontrasena"
+                        [type]="hide ? 'password' : 'text'" required [errorStateMatcher]="matcher" name="confirma">
+
+                    <mat-error *ngIf="afiliado.hasError('required','confcontrasena')">
+                        Por favor confirme su contraseña
+                    </mat-error>
+                    <mat-error *ngIf="afiliado.hasError('notSame')">
+                        La contraseña ingresada debe ser igual
+                    </mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+
+
+                <div>
+                    <mat-checkbox
+                    formControlName="aviso_privacidad"
+                    name="aviso_privacidad">
+                      Acepto la política de privacidad
+                    </mat-checkbox>
+                    <a mat-button (click)="OpenPrivacidadRegistro()">(ver aqui)</a>
+                </div>
+                <div class="center">
+                    <button
+                    [disabled]="afiliado.invalid"
+                    (click)="onSubmit()"
+                    mat-raised-button
+                    color="primary">
+                      REGISTRO
+                    </button>
+                </div>
+
+
+                <p>¿Ya tienes cuenta?</p>
+                <a [routerLink]="['/afiliados/login']">Inicia Sesión aquí</a>
+            </form>
+
+        </div>
+    </div>
+</div>

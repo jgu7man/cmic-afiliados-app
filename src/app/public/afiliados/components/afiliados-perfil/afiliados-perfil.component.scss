@@ -1,0 +1,20 @@
+
+
+::ng-deep {
+  mat-expansion-panel-header {
+    height:fit-content !important;
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+    .mat-content {
+      flex-direction: column;
+      mat-panel-title {
+        font-weight: 600;
+        font-size: large;
+      }
+      mat-panel-description {
+        overflow-wrap: anywhere;
+        color: #202020;
+      }
+    }
+  }
+}

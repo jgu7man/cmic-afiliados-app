@@ -1,0 +1,39 @@
+<ng-container *ngIf="!showDropzone; else dropzone">
+  <button mat-raised-button color='accent'
+  (click)="showDropzone = !showDropzone"
+  >{{toggleButtonLabel}}</button>
+</ng-container>
+<ng-template #dropzone >
+  <div class="row">
+    <div class="col s12">
+
+      <ngx-dropzone (change)="onSelect($event)" [multiple]="multiple" [attr.maxFileSize]="maxFileSize ? maxFileSize : undefined" >
+        <ngx-dropzone-label>{{dropzoneLabel}}</ngx-dropzone-label>
+        <ngx-dropzone-preview
+          *ngFor="let f of storage_.files"
+          [removable]="true"
+          (removed)="onRemove(f)"
+        >
+          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+        </ngx-dropzone-preview>
+      </ngx-dropzone>
+
+    </div>
+  </div>
+
+  <div class="uploading-area" *ngIf="uploadingFiles && uploadStatus">
+    <mat-progress-bar *ngIf="UploadedPercent"
+      mode="determinate"
+      [value]="UploadedPercent"
+    ></mat-progress-bar>
+  </div>
+
+  <div class="row" *ngIf="uploadButton" >
+    <div class="col s12 center">
+      <button mat-raised-button color='primary'
+      (click)="loadFiles()" >{{uploadButtonLabel}}</button>
+    </div>
+  </div>
+
+
+</ng-template>

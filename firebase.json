@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "afiliados-app",
+      "target": "afiliados-cemic",
       "public": "dist/afiliados-app",
       "ignore": [
         "**/.*"

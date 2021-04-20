@@ -1,46 +1,105 @@
-<mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step>
-    <form>
-      <ng-template matStepLabel>Fill out your name</ng-template>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <!-- Al cargar en forma de clase, los datos ya tienen un valor por default, en este caso es un string vacio ('') -->
-        <input
-        matInput
-        placeholder="Last name, First name"
-        [(ngModel)]="datosGenerales.RFC"
-        name="first"
-        #firsty="ngModel"
-        required>
-        <mat-error *ngIf="firsty.hasError('required')">
-          Este campo es necesario
-        </mat-error>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step >
-    <form >
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+<div class="container">
+  <div class="row">
+    <div class="col s12 l5">
+      <mat-vertical-stepper [linear]="true" #stepper>
+        <mat-step>
+          <ng-template matStepLabel>Datos Generales de la empresa</ng-template>
+
+          <g-datos-generales-form
+          [RFC]="user?.RFC"
+          (changes)="onChanges('datos_generales', $event)"
+          (invalid)="datosGeneralesBtn.disabled = $event"
+          ></g-datos-generales-form>
+
+          <div>
+            <button mat-button matStepperNext #datosGeneralesBtn="matButton"
+              (click)="afiliados_.savePartialAfiliado('datos_generales', afiliado.datos_generales)">Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- DOMICILIO -->
+        <mat-step>
+          <ng-template matStepLabel>Domicilio</ng-template>
+            <g-direccion-form
+            (invalid)="direccionBtn.disabled = $event"
+            (changes)="onChanges('domicilio', $event)"
+            ></g-direccion-form>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-button matStepperNext #direccionBtn="matButton"
+              (click)="afiliados_.savePartialAfiliado('domicilio', afiliado.domicilio)">Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- DATOS DE CONTACTO -->
+        <mat-step>
+          <ng-template matStepLabel>Datos de contacto</ng-template>
+
+          <g-contacto-form
+          (changes)="onChanges('contacto', $event)"
+          (invalid)="contactoBtn.disabled = $event"
+          ></g-contacto-form>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button #contactoBtn="matButton"
+              (click)="afiliados_.savePartialAfiliado('contacto', afiliado.contacto)" mat-button
+              matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- REPRESENTANTE LEGAL -->
+        <mat-step>
+          <ng-template matStepLabel>Datos de representante legal</ng-template>
+          <g-representante-form
+          (invalid)="representanteBtn.disabled = $event"
+          (changes)="onChanges('representante_legal', $event)"
+          ></g-representante-form>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button #representanteBtn="matButton"
+              (click)="afiliados_.savePartialAfiliado('representante_legal', afiliado.representante_legal)" mat-button
+              matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- DIRECTOR GENERAL -->
+        <mat-step>
+          <ng-template matStepLabel>Datos de director general</ng-template>
+          <mat-checkbox [checked]="director_igual_legal" [(ngModel)]="director_igual_legal" name="director_igual">
+            ¿Los datos son los mismos que del representante?</mat-checkbox>
+            <div *ngIf="!director_igual_legal">
+
+              <g-representante-form
+              (changes)="onChanges('director', $event)"
+              (invalid)="directorBtn.disabled = $event"
+              ></g-representante-form>
+
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button #directorBtn="matButton"
+              (click)="afiliados_.savePartialAfiliado('representante_legal', afiliado.representante_legal)" mat-button
+              matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+
+
+        <!-- TÉRMINOS Y CONDICIONES -->
+        <mat-step>
+          <ng-template matStepLabel>Continuar</ng-template>
+            <p>Ahora continuamos con tu registro</p>
+            <div>
+              <button mat-button matStepperPrevious>Atrás</button>
+              <button mat-button
+                matStepperNext [routerLink]="['/afiliados/elegir-actividades']">Siguiente</button>
+            </div>
+        </mat-step>
+      </mat-vertical-stepper>
+
     </div>
-  </mat-step>
-</mat-vertical-stepper>
+  </div>
+</div>

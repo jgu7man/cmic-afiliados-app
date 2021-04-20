@@ -1,24 +1,67 @@
+import { emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { Component, OnInit } from '@angular/core';
-import { DatosGenerales } from '../../afiliados.model';
-
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { GdevCache } from 'gdev-cache';
+import { AfiliadoModel, iContacto, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliadoModel, ContactoAfiliado, iUserAfiliado, AfiliadoProperty } from '../../models/afiliados.model';
+import { AfiliadosService } from '../../services/afiliados.service';
+import {take} from 'rxjs/operators'
 @Component({
   selector: 'g-afiliados-form',
   templateUrl: './afiliacion-form.component.html',
-  styleUrls: ['./afiliacion-form.component.scss']
+  styleUrls: ['./afiliacion-form.component.scss'],
 })
 export class AfiliacionFormComponent implements OnInit {
+  public user: iUserAfiliado
 
-  // REVIEW La forma de cargarlos los datos con clase hace más simple su iniciación
-  public datosGenerales: DatosGenerales
+  // MODEL
+  public afiliado: AfiliadoModel = emptyAfiliado
+  public addCorrespondencia: boolean = false
+  public director_igual_legal: boolean = false
 
-  constructor() {
-    this.datosGenerales = new DatosGenerales('','','','','','','','');
+
+
+  constructor(
+    public dialog: MatDialog,
+    public afiliados_: AfiliadosService,
+    private _cache: GdevCache
+  ) {
+    // Se obtiene el usuario del cache
+    let user = this._cache.getDataKey<iUserAfiliado>('user')
+    this.user = user ? user : { RFC: '', email: '' }
+
+
+
+
+  }
+
+  ngOnInit(): void { }
+
+  onChanges(form: AfiliadoProperty, data: any) {
+    console.log( form, data )
+    this.afiliado[form] = data
+    console.log( this.afiliado )
+    console.log( this.afiliado[form] )
   }
 
 
-  ngOnInit(): void {
-  }
 
 
 
 }
+
+@Component({
+  selector: 'dialog-privacidad',
+  templateUrl: 'dialog-privacidad.html',
+})
+export class DialogPrivacidad {
+  // REVIEW agregar las importaciones para el manejo de la data en el DIALOG
+  constructor(
+    public dialog_: MatDialogRef<DialogPrivacidad>
+  ){}
+}
+
+@Component({
+  selector: 'dialog-retencion',
+  templateUrl: 'dialog-retencion.html',
+})
+export class DialogRetencion {}

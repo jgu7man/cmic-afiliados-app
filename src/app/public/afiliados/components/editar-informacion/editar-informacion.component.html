@@ -1,0 +1,106 @@
+<div class="container" *ngIf="afiliado">
+  <div class="row">
+    <div class="col s12">
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Datos Generales de la empresa</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <g-datos-generales-form
+          [form]="afiliado.datos_generales"
+          [RFC]="user?.RFC"
+          (changes)="onChanges('datos_generales', $event)"
+          (invalid)="datosGeneralesBtn.disabled = $event"
+          ></g-datos-generales-form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button #datosGeneralesBtn="matButton" color="primary">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Domicilio</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <g-direccion-form
+          [form]="afiliado.domicilio"
+          (invalid)="direccionBtn.disabled = $event"
+          (changes)="onChanges('domicilio', $event)"
+          ></g-direccion-form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button #direccionBtn color="primary">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Contacto</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <g-contacto-form
+          [form]="afiliado.contacto"
+          (changes)="onChanges('contacto', $event)"
+          (invalid)="contactoBtn.disabled = $event"
+          ></g-contacto-form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button #contactoBtn color="primary">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Representante Legal</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <g-representante-form
+        [form]="afiliado.representante_legal"
+        (invalid)="representanteBtn.disabled = $event"
+        (changes)="onChanges('representante_legal', $event)"
+        ></g-representante-form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button #representanteBtn color="primary">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Director</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        <g-representante-form
+        [form]="afiliado.director"
+        (changes)="onChanges('director', $event)"
+        (invalid)="directorBtn.disabled = $event"
+        ></g-representante-form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button #directorBtn color="primary">Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

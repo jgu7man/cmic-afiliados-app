@@ -1,0 +1,24 @@
+<div id="hero">
+  <div class="container" strechHeight>
+    <div class="row">
+      <div class="col s12">
+        <h1>La empresa que estás buscando, está aquí</h1>
+        <h2>Contacta con las mejores empresas de Colima</h2>
+      </div>
+      <div class="col s12" id="botones">
+        <button
+        (mouseenter)="hover = true"
+        (mouseleave)="hover = false"
+        mat-raised-button
+        [ngStyle]="{'mat-primary': hover}"
+        >Ver catálogo</button>
+        <button
+        (mouseenter)="hover = true"
+        (mouseleave)="hover = false"
+        [ngStyle]="{'mat-primary': hover}"
+        [routerLink]="['/afiliados/registro']"
+        mat-raised-button>Afiliarse</button>
+      </div>
+    </div>
+  </div>
+</div>
