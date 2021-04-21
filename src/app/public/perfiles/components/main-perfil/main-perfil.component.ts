@@ -40,4 +40,8 @@ export class MainPerfilComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get banner() {
+    return this.afiliado.imgBanner ? this.afiliado.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
+  }
+
 }

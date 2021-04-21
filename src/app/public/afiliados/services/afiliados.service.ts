@@ -49,7 +49,7 @@ export class AfiliadosService {
       .collection('afiliados')
       .doc(user?.RFC)
       .update({
-        [field]: { ...partialAafiliado },
+        [field]: typeof partialAafiliado != 'string' ?  { ...partialAafiliado } : partialAafiliado,
       })
       .then(() => {
         console.log('Datos guardados');
@@ -107,5 +107,6 @@ export class AfiliadosService {
   }
 
 
+  // getPartialAfiliado(RFC: string):
 
 }

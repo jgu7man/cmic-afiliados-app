@@ -47,7 +47,7 @@ export class PerfilesService {
 
   getInfoCollection<T>(rfc: string, doc: string) {
     const ref = this._afs.collection<T>(`afiliados/${rfc}/info/${doc}/items`)
-    return ref.valueChanges().pipe(
+    return ref.valueChanges('id').pipe(
       map(list => list.map((item: any) => {
         if (item['updated']) {
           let updated = item['updated'] as firebase.firestore.Timestamp
@@ -58,7 +58,7 @@ export class PerfilesService {
     )
   }
 
-  async deleteInfoItem(rfc: string, doc: string, itemId: string,) {
+  async deleteInfoItem(rfc: string, doc: string, itemId?: string,) {
     const ref = this._afs.collection(`afiliados/${rfc}/info/${doc}/items`).ref
     await ref.doc(itemId).delete()
     return

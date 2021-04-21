@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { GdevCache } from 'gdev-cache';
 import { Especialidad,  Actividad, catalogoName } from '../../models/actividades.model';
@@ -22,8 +23,30 @@ export class ActividadesFormComponent implements OnInit {
     puesto: '',
     email: ''
   }
-  contacto_2: ContactoInteres = {...this.contacto_1}
+  contacto_2: ContactoInteres = { ...this.contacto_1 }
 
+  actividad: FormGroup = new FormGroup({
+    especialidad: new FormControl(''),
+    subespecialidad: new FormControl('')
+  })
+
+  actividadesForm: FormGroup = new FormGroup({
+    tipos_de_obra: new FormArray([
+      this.actividad,
+      this.actividad,
+      this.actividad,
+    ]),
+    servicios_profesionales: new FormArray([
+      this.actividad,
+      this.actividad,
+      this.actividad,
+    ]),
+    fuentes_de_trabajo: new FormArray([
+      this.actividad,
+      this.actividad,
+      this.actividad,
+    ]),
+  })
 
 
   constructor(
@@ -37,6 +60,7 @@ export class ActividadesFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 
 
   onSelectActividad(catalogo: catalogoName, change: MatSelectChange) {

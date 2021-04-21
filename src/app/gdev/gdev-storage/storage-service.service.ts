@@ -34,6 +34,7 @@ export class GdevStorage {
     Subject<iUploadedFile> = new Subject()
   public upload$: Subject<void> = new Subject()
   public uploadComplete$: Subject<iUploadedFile[]> = new Subject
+  public showDropzone:boolean = false
 
   constructor(
     private _aStorage: AngularFireStorage,
@@ -44,8 +45,8 @@ export class GdevStorage {
     return this.uploadComplete$
   }
 
-  uploadFiles(file: any, path:string, prefixName?:string, metadata?:any):
-    Observable<iUploadInfo> {
+  uploadFile(file: any, path:string, prefixName?:string | null, metadata?:any):
+    Observable<iUploadedFile> {
 
       metadata = {
         customMetadata: metadata
@@ -59,8 +60,8 @@ export class GdevStorage {
       task = this._aStorage.upload(filePath, file, metadata);
 
 
-    task.percentageChanges().subscribe( uploadedState => {
-      this.fileUploadedStatus$.next( { uploadedState} )
+    task.percentageChanges().subscribe(uploadedState => {
+      this.fileUploadedStatus$.next( {uploadedState} )
     } )
 
     task.snapshotChanges().pipe(
@@ -104,6 +105,36 @@ export class GdevStorage {
     for (let index = 0; index < array.length; index++) {
       await callback(array[index], index, array);
     }
-	}
+  }
+
+
+  async compareDimensions(file: any, equals: boolean) {
+    const fileAsDataURL = window.URL.createObjectURL(file)
+    const dimensions: iImageDimensions = await this.getHeightAndWidthFromDataUrl(fileAsDataURL)
+    if (equals) {
+      return dimensions.width === dimensions.height ? true : false;
+    } else {
+      return dimensions.width === dimensions.height ? false : true
+    }
+  }
+
+
+  async getHeightAndWidthFromDataUrl(dataURL: any) {
+    return new Promise<iImageDimensions>(resolve => {
+      const img = new Image()
+      img.onload = () => {
+        resolve({
+          height: img.height,
+          width: img.width
+        })
+      }
+      img.src = dataURL
+    })
+  }
+}
+
+export interface iImageDimensions {
+  height: number,
+  width: number
 }
 

@@ -7,12 +7,14 @@
 @include mat-core();
 
 $afiliados-app-primary: mat-palette($cmic-primary, 500);
-$afiliados-app-accent: mat-palette($cmic-secondary, 300, 500, 800);
+$afiliados-app-accent: mat-palette($cmic-accent, 500, 800, A700);
+$afiliados-app-ladrillo: mat-palette($cmic-ladrillo, 500, 800, A700);
 $afiliados-app-warn: mat-palette($mat-red);
 $afiliados-app-theme: mat-light-theme((
   color: (
     primary: $afiliados-app-primary,
     accent: $afiliados-app-accent,
+    ladrillo: $afiliados-app-ladrillo,
     warn: $afiliados-app-warn,
   )
 ));
@@ -39,4 +41,15 @@ mat-form-field {width: 100%;}
 
 mat-card {
   margin-bottom: 1em;
+  width: 100%;
+}
+
+::ng-deep {
+  .mat-checkbox-layout {
+    white-space: pre-wrap !important;
+  }
+
+  label.mat-radio-label {
+    margin-right: 1em;
+  }
 }

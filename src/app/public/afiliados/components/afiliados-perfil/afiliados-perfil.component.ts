@@ -1,8 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { take } from 'rxjs/operators';
+import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
+import { iUploadedFile, iUploadOptions } from 'src/app/gdev/gdev-storage/storage.model';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel, iUserAfiliado } from '../../models/afiliados.model';
 import { iRecHumanos } from '../../models/perfiles.model';
 import { AfiliadosService } from '../../services/afiliados.service';
@@ -29,18 +32,19 @@ export class AfiliadosPerfilComponent implements OnInit {
   // perfilHeight: number
 
   constructor(
-    private _afiliadosService: AfiliadosService,
+    public afiliados_: AfiliadosService,
     private _router: Router,
     private _alert: GdevAlert,
     private _route: ActivatedRoute,
     private _cache: GdevCache,
+    private _dialog: MatDialog
   ) {
     // if (this.imgPerfil) this.perfilHeight = this.imgPerfil.offsetWidth
     this.RFC = this._route.snapshot.params['RFC']
     if (!this.RFC) {
       this.RFC = this._cache.getDataKey<iUserAfiliado>('user')?.RFC as string
     }
-    this._afiliadosService.getPerfilAfiliado(this.RFC).subscribe((data) => {
+    this.afiliados_.getPerfilAfiliado(this.RFC).subscribe((data) => {
       console.log(data);
       // TODO Poner un estado CARGANDO y apagarlo aquí
       if (data) {
@@ -57,7 +61,26 @@ export class AfiliadosPerfilComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  uploadProfileImage(): void {
 
+    let options: iUploadOptions = {
+      path: `afiliados/${this.afiliado.datos_generales.RFC}`,
+      multiple: false,
+      'uploadButton': true
+    }
 
+    this._dialog.open(GdevUploadModalComponent, {
+      width: '40%',
+      minHeight: '40%',
+      data: options
+    }).afterClosed().subscribe((file: iUploadedFile[]) => {
+      this.afiliados_.savePartialAfiliado('imgBanner', file[0])
+    })
+
+  }
+
+  get banner() {
+    return this.afiliado.imgBanner ? this.afiliado.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
+  }
 
 }

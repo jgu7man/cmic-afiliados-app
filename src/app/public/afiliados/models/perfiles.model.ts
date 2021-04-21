@@ -15,11 +15,14 @@ export interface iExperiencia {
 
 export interface iProyecto {
   nombre: string,
+  cliente: string,
+  fecha:number | string,
   monto: string,
   ubicacion: iDireccion,
-  privado: boolean,
+  sector: 'Privado' | 'Público',
   evidencia: iUploadedFile[],
   updated?: Date | firebase.firestore.Timestamp
+  id?:string
 }
 
 export interface iCapContable {
@@ -47,6 +50,7 @@ export interface iMaqEquipItem {
   comprobacion: boolean,
   evidencia?: iUploadedFile[]
   updated?: Date | firebase.firestore.Timestamp
+  id?: string
 }
 
 export interface iRecHumanos {
@@ -63,6 +67,7 @@ export interface iMemberModel {
   cargo: string,
   contacto?: string
   updated?: Date | firebase.firestore.Timestamp
+  id?: string
 }
 
 export interface iCertificaciones {
@@ -75,7 +80,8 @@ export interface iCertificacion {
   aval: string,
   miembro: iMemberModel,
   evidencia?: iUploadedFile
-  updated?: Date | firebase.firestore.Timestamp
+  updated?: Date | firebase.firestore.Timestamp,
+  id?: string
 }
 
 export type PerfilDoc =

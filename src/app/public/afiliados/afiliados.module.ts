@@ -29,6 +29,8 @@ import { DatosGeneralesFormComponent } from './components/afiliacion-form/datos-
 import { DireccionFormComponent } from './components/afiliacion-form/direccion-form/direccion-form.component';
 import { ContactoFormComponent } from './components/afiliacion-form/contacto-form/contacto-form.component';
 import { RepresentanteFormComponent } from './components/afiliacion-form/representante-form/representante-form.component';
+import { MomentDateModule } from '@angular/material-moment-adapter';
+import { AfiliadoPerfilSidebarComponent } from './components/afiliado-perfil-sidebar/afiliado-perfil-sidebar.component';
 
 
 @NgModule({
@@ -54,6 +56,7 @@ import { RepresentanteFormComponent } from './components/afiliacion-form/represe
     DireccionFormComponent,
     ContactoFormComponent,
     RepresentanteFormComponent,
+    AfiliadoPerfilSidebarComponent,
   ],
   imports: [
     CommonModule,
@@ -64,7 +67,8 @@ import { RepresentanteFormComponent } from './components/afiliacion-form/represe
     GdevAuthModule,
     GdevStorageModule,
     NgxDropzoneModule,
-    PerfilesModule
+    PerfilesModule,
+    MomentDateModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

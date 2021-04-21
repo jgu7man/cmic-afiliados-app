@@ -1,18 +1,25 @@
 
   <article>
-    <div class="profile-img-container"
-    #container>
+    <div class="profile-img-container" #container>
       <div class="profile-img" #img
       *ngIf="afiliado"
       [ngStyle]="{'height.px': img.offsetWidth, 'width':'66.66%'}">
-      <img
-      width="100%"
-      [src]="afiliado.imgPerfil ? afiliado.imgPerfil.url :
-      'http://tritonshall.com/wp-content/themes/photobook/images/blank.png'"
-      alt="Cargar Logo"
-    />
+        <img
+          width="100%"
+          [src]="afiliado.imgPerfil ? afiliado.imgPerfil.url :
+          'http://tritonshall.com/wp-content/themes/photobook/images/blank.png'"
+          alt="Cargar Logo"
+        />
       </div>
+
+      <!-- Upload Image Perfil -->
+      <button mat-mini-fab class="upload-btn"
+      (click)="uploadProfileImage()">
+        <i class="fas fa-upload"></i>
+      </button>
     </div>
+
+
     <div
     class="logo-container">
     </div>
@@ -77,9 +84,24 @@
 
   <article>
     <p class="article-header">Servicios</p>
-    <p *ngFor="let servicio of afiliado.servicios">
-      {{servicio}}
-    </p>
+    <mat-form-field class="example-chip-list">
+      <mat-label>Servicios que ofrece</mat-label>
+      <mat-chip-list #chipList aria-label="Servicio que ofrece">
+        <mat-chip *ngFor="let servicio of servicios" [selectable]="true"
+                 [removable]="true" (removed)="remove(servicio)">
+          {{servicio}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Nuevo servicio..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="false"
+               (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+    </mat-form-field>
+    <button mat-raised-button color='primary'
+    (click)="afiliados_.savePartialAfiliado('servicios', servicios)"
+     >Guardar</button>
   </article>
 
   <article>

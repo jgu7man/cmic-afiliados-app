@@ -11,4 +11,17 @@ export interface iUploadInfo {
   metadata?: any
 }
 
-
+export interface iUploadOptions {
+  path: string
+  prefixName?: string
+  metadata?: Object
+  multiple?: boolean
+  maxFileSize?: number
+  showDropzone?: boolean
+  uploadButton?: boolean
+  uploadStatus?: boolean
+  toggleButtonLabel?: string
+  uploadButtonLabel?: string
+  dropzoneLabel?: string
+  compareDimensions?: 'equals' | 'notEquals'
+}

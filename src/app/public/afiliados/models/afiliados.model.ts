@@ -1,3 +1,4 @@
+import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { Actividad } from './actividades.model';
 
 export interface iUserAfiliado {
@@ -14,6 +15,10 @@ export class AfiliadoModel {
     public contacto: ContactoAfiliado,
     public representante_legal: RepresentanteAfiliado,
     public director: RepresentanteAfiliado,
+    public somos?: string,
+    public imgPerfil?: iUploadedFile,
+    public imgBanner?: iUploadedFile,
+    public servicios?: string[]
   ) {}
 }
 
@@ -105,7 +110,10 @@ export type PartialAfiliado =
   | DireccionAfiliadoModel
   | RepresentanteAfiliado
   | Intereses
-  | ContactoAfiliado;
+  | ContactoAfiliado
+  | iUploadedFile
+  | string
+  | string[]
 
 export type AfiliadoProperty =
 | "datos_generales"

@@ -6,6 +6,7 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
+  AbstractControl,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -57,7 +58,7 @@ export class AfiliadosRegistroComponent implements OnInit {
     })
     this.afiliado = this.formBuilder.group(
       {
-        RFC: this.rfcCtrl = new FormControl( '', [Validators.required, Validators.minLength(12), Validators.maxLength(13)]),
+        RFC: this.rfcCtrl = new FormControl( '', [Validators.required, Validators.minLength(12), Validators.maxLength(13), this.validateSymbols]),
         email: ['', [Validators.required, Validators.email]],
         contrasena: ['', [Validators.required]],
         confcontrasena: ['', [Validators.required]],
@@ -91,6 +92,22 @@ export class AfiliadosRegistroComponent implements OnInit {
         this.afiliado.controls.aviso_privacidad.setValue(true);
       }
     });
+  }
+
+  validateSymbols(control: AbstractControl) {
+    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    if (format.test(control.value) ) {
+      return { invalidFormat: true };
+    }
+    return null;
+  }
+
+  preventSpaces(e) {
+    if (e.which === 32)
+      return false;
+    else {
+      return
+    }
   }
 
   ngOnInit(): void {}

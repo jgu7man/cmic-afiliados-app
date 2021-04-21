@@ -19,13 +19,17 @@
 
         <!-- Empresa Content -->
         <div class="col s12 l8">
-          <img
-            width="100%"
-            height="200px"
-            src="/assets/img/cmic-perfil-banner.jpg"
-            alt="Cargar Imagen de Portada"
-            style="margin-bottom: 15px"
-          />
+
+          <div class="bannerPerfil">
+        <div id="img"
+          width="100%"
+          height="200px"
+          [ngStyle]="{'background': 'url('+banner+')'}"
+          alt="Cargar Imagen de Portada"
+          style="margin-bottom: 15px"
+        ></div>
+          </div>
+
 
           <mat-accordion>
 
@@ -56,7 +60,7 @@
 
 
             <!-- Contabilidad panel -->
-            <mat-expansion-panel #contaPanel style="margin-top: 5px">
+            <!-- <mat-expansion-panel #contaPanel style="margin-top: 5px">
               <mat-expansion-panel-header>
                 <mat-panel-title> Capacidad Contable </mat-panel-title>
                 <mat-panel-description>
@@ -67,7 +71,7 @@
               [rfc]="RFC"
               (extract$)="perfilOutput.conta = $event"
               ></g-perfil-cap-contable>
-            </mat-expansion-panel>
+            </mat-expansion-panel> -->
 
             <!-- Equipo y maquinaria panel -->
             <mat-expansion-panel #maqPanel style="margin-top: 5px">

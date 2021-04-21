@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { from, Subscription, timer } from 'rxjs';
 import { concatAll, debounce } from 'rxjs/operators';
 import { GdevStorage } from '../../storage-service.service';
-import { iUploadedFile } from '../../storage.model';
+import { iUploadedFile, iUploadOptions } from '../../storage.model';
 
 @Component({
-  selector: 'gdev-upload-files',
-  templateUrl: './upload-files.component.html',
-  styleUrls: ['./upload-files.component.scss']
+  templateUrl: './upload-modal.component.html',
+  styleUrls: ['./upload-modal.component.scss']
 })
-export class UploadFilesComponent implements OnInit, OnDestroy {
+export class GdevUploadModalComponent implements OnInit, OnDestroy {
 
   // public files: any[] = []
   public uploadingFiles: boolean = false
@@ -17,37 +17,34 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   public fileSubscription?: Subscription
   public uploadedFiles:iUploadedFile[] = []
 
-  @Input() path: string
-  @Input() prefixName: string
-  @Input() metadata?: Object
-
-  @Input() multiple: boolean = true
-  @Input() maxFileSize?: number
-
-  @Input() showDropzone: boolean = false
-  @Input() uploadButton: boolean = true
-  @Input() uploadStatus: boolean = true
-
-  @Input() toggleButtonLabel: string = 'Subir archivos'
-  @Input() uploadButtonLabel: string = 'Subir'
-  @Input() dropzoneLabel: string = 'Arrastra los archivos o toca aquí'
-
   @Output() uploadComplete: EventEmitter<iUploadedFile[]>
     = new EventEmitter();
 
   private triggerSubscription?: Subscription
+  public options: iUploadOptions = {
+    path: '' ,
+    multiple: true,
+    showDropzone: true,
+    uploadButton: false,
+    uploadStatus: true,
+    toggleButtonLabel:  'Subir archivos',
+    uploadButtonLabel: 'Subir',
+    dropzoneLabel: 'Arrastra los archivos o toca aquí',
+  }
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) clientOptions: iUploadOptions,
+    public dialog_: MatDialogRef<GdevUploadModalComponent>,
     public storage_: GdevStorage
   ) {
-    this.path = this.storage_.path
-    this.prefixName = this.storage_.prefixName
-    this.metadata = this.storage_.metadata
+    this.options = {...this.options, ...clientOptions}
+    if (this.storage_.path) this.options.path = this.storage_.path
+    if (this.storage_.prefixName) this.options.prefixName = this.storage_.prefixName
+    if (this.storage_.metadata) this.options.metadata = this.storage_.metadata
   }
 
   ngOnInit(): void {
-    if (this.showDropzone) this.storage_.showDropzone = this.showDropzone
-    if (this.uploadButton === false) {
+    if (this.options.uploadButton === false) {
       this.triggerSubscription =
       this.storage_.upload$
         .pipe(
@@ -62,11 +59,21 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
 
 
   onSelect(event: any) {
-    this.storage_.files.push(...event.addedFiles);
-    // const formData = new FormData();
-    // for (var i = 0; i < this._storage.files.length; i++) {
-    //   formData.append('file[]', this.files[i]);
-    // }
+    let files = event.addedFiles as any[];
+    if (this.options.compareDimensions) {
+      files.forEach(file => {
+        let matchFile = this.storage_.compareDimensions(file,
+          this.options.compareDimensions == 'equals' ? true : false)
+        if (matchFile)
+        this.storage_.files.push(file);
+      })
+    } else {
+      this.storage_.files.push(...files)
+    }
+
+    if (!this.options.uploadButton) {
+      this.loadFiles()
+    }
   }
 
   onRemove(file: any) {
@@ -78,13 +85,16 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
     this.uploadedFiles = []
     this.uploadingFiles = true;
 
-
-
     var uploads:any[] = []
+
+    console.log(  )
 
     await this.storage_.asyncForEach(this.storage_.files, async (file: any) => {
       uploads.push(
-        this.storage_.uploadFile(file, this.path, this.prefixName, this.metadata)
+        this.storage_.uploadFile(file, this.options.path,
+          this.options.prefixName ? this.options.prefixName : null,
+          this.options.metadata ? this.options.metadata : null
+        )
       )
     })
 
@@ -110,11 +120,11 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   get UploadedPercent(): void | number {
     let percent = (100 / this.storage_.files.length) * this.cantUploaded
     if (percent === 100) {
-      this.showDropzone = false
+      this.options.showDropzone = false
       if (this.fileSubscription && this.cantUploaded === this.storage_.files.length) {
-        this.fileSubscription.unsubscribe()
         this.storage_.files = []
         console.log( 'complete' )
+        this.dialog_.close(this.uploadedFiles)
       }
     }
     else return percent

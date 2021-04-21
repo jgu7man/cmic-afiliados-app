@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 import { MaterialModule } from 'src/shared/material.module';
+import { GdevUploadModalComponent } from './components/upload-modal/upload-modal.component';
 
 @NgModule({
-  declarations: [UploadFilesComponent],
+  declarations: [UploadFilesComponent, GdevUploadModalComponent],
   imports: [CommonModule, NgxDropzoneModule, MaterialModule],
-  exports: [UploadFilesComponent],
+  exports: [UploadFilesComponent, GdevUploadModalComponent],
 })
 export class GdevStorageModule {}

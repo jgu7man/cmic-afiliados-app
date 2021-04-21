@@ -1,7 +1,6 @@
-import { DireccionAfiliadoModel } from './../../../afiliados/models/afiliados.model';
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AfiliadoModel, DatosGeneralesAfiliado, iAfiliadoModel, emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
+import { AfiliadoModel,  emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iRecHumanos } from 'src/app/public/afiliados/models/perfiles.model';
 
 @Component({
@@ -23,6 +22,11 @@ export class PerfilSidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log( this.afiliado.servicios )
+  }
+
+  get year(): number {
+    return new Date().getFullYear()
   }
 
   get Hombres() {
