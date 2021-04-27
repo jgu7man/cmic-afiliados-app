@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PerfilesService } from '../../../services/perfiles.service';
+import { PerfilService } from '../../../services/perfil.service';
 import { emptyMember } from '../../../models/perfiles.model';
 
 @Component({
@@ -14,7 +14,7 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
 
   constructor(
     public location_: Location,
-    public perfiles_: PerfilesService,
+    public perfil_: PerfilService,
   ) {
 
 
@@ -24,11 +24,11 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
       contacto: new FormControl('', [Validators.required]),
     })
 
-    this.perfiles_.initialize('recursos_humanos')
+    this.perfil_.initialize('recursos_humanos')
   }
 
   ngOnInit(): void {
-    this.perfiles_.editSubscription = this.perfiles_
+    this.perfil_.editSubscription = this.perfil_
       .listenEditingItem.subscribe(item => {
       this.memberForm.patchValue(item)
     })
@@ -36,14 +36,14 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
   }
 
   async onSaveItem() {
-    await this.perfiles_.saveItems(this.memberForm, 'recursos_humanos')
+    await this.perfil_.saveItems(this.memberForm, 'recursos_humanos')
     let {updated, id, ...item} = emptyMember
     this.memberForm.setValue(item)
     this.memberForm.markAsPristine()
   }
 
   ngOnDestroy() {
-    this.perfiles_.getOutSection()
+    this.perfil_.getOutSection()
   }
 
 

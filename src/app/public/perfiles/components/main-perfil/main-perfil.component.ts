@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil, iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
-import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
+import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 
 @Component({
   selector: 'g-main-perfil',
@@ -26,11 +26,11 @@ export class MainPerfilComponent implements OnInit {
   }
   constructor(
     private _route: ActivatedRoute,
-    private _perfiles: PerfilesService,
+    private _perfil: PerfilService,
     private _afiliados: AfiliadosService,
   ) {
     this.RFC = this._route.snapshot.params['RFC']
-    this._perfiles.getInfoDoc<iPerfil>(this.RFC, 'perfil')
+    this._perfil.getInfoDoc<iPerfil>( 'perfil')
       .then(perfil => { if (perfil) this.perfil = perfil })
     this._afiliados.getPerfilAfiliado(this.RFC).subscribe((data) => {
       if (data) this.afiliado = data

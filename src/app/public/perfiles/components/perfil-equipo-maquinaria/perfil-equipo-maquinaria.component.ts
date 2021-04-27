@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { MaqEquipItem } from 'src/app/public/afiliados/models/perfiles.model';
-import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
+import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 
 @Component({
   selector: 'g-perfil-equipo-maquinaria',
@@ -18,10 +18,10 @@ export class PerfilEquipoMaquinariaComponent implements OnInit {
   items$?: Observable<MaqEquipItem[]>
 
   constructor(
-    public perfiles_: PerfilesService,
+    public perfil_: PerfilService,
   ) {
 
-    this.items$ = this.perfiles_.getInfoCollection<MaqEquipItem>('equipo_maquinaria')
+    this.items$ = this.perfil_.getInfoCollection<MaqEquipItem>('equipo_maquinaria')
 
    }
 
@@ -29,7 +29,7 @@ export class PerfilEquipoMaquinariaComponent implements OnInit {
   }
 
   sendToEdit(item: MaqEquipItem, index: number) {
-    this.perfiles_.onEditItem(item)
+    this.perfil_.onEditItem(item)
     this.editingItem = index
   }
 }

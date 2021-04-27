@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { iUserAfiliado } from '../../../models/afiliados.model';
-import { PerfilesService } from '../../../services/perfiles.service';
+import { PerfilService } from '../../../services/perfil.service';
 //import { StorageService } from 'Src/app/gdev/gdev-storage/gdev-storage.module';
 
 @Component({
@@ -29,7 +29,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     private _loading: GdevLoading,
     public location_: Location,
     private _cache: GdevCache,
-    private _perfiles: PerfilesService,
+    private _perfil: PerfilService,
     private _storage: GdevStorage
   ) {
     this.extractCtrl = new FormControl('', [Validators.required]);
@@ -62,7 +62,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     this.path = `afiliados/${RFC}/cap-contable`
     this.metadata = { RFC, email }
 
-    // this._perfiles.getInfoDoc<iCapContable>(this.RFC, 'cap-contable')
+    // this._perfil.getInfoDoc<iCapContable>(this.RFC, 'capacidad_financiera')
     //   .then(data => {
     //     if (data) {
     //       const { extract, capacidad } = data
@@ -70,7 +70,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     //     }
     //   })
 
-    this._perfiles.getInfoCollection( 'cap-contable')
+    this._perfil.getInfoCollection( 'capacidad_financiera')
       .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
       .subscribe(items => {
         items.forEach((item, i )=> {
@@ -96,7 +96,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
 
   saveDeclaracion(declaracion: AbstractControl, index: number): void {
     console.log( declaracion.value )
-    this._perfiles.updateInfoItem( 'cap-contable', declaracion.value)
+    this._perfil.updateInfoItem( 'capacidad_financiera', declaracion.value)
       .then(() => {
         let list = this.declaracionesForm.get(['declaraciones']) as FormArray;
         list.at(index).markAsPristine()
@@ -105,7 +105,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
 
 
   saveCapContable() {
-    this._perfiles.updateInfoDoc( 'cap-contable', this.capContableForm.value)
+    this._perfil.updateInfoDoc( 'capacidad_financiera', this.capContableForm.value)
     this.capContableForm.markAsPristine()
   }
 }

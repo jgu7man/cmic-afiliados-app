@@ -53,8 +53,6 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <g-perfil-experiencia
-              [rfc]="RFC"
-              (extract$)="perfilOutput.experiencia = $event"
               ></g-perfil-experiencia>
             </mat-expansion-panel>
 
@@ -81,7 +79,7 @@
                   {{perfilOutput.eqmaq}}
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <g-perfil-equipo-maquinaria [rfc]="RFC"></g-perfil-equipo-maquinaria>
+              <g-perfil-equipo-maquinaria></g-perfil-equipo-maquinaria>
             </mat-expansion-panel>
 
             <!-- Recursos humanos panel -->
@@ -93,9 +91,6 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <g-perfil-recursos-humanos
-              [rfc]="RFC"
-              (extract$)="perfilOutput.rrhh = $event"
-              (recursos$)="perfilOutput.personal = $event"
               ></g-perfil-recursos-humanos>
 
             </mat-expansion-panel>
@@ -109,8 +104,7 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <g-perfil-certificaciones
-              [rfc]="RFC"
-              (extract$)="perfilOutput.cert"
+
               ></g-perfil-certificaciones>
             </mat-expansion-panel>
 

@@ -19,12 +19,12 @@
           <mat-form-field>
             <mat-label>Extracto</mat-label>
             <textarea placeholder="Explica en breves palabras las certificaciones con las que cuenta la empresa" matInput type="text"
-              name="extractCtrl" [formControl]="perfiles_.extractCtrl"></textarea>
+              name="extractCtrl" [formControl]="perfil_.extractCtrl"></textarea>
           </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button [disabled]="perfiles_.extractCtrl.invalid && perfiles_.extractCtrl.pristine"
-          (click)="perfiles_.updateExtract('certificaciones')">Guardar</button>
+          <button mat-button [disabled]="perfil_.extractCtrl.invalid && perfil_.extractCtrl.pristine"
+          (click)="perfil_.updateExtract('certificaciones')">Guardar</button>
         </mat-card-actions>
       </mat-card>
 
@@ -76,8 +76,8 @@
                     <gdev-upload-files
                     [maxFileSize]="2097152"
                     [uploadButton]="false"
-                    [path]="perfiles_.filesPath"
-                    [metadata]="perfiles_.metadata"
+                    [path]="perfil_.filesPath"
+                    [metadata]="perfil_.metadata"
                     [multiple]="false"
                     [toggleButtonLabel]="'Agrega evidencia'"
                     dropzoneLabel="Toca o arrastra los archivos hasta aquí para subirlos. MÁXIMO 3 ARCHIVOS"

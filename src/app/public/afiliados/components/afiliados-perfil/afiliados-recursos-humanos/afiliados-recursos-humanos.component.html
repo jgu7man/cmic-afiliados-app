@@ -24,7 +24,7 @@
                     matInput
                     type="text"
                     name="name"
-                    [formControl]="perfiles_.extractCtrl"
+                    [formControl]="perfil_.extractCtrl"
                     required
                   ></textarea>
                 </mat-form-field>
@@ -34,8 +34,8 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button [disabled]="perfiles_.extractCtrl.invalid && perfiles_.extractCtrl.pristine"
-          (click)="perfiles_.updateExtract('recursos_humanos')"
+          <button mat-button [disabled]="perfil_.extractCtrl.invalid && perfil_.extractCtrl.pristine"
+          (click)="perfil_.updateExtract('recursos_humanos')"
           color="primary"
           >Guardar</button>
         </mat-card-actions>

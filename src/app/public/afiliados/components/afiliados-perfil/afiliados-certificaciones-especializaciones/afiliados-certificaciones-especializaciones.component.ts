@@ -4,7 +4,7 @@ import { GdevCache } from 'gdev-cache';
 import { GdevLoading } from 'gdev-loading';
 import { Location } from '@angular/common';
 import { iUserAfiliado } from '../../../models/afiliados.model';
-import { PerfilesService } from '../../../services/perfiles.service';
+import { PerfilService } from '../../../services/perfil.service';
 import { iAdtionalInfo, CertificacionModel, emptyCert } from '../../../models/perfiles.model';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
@@ -21,7 +21,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
     private _loading: GdevLoading,
     public location_: Location,
     private _cache: GdevCache,
-    public perfiles_: PerfilesService,
+    public perfil_: PerfilService,
     private _storage: GdevStorage
   ) {
 
@@ -34,11 +34,11 @@ export class AfiliadosCertificacionesEspecializacionesComponent
       evidencia: new FormControl([], [Validators.required]),
     });
 
-    this.perfiles_.initialize('certificaciones')
+    this.perfil_.initialize('certificaciones')
 
   }
   ngOnInit(): void {
-    this.perfiles_.editSubscription = this.perfiles_
+    this.perfil_.editSubscription = this.perfil_
       .listenEditingItem.subscribe(item => {
       this.certForm.patchValue(item)
     })
@@ -58,7 +58,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
 
 
   async onSaveItem() {
-    await this.perfiles_.saveItems(this.certForm, 'certificaciones')
+    await this.perfil_.saveItems(this.certForm, 'certificaciones')
     let {updated, id, ...item} = emptyCert
     this.certForm.setValue(item)
     this.certForm.markAsPristine()
@@ -76,6 +76,6 @@ export class AfiliadosCertificacionesEspecializacionesComponent
 
 
   ngOnDestroy() {
-    this.perfiles_.getOutSection()
+    this.perfil_.getOutSection()
   }
 }

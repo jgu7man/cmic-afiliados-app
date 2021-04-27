@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AfiliadoModel, AfiliadoProperty, emptyAfiliado } from '../../models/afiliados.model';
 import { GdevAlert } from 'gdev-alert';
 import { FormControl, FormGroup } from '@angular/forms';
-import { PerfilesService } from '../../services/perfiles.service';
+import { PerfilService } from '../../services/perfil.service';
 import { iPersonal } from '../../models/perfiles.model';
 
 @Component({
@@ -32,7 +32,7 @@ export class EditarPerfilComponent implements OnInit {
     public afiliados_: AfiliadosService,
     private _route: ActivatedRoute,
     private _alert: GdevAlert,
-    private _perfiles: PerfilesService
+    private _perfil: PerfilService
   ) {
     this.RFC = this._route.snapshot.params['RFC']
     if (this.RFC) {

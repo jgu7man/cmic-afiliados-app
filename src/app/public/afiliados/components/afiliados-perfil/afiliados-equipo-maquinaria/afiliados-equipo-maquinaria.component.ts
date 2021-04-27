@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { PerfilesService } from '../../../services/perfiles.service';
+import { PerfilService } from '../../../services/perfil.service';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { emptyMaqEquip } from '../../../models/perfiles.model';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
@@ -20,7 +20,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
 
   constructor(
     public location_: Location,
-    public perfiles_: PerfilesService,
+    public perfil_: PerfilService,
     private _storage: GdevStorage,
     _formBuilder: FormBuilder,
   ) {
@@ -33,11 +33,11 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
 
     });
 
-    this.perfiles_.initialize('equipo_maquinaria')
+    this.perfil_.initialize('equipo_maquinaria')
   }
 
   ngOnInit(): void {
-    this.perfiles_.editSubscription = this.perfiles_
+    this.perfil_.editSubscription = this.perfil_
       .listenEditingItem.subscribe(item => {
       this.eqpmaqForm.patchValue(item)
     })
@@ -50,7 +50,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
 
 
   async onSaveItem() {
-    await this.perfiles_.saveItems(this.eqpmaqForm, 'equipo_maquinaria')
+    await this.perfil_.saveItems(this.eqpmaqForm, 'equipo_maquinaria')
     let {updated, id, ...item} = emptyMaqEquip
     this.eqpmaqForm.setValue(item)
     this.eqpmaqForm.markAsPristine()
@@ -67,7 +67,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
 
 
   ngOnDestroy() {
-    this.perfiles_.getOutSection()
+    this.perfil_.getOutSection()
   }
 
 }

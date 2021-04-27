@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MemberModel } from 'src/app/public/afiliados/models/perfiles.model';
-import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
+import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 
 @Component({
   selector: 'g-perfil-recursos-humanos',
@@ -17,10 +17,10 @@ export class PerfilRecursosHumanosComponent implements OnInit {
   items$?: Observable<MemberModel[]>
 
   constructor(
-    public perfiles_: PerfilesService,
+    public perfil_: PerfilService,
   ) {
 
-      this.items$ = this.perfiles_.getInfoCollection
+      this.items$ = this.perfil_.getInfoCollection
         <MemberModel>( 'recursos_humanos')
 
    }
@@ -29,7 +29,7 @@ export class PerfilRecursosHumanosComponent implements OnInit {
   }
 
   sendToEdit(item: MemberModel, index: number) {
-    this.perfiles_.onEditItem(item)
+    this.perfil_.onEditItem(item)
     this.editingItem = index
   }
 

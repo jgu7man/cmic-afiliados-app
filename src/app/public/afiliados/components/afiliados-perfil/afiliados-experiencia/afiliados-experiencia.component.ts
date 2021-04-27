@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { emptyProyecto } from '../../../models/perfiles.model';
-import { PerfilesService } from '../../../services/perfiles.service';
+import { PerfilService } from '../../../services/perfil.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 
 
@@ -18,7 +18,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
 
   constructor(
     public storage_: GdevStorage,
-    public perfiles_: PerfilesService,
+    public perfil_: PerfilService,
     public location_: Location,
   ) {
 
@@ -40,11 +40,11 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
       evidencia: new FormControl([] ),
     })
 
-    this.perfiles_.initialize('experiencia')
+    this.perfil_.initialize('experiencia')
    }
 
   ngOnInit(): void {
-    this.perfiles_.editSubscription = this.perfiles_
+    this.perfil_.editSubscription = this.perfil_
       .listenEditingItem.subscribe(item => {
       this.proyectoForm.patchValue(item)
     })
@@ -63,7 +63,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
   }
 
   async onSetProyecto() {
-    await this.perfiles_.saveItems(this.proyectoForm, 'experiencia')
+    await this.perfil_.saveItems(this.proyectoForm, 'experiencia')
     let {updated, id, ...item} = emptyProyecto
     this.proyectoForm.setValue(item)
     this.proyectoForm.markAsPristine()
@@ -83,7 +83,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.perfiles_.getOutSection()
+    this.perfil_.getOutSection()
   }
 
 }

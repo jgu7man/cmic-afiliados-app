@@ -24,7 +24,7 @@
               matInput
               type="text"
               name="name"
-              [formControl]="perfiles_.extractCtrl"
+              [formControl]="perfil_.extractCtrl"
             >
             </textarea>
           </mat-form-field>
@@ -32,8 +32,8 @@
         <mat-card-actions>
           <button
             mat-button
-            [disabled]="perfiles_.extractCtrl.invalid && perfiles_.extractCtrl.pristine"
-            (click)="perfiles_.updateExtract('equipo_maquinaria')"
+            [disabled]="perfil_.extractCtrl.invalid && perfil_.extractCtrl.pristine"
+            (click)="perfil_.updateExtract('equipo_maquinaria')"
             color="primary"
           >
             Guardar
@@ -122,8 +122,8 @@
                   <div class="col s4">
                     <gdev-upload-files
                     [maxFileSize]="2097152"
-                      [path]="perfiles_.filesPath"
-                      [metadata]="perfiles_.metadata"
+                      [path]="perfil_.filesPath"
+                      [metadata]="perfil_.metadata"
                       [uploadButton]="false"
                       uploadButtonLabel="Agregar evidencia"
                       dropzoneLabel="Toca o arrastra los archivos hasta aquí para subirlos. MÁXIMO 3 ARCHIVOS"

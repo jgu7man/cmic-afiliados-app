@@ -94,6 +94,7 @@ export type SectionName =
   | "equipo_maquinaria"
   | "recursos_humanos"
   | "certificaciones"
+  | "capacidad_financiera"
 
 
 

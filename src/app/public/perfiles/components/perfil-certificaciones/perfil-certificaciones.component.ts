@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
+import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 import { CertificacionModel } from '../../../afiliados/models/perfiles.model';
 
 @Component({
@@ -17,10 +17,10 @@ export class PerfilCertificacionesComponent implements OnInit {
   items$?: Observable<CertificacionModel[]>
 
   constructor(
-    public perfiles_: PerfilesService,
+    public perfil_: PerfilService,
   ) {
 
-    this.items$ = this.perfiles_.getInfoCollection
+    this.items$ = this.perfil_.getInfoCollection
       <CertificacionModel>( 'certificaciones')
 
    }
@@ -29,7 +29,7 @@ export class PerfilCertificacionesComponent implements OnInit {
   }
 
   sendToEdit(item: CertificacionModel, index: number) {
-    this.perfiles_.onEditItem(item)
+    this.perfil_.onEditItem(item)
     this.editingItem = index
   }
 
