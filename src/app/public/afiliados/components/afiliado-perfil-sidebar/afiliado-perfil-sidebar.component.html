@@ -1,23 +1,22 @@
 <article>
   <div class="profile-img-container" #container>
     <div class="profile-img" #img
-    *ngIf="afiliado"
-    [ngStyle]="putImage(img) | async">
-      <ng-container *ngIf="afiliado.perfil?.imgPerfil; else default">
+    [ngStyle]="{'height.px':img.offsetWidth  }">
+      <ng-container *ngIf="ImageSrc; else default">
         <img
           width="100%"
-          [src]="afiliado.perfil?.imgPerfil?.url "
+          [src]="ImageSrc"
           alt="{{afiliado.datos_generales.comercial_nombre}}"
           onerror="this.style.display='none'"
         />
       </ng-container>
-      <ng-template #default >
-        <p class="center">
-          {{afiliado.datos_generales.comercial_nombre}}
-        </p>
-
-      </ng-template>
     </div>
+    <ng-template #default >
+      <p class="center">
+        {{afiliado.datos_generales.comercial_nombre}}
+      </p>
+
+    </ng-template>
 
     <!-- Upload Image Perfil -->
     <button mat-mini-fab class="upload-btn"

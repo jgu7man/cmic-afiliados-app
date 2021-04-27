@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, AfterViewChecked, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, interval, of } from 'rxjs';
+import { BehaviorSubject, interval, Observable, of } from 'rxjs';
 import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
 import { AfiliadoModel,  emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
@@ -16,16 +16,18 @@ import { GdevLoading } from 'gdev-loading';
   templateUrl: './afiliado-perfil-sidebar.component.html',
   styleUrls: ['./afiliado-perfil-sidebar.component.scss']
 })
-export class AfiliadoPerfilSidebarComponent implements OnInit {
+export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
 
-  private _afiliado: BehaviorSubject<AfiliadoModel> = new BehaviorSubject(
+  public _afiliado: BehaviorSubject<AfiliadoModel> = new BehaviorSubject(
     emptyAfiliado
   );
   @Input() set afiliado(variable: AfiliadoModel) { this._afiliado.next(variable); }
   get afiliado() { return this._afiliado.getValue() }
 
   @Input() personal: iPersonal = {} as iPersonal;
-
+  @ViewChild('img') imgContainer?: HTMLDivElement;
+  imgWidth?: number
+  imgStyle: any
 
   constructor(
     private dialog: MatDialog,
@@ -33,17 +35,28 @@ export class AfiliadoPerfilSidebarComponent implements OnInit {
     private _loading: GdevLoading
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this._afiliado.pipe(debounceTime(500)).subscribe(data => {
-      // console.log( data )
       this.afiliado = data
     })
+
   }
 
-  putImage(img: HTMLDivElement) {
-    return of({ 'height.px': img.offsetWidth, 'width': '66.66%' } )
-      .pipe(delay(1000), tap(data => console.log( data )))
+  ngAfterViewInit() {
+    if (this.imgContainer) {
+      this.imgWidth = this.imgContainer.offsetWidth
+      this.imgStyle = { 'height.px':this.imgWidth, 'width': '66.66%' }
+    }
 
+  }
+
+
+  get ImageSrc() {
+    return this.afiliado.perfil
+      ? this.afiliado.perfil.imgPerfil
+        ? this.afiliado.perfil.imgPerfil.url
+        : ''
+      : ''
   }
 
   uploadProfileImage(): void {
