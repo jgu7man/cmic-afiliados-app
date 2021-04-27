@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
+import { ActivatedRoute } from '@angular/router';
 import { GdevCache } from 'gdev-cache';
 import { Especialidad,  Actividad, catalogoName } from '../../models/actividades.model';
 import { ContactoInteres, DatosGeneralesAfiliado, Intereses } from '../../models/afiliados.model';
@@ -13,6 +14,7 @@ import { AfiliadosService } from '../../services/afiliados.service';
 })
 export class ActividadesFormComponent implements OnInit {
 
+  RFC:string
   afiliado: DatosGeneralesAfiliado | null
   especialidadSelected: Especialidad = { nombre: '', actividades: [] };
   afiliadoIntereses: Intereses
@@ -52,8 +54,10 @@ export class ActividadesFormComponent implements OnInit {
   constructor(
     public actividades_: ActividadesService,
     public afiliados_: AfiliadosService,
-    private _cache: GdevCache
-  ) {
+    private _cache: GdevCache,
+    private _route: ActivatedRoute
+    ) {
+    this.RFC = this._route.snapshot.params['RFC']
     this.afiliadoIntereses = new Intereses([], [], [], this.contacto_1, this.contacto_2, false, false,)
     this.afiliado = this._cache.getDataKey<DatosGeneralesAfiliado>('datos_generales')
    }

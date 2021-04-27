@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
-import { iExperiencia, iProyecto } from 'src/app/public/afiliados/models/perfiles.model';
-import { filter } from 'rxjs/operators';
+import { iProyecto } from 'src/app/public/afiliados/models/perfiles.model';
+import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'g-perfil-experiencia',
@@ -16,24 +16,32 @@ export class PerfilExperienciaComponent implements OnInit {
   @Input() set rfc(RFC: string) { this._rfc.next(RFC); }
   get rfc() { return this._rfc.getValue()}
 
+  @Input() edit: boolean = false;
+
+  @Output() toEdit: EventEmitter<iProyecto> = new EventEmitter()
   @Output() extract$: EventEmitter<string> = new EventEmitter();
   items$?: Observable<iProyecto[]>
+  items: iProyecto[] = []
+  editingItem?: number
 
   constructor(
-    private _perfiles: PerfilesService,
+    public  perfiles_: PerfilesService,
   ) {
 
     this._rfc.pipe(filter(rfc => !!rfc)).subscribe(rfc => {
-      this._perfiles.getInfoDoc<iExperiencia>(this.rfc, 'experiencia')
-        .then(data => { if (data) this.extract$.emit(data.extract) })
-
-      this.items$ = this._perfiles.getInfoCollection
-        <iProyecto>(this.rfc, 'experiencia')
+      this.items$ = this.perfiles_.getInfoCollection
+        <iProyecto>(rfc, 'experiencia')
+        .pipe(tap(() =>this.editingItem = undefined))
     })
 
-   }
+  }
 
   ngOnInit(): void {
+  }
+
+  sendToEdit(item: iProyecto, index: number) {
+    this.toEdit.emit(item)
+    this.editingItem = index
   }
 
 }

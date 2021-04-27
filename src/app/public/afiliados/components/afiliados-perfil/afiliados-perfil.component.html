@@ -53,7 +53,7 @@
           <mat-action-row>
             <button mat-raised-button color='primary'
             [disabled]="somosInput.invalid"
-            (click)="afiliados_.savePartialAfiliado('somos', somos)"
+            (click)="afiliados_.savePartialAfiliado('perfil.somos', somos, RFC)"
             >Guardar</button>
           </mat-action-row>
         </mat-expansion-panel>
@@ -64,18 +64,70 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Experiencia </mat-panel-title>
             <mat-panel-description>
-              {{perfilOutput.experiencia}}
+              {{afiliado.adicional?.expExtract}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-experiencia
           [rfc]="RFC"
-          (extract$)="perfilOutput.experiencia = $event"
           ></g-perfil-experiencia>
           <mat-action-row>
             <a [routerLink]="['../experiencia']"
             mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
 
+        </mat-expansion-panel>
+
+
+
+
+        <!-- Equipo y maquinaria panel -->
+        <mat-expansion-panel #maqPanel style="margin-top: 5px">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Equipo y maquinaria </mat-panel-title>
+            <mat-panel-description>
+              {{afiliado.adicional?.maqExtract}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <g-perfil-equipo-maquinaria [rfc]="RFC"></g-perfil-equipo-maquinaria>
+          <mat-action-row>
+            <a [routerLink]="['../equipo-maquinaria']"
+            mat-raised-button color='primary' >Editar</a>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <!-- Recursos humanos panel -->
+        <mat-expansion-panel #rhPanel style="margin-top: 5px">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Recursos Humanos </mat-panel-title>
+            <mat-panel-description>
+              {{afiliado.adicional?.rrhhExtract}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <g-perfil-recursos-humanos
+          [rfc]="RFC"
+          (recursos$)="perfilOutput.personal = $event"
+          ></g-perfil-recursos-humanos>
+          <mat-action-row>
+            <a [routerLink]="['../recursos-humanos']"
+            mat-raised-button color='primary' >Editar</a>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+        <!-- Certificaciones panel -->
+        <mat-expansion-panel #certPanel style="margin-top: 5px">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
+            <mat-panel-description>
+              {{afiliado.adicional?.certExtract}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <g-perfil-certificaciones
+          [rfc]="RFC"
+          ></g-perfil-certificaciones>
+          <mat-action-row>
+            <a [routerLink]="['../certificaciones-especializaciones']"
+            mat-raised-button color='primary' >Editar</a>
+          </mat-action-row>
         </mat-expansion-panel>
 
 
@@ -96,60 +148,6 @@
             mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel> -->
-
-        <!-- Equipo y maquinaria panel -->
-        <mat-expansion-panel #maqPanel style="margin-top: 5px">
-          <mat-expansion-panel-header>
-            <mat-panel-title> Equipo y maquinaria </mat-panel-title>
-            <mat-panel-description>
-              {{perfilOutput.eqmaq}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <g-perfil-equipo-maquinaria [rfc]="RFC"></g-perfil-equipo-maquinaria>
-          <mat-action-row>
-            <a [routerLink]="['../equipo-maquinaria']"
-            mat-raised-button color='primary' >Editar</a>
-          </mat-action-row>
-        </mat-expansion-panel>
-
-        <!-- Recursos humanos panel -->
-        <mat-expansion-panel #rhPanel style="margin-top: 5px">
-          <mat-expansion-panel-header>
-            <mat-panel-title> Recursos Humanos </mat-panel-title>
-            <mat-panel-description>
-              {{perfilOutput.rrhh}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <g-perfil-recursos-humanos
-          [rfc]="RFC"
-          (extract$)="perfilOutput.rrhh = $event"
-          (recursos$)="perfilOutput.personal = $event"
-          ></g-perfil-recursos-humanos>
-          <mat-action-row>
-            <a [routerLink]="['../recursos-humanos']"
-            mat-raised-button color='primary' >Editar</a>
-          </mat-action-row>
-        </mat-expansion-panel>
-
-        <!-- Certificaciones panel -->
-        <mat-expansion-panel #certPanel style="margin-top: 5px">
-          <mat-expansion-panel-header>
-            <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
-            <mat-panel-description>
-              {{perfilOutput.cert}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <g-perfil-certificaciones
-          [rfc]="RFC"
-          (extract$)="perfilOutput.cert"
-          ></g-perfil-certificaciones>
-          <mat-action-row>
-            <a [routerLink]="['../certificaciones-especializaciones']"
-            mat-raised-button color='primary' >Editar</a>
-          </mat-action-row>
-        </mat-expansion-panel>
-
-
 
       </mat-accordion>
     </div>

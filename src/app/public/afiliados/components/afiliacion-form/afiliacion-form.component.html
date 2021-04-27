@@ -13,7 +13,12 @@
 
           <div>
             <button mat-button matStepperNext #datosGeneralesBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado('datos_generales', afiliado.datos_generales)">Siguiente</button>
+              (click)="afiliados_.savePartialAfiliado(
+                'datos_generales',
+                afiliado.datos_generales,
+                RFC
+                )"
+                >Siguiente</button>
           </div>
         </mat-step>
 
@@ -28,7 +33,11 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button mat-button matStepperNext #direccionBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado('domicilio', afiliado.domicilio)">Siguiente</button>
+              (click)="afiliados_.savePartialAfiliado(
+                'domicilio',
+                afiliado.domicilio,
+                RFC
+                )">Siguiente</button>
           </div>
         </mat-step>
 
@@ -44,7 +53,12 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button #contactoBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado('contacto', afiliado.contacto)" mat-button
+              (click)="afiliados_.savePartialAfiliado(
+                'contacto',
+                afiliado.contacto,
+                RFC
+                )"
+                mat-button
               matStepperNext>Siguiente</button>
           </div>
         </mat-step>
@@ -60,7 +74,11 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button #representanteBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado('representante_legal', afiliado.representante_legal)" mat-button
+              (click)="afiliados_.savePartialAfiliado(
+                'representante_legal',
+                afiliado.representante_legal,
+                RFC
+                )" mat-button
               matStepperNext>Siguiente</button>
           </div>
         </mat-step>
@@ -82,7 +100,11 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button #directorBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado('representante_legal', afiliado.representante_legal)" mat-button
+              (click)="afiliados_.savePartialAfiliado(
+                'representante_legal',
+                afiliado.representante_legal,
+                RFC
+                )" mat-button
               matStepperNext>Siguiente</button>
           </div>
         </mat-step>
@@ -95,7 +117,7 @@
             <div>
               <button mat-button matStepperPrevious>Atrás</button>
               <button mat-button
-                matStepperNext [routerLink]="['/afiliados/elegir-actividades']">Siguiente</button>
+                matStepperNext [routerLink]="['/afiliados/elegir-actividades', RFC]">Siguiente</button>
             </div>
         </mat-step>
       </mat-vertical-stepper>

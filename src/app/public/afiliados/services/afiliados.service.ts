@@ -4,8 +4,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
-import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { debounceTime, flatMap, map, switchMap } from 'rxjs/operators';
 import { AfiliadoModel, iAfiliadoModel, iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
 
 @Injectable({
@@ -40,7 +40,7 @@ export class AfiliadosService {
    * @param {string} field: nombre del campo de la parcialidad a guardar
    * @param {PartialAfiliado} partialAafiliado parcialidad que se ha de guardar
    */
-  savePartialAfiliado(field: string, partialAafiliado: PartialAfiliado) {
+  savePartialAfiliado(field: string, partialAafiliado: PartialAfiliado, RFC: string) {
     // Obtenemos del local storage la información del usuario
     console.log( partialAafiliado )
     const user = this._cache.getDataKey<iUserAfiliado>('user');
@@ -88,7 +88,7 @@ export class AfiliadosService {
         console.log('usuario registrado');
         this._alert.sendFloatNotification('Usuario registrado');
         this._cache.updateData('user', afiliado);
-        this._router.navigate(['/afiliados/afiliacion']);
+        this._router.navigate(['/afiliados/afiliacion', RFC]);
       }
       /*
       console.log('usuario registrado')
@@ -100,10 +100,10 @@ export class AfiliadosService {
     }
   }
 
-  getPerfilAfiliado(RFC: string):Observable<AfiliadoModel>{
+  getPerfilAfiliado(RFC: string):Observable<AfiliadoModel | undefined>{
     return this._afs.collection('afiliados')
-      .doc<AfiliadoModel>(RFC).get()
-      .pipe(map((doc) => doc.data() as AfiliadoModel))
+      .doc<AfiliadoModel>(RFC).valueChanges()
+      .pipe(debounceTime(500))
   }
 
 

@@ -1,35 +1,44 @@
-import { iDireccion } from "./afiliados.model";
+import { emptyDireccion, iDireccion } from "./afiliados.model";
 import firebase from "firebase/app"
 import { iUploadedFile } from "src/app/gdev/gdev-storage/storage.model";
 
 export interface iPerfil {
-  somos: string,
-  perfilImg?: iUploadedFile,
-  bannerImg?: iUploadedFile
-}
-
-export interface iExperiencia {
-  extract: string,
+  somos?: string,
+  imgPerfil?: iUploadedFile,
+  imgBanner?: iUploadedFile,
+  servicios?: string[],
+  primerAfiliacion?: number,
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface iProyecto {
-  nombre: string,
-  cliente: string,
-  fecha:number | string,
-  monto: string,
-  ubicacion: iDireccion,
-  sector: 'Privado' | 'Público',
-  evidencia: iUploadedFile[],
+export interface iAdtionalInfo {
+  personal?: iPersonal
+  capFinanciera?: number,
+  certExtract?: string,
+  maqExtract?: string,
+  expExtract?: string,
+  rrhhExtract?: string,
   updated?: Date | firebase.firestore.Timestamp
-  id?:string
 }
 
-export interface iCapContable {
-  capacidad: any
-  extract: string
-  updated?: Date | firebase.firestore.Timestamp
+
+export class iProyecto {
+  constructor(
+    public nombre: string,
+    public cliente: string,
+    public fecha:number | string,
+    public monto: string,
+    public ubicacion: iDireccion,
+    public sector: 'Privado' | 'Público',
+    public evidencia: iUploadedFile[],
+    public updated?: Date | firebase.firestore.Timestamp,
+    public id?:string,
+  ) {}
 }
+
+export const emptyProyecto: iProyecto =
+  new iProyecto('','','','',emptyDireccion,'Público', [])
+
 
 export interface iDeclaracion {
   year: number,
@@ -38,10 +47,6 @@ export interface iDeclaracion {
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface iMaquinariaEquipo {
-  extract: string,
-  updated?: Date | firebase.firestore.Timestamp
-}
 
 export interface iMaqEquipItem {
   nombre: string,
@@ -53,12 +58,11 @@ export interface iMaqEquipItem {
   id?: string
 }
 
-export interface iRecHumanos {
-  extract: string,
+export interface iPersonal {
   planta_fija: number;
   capacidad_proyecto: number;
-  hombres: number;
-  mujeres: number;
+  hombres?: number;
+  mujeres?: number;
   updated?: Date | firebase.firestore.Timestamp
 }
 
@@ -70,10 +74,6 @@ export interface iMemberModel {
   id?: string
 }
 
-export interface iCertificaciones {
-  extract: string,
-  updated?: Date | firebase.firestore.Timestamp
-}
 
 export interface iCertificacion {
   nombre: string,
@@ -84,12 +84,12 @@ export interface iCertificacion {
   id?: string
 }
 
-export type PerfilDoc =
-| iExperiencia
-| iCapContable
-| iMaquinariaEquipo
-| iRecHumanos
-| iCertificaciones
+export interface iPerfilSection {
+  extract: string,
+  updated?: Date | firebase.firestore.Timestamp
+}
+
+
 
 export type PerfilCol =
 | iProyecto

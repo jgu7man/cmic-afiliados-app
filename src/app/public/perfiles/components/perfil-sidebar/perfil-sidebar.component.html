@@ -7,7 +7,7 @@
       [ngStyle]="{'height.px': img.offsetWidth, 'width':'66.66%'}">
       <img
       width="100%"
-      [src]="afiliado.imgPerfil ? afiliado.imgPerfil.url :
+      [src]="afiliado.perfil?.imgPerfil ? afiliado.perfil?.imgPerfil?.url :
       'http://tritonshall.com/wp-content/themes/photobook/images/blank.png'"
       alt="Cargar Logo"
     />
@@ -77,7 +77,7 @@
 
   <article>
     <p class="article-header">Servicios</p>
-    <p *ngFor="let servicio of afiliado.servicios">
+    <p *ngFor="let servicio of afiliado.perfil?.servicios">
       {{servicio}}
     </p>
   </article>

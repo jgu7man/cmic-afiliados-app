@@ -1,3 +1,4 @@
+import { iAdtionalInfo, iPerfil } from './perfiles.model';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { Actividad } from './actividades.model';
 
@@ -15,10 +16,8 @@ export class AfiliadoModel {
     public contacto: ContactoAfiliado,
     public representante_legal: RepresentanteAfiliado,
     public director: RepresentanteAfiliado,
-    public somos?: string,
-    public imgPerfil?: iUploadedFile,
-    public imgBanner?: iUploadedFile,
-    public servicios?: string[]
+    public perfil?: iPerfil,
+    public adicional?: iAdtionalInfo
   ) {}
 }
 
@@ -30,6 +29,7 @@ export interface iAfiliadoModel {
   contacto: ContactoAfiliado;
   representante_legal: RepresentanteAfiliado;
   director: RepresentanteAfiliado;
+  perfil: iPerfil
 }
 
 export class DatosGeneralesAfiliado {
@@ -105,6 +105,8 @@ export class Intereses {
   ) {}
 }
 
+
+
 export type PartialAfiliado =
   | DatosGeneralesAfiliado
   | DireccionAfiliadoModel
@@ -120,7 +122,8 @@ export type AfiliadoProperty =
 | "domicilio"
 | "contacto"
 | "representante_legal"
-| "director"
+  | "director"
+|"perfil"
 
 
 export const emptyDireccion = {

@@ -67,7 +67,7 @@
               >Atrás</button>
               <button mat-button matStepperNext
               [disabled]="afiliadoIntereses[catalogo.id].length < 3"
-              (click)="afiliados_.savePartialAfiliado('intereses',  afiliadoIntereses)"
+              (click)="afiliados_.savePartialAfiliado('intereses',  afiliadoIntereses, RFC)"
               >Siguiente</button>
             </div>
         </mat-step>
@@ -209,7 +209,13 @@
         </mat-step>
 
 
-        <!-- TODO Agregar la validación de los permisos en con checkbox para el consentimiento y la veracidad en un modal -->
+        <mat-step>
+          <ng-template matStepLabel>Terminado!</ng-template>
+          <p>Has terminado con el registro de afiliación. Podrás editar los datos en la sección de edición de empresa</p>
+          <button mat-button matStepperPrevious>Atrás</button>
+            <button [routerLink]="['/afiliados/perfil']"
+            >Perfil</button>
+        </mat-step>
       </mat-vertical-stepper>
 
     </div>

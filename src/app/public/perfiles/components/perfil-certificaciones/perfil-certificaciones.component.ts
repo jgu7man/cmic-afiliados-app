@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
-import { iCertificacion, iCertificaciones } from '../../../afiliados/models/perfiles.model';
+import { iCertificacion } from '../../../afiliados/models/perfiles.model';
 
 @Component({
   selector: 'g-perfil-certificaciones',
@@ -23,8 +23,8 @@ export class PerfilCertificacionesComponent implements OnInit {
   ) {
 
     this._rfc.pipe(filter(rfc => !!rfc)).subscribe(rfc => {
-      this._perfiles.getInfoDoc<iCertificaciones>(this.rfc, 'certificaciones')
-        .then(data => { if (data) this.extract$.emit(data.extract) })
+      // this._perfiles.getInfoDoc<iCertificaciones>(this.rfc, 'certificaciones')
+      //   .then(data => { if (data) this.extract$.emit(data.extract) })
 
       this.items$ = this._perfiles.getInfoCollection
         <iCertificacion>(this.rfc, 'certificaciones')

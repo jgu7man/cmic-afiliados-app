@@ -7,7 +7,7 @@ import { take } from 'rxjs/operators';
 import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
 import { iUploadedFile, iUploadOptions } from 'src/app/gdev/gdev-storage/storage.model';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel, iUserAfiliado } from '../../models/afiliados.model';
-import { iRecHumanos } from '../../models/perfiles.model';
+import { iPersonal } from '../../models/perfiles.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class AfiliadosPerfilComponent implements OnInit {
     rrhh: '',
     conta: '',
     cert: '',
-    personal: {} as iRecHumanos
+    personal: {} as iPersonal
   }
 
   @ViewChild('img') private imgPerfil?: HTMLImageElement
@@ -39,24 +39,29 @@ export class AfiliadosPerfilComponent implements OnInit {
     private _cache: GdevCache,
     private _dialog: MatDialog
   ) {
-    // if (this.imgPerfil) this.perfilHeight = this.imgPerfil.offsetWidth
-    this.RFC = this._route.snapshot.params['RFC']
-    if (!this.RFC) {
-      this.RFC = this._cache.getDataKey<iUserAfiliado>('user')?.RFC as string
-    }
-    this.afiliados_.getPerfilAfiliado(this.RFC).subscribe((data) => {
-      console.log(data);
-      // TODO Poner un estado CARGANDO y apagarlo aquí
-      if (data) {
-        this.afiliado = data;
-        this.RFC = data.datos_generales?.RFC as string;
-      }
-      else {
-        this._alert.sendMessageAlert('Primero necesitas iniciar sesión')
-        // this._router.navigate(['/afiliados/login'])
 
-      }
-    });
+    let param = this._route.snapshot.params['RFC']
+    this.RFC = param ? param
+      : this._cache.getDataKey<iUserAfiliado>('user')?.RFC as string
+
+    if (!this.RFC) {
+      this._alert.sendMessageAlert('Primero necesitas iniciar sesión como afiliado o administrador')
+        this._router.navigate(['/afiliados/login'])
+    } else {
+      this.afiliados_.getPerfilAfiliado(this.RFC).subscribe((data) => {
+        // TODO Poner un estado CARGANDO y apagarlo aquí
+        if (data) {
+          this.afiliado = data;
+          this.RFC = data.datos_generales?.RFC as string;
+          this.somos = data.perfil?.somos ? data.perfil.somos : ''
+
+        }
+        else {
+          this._alert.sendMessageAlert('No se encontró el perfil')
+        }
+      });
+    }
+
   }
 
   ngOnInit(): void { }
@@ -74,13 +79,13 @@ export class AfiliadosPerfilComponent implements OnInit {
       minHeight: '40%',
       data: options
     }).afterClosed().subscribe((file: iUploadedFile[]) => {
-      this.afiliados_.savePartialAfiliado('imgBanner', file[0])
+      this.afiliados_.savePartialAfiliado('perfil.imgBanner', file[0], this.RFC)
     })
 
   }
 
   get banner() {
-    return this.afiliado.imgBanner ? this.afiliado.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
+    return this.afiliado.perfil?.imgBanner ? this.afiliado.perfil.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
   }
 
 }

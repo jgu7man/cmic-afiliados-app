@@ -18,7 +18,7 @@ export class AfiliacionFormComponent implements OnInit {
   public addCorrespondencia: boolean = false
   public director_igual_legal: boolean = false
 
-
+  public RFC: string
 
   constructor(
     public dialog: MatDialog,
@@ -26,11 +26,9 @@ export class AfiliacionFormComponent implements OnInit {
     private _cache: GdevCache
   ) {
     // Se obtiene el usuario del cache
-    let user = this._cache.getDataKey<iUserAfiliado>('user')
-    this.user = user ? user : { RFC: '', email: '' }
-
-
-
+    let user = this._cache.getDataKey<iUserAfiliado>('user') as iUserAfiliado
+      this.user = user
+      this.RFC = user.RFC
 
   }
 

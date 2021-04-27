@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Información de la empresa</mat-card-title>
+          <mat-card-subtitle>Edita lo correspondiente a la información pública de la empresa</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+          <form class="row" [formGroup]="perfilForm">
+
+            <div class="col s12">
+              <gdev-year-selector
+              [fieldLabel]="'Año de afiliación al CMIC'"
+              matTooltip="Presiona el ícono para elegir una fecha"
+              (selected)="catchYear($event)"
+              [value]="perfilForm.value.primerAfiliacion"
+              ></gdev-year-selector>
+            </div>
+
+            <div class="col s12">
+              <mat-form-field>
+                <mat-label>Capacidad financiera</mat-label>
+                <input
+                matInput
+                type="number"
+                name="capFinanciera"
+                formControlName="capFinanciera"
+                >
+                <span matPrefix>$&nbsp;</span>
+                <span matSuffix>.00</span>
+                <mat-error *ngIf="perfilForm.hasError('required', 'capFinanciera')">
+                 Capacidad financiera es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </form>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color='primary'
+          (click)="saveData('perfil', perfilForm)"
+          [disabled]="perfilForm.pristine" >
+            Guardar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+
+      <g-afiliados-personal-form [RFC]="RFC"></g-afiliados-personal-form>
+
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Servicios</mat-card-title>
+          <mat-card-subtitle>Puedes agregar o quitar los servicios que ofrece tu empresa</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field class="example-chip-list">
+            <mat-label>Servicios que ofrece</mat-label>
+            <mat-chip-list #chipList aria-label="Servicio que ofrece">
+              <mat-chip *ngFor="let servicio of servicios" [selectable]="true"
+                       [removable]="true" (removed)="remove(servicio)">
+                {{servicio}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Nuevo servicio..."
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="false"
+                     (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color='primary'
+          (click)="afiliados_.savePartialAfiliado('perfil.servicios', servicios, RFC)"
+           >Guardar</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+</div>

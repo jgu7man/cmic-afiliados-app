@@ -37,54 +37,11 @@
 
           <div class="row">
             <div class="col s12">
-              <mat-accordion>
-                <div class="proyect-item"
-                *ngFor="let item of items; index as i">
-                <mat-expansion-panel *ngIf="editingItem != i">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title><b>{{item.nombre}}</b></mat-panel-title>
-                    <mat-panel-description>Cliente: <span class="data-text">{{item.cliente}}</span> </mat-panel-description>
-                  </mat-expansion-panel-header>
-                  <mat-card-content class="proyecto-content">
-                    <div class="row">
-                      <div class="col s12 m5">
-                        <p>Fecha del proyecto:<span class="data-text"> {{item.fecha}} </span> </p>
-                        <p>Monto contratado:<span class="data-text"> {{item.monto}} </span> </p>
-                        <p>Sector:<span class="data-text"> {{item.sector}} </span> </p>
-                        <p><b>Ubicado en:</b></p>
-                        <p> {{item.ubicacion.calle}} {{item.ubicacion.num_ext}} {{item.ubicacion.num_int}} </p>
-                        <p> {{item.ubicacion.colonia}} {{item.ubicacion.codigo_postal}} </p>
-                        <p> {{item.ubicacion.municipio_alcaldia}}, {{item.ubicacion.entidad_federativa}} </p>
-                      </div>
-                      <div class="col s12 m7 proyect-gallery">
-                        <div class="row">
-                          <div class="col s12 m6 l4" *ngFor="let img of item.evidencia">
-                            <mat-card>
-                              <img mat-card-image [src]="img.url" [alt]="img.fileName">
-                            </mat-card>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </mat-card-content>
-
-                  <mat-action-row>
-                    <button
-                    mat-raised-button
-                    color='accent'
-                    (click)="onEditItem(item, i)"
-                    >Editar</button>
-                    <button mat-raised-button
-                    color="warn"
-                    (click)="_perfiles.deleteInfoItem(RFC, 'experiencia', item.id)">
-                      Eliminar
-                    </button>
-                  </mat-action-row>
-                </mat-expansion-panel>
-                </div>
-
-              </mat-accordion>
+              <g-perfil-experiencia
+              [rfc]="RFC"
+              [edit]="true"
+              (toEdit)="onEditItem($event)"
+              ></g-perfil-experiencia>
             </div>
           </div>
 
@@ -126,20 +83,12 @@
 
 
                   <div class="col s12 m6">
-                    <mat-form-field>
-                      <mat-label>Fecha</mat-label>
-                      <input matInput [matDatepicker]="dp" type="text"  name="fecha" formControlName="fecha"  >
-                      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                      <mat-datepicker #dp
-                                      startView="multi-year"
-                                      (yearSelected)="chosenYearHandler($event, dp)"
-                                      panelClass="example-month-picker"
-                                      disabled="false">
-                      </mat-datepicker>
-                      <mat-error *ngIf="proyectoForm.hasError('required', 'fecha')">
-                        Este dato es necesario
-                      </mat-error>
-                    </mat-form-field>
+                    <gdev-year-selector
+                    [value]="proyectoForm.value.fecha"
+                    (selected)="catchYear($event)"
+                    [max]="now"
+                    fieldLabel="Año del proyecto"
+                    ></gdev-year-selector>
                   </div>
 
                 </div>
@@ -185,14 +134,20 @@
                     <div class="col s12">
                       <mat-form-field>
                         <mat-label>Municipio</mat-label>
-                        <input matInput type="text" name="municipio" formControlName="municipio_alcaldia">
+                        <input matInput type="text" name="municipio" formControlName="municipio_alcaldia" required>
+                        <mat-error *ngIf="proyectoForm.hasError('required', 'ubicacion.municipio_alcaldia')">
+                          Al menos define el Municipio
+                        </mat-error>
                       </mat-form-field>
                     </div>
 
                     <div class="col s12">
                       <mat-form-field>
                         <mat-label>Entidad Federativa</mat-label>
-                        <input matInput type="text" name="entidad_federativa" formControlName="entidad_federativa">
+                        <input matInput type="text" name="entidad_federativa" formControlName="entidad_federativa" required>
+                        <mat-error *ngIf="proyectoForm.hasError('required', 'ubicacion.entidad_federativa')">
+                          Debes definir el Estado o entidad federativa
+                        </mat-error>
                       </mat-form-field>
                     </div>
 
@@ -210,24 +165,23 @@
                 </div>
 
                 <div class="row">
-                  <div class="col s12">
-                    <ng-container *ngIf="proyectoForm.value.evidencia.length > 0">
-                      <div class="row">
-                        <div class="col s12 m6 l4" *ngFor="let img of proyectoForm.value.evidencia; index as i">
-                          <mat-card>
-                            <img mat-card-image [src]="img.url" [alt]="img.fileName">
-                            <button mat-icon-button color="warn" (click)="removeGalleryImg(i)" >
-                                <i class="fas fa-times"></i>
-                            </button>
-                          </mat-card>
-                        </div>
-                      </div>
+                  <div class="col s12 proyect-gallery">
+                    <ng-container *ngIf="evidencias && evidencias.length > 0">
+                      <mat-grid-list cols="3" rowHeight="4:3">
+                        <mat-grid-tile *ngFor="let img of evidencias; index as i">
+                          <button mat-icon-button color="warn" (click)="removeGalleryImg(i)" >
+                              <i class="fas fa-times"></i>
+                          </button>
+                          <img [src]="img.url" [alt]="img.fileName">
+                        </mat-grid-tile>
+                      </mat-grid-list>
                     </ng-container>
                     <gdev-upload-files
                     [maxFileSize]="2097152"
                     [path]="path"
                     [metadata]="metadata"
                     toggleButtonLabel="Subir evidencia"
+                    dropzoneLabel="Toca o arrastra los archivos hasta aquí para subirlos. MÁXIMO 3 ARCHIVOS"
                     [uploadButton]="false">
                     </gdev-upload-files>
                   </div>
@@ -235,7 +189,7 @@
 
               </mat-card-content>
               <mat-card-actions>
-                <button mat-raised-button color='primary' [disabled]="proyectoForm.invalid && proyectoForm.pristine" (click)="onSetProyecto()">Guardar</button>
+                <button mat-raised-button color='primary' [disabled]="validateProjectForm" (click)="onSetProyecto()">Guardar</button>
               </mat-card-actions>
             </mat-card>
           </form>

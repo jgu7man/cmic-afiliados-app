@@ -1,11 +1,11 @@
-import { iUserAfiliado } from './../../models/afiliados.model';
+import { iUserAfiliado } from '../../../models/afiliados.model';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GdevCache } from 'gdev-cache';
-import { GdevStorage } from '../../../../gdev/gdev-storage/storage-service.service';
-import { PerfilesService } from '../../services/perfiles.service';
-import { iRecHumanos, iMemberModel } from '../../models/perfiles.model';
+import { GdevStorage } from '../../../../../gdev/gdev-storage/storage-service.service';
+import { PerfilesService } from '../../../services/perfiles.service';
+import { iPersonal, iMemberModel } from '../../../models/perfiles.model';
 import { GdevAlert } from 'gdev-alert';
 
 @Component({
@@ -45,13 +45,7 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
     this.RFC = RFC
     this.path = `afiliados/${RFC}/recursos-humanos`
     this.metadata = { RFC, email }
-    this.perfiles_.getInfoDoc<iRecHumanos>(this.RFC, 'recursos-humanos')
-      .then(data => {
-        if (data) {
-          const {extract, planta_fija, capacidad_proyecto, hombres, mujeres} = data
-          this.rrhhForm.setValue({extract,planta_fija,capacidad_proyecto,hombres,mujeres,})
-        }
-      })
+
     this.perfiles_.getInfoCollection<iMemberModel>(this.RFC, 'recursos-humanos')
     .subscribe(items => this.items = items)
   }
@@ -61,7 +55,7 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
   }
 
   onSaveInfo(): void {
-    this.perfiles_.updateInfoDoc(this.RFC, 'recursos-humanos', this.rrhhForm.value)
+    this.perfiles_.updateInfoDoc('adicional.rrhhExtract', this.rrhhForm.value['extract'], this.RFC)
   }
 
   onSaveItem() {

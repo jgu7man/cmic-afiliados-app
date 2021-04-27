@@ -8,11 +8,11 @@ import { AfiliadosLoginComponent } from './components/afiliados-login/afiliados-
 import { AfiliadosRegistroComponent } from './components/afiliados-registro/afiliados-registro.component';
 import { AfiliadosPerfilComponent } from './components/afiliados-perfil/afiliados-perfil.component';
 import { AfiliadosAdminComponent } from './components/afiliados-admin/afiliados-admin.component';
-import { AfiliadosExperienciaComponent } from './components/afiliados-experiencia/afiliados-experiencia.component';
-import { AfiliadosCapacidadContableComponent } from './components/afiliados-capacidad-contable/afiliados-capacidad-contable.component';
-import { AfiliadosEquipoMaquinariaComponent } from './components/afiliados-equipo-maquinaria/afiliados-equipo-maquinaria.component';
-import { AfiliadosRecursosHumanosComponent } from './components/afiliados-recursos-humanos/afiliados-recursos-humanos.component';
-import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
+import { AfiliadosExperienciaComponent } from './components/afiliados-perfil/afiliados-experiencia/afiliados-experiencia.component';
+import { AfiliadosCapacidadContableComponent } from './components/afiliados-perfil/afiliados-capacidad-contable/afiliados-capacidad-contable.component';
+import { AfiliadosEquipoMaquinariaComponent } from './components/afiliados-perfil/afiliados-equipo-maquinaria/afiliados-equipo-maquinaria.component';
+import { AfiliadosRecursosHumanosComponent } from './components/afiliados-perfil/afiliados-recursos-humanos/afiliados-recursos-humanos.component';
+import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-perfil/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
 import { EditarInformacionComponent } from './components/editar-informacion/editar-informacion.component';
 
 const routes: Routes = [
@@ -21,8 +21,8 @@ const routes: Routes = [
     component: AfiliadosComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'perfil' },
-      { path: 'afiliacion', component: AfiliacionFormComponent },
-      { path: 'elegir-actividades', component: ActividadesFormComponent },
+      { path: 'afiliacion/:RFC', component: AfiliacionFormComponent },
+      { path: 'elegir-actividades/:RFC', component: ActividadesFormComponent },
       { path: '', component: AfiliadosAdminComponent, children:[
         { path: 'perfil', component: AfiliadosPerfilComponent },
         { path: 'experiencia', component: AfiliadosExperienciaComponent },

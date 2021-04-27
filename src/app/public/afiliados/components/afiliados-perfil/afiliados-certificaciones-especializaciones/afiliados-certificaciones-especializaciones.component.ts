@@ -3,9 +3,9 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { GdevCache } from 'gdev-cache';
 import { GdevLoading } from 'gdev-loading';
 import { Location } from '@angular/common';
-import { iUserAfiliado } from '../../models/afiliados.model';
-import { PerfilesService } from '../../services/perfiles.service';
-import { iCertificacion, iCertificaciones } from '../../models/perfiles.model';
+import { iUserAfiliado } from '../../../models/afiliados.model';
+import { PerfilesService } from '../../../services/perfiles.service';
+import { iAdtionalInfo, iCertificacion } from '../../../models/perfiles.model';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 @Component({
   templateUrl: './afiliados-certificaciones-especializaciones.component.html',
@@ -42,7 +42,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
     this.RFC = RFC
     this.path = `afiliados/${RFC}/certificaciones`
     this.metadata = { RFC, email }
-    this.perfiles_.getInfoDoc<iCertificaciones>(this.RFC, 'certificaciones')
+    this.perfiles_.getInfoDoc<iAdtionalInfo>('certificaciones', this.RFC,)
       .then(data =>{ if(data) this.extractCtrl.setValue(data.extract)})
     this.perfiles_.getInfoCollection<iCertificacion>(this.RFC, 'certificaciones')
     .subscribe(items => this.items = items)
@@ -50,7 +50,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
   ngOnInit(): void { }
 
   onSaveInfo() {
-    this.perfiles_.updateInfoDoc(this.RFC, 'certificaciones', {extract: this.extractCtrl.value})
+    this.perfiles_.updateInfoDoc( 'adicional.certExtract', this.extractCtrl.value, this.RFC,)
   }
 
   onSaveItem() {

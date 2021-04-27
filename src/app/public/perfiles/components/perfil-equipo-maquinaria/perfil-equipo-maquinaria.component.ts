@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { iMaqEquipItem, iMaquinariaEquipo } from 'src/app/public/afiliados/models/perfiles.model';
+import { filter, tap } from 'rxjs/operators';
+import { iMaqEquipItem } from 'src/app/public/afiliados/models/perfiles.model';
 import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
 
 @Component({
@@ -23,11 +23,12 @@ export class PerfilEquipoMaquinariaComponent implements OnInit {
   ) {
 
     this._rfc.pipe(filter(rfc => !!rfc)).subscribe(rfc => {
-      this._perfiles.getInfoDoc<iMaquinariaEquipo>(this.rfc, 'maquinaria-equipo')
-        .then(data => { if (data) this.extract$.emit(data.extract) })
+      // this._perfiles.getInfoDoc<iMaquinariaEquipo>(this.rfc, 'maquinaria-equipo')
+      //   .then(data => { if (data) this.extract$.emit(data.extract) })
 
       this.items$ = this._perfiles.getInfoCollection
         <iMaqEquipItem>(this.rfc, 'maquinaria-equipo')
+      .pipe(tap(data => console.log( data )))
     })
 
    }

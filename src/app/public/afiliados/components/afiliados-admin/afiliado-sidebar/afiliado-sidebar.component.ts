@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GdevCache } from 'gdev-cache';
-import { iUserAfiliado } from '../../models/afiliados.model';
+import { iUserAfiliado } from '../../../models/afiliados.model';
 
 @Component({
   selector: 'g-afiliado-sidebar',

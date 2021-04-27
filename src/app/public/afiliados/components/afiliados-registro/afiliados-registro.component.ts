@@ -102,7 +102,7 @@ export class AfiliadosRegistroComponent implements OnInit {
     return null;
   }
 
-  preventSpaces(e) {
+  preventSpaces(e:any) {
     if (e.which === 32)
       return false;
     else {

@@ -1,0 +1,14 @@
+<mat-form-field class="gdev-datepicker-field" #field [appearance]="appearance" >
+  <mat-label>{{fieldLabel}}</mat-label>
+  <input matInput [matDatepicker]="dp" type="text"  name="{{fieldLabel}}" [formControl] ="yearCtrl" (click)="dp.open()" [max]="max" [min]="min" >
+  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+  <mat-datepicker #dp
+                  startView="multi-year"
+                  (yearSelected)="chosenYearHandler($event, dp)"
+                  panelClass="example-month-picker"
+                  disabled="false">
+  </mat-datepicker>
+  <mat-error *ngIf="yearCtrl.hasError('required')">
+    {{reqErrorLabel}
+  </mat-error>
+</mat-form-field>

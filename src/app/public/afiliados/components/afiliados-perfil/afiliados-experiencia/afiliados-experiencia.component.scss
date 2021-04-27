@@ -19,4 +19,16 @@
 .proyect-gallery {
   max-height: 414px;
   overflow: auto;
+  mat-grid-list {
+    cursor: pointer;
+    img {
+      width: 100%;
+    }
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #ccc5;
+    }
+  }
 }

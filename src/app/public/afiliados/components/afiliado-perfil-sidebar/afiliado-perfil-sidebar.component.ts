@@ -1,13 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, interval, of } from 'rxjs';
 import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
 import { AfiliadoModel,  emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
-import { iRecHumanos } from 'src/app/public/afiliados/models/perfiles.model';
+import { iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
 import { iUploadedFile, iUploadOptions } from 'src/app/gdev/gdev-storage/storage.model';
 import { AfiliadosService } from '../../services/afiliados.service';
-import { MatChipInputEvent } from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+
+import { FormControl, Validators } from '@angular/forms';
+import { debounceTime, delay, map, mapTo, take, tap } from 'rxjs/operators';
+import { GdevLoading } from 'gdev-loading';
 
 @Component({
   selector: 'g-afiliado-perfil-sidebar',
@@ -22,17 +24,26 @@ export class AfiliadoPerfilSidebarComponent implements OnInit {
   @Input() set afiliado(variable: AfiliadoModel) { this._afiliado.next(variable); }
   get afiliado() { return this._afiliado.getValue() }
 
-  @Input() personal: iRecHumanos = {} as iRecHumanos;
-  servicios: string[] = []
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  @Input() personal: iPersonal = {} as iPersonal;
+
 
   constructor(
     private dialog: MatDialog,
-    public afiliados_: AfiliadosService
+    public afiliados_: AfiliadosService,
+    private _loading: GdevLoading
   ) { }
 
   ngOnInit(): void {
-    if (this.afiliado.servicios) this.servicios = this.afiliado.servicios
+    this._afiliado.pipe(debounceTime(500)).subscribe(data => {
+      // console.log( data )
+      this.afiliado = data
+    })
+  }
+
+  putImage(img: HTMLDivElement) {
+    return of({ 'height.px': img.offsetWidth, 'width': '66.66%' } )
+      .pipe(delay(1000), tap(data => console.log( data )))
+
   }
 
   uploadProfileImage(): void {
@@ -48,48 +59,27 @@ export class AfiliadoPerfilSidebarComponent implements OnInit {
       minHeight: '40%',
       data: options
     }).afterClosed().subscribe((file: iUploadedFile[]) => {
-      this.afiliados_.savePartialAfiliado('imgPerfil', file[0])
+      this.afiliados_.savePartialAfiliado('perfil.imgPerfil', file[0], this.afiliado.datos_generales.RFC)
     })
 
   }
 
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
 
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.servicios.push(value.trim());
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-  }
-
-  remove(servicio:string): void {
-    const index = this.servicios.indexOf(servicio);
-
-    if (index >= 0) {
-      this.servicios.splice(index, 1);
-    }
-  }
 
   get year(): number {
     return new Date().getFullYear()
   }
 
   get Hombres() {
-    if (this.personal) {
+    if (this.personal && this.personal.hombres) {
       return (this.personal.hombres * 100) / this.personal.planta_fija
     } else {
       return 0
     }
   }
   get Mujeres() {
-    if (this.personal) {
+    if (this.personal && this.personal.mujeres) {
       return ( this.personal.mujeres * 100 ) / this.personal.planta_fija
     } else {
       return 0

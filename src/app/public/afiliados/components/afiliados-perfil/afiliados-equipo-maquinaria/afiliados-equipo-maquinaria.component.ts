@@ -1,4 +1,4 @@
-import { iUserAfiliado } from './../../models/afiliados.model';
+import { iUserAfiliado } from '../../../models/afiliados.model';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -9,9 +9,9 @@ import {
 } from '@angular/forms';
 import { GdevCache } from 'gdev-cache';
 import { GdevLoading } from 'gdev-loading';
-import { PerfilesService } from '../../services/perfiles.service';
+import { PerfilesService } from '../../../services/perfiles.service';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
-import { iMaqEquipItem } from '../../models/perfiles.model';
+import { iMaqEquipItem } from '../../../models/perfiles.model';
 @Component({
   templateUrl: './afiliados-equipo-maquinaria.component.html',
   styleUrls: ['./afiliados-equipo-maquinaria.component.scss'],
@@ -54,7 +54,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
   ngOnInit(): void { }
 
   onSaveExtract(): void {
-    this.perfiles_.updateInfoDoc(this.RFC, 'maquinaria-equipo', { extract: this.extractCtrl.value })
+    this.perfiles_.updateInfoDoc( 'adicional.maqExtract', this.extractCtrl.value, this.RFC,)
     this.extractCtrl.markAsPristine()
   }
 

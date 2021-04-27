@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -14,20 +16,28 @@ export class EditarInformacionComponent implements OnInit {
 
   user?: iUserAfiliado
   afiliado: AfiliadoModel = emptyAfiliado
+  RFC: string
+
 
   constructor(
     private _cache: GdevCache,
-    private _afiliados: AfiliadosService
+    private _afiliados: AfiliadosService,
+    private _route: ActivatedRoute,
+    private _alert: GdevAlert
   ) {
-    const user = this._cache.getDataKey<iUserAfiliado>('user')
-    if (user) this.user = user
-    else { }
-    this._afiliados.getPerfilAfiliado(this.user?.RFC as string)
-      .subscribe(data => {
-        this.afiliado = data
-        console.log( data.datos_generales?.fisica_apellido_mat )
-      })
-    // .pipe(tap(data => console.log( data)))
+    this.RFC = this._route.snapshot.params['RFC']
+    if (this.RFC) {
+      this._afiliados.getPerfilAfiliado(this.RFC).subscribe((data) => {
+        // TODO Poner un estado CARGANDO y apagarlo aquí
+        if (data) {
+          this.afiliado = data;
+          this.RFC = data.datos_generales?.RFC as string;
+        }
+        else {
+          this._alert.sendMessageAlert('No se encontró el perfil')
+        }
+      });
+    }
   }
 
   ngOnInit(): void {

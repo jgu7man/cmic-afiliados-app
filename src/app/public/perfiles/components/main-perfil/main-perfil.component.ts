@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
-import { iPerfil, iRecHumanos } from 'src/app/public/afiliados/models/perfiles.model';
+import { iPerfil, iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
 import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
 
@@ -22,7 +22,7 @@ export class MainPerfilComponent implements OnInit {
     rrhh: '',
     conta: '',
     cert: '',
-    personal: {} as iRecHumanos
+    personal: {} as iPersonal
   }
   constructor(
     private _route: ActivatedRoute,
@@ -33,7 +33,7 @@ export class MainPerfilComponent implements OnInit {
     this._perfiles.getInfoDoc<iPerfil>(this.RFC, 'perfil')
       .then(perfil => { if (perfil) this.perfil = perfil })
     this._afiliados.getPerfilAfiliado(this.RFC).subscribe((data) => {
-      this.afiliado = data
+      if (data) this.afiliado = data
      })
    }
 
@@ -41,7 +41,7 @@ export class MainPerfilComponent implements OnInit {
   }
 
   get banner() {
-    return this.afiliado.imgBanner ? this.afiliado.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
+    return this.afiliado.perfil?.imgBanner ? this.afiliado.perfil.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
   }
 
 }

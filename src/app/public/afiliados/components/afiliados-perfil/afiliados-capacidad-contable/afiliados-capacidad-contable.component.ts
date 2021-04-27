@@ -1,4 +1,3 @@
-import { iCapContable } from './../../models/perfiles.model';
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormArrayName, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,9 +7,8 @@ import { orderBy } from 'lodash';
 import { map } from 'rxjs/operators';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
-import { iUserAfiliado } from '../../models/afiliados.model';
-import { iDeclaracion } from '../../models/perfiles.model';
-import { PerfilesService } from '../../services/perfiles.service';
+import { iUserAfiliado } from '../../../models/afiliados.model';
+import { PerfilesService } from '../../../services/perfiles.service';
 //import { StorageService } from 'Src/app/gdev/gdev-storage/gdev-storage.module';
 
 @Component({
@@ -64,13 +62,13 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     this.path = `afiliados/${RFC}/cap-contable`
     this.metadata = { RFC, email }
 
-    this._perfiles.getInfoDoc<iCapContable>(this.RFC, 'cap-contable')
-      .then(data => {
-        if (data) {
-          const { extract, capacidad } = data
-          this.capContableForm.setValue({ extract, capacidad })
-        }
-      })
+    // this._perfiles.getInfoDoc<iCapContable>(this.RFC, 'cap-contable')
+    //   .then(data => {
+    //     if (data) {
+    //       const { extract, capacidad } = data
+    //       this.capContableForm.setValue({ extract, capacidad })
+    //     }
+    //   })
 
     this._perfiles.getInfoCollection(this.RFC, 'cap-contable')
       .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
