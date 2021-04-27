@@ -1,12 +1,14 @@
 import { iAdtionalInfo, iPerfil } from './perfiles.model';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { Actividad } from './actividades.model';
+import firebase from 'firebase/app'
 
 export interface iUserAfiliado {
   uid?: string;
   RFC: string;
   email: string;
   contrasena?: string;
+  registrado?: firebase.firestore.Timestamp
 }
 
 export class AfiliadoModel {

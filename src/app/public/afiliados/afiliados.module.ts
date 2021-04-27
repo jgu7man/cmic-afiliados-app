@@ -34,6 +34,9 @@ import { AfiliadoPerfilSidebarComponent } from './components/afiliado-perfil-sid
 import { GdevModule } from 'src/app/gdev/gdev.module';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
 import { AfiliadosPersonalFormComponent } from './components/editar-perfil/afiliados-personal-form/afiliados-personal-form.component';
+import { AfiliadosAccesosComponent } from './components/afiliados-accesos/afiliados-accesos.component';
+import { AddManagerComponent } from './components/afiliados-accesos/add-manager/add-manager.component';
+import { DeleteManagerComponent } from './components/afiliados-accesos/delete-manager/delete-manager.component';
 
 
 @NgModule({
@@ -62,6 +65,9 @@ import { AfiliadosPersonalFormComponent } from './components/editar-perfil/afili
     AfiliadoPerfilSidebarComponent,
     EditarPerfilComponent,
     AfiliadosPersonalFormComponent,
+    AfiliadosAccesosComponent,
+    AddManagerComponent,
+    DeleteManagerComponent,
   ],
   imports: [
     CommonModule,

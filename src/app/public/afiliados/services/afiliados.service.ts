@@ -108,6 +108,9 @@ export class AfiliadosService {
   }
 
 
-  // getPartialAfiliado(RFC: string):
+  getManagers() {
+    let rfc = this._cache.getDataKey<string>('rfc')
+    return this._afs.collection<iUserAfiliado>(`afiliados/${rfc}/managers`).valueChanges({idField: 'uid'})
+  }
 
 }

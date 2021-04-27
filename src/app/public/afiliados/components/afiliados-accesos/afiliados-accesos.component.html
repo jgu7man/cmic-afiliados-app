@@ -1,0 +1,54 @@
+<div class="container page">
+  <div class="row">
+    <div class="col s12 m1">
+      <button mat-icon-button (click)="location_.back()">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </button>
+    </div>
+    <div class="col s12 m11">
+
+      <div class="row">
+        <div class="col s12">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Aceesos al perfil</mat-card-title>
+              <mat-card-subtitle>En esta sección puedes administrar los accesos de quienes pueden editar el perfil de la empresa</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+
+              <mat-list #managersPanel>
+                <mat-list-item
+                [checkboxPosition]="'before'"
+                *ngFor="let manager of managers$ | async"
+                >
+                <div mat-line>{{manager.email}}</div>
+                <div mat-line style="font-size: xx-small;">
+                  <ng-container *ngIf="manager.registrado; else pendiente">
+                    {{time(manager.registrado)| date}}
+                  </ng-container>
+                  <ng-template #pendiente >
+                    Pendiente
+                  </ng-template>
+                </div>
+                <mat-icon (click)="openDeleteDialog(manager.uid)">
+                  <i class="fas fa-trash red-text"></i>
+                </mat-icon>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+              </mat-list>
+
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button
+              color="primary"
+              (click)="openAddDialog()"
+              >Agregar</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

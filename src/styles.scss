@@ -33,6 +33,10 @@ $cmic-typography: mat-typography-config(
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.page {
+  min-height: 100vh;
+}
+
 mat-form-field {width: 100%;}
 .data-text {
   font-weight: 600;

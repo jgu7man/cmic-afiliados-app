@@ -15,6 +15,7 @@ import { AfiliadosRecursosHumanosComponent } from './components/afiliados-perfil
 import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-perfil/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
 import { EditarInformacionComponent } from './components/editar-informacion/editar-informacion.component';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
+import { AfiliadosAccesosComponent } from './components/afiliados-accesos/afiliados-accesos.component';
 
 const routes: Routes = [
   {
@@ -32,7 +33,8 @@ const routes: Routes = [
         { path: 'recursos-humanos', component: AfiliadosRecursosHumanosComponent },
         { path: 'certificaciones-especializaciones', component: AfiliadosCertificacionesEspecializacionesComponent },
         { path: 'editar-afiliado', component: EditarInformacionComponent  },
-        { path: 'editar-perfil', component: EditarPerfilComponent  },
+        { path: 'editar-perfil', component: EditarPerfilComponent },
+        { path: 'accesos', component: AfiliadosAccesosComponent },
       ]},
     ],
   },
