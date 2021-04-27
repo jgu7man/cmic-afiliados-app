@@ -7,7 +7,9 @@ import { AfiliadoModel, AfiliadoProperty, emptyAfiliado } from '../../models/afi
 import { GdevAlert } from 'gdev-alert';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PerfilService } from '../../services/perfil.service';
-import { iPersonal } from '../../models/perfiles.model';
+import { iAdtionalInfo, iPerfil, iPersonal } from '../../models/perfiles.model';
+import { GdevCache } from 'gdev-cache';
+import { Location } from '@angular/common';
 
 @Component({
   templateUrl: './editar-perfil.component.html',
@@ -32,21 +34,26 @@ export class EditarPerfilComponent implements OnInit {
     public afiliados_: AfiliadosService,
     private _route: ActivatedRoute,
     private _alert: GdevAlert,
-    private _perfil: PerfilService
+    public  perfil_: PerfilService,
+    private _cache: GdevCache,
+    public location_: Location,
   ) {
-    this.RFC = this._route.snapshot.params['RFC']
-    if (this.RFC) {
+    this.RFC = this._cache.getDataKey<string>('rfc') as string;
       this.afiliados_.getPerfilAfiliado(this.RFC).subscribe((data) => {
+        console.log( data )
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
           this.afiliado = data;
           this.RFC = data.datos_generales?.RFC as string;
+          let { primerAfiliacion, servicios, capFinanciera } = this.afiliado.perfil as iPerfil
+          console.log( { primerAfiliacion, servicios, capFinanciera } )
+          this.perfilForm.patchValue({ primerAfiliacion, capFinanciera })
+          this.servicios = servicios ? servicios : []
         }
         else {
           this._alert.sendMessageAlert('No se encontró el perfil')
         }
       });
-    }
    }
 
   ngOnInit(): void {
@@ -68,7 +75,8 @@ export class EditarPerfilComponent implements OnInit {
 
 
   saveData(field: string, form: FormGroup): void {
-    this.afiliados_.savePartialAfiliado(field, form.value, this.RFC)
+    this.perfil_.updateInfoDoc(field, form.value)
+    form.markAsPristine()
   }
 
 

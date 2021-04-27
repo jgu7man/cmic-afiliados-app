@@ -101,7 +101,7 @@ export class AfiliadosService {
     }
   }
 
-  getPerfilAfiliado(RFC: string):Observable<AfiliadoModel | undefined>{
+  getPerfilAfiliado(RFC: string): Observable<AfiliadoModel | undefined>{
     return this._afs.collection('afiliados')
       .doc<AfiliadoModel>(RFC).valueChanges()
       .pipe(debounceTime(500))

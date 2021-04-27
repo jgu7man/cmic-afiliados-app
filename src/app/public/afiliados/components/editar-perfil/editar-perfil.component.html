@@ -1,6 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s12 m1">
+      <button mat-icon-button (click)="location_.back()">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </button>
+    </div>
+    <div class="col s12 m11">
 
       <mat-card>
         <mat-card-header>
@@ -11,7 +16,7 @@
 
           <form class="row" [formGroup]="perfilForm">
 
-            <div class="col s12">
+            <div class="col s12 m7">
               <gdev-year-selector
               [fieldLabel]="'Año de afiliación al CMIC'"
               matTooltip="Presiona el ícono para elegir una fecha"
@@ -20,7 +25,7 @@
               ></gdev-year-selector>
             </div>
 
-            <div class="col s12">
+            <div class="col s12 m7">
               <mat-form-field>
                 <mat-label>Capacidad financiera</mat-label>
                 <input
@@ -61,7 +66,7 @@
         <mat-card-content>
           <mat-form-field class="example-chip-list">
             <mat-label>Servicios que ofrece</mat-label>
-            <mat-chip-list #chipList aria-label="Servicio que ofrece">
+            <mat-chip-list #chipList aria-label="Escribe un servicio y presiona enter o comma para agregarlo">
               <mat-chip *ngFor="let servicio of servicios" [selectable]="true"
                        [removable]="true" (removed)="remove(servicio)">
                 {{servicio}}
@@ -77,7 +82,7 @@
         </mat-card-content>
         <mat-card-actions>
           <button mat-raised-button color='primary'
-          (click)="afiliados_.savePartialAfiliado('perfil.servicios', servicios, RFC)"
+          (click)="perfil_.updateInfoDoc('perfil.servicios', servicios)"
            >Guardar</button>
         </mat-card-actions>
       </mat-card>

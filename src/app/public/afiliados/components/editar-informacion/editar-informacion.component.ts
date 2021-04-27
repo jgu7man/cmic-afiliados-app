@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -23,7 +24,8 @@ export class EditarInformacionComponent implements OnInit {
     private _cache: GdevCache,
     private _afiliados: AfiliadosService,
     private _route: ActivatedRoute,
-    private _alert: GdevAlert
+    private _alert: GdevAlert,
+    public location_: Location
   ) {
     this.RFC = this._route.snapshot.params['RFC']
     if (this.RFC) {

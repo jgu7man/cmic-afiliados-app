@@ -97,12 +97,14 @@
   <p class="article-header">Servicios</p>
   <p>
     <span *ngFor="let servicio of afiliado.perfil?.servicios">
-      {{servicio}}
+      {{servicio}} <br>
     </span>
   </p>
 </article>
 
 <article>
   <p class="article-header">Extras</p>
-
+  <p>Capacidad Financiera: <span class="data-text">
+    {{afiliado.perfil?.capFinanciera}}
+  </span></p>
 </article>

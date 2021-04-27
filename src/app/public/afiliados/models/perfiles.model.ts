@@ -8,12 +8,12 @@ export interface iPerfil {
   imgBanner?: iUploadedFile,
   servicios?: string[],
   primerAfiliacion?: number,
+  capFinanciera?: number,
   updated?: Date | firebase.firestore.Timestamp
 }
 
 export interface iAdtionalInfo {
   personal?: iPersonal
-  capFinanciera?: number,
   extract?: iExtracts,
   updated?: Date | firebase.firestore.Timestamp
 }

@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { iPersonal } from '../../../models/perfiles.model';
 import { AfiliadosService } from '../../../services/afiliados.service';
+import { PerfilService } from '../../../services/perfil.service';
 
 @Component({
   selector: 'g-afiliados-personal-form',
@@ -22,21 +23,21 @@ export class AfiliadosPersonalFormComponent implements OnInit {
     mujeres: new FormControl('',),
   });
 
-  private _personal: BehaviorSubject<iPersonal> = new BehaviorSubject({
-    ...this.personalForm.value
-  });
-  @Input() set personal(person: iPersonal) { this._personal.next(person); }
 
   constructor(
     private _afiliados: AfiliadosService,
+    private _perfil: PerfilService
   ) {
-
+    this._perfil.getInfoDoc('adicional.personal')
+      .then(data => {
+        if (data) {
+          this.personalForm.patchValue(data)
+          this.personalForm.markAsPristine()
+        }
+      })
    }
 
   ngOnInit(): void {
-    this._personal.subscribe(personal => {
-      this.personalForm.setValue(personal)
-    })
 
   }
 
@@ -46,6 +47,7 @@ export class AfiliadosPersonalFormComponent implements OnInit {
       this.personalForm.value,
       this.RFC
     )
+    this.personalForm.markAsPristine()
   }
 
 }

@@ -56,7 +56,6 @@ export class PerfilService {
     var infoDoc = await ref.get()
     if (infoDoc.exists) {
       let data = infoDoc.get(field)
-      console.log( data )
       return data
     } else {
       return
