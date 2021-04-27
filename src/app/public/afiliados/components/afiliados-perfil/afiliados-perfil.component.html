@@ -64,7 +64,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Experiencia </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.expExtract}}
+              {{afiliado.adicional?.extract?.experiencia}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-experiencia
@@ -85,7 +85,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Equipo y maquinaria </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.maqExtract}}
+              {{afiliado.adicional?.extract?.equipo_maquinaria}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-equipo-maquinaria [rfc]="RFC"></g-perfil-equipo-maquinaria>
@@ -100,7 +100,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Recursos Humanos </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.rrhhExtract}}
+              {{afiliado.adicional?.extract?.recursos_humanos}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-recursos-humanos
@@ -118,7 +118,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.certExtract}}
+              {{afiliado.adicional?.extract?.certificaciones}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-certificaciones

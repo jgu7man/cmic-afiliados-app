@@ -14,15 +14,19 @@ export interface iPerfil {
 export interface iAdtionalInfo {
   personal?: iPersonal
   capFinanciera?: number,
-  certExtract?: string,
-  maqExtract?: string,
-  expExtract?: string,
-  rrhhExtract?: string,
+  extract?: iExtracts,
   updated?: Date | firebase.firestore.Timestamp
 }
 
+export interface iExtracts {
+  "experiencia": string
+  "equipo_maquinaria": string
+  "recursos_humanos": string
+  "certificaciones": string
+}
 
-export class iProyecto {
+
+export class Proyecto {
   constructor(
     public nombre: string,
     public cliente: string,
@@ -36,8 +40,8 @@ export class iProyecto {
   ) {}
 }
 
-export const emptyProyecto: iProyecto =
-  new iProyecto('','','','',emptyDireccion,'Público', [])
+export const emptyProyecto: Proyecto =
+  new Proyecto('','','','',emptyDireccion,'Público', [])
 
 
 export interface iDeclaracion {
@@ -48,15 +52,20 @@ export interface iDeclaracion {
 }
 
 
-export interface iMaqEquipItem {
-  nombre: string,
-  modelo: string,
-  propio: boolean,
-  comprobacion: boolean,
-  evidencia?: iUploadedFile[]
-  updated?: Date | firebase.firestore.Timestamp
-  id?: string
+export class MaqEquipItem {
+  constructor(
+    public nombre: string,
+    public modelo: string,
+    public propio: boolean,
+    public comprobacion: boolean,
+    public evidencia?: iUploadedFile[],
+    public updated?: Date | firebase.firestore.Timestamp,
+    public id?: string,
+  ){}
 }
+
+export const emptyMaqEquip: MaqEquipItem =
+  new MaqEquipItem('', '',false, false, [])
 
 export interface iPersonal {
   planta_fija: number;
@@ -66,23 +75,42 @@ export interface iPersonal {
   updated?: Date | firebase.firestore.Timestamp
 }
 
-export interface iMemberModel {
-  nombre: string,
-  cargo: string,
-  contacto?: string
-  updated?: Date | firebase.firestore.Timestamp
-  id?: string
+
+export class MemberModel {
+  constructor(
+    public nombre: string,
+    public cargo: string,
+    public contacto?: string,
+    public updated?: Date | firebase.firestore.Timestamp,
+    public id?: string
+  ){}
 }
 
+export const emptyMember: MemberModel =
+  new MemberModel('','')
 
-export interface iCertificacion {
-  nombre: string,
-  aval: string,
-  miembro: iMemberModel,
-  evidencia?: iUploadedFile
-  updated?: Date | firebase.firestore.Timestamp,
-  id?: string
+export type SectionName =
+  | "experiencia"
+  | "equipo_maquinaria"
+  | "recursos_humanos"
+  | "certificaciones"
+
+
+
+export class CertificacionModel {
+  constructor(
+    public nombre: string,
+    public aval: string,
+    public miembro: MemberModel,
+    public fecha: number,
+    public evidencia?: iUploadedFile[],
+    public updated?: Date | firebase.firestore.Timestamp,
+    public id?: string
+  ){}
 }
+
+export const emptyCert: CertificacionModel =
+  new CertificacionModel('','', emptyMember, new Date(). getFullYear(), [])
 
 export interface iPerfilSection {
   extract: string,
@@ -92,8 +120,8 @@ export interface iPerfilSection {
 
 
 export type PerfilCol =
-| iProyecto
+| Proyecto
 | iDeclaracion
-| iMaqEquipItem
-| iMemberModel
-| iCertificacion
+| MaqEquipItem
+| MemberModel
+| CertificacionModel

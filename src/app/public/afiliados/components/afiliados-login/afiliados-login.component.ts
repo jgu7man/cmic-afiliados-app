@@ -28,11 +28,13 @@ export class AfiliadosLoginComponent implements OnInit {
   onSubmit(fields:  GdevLoginFields)  {
 		this._authService.emailSignIn(fields.email,  fields.password)
       .then(user => {
-        console.log(user)
         if (user) {
           this._afiliados.retriveManager(user.email as string)
           .pipe(take(1)).subscribe(
-            dataUser => this._cache.updateData('user', dataUser)
+            dataUser => {
+              this._cache.updateData('user', dataUser)
+              this._cache.updateData('rfc', dataUser.RFC)
+            }
           )
         } else {
 

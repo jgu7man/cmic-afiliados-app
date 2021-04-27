@@ -1,15 +1,30 @@
 <ng-container *ngIf="items$ |async as items; else empty">
   <div class="row">
     <div class="col s12" *ngIf="items.length > 0; else empty">
-      <mat-card *ngFor="let item of items$ | async">
-        <mat-card-header>
-          <mat-card-title> {{item.nombre}} </mat-card-title>
-          <mat-card-subtitle> {{item.cargo}} </mat-card-subtitle>
-          <mat-chip-list>
-            <mat-chip> {{item.contacto}} </mat-chip>
-          </mat-chip-list>
-        </mat-card-header>
-      </mat-card>
+      <ng-container *ngFor="let item of items$ | async; index as i">
+        <mat-card *ngIf="editingItem != i">
+          <mat-card-header>
+            <mat-card-title> {{item.nombre}} </mat-card-title>
+            <mat-card-subtitle> {{item.cargo}} </mat-card-subtitle>
+            <mat-chip-list>
+              <mat-chip> {{item.contacto}} </mat-chip>
+            </mat-chip-list>
+          </mat-card-header>
+
+          <mat-card-actions *ngIf="edit"
+            style="display: flex; justify-content: space-around;">
+                <button mat-raised-button
+                color="accent"
+                (click)="sendToEdit(item, i)"
+                >Editar</button>
+                <button mat-raised-button
+                color="primary"
+                (click)="perfiles_.deleteInfoItem('recursos_humanos', item.id)"
+                >Eliminar</button>
+            </mat-card-actions>
+        </mat-card>
+      </ng-container>
+
     </div>
   </div>
 </ng-container>

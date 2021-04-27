@@ -34,7 +34,7 @@ export class PerfilCapContableComponent implements OnInit {
       //     this.capacidad = data
       //     this.extract$.emit(data.extract)
       //   }})
-      this._perfiles.getInfoCollection<iDeclaracion>(this.rfc, 'cap-contable')
+      this._perfiles.getInfoCollection<iDeclaracion>( 'cap-contable')
         .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
         .subscribe(items => { this.declaraciones = items.splice(0,3) })
     })

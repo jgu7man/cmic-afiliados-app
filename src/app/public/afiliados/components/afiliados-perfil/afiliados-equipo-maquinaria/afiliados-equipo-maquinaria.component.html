@@ -24,7 +24,7 @@
               matInput
               type="text"
               name="name"
-              [formControl]="extractCtrl"
+              [formControl]="perfiles_.extractCtrl"
             >
             </textarea>
           </mat-form-field>
@@ -32,8 +32,9 @@
         <mat-card-actions>
           <button
             mat-button
-            [disabled]="extractCtrl.invalid && extractCtrl.pristine"
-            (click)="onSaveExtract()"
+            [disabled]="perfiles_.extractCtrl.invalid && perfiles_.extractCtrl.pristine"
+            (click)="perfiles_.updateExtract('equipo_maquinaria')"
+            color="primary"
           >
             Guardar
           </button>
@@ -43,46 +44,21 @@
       <!-- Items -->
       <mat-card>
         <mat-card-content>
-
-          <div class="row"
-          *ngFor="let item of items" >
-            <div class="col s12">
-              <mat-card>
-                <mat-card-header>
-                  <mat-card-title> {{item.nombre}} </mat-card-title>
-                  <mat-card-subtitle> Modelo: {{item.modelo}} </mat-card-subtitle>
-                  <mat-chip-list>
-                    <mat-chip *ngIf="item.comprobacion"> Comprobable </mat-chip>
-                    <mat-chip *ngIf="item.propio"> Propio </mat-chip>
-                  </mat-chip-list>
-                </mat-card-header>
-                <mat-card-content>
-                  <mat-expansion-panel class="mat-elevation-z0">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        Evidencia
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="row">
-                      <div class="col s12 m6 l4" *ngFor="let img of item.evidencia">
-                        <mat-card>
-                          <img mat-card-image [src]="img.url" [alt]="img.fileName">
-                        </mat-card>
-                      </div>
-                    </div>
-                  </mat-expansion-panel>
-                </mat-card-content>
-              </mat-card>
-            </div>
-          </div>
-
-          <!-- Agregar o editar items -->
-          <mat-card id="add-items">
+          <mat-card-header>
             <mat-card-title>Agregar equipo o maquinaria</mat-card-title>
             <mat-card-subtitle>
               Agregar nuevos equipos o maquinarias a tu lista
             </mat-card-subtitle>
-            <mat-card-header> </mat-card-header>
+          </mat-card-header>
+
+          <g-perfil-equipo-maquinaria
+          [edit]="true"
+          ></g-perfil-equipo-maquinaria>
+
+          <!-- Agregar o editar items -->
+          <mat-card id="add-items">
+
+
             <mat-card-content>
               <!-- Item maquinaria o equipo -->
               <div class="row">
@@ -146,10 +122,11 @@
                   <div class="col s4">
                     <gdev-upload-files
                     [maxFileSize]="2097152"
-                      [path]="path"
-                      [metadata]="metadata"
+                      [path]="perfiles_.filesPath"
+                      [metadata]="perfiles_.metadata"
                       [uploadButton]="false"
                       uploadButtonLabel="Agregar evidencia"
+                      dropzoneLabel="Toca o arrastra los archivos hasta aquí para subirlos. MÁXIMO 3 ARCHIVOS"
                     ></gdev-upload-files>
                   </div>
                 </form>
@@ -162,6 +139,7 @@
                 mat-button
                 [disabled]="eqpmaqForm.invalid"
                 (click)="onSaveItem()"
+                color="primary"
               >
                 Guardar
               </button>

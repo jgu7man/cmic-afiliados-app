@@ -64,7 +64,6 @@ export class YearSelectorComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this._value.subscribe(() => {
       if (this.value) {
-        console.log( this.value )
         const date: Moment = this.yearCtrl.value
         date.year(this.value)
         this.yearCtrl.setValue(date)

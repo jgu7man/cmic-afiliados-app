@@ -55,6 +55,7 @@ export class GdevStorage {
 
     const
       fileName = prefixName ? `${prefixName}-${file.name}` : file.name,
+      format = file.type,
       filePath = `${path}/${fileName}`,
       ref = this._aStorage.ref(filePath),
       task = this._aStorage.upload(filePath, file, metadata);
@@ -66,10 +67,10 @@ export class GdevStorage {
 
     task.snapshotChanges().pipe(
       finalize(() => {
-          ref.getDownloadURL().subscribe((url) => {
+        ref.getDownloadURL().subscribe((url) => {
             // Response
             let uploadedFile: iUploadedFile = {
-              fileName, url,
+              fileName, url, format,
               uploadedState: true,
               uploaded: new Date(),
             }

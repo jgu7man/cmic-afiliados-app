@@ -9,6 +9,7 @@ export interface iUploadInfo {
   fileName?: string;
   uploaded?: Date | firebase.firestore.Timestamp,
   metadata?: any
+  format?: string
 }
 
 export interface iUploadOptions {

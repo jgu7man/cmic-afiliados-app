@@ -1,7 +1,7 @@
-<ng-container *ngIf="items$ | async as items; else empty">
+<ng-container *ngIf="(items$ | async) as items; else empty" >
   <div class="row">
     <div class="col s12">
-      <mat-accordion *ngIf="items.length > 0; else empty">
+      <mat-accordion *ngIf="items.length > 0; else empty" >
         <div class="proyect-item"
         *ngFor="let item of items; index as i">
         <mat-expansion-panel *ngIf="i != editingItem">
@@ -35,17 +35,18 @@
             <button mat-raised-button color='accent'
             (click)="sendToEdit(item, i)" >Editar</button>
             <button mat-raised-button color='primary'
-            (click)="perfiles_.deleteInfoItem(rfc, 'experiencia', item.id)" >Eliminar</button>
+            (click)="perfiles_.deleteInfoItem( 'experiencia', item.id)" >Eliminar</button>
           </mat-action-row>
         </mat-expansion-panel>
         </div>
 
       </mat-accordion>
     </div>
+
   </div>
 
+  </ng-container>
 
-</ng-container>
 <ng-template #empty >
   <p class="data-text">Aún no hay experiecia registrada</p>
 </ng-template>

@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { PerfilesService } from 'src/app/public/afiliados/services/perfiles.service';
-import { iCertificacion } from '../../../afiliados/models/perfiles.model';
+import { CertificacionModel } from '../../../afiliados/models/perfiles.model';
 
 @Component({
   selector: 'g-perfil-certificaciones',
@@ -12,27 +12,25 @@ import { iCertificacion } from '../../../afiliados/models/perfiles.model';
 })
 export class PerfilCertificacionesComponent implements OnInit {
 
-  private _rfc : BehaviorSubject<string> = new BehaviorSubject('');
-  @Input() set rfc(RFC: string) { this._rfc.next(RFC); }
-  get rfc() { return this._rfc.getValue()}
-  @Output() extract$: EventEmitter<string> = new EventEmitter();
-  items$?: Observable<iCertificacion[]>
+  @Input() edit: boolean = false;
+  editingItem?: number
+  items$?: Observable<CertificacionModel[]>
 
   constructor(
-    private _perfiles: PerfilesService,
+    public perfiles_: PerfilesService,
   ) {
 
-    this._rfc.pipe(filter(rfc => !!rfc)).subscribe(rfc => {
-      // this._perfiles.getInfoDoc<iCertificaciones>(this.rfc, 'certificaciones')
-      //   .then(data => { if (data) this.extract$.emit(data.extract) })
-
-      this.items$ = this._perfiles.getInfoCollection
-        <iCertificacion>(this.rfc, 'certificaciones')
-    })
+    this.items$ = this.perfiles_.getInfoCollection
+      <CertificacionModel>( 'certificaciones')
 
    }
 
   ngOnInit(): void {
+  }
+
+  sendToEdit(item: CertificacionModel, index: number) {
+    this.perfiles_.onEditItem(item)
+    this.editingItem = index
   }
 
 }

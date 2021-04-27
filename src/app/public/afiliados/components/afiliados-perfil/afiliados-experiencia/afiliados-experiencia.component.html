@@ -19,11 +19,11 @@
           <mat-form-field>
             <mat-label>Extracto</mat-label>
             <textarea placeholder="Explica en breves palabras la experiencia que la empresa tiene" matInput type="text"
-              name="name" [formControl]="extractCtrl"></textarea>
+              name="name" [formControl]="perfiles_.extractCtrl"></textarea>
           </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button [disabled]="extractCtrl.invalid" (click)="onUpdateInfo()">Guardar</button>
+          <button mat-button [disabled]="perfiles_.extractCtrl.invalid" (click)="perfiles_.updateExtract('experiencia')">Guardar</button>
         </mat-card-actions>
       </mat-card>
 
@@ -38,9 +38,7 @@
           <div class="row">
             <div class="col s12">
               <g-perfil-experiencia
-              [rfc]="RFC"
               [edit]="true"
-              (toEdit)="onEditItem($event)"
               ></g-perfil-experiencia>
             </div>
           </div>
@@ -178,8 +176,8 @@
                     </ng-container>
                     <gdev-upload-files
                     [maxFileSize]="2097152"
-                    [path]="path"
-                    [metadata]="metadata"
+                    [path]="perfiles_.filesPath"
+                    [metadata]="perfiles_.metadata"
                     toggleButtonLabel="Subir evidencia"
                     dropzoneLabel="Toca o arrastra los archivos hasta aquí para subirlos. MÁXIMO 3 ARCHIVOS"
                     [uploadButton]="false">

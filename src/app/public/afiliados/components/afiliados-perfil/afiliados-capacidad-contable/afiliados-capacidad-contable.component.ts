@@ -70,7 +70,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     //     }
     //   })
 
-    this._perfiles.getInfoCollection(this.RFC, 'cap-contable')
+    this._perfiles.getInfoCollection( 'cap-contable')
       .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
       .subscribe(items => {
         items.forEach((item, i )=> {
@@ -96,7 +96,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
 
   saveDeclaracion(declaracion: AbstractControl, index: number): void {
     console.log( declaracion.value )
-    this._perfiles.setInfoItem(this.RFC, 'cap-contable', declaracion.value)
+    this._perfiles.updateInfoItem( 'cap-contable', declaracion.value)
       .then(() => {
         let list = this.declaracionesForm.get(['declaraciones']) as FormArray;
         list.at(index).markAsPristine()
@@ -105,7 +105,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
 
 
   saveCapContable() {
-    this._perfiles.updateInfoDoc(this.RFC, 'cap-contable', this.capContableForm.value)
+    this._perfiles.updateInfoDoc( 'cap-contable', this.capContableForm.value)
     this.capContableForm.markAsPristine()
   }
 }

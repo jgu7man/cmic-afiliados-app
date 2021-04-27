@@ -1,6 +1,6 @@
 <div *ngIf="items$ | async as items; else empty">
   <ng-container *ngIf="items.length > 0; else empty">
-  <div class="row" *ngFor="let item of items$ | async">
+  <div class="row" *ngFor="let item of items$ | async; index as i">
     <div class="col s12">
       <mat-card>
         <mat-card-header>
@@ -10,6 +10,13 @@
         <mat-card-content>
           <p>Persona certificada: <span class="data-text">{{item.miembro}}</span></p>
         </mat-card-content>
+        <mat-card-actions *ngIf="edit"
+        style="display: flex; justify-content: space-around;">
+        <button mat-raised-button color='accent'
+        (click)="sendToEdit(item, i)" >Editar</button>
+        <button mat-raised-button color='primary'
+        (click)="perfiles_.deleteInfoItem( 'certificaciones', item.id)" >Eliminar</button>
+        </mat-card-actions>
       </mat-card>
     </div>
   </div>

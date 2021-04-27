@@ -88,6 +88,7 @@ export class AfiliadosService {
         console.log('usuario registrado');
         this._alert.sendFloatNotification('Usuario registrado');
         this._cache.updateData('user', afiliado);
+        this._cache.updateData('rfc', afiliado.RFC);
         this._router.navigate(['/afiliados/afiliacion', RFC]);
       }
       /*
