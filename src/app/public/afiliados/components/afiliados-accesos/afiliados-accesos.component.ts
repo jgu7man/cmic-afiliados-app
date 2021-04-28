@@ -25,7 +25,7 @@ export class AfiliadosAccesosComponent implements OnInit {
     private _cache: GdevCache,
     private _dialog: MatDialog
   ) {
-    this.managers$ = this._afiliados.getManagers().pipe(tap(data => console.log( data )))
+    this.managers$ = this._afiliados.getManagers()
     this.currentUser = this._cache.getDataKey<iUserAfiliado>('user') as iUserAfiliado
    }
 

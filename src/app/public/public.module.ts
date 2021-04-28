@@ -1,4 +1,4 @@
-  import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PublicRoutingModule } from './public-routing.module';
@@ -12,10 +12,17 @@ import { ClientesModule } from './clientes/clientes.module';
 import { FooterComponent } from './footer/footer.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { GdevResponsiveModule } from 'gdev-responsive';
-
+import { CreateAccountComponent } from './pages/create-account/create-account.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [PublicComponent, TopbarComponent, FooterComponent, InicioComponent],
+  declarations: [
+    PublicComponent,
+    TopbarComponent,
+    FooterComponent,
+    InicioComponent,
+    CreateAccountComponent,
+  ],
   imports: [
     CommonModule,
     PublicRoutingModule,
@@ -24,7 +31,10 @@ import { GdevResponsiveModule } from 'gdev-responsive';
     ComunesModule,
     AfiliadosModule,
     ClientesModule,
-    GdevResponsiveModule
-  ]
+    GdevResponsiveModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  exports: [CreateAccountComponent],
 })
 export class PublicModule {}

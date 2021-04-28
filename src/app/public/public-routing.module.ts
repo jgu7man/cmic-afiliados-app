@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { MainPerfilComponent } from './perfiles/components/main-perfil/main-perfil.component';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
       loadChildren: () => import('./clientes/clientes.module').then(m => m.ClientesModule)
     },
     { path: 'afiliado/:RFC', component: MainPerfilComponent },
+    { path: 'create', component: CreateAccountComponent },
   ]},
 ];
 

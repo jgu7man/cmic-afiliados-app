@@ -57,7 +57,7 @@ export class AfiliadosService {
   }
 
   async registAfiliado(afiliado: iUserAfiliado) {
-    const { email, contrasena, RFC } = afiliado;
+    const { RFC } = afiliado;
     try {
       const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
       const afiliadoDoc = await afiliadoRef.get();
@@ -67,38 +67,43 @@ export class AfiliadosService {
             'Esta empresa ya está registrada. Si necesitas accesos, contacta a un administrador de la empresa o con CMIC directamente',
         };
       } else {
-        const userCredentials = await this._auth
-          .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
-          .catch((error) => {
-            throw { message: 'No se pudo crear el usuario', error };
-          });
 
+        await this._createFirebaseUser(afiliado)
         afiliadoRef.set({ creado: new Date() });
-
-
-        const userRef = afiliadoRef
-          .collection('managers')
-          .doc(userCredentials.user?.uid);
-
-        userRef.set({ email, RFC, registrado: new Date() }).catch((error) => {
-          throw { message: 'No se pudo guardar en base de datos', error };
-        });
-
-        afiliado.uid = userCredentials.user?.uid;
-        console.log('usuario registrado');
-        this._alert.sendFloatNotification('Usuario registrado');
-        this._cache.updateData('user', afiliado);
-        this._cache.updateData('rfc', afiliado.RFC);
         this._router.navigate(['/afiliados/afiliacion', RFC]);
       }
-      /*
-      console.log('usuario registrado')
-      this._cache.updateData('user', userCredentials.user)
-      this._router.navigate(['/afiliados/afiliacion'])*/
+
     } catch (e) {
       this._alert.sendMessageAlert(e.message);
       console.error(e);
     }
+  }
+
+
+  private async _createFirebaseUser({ email, contrasena, RFC }: iUserAfiliado) {
+    const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
+    const userCredentials = await this._auth
+      .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
+      .catch((error) => {
+        throw { message: 'No se pudo crear el usuario', error };
+      });
+
+    const userRef = afiliadoRef
+      .collection('managers')
+      .doc(userCredentials.user?.uid);
+
+    userRef.set({ email, RFC, registrado: new Date() }).catch((error) => {
+      throw { message: 'No se pudo guardar en base de datos', error };
+    });
+
+    let uid = userCredentials.user?.uid;
+    console.log('usuario registrado');
+    this._alert.sendFloatNotification('Usuario registrado');
+    this._cache.updateData('user', {email, RFC, uid});
+    this._cache.updateData('rfc', RFC);
+
+    return userCredentials
+
   }
 
   getPerfilAfiliado(RFC: string): Observable<AfiliadoModel | undefined>{
@@ -115,15 +120,15 @@ export class AfiliadosService {
 
 
   async addManager(email: string) {
-    let rfc = this._cache.getDataKey<string>('rfc')
+    let RFC = this._cache.getDataKey<string>('rfc')
     let user: iUserAfiliado = this._cache.getDataKey<iUserAfiliado>('user') as iUserAfiliado
 
-    const managersRef = this._afs.collection(`afiliados/${rfc}/managers`).ref
+    const managersRef = this._afs.collection(`afiliados/${RFC}/managers`).ref
     const list = await managersRef.where('email', '==', email).get();
     if (list.empty) {
 
-      const perfil = await this.getPerfilAfiliado(rfc as string).pipe(take(1)).toPromise()
-      await managersRef.doc(email).set({ email })
+      const perfil = await this.getPerfilAfiliado(RFC as string).pipe(take(1)).toPromise()
+      await managersRef.doc(email).set({ email, RFC })
 
       this._afs.collection( 'mail' ).ref.add( {
         to: email,
@@ -134,7 +139,7 @@ export class AfiliadosService {
           \t ${perfil?.datos_generales.comercial_nombre} \n
 
           Por favor da click en el siguiente enlace:\n
-          https://cmic-platform.web.app/create`
+          https://cmic-platform.web.app/create?email=${email}&rfc=${RFC}"`
         }
       } )
       this._alert.sendFloatNotification('Correo enviado')
@@ -142,6 +147,38 @@ export class AfiliadosService {
 
 
 
+    }
+
+  }
+
+
+  async createManager({email, contrasena, RFC}:iUserAfiliado) {
+    const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
+    const perfil = await this.getPerfilAfiliado(RFC).pipe(take(1)).toPromise()
+
+    console.log( { email, RFC, perfil} )
+    if (!RFC || !perfil) {
+      this._alert.sendMessageAlert(`
+        <h2 class="center">Perfil de empresa no encontrado</h2>
+        <p class="center">No se encontró la empresa para esta acción. <br>
+        Por favor revisa el enlace que usaste, debe ser el que recibiste por email o contacta con la CMIC</p>
+      `, 'html')
+    } else {
+
+      const emailRef = afiliadoRef.collection('managers').doc(email)
+      const emailDoc = await emailRef.get()
+
+      if (!emailDoc.exists) {
+        this._alert.sendMessageAlert(`
+          <h2 class="center">Email incorrecto</h2>
+          <p class="center">No esperamos ninguna petición de creación de cuenta para ${perfil?.datos_generales.comercial_nombre}. <br> Por favor contacta con CMIC para cualquier error </p>
+        `, 'html')
+      } else {
+
+        await this._createFirebaseUser({ email, contrasena, RFC })
+        emailRef.delete()
+        this._router.navigate(['/afiliados/perfil']);
+      }
     }
 
   }
