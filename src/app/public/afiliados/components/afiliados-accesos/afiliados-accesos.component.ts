@@ -42,15 +42,14 @@ export class AfiliadosAccesosComponent implements OnInit {
 
   openAddDialog() {
     this._dialog.open(AddManagerComponent, {
-      minHeight: 414,
       minWidth: 414,
+      maxWidth: '50%'
     })
   }
 
   openDeleteDialog(id?: string) {
     if (id) {
       this._dialog.open(DeleteManagerComponent, {
-        minHeight: 414,
         minWidth: 414,
         data: id
       })

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { Observable, of, throwError } from 'rxjs';
-import { debounceTime, flatMap, map, switchMap } from 'rxjs/operators';
+import { debounceTime, flatMap, map, switchMap, take } from 'rxjs/operators';
 import { AfiliadoModel, iAfiliadoModel, iUserAfiliado, PartialAfiliado } from '../models/afiliados.model';
 
 @Injectable({
@@ -111,6 +111,49 @@ export class AfiliadosService {
   getManagers() {
     let rfc = this._cache.getDataKey<string>('rfc')
     return this._afs.collection<iUserAfiliado>(`afiliados/${rfc}/managers`).valueChanges({idField: 'uid'})
+  }
+
+
+  async addManager(email: string) {
+    let rfc = this._cache.getDataKey<string>('rfc')
+    let user: iUserAfiliado = this._cache.getDataKey<iUserAfiliado>('user') as iUserAfiliado
+
+    const managersRef = this._afs.collection(`afiliados/${rfc}/managers`).ref
+    const list = await managersRef.where('email', '==', email).get();
+    if (list.empty) {
+
+      const perfil = await this.getPerfilAfiliado(rfc as string).pipe(take(1)).toPromise()
+      await managersRef.doc(email).set({ email })
+
+      this._afs.collection( 'mail' ).ref.add( {
+        to: email,
+        message: {
+          subject: `Invitación a CMIC`,
+          text: `Se te ha invitado a ser administrador del perfil de afiliado CMIC de la empresa \n
+
+          \t ${perfil?.datos_generales.comercial_nombre} \n
+
+          Por favor da click en el siguiente enlace:\n
+          https://cmic-platform.web.app/create`
+        }
+      } )
+      this._alert.sendFloatNotification('Correo enviado')
+      return
+
+
+
+    }
+
+  }
+
+
+  async deleteManager(id: string) {
+    let rfc = this._cache.getDataKey<string>('rfc')
+    let user: iUserAfiliado = this._cache.getDataKey<iUserAfiliado>('user') as iUserAfiliado
+    const managersRef = this._afs.collection(`afiliados/${rfc}/managers`).ref
+    await managersRef.doc(id).delete()
+    this._alert.sendFloatNotification('Perfil eliminado')
+    return
   }
 
 }

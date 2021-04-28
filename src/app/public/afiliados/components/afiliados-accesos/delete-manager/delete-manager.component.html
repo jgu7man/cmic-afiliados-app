@@ -1,1 +1,16 @@
-<p>delete-manager works!</p>
+<p mat-dialog-title class="center">Cuidado!</p>
+<mat-dialog-content>
+  <p class="center">
+    ¿Seguro que deseas elimiar este perfil?
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions
+style="display: flex; justify-content: space-around;">
+    <button mat-raised-button
+    (click)="dialog.close()"
+    >Cancelar</button>
+    <button mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    >Borrar</button>
+</mat-dialog-actions>

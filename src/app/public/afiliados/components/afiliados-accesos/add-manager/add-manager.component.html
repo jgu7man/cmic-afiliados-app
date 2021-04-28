@@ -1,1 +1,30 @@
-<p>add-manager works!</p>
+<p mat-dialog-title>Agregar un nuevo acceso al perfil</p>
+<mat-dialog-content>
+  <p>Se le enviará un correo a la dirección que escribas dando los permisos necesarios para acceder.
+    <br> La otra persona tendrá que registrarse usando el correo que estás proporcionando y crear una contraseña nueva. </p>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input
+    matInput
+    type="email"
+    name="nuevoManager"
+    [formControl]="nuevoManager"
+    >
+    <mat-error *ngIf="nuevoManager.hasError('required')">
+    Es necesario que escribas un email
+    </mat-error>
+    <mat-error *ngIf="nuevoManager.hasError('email')">
+    Por favor, usa un formato correcto de correo
+    </mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions
+style="display: flex; justify-content:flex-end;">
+    <button mat-raised-button
+    (click)="dialog.close()"
+    >Cancelar</button>
+    <button mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    >Enviar</button>
+</mat-dialog-actions>
