@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GdevCache } from 'gdev-cache';
-import { iUserAfiliado } from '../../../models/afiliados.model';
+import { iManager } from '../../../models/afiliados.model';
 
 @Component({
   selector: 'g-afiliado-sidebar',
@@ -13,7 +13,7 @@ export class AfiliadoSidebarComponent implements OnInit {
   constructor(
     private _cache: GdevCache
   ) {
-    const user = this._cache.getDataKey<iUserAfiliado>('user')
+    const user = this._cache.getDataKey<iManager>('user')
     if (user) this.RFC = user.RFC
     else {
 

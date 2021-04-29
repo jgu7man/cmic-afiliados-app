@@ -4,6 +4,7 @@ import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
 import { GdevCache } from 'gdev-cache';
 import { take } from 'rxjs/operators';
 import { AfiliadosService } from '../../services/afiliados.service';
+import { ManagersService } from '../../services/managers.service';
 
 @Component({
   templateUrl: './afiliados-login.component.html',
@@ -14,10 +15,10 @@ export class AfiliadosLoginComponent implements OnInit {
   constructor(
     private _authService: GdevAuthService,
     private _cache: GdevCache,
-    private _afiliados: AfiliadosService,
-    private _router: Router
+    private _router: Router,
+    private _managers: ManagersService
   ) {
-    this._afiliados.afiliado$.subscribe(user => {
+    this._managers.current$.subscribe(user => {
       if (user) { this._router.navigate(['/afiliados']) }
     })
    }
@@ -29,7 +30,7 @@ export class AfiliadosLoginComponent implements OnInit {
 		this._authService.emailSignIn(fields.email,  fields.password)
       .then(user => {
         if (user) {
-          this._afiliados.retriveManager(user.email as string)
+          this._managers.retriveManager(user.email as string)
           .pipe(take(1)).subscribe(
             dataUser => {
               this._cache.updateData('user', dataUser)

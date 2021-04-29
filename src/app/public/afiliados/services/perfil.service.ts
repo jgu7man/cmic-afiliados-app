@@ -10,7 +10,7 @@ import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { GdevLoading } from 'gdev-loading';
 import { GdevCache } from 'gdev-cache';
-import { iUserAfiliado } from '../models/afiliados.model';
+import { iManager } from '../models/afiliados.model';
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class PerfilService {
   ) {
     this.extractCtrl = new FormControl('', [Validators.required])
     this.RFC = this._cache.getDataKey<string>('rfc') as string
-    const { email }: iUserAfiliado = this._cache.getDataKey('user') as iUserAfiliado
+    const { email }: iManager = this._cache.getDataKey('user') as iManager
     this.metadata = { RFC: this.RFC, email }
   }
 

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { DatosGeneralesAfiliado } from '../../../models/afiliados.model';
+import { DatosGeneralesModel } from '../../../models/afiliados.model';
 
 @Component({
   selector: 'g-datos-generales-form',
@@ -22,12 +22,12 @@ export class DatosGeneralesFormComponent implements OnInit {
   @Input() set RFC(rfc: string | undefined) { if (rfc) this.RFC$.next(rfc); }
   // get RFC() { return this._RFC.getValue() }
 
-  private _form: Subject<DatosGeneralesAfiliado> = new Subject();
-  @Input() set form(variable: DatosGeneralesAfiliado | undefined)
+  private _form: Subject<DatosGeneralesModel> = new Subject();
+  @Input() set form(variable: DatosGeneralesModel | undefined)
   { this._form.next(variable); }
 
 
-  @Output() changes: EventEmitter<DatosGeneralesAfiliado> = new EventEmitter()
+  @Output() changes: EventEmitter<DatosGeneralesModel> = new EventEmitter()
   @Output() invalid: EventEmitter<boolean> = new EventEmitter()
 
   constructor() {

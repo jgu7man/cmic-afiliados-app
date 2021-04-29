@@ -13,10 +13,9 @@
 
           <div>
             <button mat-button matStepperNext #datosGeneralesBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado(
+              (click)="afiliados_.patch(
                 'datos_generales',
-                afiliado.datos_generales,
-                RFC
+                afiliado.datos_generales
                 )"
                 >Siguiente</button>
           </div>
@@ -33,10 +32,9 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button mat-button matStepperNext #direccionBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado(
+              (click)="afiliados_.patch(
                 'domicilio',
-                afiliado.domicilio,
-                RFC
+                afiliado.domicilio
                 )">Siguiente</button>
           </div>
         </mat-step>
@@ -53,10 +51,9 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button #contactoBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado(
+              (click)="afiliados_.patch(
                 'contacto',
-                afiliado.contacto,
-                RFC
+                afiliado.contacto
                 )"
                 mat-button
               matStepperNext>Siguiente</button>
@@ -74,10 +71,9 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button #representanteBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado(
+              (click)="afiliados_.patch(
                 'representante_legal',
-                afiliado.representante_legal,
-                RFC
+                afiliado.representante_legal
                 )" mat-button
               matStepperNext>Siguiente</button>
           </div>
@@ -100,10 +96,9 @@
           <div>
             <button mat-button matStepperPrevious>Atrás</button>
             <button #directorBtn="matButton"
-              (click)="afiliados_.savePartialAfiliado(
+              (click)="afiliados_.patch(
                 'representante_legal',
-                afiliado.representante_legal,
-                RFC
+                afiliado.representante_legal
                 )" mat-button
               matStepperNext>Siguiente</button>
           </div>

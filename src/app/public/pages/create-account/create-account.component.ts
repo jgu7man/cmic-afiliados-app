@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { MyErrorStateMatcher } from '../../afiliados/components/afiliados-registro/afiliados-registro.component';
 import { AfiliadosService } from '../../afiliados/services/afiliados.service';
+import { ManagersService } from '../../afiliados/services/managers.service';
 
 @Component({
   selector: 'g-create-account',
@@ -25,9 +26,9 @@ export class CreateAccountComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private _afiliados: AfiliadosService,
     private _alert: GdevAlert,
-    private _router: Router
+    private _router: Router,
+    private _managers: ManagersService
   ) {
     let {email, rfc} = this._route.snapshot.queryParams
     if (email && rfc) { this.accountForm.patchValue({ email, RFC: rfc }) }
@@ -44,7 +45,7 @@ export class CreateAccountComponent implements OnInit {
   }
 
   onSubmit() {
-    this._afiliados.createManager(this.accountForm.getRawValue())
+    this._managers.createManager(this.accountForm.getRawValue())
   }
 
 }

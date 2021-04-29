@@ -6,7 +6,7 @@ import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AfiliadoModel, AfiliadoProperty, emptyAfiliado, iAfiliadoModel, iUserAfiliado, PartialAfiliado } from '../../models/afiliados.model';
+import { AfiliadoModel, AfiliadoProperty, emptyAfiliado, iAfiliadoModel, iManager, PartialAfiliado } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { AfiliadosService } from '../../services/afiliados.service';
 })
 export class EditarInformacionComponent implements OnInit {
 
-  user?: iUserAfiliado
+  user?: iManager
   afiliado: AfiliadoModel = emptyAfiliado
   RFC: string
 
@@ -29,7 +29,7 @@ export class EditarInformacionComponent implements OnInit {
   ) {
     this.RFC = this._route.snapshot.params['RFC']
     if (this.RFC) {
-      this._afiliados.getPerfilAfiliado(this.RFC).subscribe((data) => {
+      this._afiliados.getPerfil(this.RFC).subscribe((data) => {
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
           this.afiliado = data;

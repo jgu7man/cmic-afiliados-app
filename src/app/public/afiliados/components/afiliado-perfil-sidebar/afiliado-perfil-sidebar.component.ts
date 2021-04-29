@@ -10,6 +10,7 @@ import { AfiliadosService } from '../../services/afiliados.service';
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, delay, map, mapTo, take, tap } from 'rxjs/operators';
 import { GdevLoading } from 'gdev-loading';
+import { PerfilService } from '../../services/perfil.service';
 
 @Component({
   selector: 'g-afiliado-perfil-sidebar',
@@ -31,8 +32,8 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    public afiliados_: AfiliadosService,
-    private _loading: GdevLoading
+    private _loading: GdevLoading,
+    public perfil_: PerfilService,
   ) { }
 
   async ngOnInit() {
@@ -72,7 +73,7 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
       minHeight: '40%',
       data: options
     }).afterClosed().subscribe((file: iUploadedFile[]) => {
-      this.afiliados_.savePartialAfiliado('perfil.imgPerfil', file[0], this.afiliado.datos_generales.RFC)
+      this.perfil_.updateInfoDoc('perfil.imgPerfil', file[0])
     })
 
   }

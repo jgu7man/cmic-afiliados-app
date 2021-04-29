@@ -3,7 +3,8 @@ import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { Actividad } from './actividades.model';
 import firebase from 'firebase/app'
 
-export interface iUserAfiliado {
+export interface iManager
+{
   uid?: string;
   RFC: string;
   email: string;
@@ -13,7 +14,7 @@ export interface iUserAfiliado {
 
 export class AfiliadoModel {
   constructor(
-    public datos_generales: DatosGeneralesAfiliado,
+    public datos_generales: DatosGeneralesModel,
     public domicilio: DireccionAfiliadoModel,
     public contacto: ContactoAfiliado,
     public representante_legal: RepresentanteAfiliado,
@@ -26,7 +27,7 @@ export class AfiliadoModel {
 
 
 export interface iAfiliadoModel {
-  datos_generales: DatosGeneralesAfiliado;
+  datos_generales: DatosGeneralesModel;
   domicilio: DireccionAfiliadoModel;
   contacto: ContactoAfiliado;
   representante_legal: RepresentanteAfiliado;
@@ -34,7 +35,7 @@ export interface iAfiliadoModel {
   perfil: iPerfil
 }
 
-export class DatosGeneralesAfiliado {
+export class DatosGeneralesModel {
   constructor(
     public RFC: string,
     public comercial_nombre: string,
@@ -110,14 +111,12 @@ export class Intereses {
 
 
 export type PartialAfiliado =
-  | DatosGeneralesAfiliado
+  | DatosGeneralesModel
   | DireccionAfiliadoModel
   | RepresentanteAfiliado
   | Intereses
   | ContactoAfiliado
-  | iUploadedFile
-  | string
-  | string[]
+
 
 export type AfiliadoProperty =
 | "datos_generales"
@@ -146,7 +145,7 @@ export const emptyContacto = {
 }
 
 export const emptyAfiliado: AfiliadoModel = new AfiliadoModel(
-  new DatosGeneralesAfiliado('', ''),
+  new DatosGeneralesModel('', ''),
   new DireccionAfiliadoModel(emptyDireccion, emptyDireccion ),
   {
     ...emptyContacto,

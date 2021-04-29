@@ -3,7 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { GdevCache } from 'gdev-cache';
 import { GdevLoading } from 'gdev-loading';
 import { Location } from '@angular/common';
-import { iUserAfiliado } from '../../../models/afiliados.model';
+import { iManager } from '../../../models/afiliados.model';
 import { PerfilService } from '../../../services/perfil.service';
 import { iAdtionalInfo, CertificacionModel, emptyCert } from '../../../models/perfiles.model';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';

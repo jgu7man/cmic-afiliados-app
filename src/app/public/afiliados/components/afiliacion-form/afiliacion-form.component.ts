@@ -2,7 +2,7 @@ import { emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/a
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GdevCache } from 'gdev-cache';
-import { AfiliadoModel, iContacto, DatosGeneralesAfiliado,  RepresentanteAfiliado, iDireccion, DireccionAfiliadoModel, ContactoAfiliado, iUserAfiliado, AfiliadoProperty } from '../../models/afiliados.model';
+import { AfiliadoModel, iContacto, DatosGeneralesModel,  RepresentanteAfiliado, iDireccion, DireccionAfiliadoModel, ContactoAfiliado, iManager, AfiliadoProperty } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 import {take} from 'rxjs/operators'
 @Component({
@@ -11,7 +11,7 @@ import {take} from 'rxjs/operators'
   styleUrls: ['./afiliacion-form.component.scss'],
 })
 export class AfiliacionFormComponent implements OnInit {
-  public user: iUserAfiliado
+  public user: iManager
 
   // MODEL
   public afiliado: AfiliadoModel = emptyAfiliado
@@ -26,7 +26,7 @@ export class AfiliacionFormComponent implements OnInit {
     private _cache: GdevCache
   ) {
     // Se obtiene el usuario del cache
-    let user = this._cache.getDataKey<iUserAfiliado>('user') as iUserAfiliado
+    let user = this._cache.getDataKey<iManager>('user') as iManager
       this.user = user
       this.RFC = user.RFC
 

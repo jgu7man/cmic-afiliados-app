@@ -6,9 +6,11 @@ import { GdevCache } from 'gdev-cache';
 import { take } from 'rxjs/operators';
 import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
 import { iUploadedFile, iUploadOptions } from 'src/app/gdev/gdev-storage/storage.model';
-import { AfiliadoModel, emptyAfiliado, iAfiliadoModel, iUserAfiliado } from '../../models/afiliados.model';
+import { AfiliadoModel, emptyAfiliado, iAfiliadoModel, iManager } from '../../models/afiliados.model';
 import { iPersonal } from '../../models/perfiles.model';
 import { AfiliadosService } from '../../services/afiliados.service';
+import { ManagersService } from '../../services/managers.service';
+import { PerfilService } from '../../services/perfil.service';
 
 @Component({
   templateUrl: './afiliados-perfil.component.html',
@@ -32,23 +34,24 @@ export class AfiliadosPerfilComponent implements OnInit {
   // perfilHeight: number
 
   constructor(
-    public afiliados_: AfiliadosService,
+    private _afiliados: AfiliadosService,
     private _router: Router,
     private _alert: GdevAlert,
     private _route: ActivatedRoute,
     private _cache: GdevCache,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    public perfil_: PerfilService
   ) {
 
     let param = this._route.snapshot.params['RFC']
     this.RFC = param ? param
-      : this._cache.getDataKey<iUserAfiliado>('user')?.RFC as string
+      : this._cache.getDataKey<iManager>('user')?.RFC as string
 
     if (!this.RFC) {
       this._alert.sendMessageAlert('Primero necesitas iniciar sesión como afiliado o administrador')
         this._router.navigate(['/afiliados/login'])
     } else {
-      this.afiliados_.getPerfilAfiliado(this.RFC).subscribe((data) => {
+      this._afiliados.getPerfil(this.RFC).subscribe((data) => {
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
           console.log( data )
@@ -80,7 +83,7 @@ export class AfiliadosPerfilComponent implements OnInit {
       minHeight: '40%',
       data: options
     }).afterClosed().subscribe((file: iUploadedFile[]) => {
-      this.afiliados_.savePartialAfiliado('perfil.imgBanner', file[0], this.RFC)
+      this.perfil_.updateInfoDoc('perfil.imgBanner', file[0])
     })
 
   }

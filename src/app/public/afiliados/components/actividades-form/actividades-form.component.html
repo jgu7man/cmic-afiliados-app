@@ -67,7 +67,7 @@
               >Atrás</button>
               <button mat-button matStepperNext
               [disabled]="afiliadoIntereses[catalogo.id].length < 3"
-              (click)="afiliados_.savePartialAfiliado('intereses',  afiliadoIntereses, RFC)"
+              (click)="afiliados_.patch('intereses',  afiliadoIntereses)"
               >Siguiente</button>
             </div>
         </mat-step>

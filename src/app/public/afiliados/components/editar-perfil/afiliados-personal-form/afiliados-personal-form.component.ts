@@ -42,10 +42,9 @@ export class AfiliadosPersonalFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this._afiliados.savePartialAfiliado(
+    this._afiliados.patch(
       'adicional.personal',
       this.personalForm.value,
-      this.RFC
     )
     this.personalForm.markAsPristine()
   }

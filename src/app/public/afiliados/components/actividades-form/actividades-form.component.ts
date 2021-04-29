@@ -4,7 +4,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { GdevCache } from 'gdev-cache';
 import { Especialidad,  Actividad, catalogoName } from '../../models/actividades.model';
-import { ContactoInteres, DatosGeneralesAfiliado, Intereses } from '../../models/afiliados.model';
+import { ContactoInteres, DatosGeneralesModel, Intereses } from '../../models/afiliados.model';
 import { ActividadesService } from '../../services/actividades.service';
 import { AfiliadosService } from '../../services/afiliados.service';
 
@@ -15,7 +15,7 @@ import { AfiliadosService } from '../../services/afiliados.service';
 export class ActividadesFormComponent implements OnInit {
 
   RFC:string
-  afiliado: DatosGeneralesAfiliado | null
+  afiliado: DatosGeneralesModel | null
   especialidadSelected: Especialidad = { nombre: '', actividades: [] };
   afiliadoIntereses: Intereses
   contacto_1: ContactoInteres = {
@@ -59,7 +59,7 @@ export class ActividadesFormComponent implements OnInit {
     ) {
     this.RFC = this._route.snapshot.params['RFC']
     this.afiliadoIntereses = new Intereses([], [], [], this.contacto_1, this.contacto_2, false, false,)
-    this.afiliado = this._cache.getDataKey<DatosGeneralesAfiliado>('datos_generales')
+    this.afiliado = this._cache.getDataKey<DatosGeneralesModel>('datos_generales')
    }
 
   ngOnInit(): void {

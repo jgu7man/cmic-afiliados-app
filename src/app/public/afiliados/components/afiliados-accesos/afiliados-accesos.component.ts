@@ -4,12 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSelectionListChange } from '@angular/material/list';
 import { GdevCache } from 'gdev-cache';
 import { Observable } from 'rxjs';
-import { iUserAfiliado } from '../../models/afiliados.model';
+import { iManager } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 import { AddManagerComponent } from './add-manager/add-manager.component';
 import firebase from 'firebase/app'
 import { DeleteManagerComponent } from './delete-manager/delete-manager.component';
 import { tap } from 'rxjs/operators';
+import { ManagersService } from '../../services/managers.service';
 
 @Component({
   templateUrl: './afiliados-accesos.component.html',
@@ -17,16 +18,16 @@ import { tap } from 'rxjs/operators';
 })
 export class AfiliadosAccesosComponent implements OnInit {
 
-  managers$: Observable<iUserAfiliado[]>
-  currentUser: iUserAfiliado
+  managers$: Observable<iManager[]>
+  currentUser: iManager
   constructor(
     public location_: Location,
-    private _afiliados: AfiliadosService,
     private _cache: GdevCache,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _managers: ManagersService
   ) {
-    this.managers$ = this._afiliados.getManagers()
-    this.currentUser = this._cache.getDataKey<iUserAfiliado>('user') as iUserAfiliado
+    this.managers$ = this._managers.getAll()
+    this.currentUser = this._cache.getDataKey<iManager>('user') as iManager
    }
 
   ngOnInit(): void {

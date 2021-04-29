@@ -32,7 +32,7 @@ export class MainPerfilComponent implements OnInit {
     this.RFC = this._route.snapshot.params['RFC']
     this._perfil.getInfoDoc<iPerfil>( 'perfil')
       .then(perfil => { if (perfil) this.perfil = perfil })
-    this._afiliados.getPerfilAfiliado(this.RFC).subscribe((data) => {
+    this._afiliados.getPerfil(this.RFC).subscribe((data) => {
       if (data) this.afiliado = data
      })
    }

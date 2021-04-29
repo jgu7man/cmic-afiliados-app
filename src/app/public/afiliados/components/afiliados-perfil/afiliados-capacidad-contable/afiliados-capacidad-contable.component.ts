@@ -7,7 +7,7 @@ import { orderBy } from 'lodash';
 import { map } from 'rxjs/operators';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
-import { iUserAfiliado } from '../../../models/afiliados.model';
+import { iManager } from '../../../models/afiliados.model';
 import { PerfilService } from '../../../services/perfil.service';
 //import { StorageService } from 'Src/app/gdev/gdev-storage/gdev-storage.module';
 
@@ -57,7 +57,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
       ])
 
     });
-    const { RFC, email }: iUserAfiliado = this._cache.getDataKey('user') as iUserAfiliado
+    const { RFC, email }: iManager = this._cache.getDataKey('user') as iManager
     this.RFC = RFC
     this.path = `afiliados/${RFC}/cap-contable`
     this.metadata = { RFC, email }

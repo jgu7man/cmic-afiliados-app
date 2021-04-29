@@ -13,8 +13,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 
-import { iUserAfiliado } from '../../models/afiliados.model';
+import { iManager } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
+import { ManagersService } from '../../services/managers.service';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -38,7 +39,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AfiliadosRegistroComponent implements OnInit {
   afiliado: FormGroup;
-  public usuario: iUserAfiliado = {
+  public usuario: iManager = {
     RFC: '',
     email: '',
     contrasena: '',
@@ -51,9 +52,10 @@ export class AfiliadosRegistroComponent implements OnInit {
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
     private _afiliadosService: AfiliadosService,
-    private _router: Router
+    private _router: Router,
+    private _managers: ManagersService
   ) {
-    this._afiliadosService.afiliado$.subscribe(user => {
+    this._managers.current$.subscribe(user => {
       if (user) { this._router.navigate(['/afiliados']) }
     })
     this.afiliado = this.formBuilder.group(
@@ -73,8 +75,8 @@ export class AfiliadosRegistroComponent implements OnInit {
     this.usuario = this.afiliado.getRawValue() as iUserAfiliado;
     console.log(this.usuario) */
 
-    this._afiliadosService.registAfiliado(
-      this.afiliado.value as iUserAfiliado
+    this._afiliadosService.regist(
+      this.afiliado.value as iManager
     );
   }
   checkPasswords(group: FormGroup) {

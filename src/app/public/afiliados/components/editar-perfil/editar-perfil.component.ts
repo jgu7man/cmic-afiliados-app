@@ -36,10 +36,10 @@ export class EditarPerfilComponent implements OnInit {
     private _alert: GdevAlert,
     public  perfil_: PerfilService,
     private _cache: GdevCache,
-    public location_: Location,
+    public location_: Location  ,
   ) {
     this.RFC = this._cache.getDataKey<string>('rfc') as string;
-      this.afiliados_.getPerfilAfiliado(this.RFC).subscribe((data) => {
+      this.afiliados_.getPerfil(this.RFC).subscribe((data) => {
         console.log( data )
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
