@@ -28,11 +28,14 @@
       </mat-form-field>
     </div>
     <div>
-      <a class="topbar-item" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
+      <a class="topbar-item link" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
 
+
+
+      <!-- Logged -->
       <ng-container *ngIf="logged; else unlogged">
 
-        <a  class="topbar-item"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
+        <a  class="topbar-item" color="primary"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
             Afiliado
         </a>
         <mat-menu #unloggedMenu="matMenu">
@@ -46,8 +49,15 @@
         </mat-menu>
 
       </ng-container>
+
+
+
+
+
+
+      <!-- Not logged -->
       <ng-template #unlogged>
-        <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="afiliadoMenu" [routerLinkActive]="'active'">
+        <a class="topbar-item link" mat-icon-button [mat-menu-trigger-for]="afiliadoMenu" [routerLinkActive]="'active'">
             Afiliado
         </a>
         <mat-menu #afiliadoMenu="matMenu">
@@ -58,7 +68,7 @@
                 Registrarse
             </button>
         </mat-menu>
-        <a class="topbar-item" mat-icon-button [mat-menu-trigger-for]="clienteMenu" [routerLinkActive]="'active'">
+        <a class="topbar-item link" mat-icon-button [mat-menu-trigger-for]="clienteMenu" [routerLinkActive]="'active'">
             Cliente
         </a>
         <mat-menu #clienteMenu="matMenu">

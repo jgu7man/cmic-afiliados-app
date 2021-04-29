@@ -6,6 +6,11 @@
   position: relative;
 }
 
+#topbar {
+  position: relative;
+  z-index: 20;
+}
+
 mat-toolbar {
   position: relative;
   z-index: 10;
@@ -51,6 +56,9 @@ mat-toolbar {
 .topbar-item {
   margin: 0 1.5em;
   font-size: medium;
+}
+
+.link {
   color: #909090;
 }
 

@@ -1491,344 +1491,319 @@ export class ActividadesService {
         nombre:"Fuentes de Trabajo",
         instrucciones:"Enumere por orden de importancia del 1 al 6 las principales fuentes de trabajo",
         especialidades:[
-            {
-                nombre:"Sector Público",
-                actividades:[
-                    //Sector Energía
-                    {
-                        nombre:"Comisión Federal de Electricidad (CFE)",
-                        codigo:"101",
-                        expansion:false,
-                        subespecialidad:"Sector Energía"
+          {
+            nombre: "Sector Energía",
+            actividades: [
+              //Sector Energía
+              {
+                nombre: "Comisión Federal de Electricidad (CFE)",
+                codigo: "101",
+                expansion: false,
 
-                    },
-                    {
-                        nombre:"PEMEX Corporativo",
-                        codigo:"102",
-                        expansion:false,
-                        subespecialidad:"Sector Energía"
-                    },
-                    {
-                        nombre:"PEMEX Exploración y Producción",
-                        codigo:"103",
-                        expansion:false,
-                        subespecialidad:"Sector Energía"
-                    },
-                    {
-                        nombre:"PEMEX Refinación",
-                        codigo:"104",
-                        expansion:false,
-                        subespecialidad:"Sector Energía"
-                    },
-                    {
-                        nombre:"PEMEX Gas y Petroquímica Básica",
-                        codigo:"105",
-                        expansion:false,
-                        subespecialidad:"Sector Energía"
-                    },
-                    {
-                        nombre:"Petroquímica",
-                        codigo:"106",
-                        expansion:false,
-                        subespecialidad:"Sector Energía"
-                    },
-                    //Sector Comunicaciones y Transportes
-                    {
-                        nombre:"Secretaría de Comunicaciones y Transportes (SCT)",
-                        codigo:"201",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Secretaria de Marina",
-                        codigo:"202",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Aeropuertos y Servicios Auxiliares (ASA)",
-                        codigo:"203",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Aeropuerto Internacional de la Ciudad de México (AICM)",
-                        codigo:"204",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Coordinación General de Puertos y Marina Mercante",
-                        codigo:"205",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Administraciones Portuarias Integrales (API)",
-                        codigo:"206",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Transportaciones Marítimas Mexicanas",
-                        codigo:"207",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Transportaciones Ferroviarias Mexicanas",
-                        codigo:"208",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Caminos y Puentes Federales de Ingresos y- Servicios Conexos (CAPUFE)",
-                        codigo:"209",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    {
-                        nombre:"Servicio Postal Mexicano (SEPOMEX)",
-                        codigo:"210",
-                        expansion:false,
-                        subespecialidad:"Sector Comunicaciones y Transportes"
-                    },
-                    //Sector Vivienda y Desarrollo Urbano
-                    {
-                        nombre:"Secretaría de Desarrollo Agrario, Territorial y Urbano(SEDATU)",
-                        codigo:"301",
-                        expansion:false,
-                        subespecialidad:"Sector Vivienda y Desarrollo Urbano"
-                    },
-                    {
-                        nombre:"Instituto del Fondo Nacional de la Vivienda para los Trabajadores (INFONAVIT)",
-                        codigo:"302",
-                        expansion:false,
-                        subespecialidad:"Sector Vivienda y Desarrollo Urbano"
-                    },
-                    {
-                        nombre:"Fondo de la Vivienda del ISSSTE (FOVISSSTE)",
-                        codigo:"303",
-                        expansion:false,
-                        subespecialidad:"Sector Vivienda y Desarrollo Urbano"
-                    },
-                    {
-                        nombre:"Fondo Nacional de Habitaciones Populares (FONHAPO)",
-                        codigo:"304",
-                        expansion:false,
-                        subespecialidad:"Sector Vivienda y Desarrollo Urbano"
-                    },
-                    {
-                        nombre:"Institutos Estatales de Vivienda",
-                        codigo:"305",
-                        expansion:false,
-                        subespecialidad:"Sector Vivienda y Desarrollo Urbano"
-                    },
-                    //Sector Agua y Medio Ambiente
-                    {
-                        nombre:"Secretaría del Medio Ambiente y Recursos Naturales (SEMARNAT)",
-                        codigo:"401",
-                        expansion:false,
-                        subespecialidad:"Sector Agua y Medio Ambiente"
-                    },
-                    {
-                        nombre:"Secretaría de la Reforma Agraria (SRA)",
-                        codigo:"402",
-                        expansion:false,
-                        subespecialidad:"Sector Agua y Medio Ambiente"
-                    },
-                    {
-                        nombre:"Comisión Nacional del Agua (CONAGUA)",
-                        codigo:"403",
-                        expansion:false,
-                        subespecialidad:"Sector Agua y Medio Ambiente"
-                    },
-                    {
-                        nombre:"Instituto Nacional de Ecología (INE)",
-                        codigo:"404",
-                        expansion:false,
-                        subespecialidad:"Sector Agua y Medio Ambiente"
-                    },
-                    {
-                        nombre:"Procuraduría Federal de Protección al Ambiente (PROFEPA)",
-                        codigo:"405",
-                        expansion:false,
-                        subespecialidad:"Sector Agua y Medio Ambiente"
-                    },
-                    {
-                        nombre:"Comisiones Estatales de Agua y Saneamiento (CEAS)",
-                        codigo:"406",
-                        expansion:false,
-                        subespecialidad:"Sector Agua y Medio Ambiente"
-                    },
-                    {
-                        nombre:"Secretaría de Agricultura y Desarrollo Rural (SADER)",
-                        codigo:"407",
-                        expansion:false,
-                        subespecialidad:"Sector Agua y Medio Ambiente"
-                    },
-                    //Sector Salud
-                    {
-                        nombre:"Secretaría de Salud (SS)",
-                        codigo:"501",
-                        expansion:false,
-                        subespecialidad:"Sector Salud"
-                    },
-                    {
-                        nombre:"Instituto Mexicano del Seguro Social (IMSS)",
-                        codigo:"502",
-                        expansion:false,
-                        subespecialidad:"Sector Salud"
-                    },
-                    {
-                        nombre:"Instituto de Seguridad y Servicios Sociales para los Trabajadores del Estado (ISSSTE)",
-                        codigo:"503",
-                        expansion:false,
-                        subespecialidad:"Sector Salud"
-                    },
-                    {
-                        nombre:"Sistema Nacional para el Desarrollo Integral de la Familia (DIF)",
-                        codigo:"505",
-                        expansion:false,
-                        subespecialidad:"Sector Salud"
-                    },
-                    {
-                        nombre:"Institutos de Especialidades Médicas",
-                        codigo:"506",
-                        expansion:false,
-                        subespecialidad:"Sector Salud"
-                    },
-                    //Sector Educación
-                    {
-                        nombre:"Secretaría de Educación Pública (SEP)",
-                        codigo:"601",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    {
-                        nombre:"Universidad Nacional Autónoma de México (UNAM)",
-                        codigo:"602",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    {
-                        nombre:"Universidad Autónoma Metropolitana (UAM)",
-                        codigo:"603",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    {
-                        nombre:"Colegio de Bachilleres",
-                        codigo:"604",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    {
-                        nombre:"Instituto Nacional de la Infraestructura Física Educativa (INIFED)",
-                        codigo:"605",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    {
-                        nombre:"Patronato de Obras e Instalaciones del Instituto, Politécnico Nacional (POI-IPN)",
-                        codigo:"606",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    {
-                        nombre:"Universidad Autónoma de Chapingo",
-                        codigo:"607",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    {
-                        nombre:"Otras Instituciones Públicas y Privadas",
-                        codigo:"608",
-                        expansion:false,
-                        subespecialidad:"Sector Educación"
-                    },
-                    //Sector Industria Comercio y Turismo
-                    {
-                        nombre:"Pronósticos para la Asistencia Pública",
-                        codigo:"701",
-                        expansion:true,
-                        subespecialidad:"Sector Industria Comercio y Turismo"
-                    },
-                    {
-                        nombre:"Lotería Nacional para la Asistencia Pública",
-                        codigo:"702",
-                        expansion:true,
-                        subespecialidad:"Sector Industria Comercio y Turismo"
-                    },
-                    {
-                        nombre:"Sociedades Nacionales de Crédito",
-                        codigo:"703",
-                        expansion:true,
-                        subespecialidad:"Sector Industria Comercio y Turismo"
-                    },
-                    {
-                        nombre:"Secretaría de Turismo (SECTUR)",
-                        codigo:"704",
-                        expansion:true,
-                        subespecialidad:"Sector Industria Comercio y Turismo"
-                    },
-                    {
-                        nombre:"Fondo Nacional de Fomento al Turismo (FONATUR)",
-                        codigo:"705",
-                        expansion:true,
-                        subespecialidad:"Sector Industria Comercio y Turismo"
-                    },
-                    {
-                        nombre:"Diconsa, Liconsa",
-                        codigo:"706",
-                        expansion:true,
-                        subespecialidad:"Sector Industria Comercio y Turismo"
-                    },
-                    {
-                        nombre:"Otros del Sector Público Federal (especificar)",
-                        codigo:"707",
-                        expansion:true,
-                        subespecialidad:"Sector Industria Comercio y Turismo"
-                    },
-                    //Sector Seguridad Pública
-                    {
-                        nombre:"Secretaría de la Defensa Nacional (SEDENA)",
-                        codigo:"801",
-                        expansion:false,
-                        subespecialidad:"Sector Seguridad Pública"
-                    },
-                    {
-                        nombre:"Instituto de Seguridad Social para las Fuerzas Armadas Mexicanas (ISFAM)",
-                        codigo:"802",
-                        expansion:false,
-                        subespecialidad:"Sector Seguridad Pública"
-                    },
-                    {
-                        nombre:"Procuraduría General de la República (PGR)",
-                        codigo:"803",
-                        expansion:false,
-                        subespecialidad:"Sector Seguridad Pública"
-                    },
-                    {
-                        nombre:"Secretaría de Seguridad Pública (SSP)",
-                        codigo:"804",
-                        expansion:false,
-                        subespecialidad:"Sector Seguridad Pública"
-                    },
-                    {
-                        nombre:"Consejo de la Judicatura Federal (CJF)",
-                        codigo:"805",
-                        expansion:false,
-                        subespecialidad:"Sector Seguridad Pública"
-                    },
-                    {
-                        nombre:"Tribunal Federal de Justicia Fiscal y Administrativa (TFJFA)",
-                        codigo:"806",
-                        expansion:false,
-                        subespecialidad:"Sector Seguridad Pública"
-                    }
-                ]
+              },
+              {
+                nombre: "PEMEX Corporativo",
+                codigo: "102",
+                expansion: false,
+              },
+              {
+                nombre: "PEMEX Exploración y Producción",
+                codigo: "103",
+                expansion: false,
+              },
+              {
+                nombre: "PEMEX Refinación",
+                codigo: "104",
+                expansion: false,
+              },
+              {
+                nombre: "PEMEX Gas y Petroquímica Básica",
+                codigo: "105",
+                expansion: false,
+              },
+              {
+                nombre: "Petroquímica",
+                codigo: "106",
+                expansion: false,
+              },
+            ]
+          },
+          {
+            nombre: "Sector Comunicaciones y Transportes",
+            actividades: [
+              {
+                nombre:"Secretaría de Comunicaciones y Transportes (SCT)",
+                codigo:"201",
+                expansion:false,
             },
+            {
+                nombre:"Secretaria de Marina",
+                codigo:"202",
+                expansion:false,
+            },
+            {
+                nombre:"Aeropuertos y Servicios Auxiliares (ASA)",
+                codigo:"203",
+                expansion:false,
+            },
+            {
+                nombre:"Aeropuerto Internacional de la Ciudad de México (AICM)",
+                codigo:"204",
+                expansion:false,
+            },
+            {
+                nombre:"Coordinación General de Puertos y Marina Mercante",
+                codigo:"205",
+                expansion:false,
+            },
+            {
+                nombre:"Administraciones Portuarias Integrales (API)",
+                codigo:"206",
+                expansion:false,
+            },
+            {
+                nombre:"Transportaciones Marítimas Mexicanas",
+                codigo:"207",
+                expansion:false,
+            },
+            {
+                nombre:"Transportaciones Ferroviarias Mexicanas",
+                codigo:"208",
+                expansion:false,
+            },
+            {
+                nombre:"Caminos y Puentes Federales de Ingresos y- Servicios Conexos (CAPUFE)",
+                codigo:"209",
+                expansion:false,
+            },
+            {
+                nombre:"Servicio Postal Mexicano (SEPOMEX)",
+                codigo:"210",
+                expansion:false,
+            },
+            ]
+          },
+          {
+            nombre: "Sector Vivienda y Desarrollo Urbano",
+            actividades: [
+              {
+                nombre:"Secretaría de Desarrollo Agrario, Territorial y Urbano(SEDATU)",
+                codigo:"301",
+                expansion:false,
+            },
+            {
+                nombre:"Instituto del Fondo Nacional de la Vivienda para los Trabajadores (INFONAVIT)",
+                codigo:"302",
+                expansion:false,
+            },
+            {
+                nombre:"Fondo de la Vivienda del ISSSTE (FOVISSSTE)",
+                codigo:"303",
+                expansion:false,
+            },
+            {
+                nombre:"Fondo Nacional de Habitaciones Populares (FONHAPO)",
+                codigo:"304",
+                expansion:false,
+            },
+            {
+                nombre:"Institutos Estatales de Vivienda",
+                codigo:"305",
+                expansion:false,
+            },
+            ]
+          },
+          {
+            nombre: "Sector Agua y Medio Ambiente",
+            actividades: [
+              {
+                nombre:"Secretaría del Medio Ambiente y Recursos Naturales (SEMARNAT)",
+                codigo:"401",
+                expansion:false,
+            },
+            {
+                nombre:"Secretaría de la Reforma Agraria (SRA)",
+                codigo:"402",
+                expansion:false,
+            },
+            {
+                nombre:"Comisión Nacional del Agua (CONAGUA)",
+                codigo:"403",
+                expansion:false,
+            },
+            {
+                nombre:"Instituto Nacional de Ecología (INE)",
+                codigo:"404",
+                expansion:false,
+            },
+            {
+                nombre:"Procuraduría Federal de Protección al Ambiente (PROFEPA)",
+                codigo:"405",
+                expansion:false,
+            },
+            {
+                nombre:"Comisiones Estatales de Agua y Saneamiento (CEAS)",
+                codigo:"406",
+                expansion:false,
+            },
+            {
+                nombre:"Secretaría de Agricultura y Desarrollo Rural (SADER)",
+                codigo:"407",
+                expansion:false,
+            },
+            ]
+          },
+          {
+            nombre: "Sector Salud",
+            actividades: [
+              {
+                nombre:"Secretaría de Salud (SS)",
+                codigo:"501",
+                expansion:false,
+            },
+            {
+                nombre:"Instituto Mexicano del Seguro Social (IMSS)",
+                codigo:"502",
+                expansion:false,
+            },
+            {
+                nombre:"Instituto de Seguridad y Servicios Sociales para los Trabajadores del Estado (ISSSTE)",
+                codigo:"503",
+                expansion:false,
+            },
+            {
+                nombre:"Sistema Nacional para el Desarrollo Integral de la Familia (DIF)",
+                codigo:"505",
+                expansion:false,
+            },
+            {
+                nombre:"Institutos de Especialidades Médicas",
+                codigo:"506",
+                expansion:false,
+            },
+            ]
+          },
+          {
+            nombre: "Sector Educación",
+            actividades: [
+              {
+                nombre:"Secretaría de Educación Pública (SEP)",
+                codigo:"601",
+                expansion:false,
+            },
+            {
+                nombre:"Universidad Nacional Autónoma de México (UNAM)",
+                codigo:"602",
+                expansion:false,
+            },
+            {
+                nombre:"Universidad Autónoma Metropolitana (UAM)",
+                codigo:"603",
+                expansion:false,
+            },
+            {
+                nombre:"Colegio de Bachilleres",
+                codigo:"604",
+                expansion:false,
+            },
+            {
+                nombre:"Instituto Nacional de la Infraestructura Física Educativa (INIFED)",
+                codigo:"605",
+                expansion:false,
+            },
+            {
+                nombre:"Patronato de Obras e Instalaciones del Instituto, Politécnico Nacional (POI-IPN)",
+                codigo:"606",
+                expansion:false,
+            },
+            {
+                nombre:"Universidad Autónoma de Chapingo",
+                codigo:"607",
+                expansion:false,
+            },
+            {
+                nombre:"Otras Instituciones Públicas y Privadas",
+                codigo:"608",
+                expansion:false,
+            },
+            ]
+          },
+          {
+            nombre: "Sector Industria Comercio y Turismo",
+            actividades: [
+              {
+                nombre:"Pronósticos para la Asistencia Pública",
+                codigo:"701",
+                expansion:true,
+            },
+            {
+                nombre:"Lotería Nacional para la Asistencia Pública",
+                codigo:"702",
+                expansion:true,
+            },
+            {
+                nombre:"Sociedades Nacionales de Crédito",
+                codigo:"703",
+                expansion:true,
+            },
+            {
+                nombre:"Secretaría de Turismo (SECTUR)",
+                codigo:"704",
+                expansion:true,
+            },
+            {
+                nombre:"Fondo Nacional de Fomento al Turismo (FONATUR)",
+                codigo:"705",
+                expansion:true,
+            },
+            {
+                nombre:"Diconsa, Liconsa",
+                codigo:"706",
+                expansion:true,
+            },
+            {
+                nombre:"Otros del Sector Público Federal (especificar)",
+                codigo:"707",
+                expansion:true,
+            },
+            ]
+          },
+          {
+            nombre: "Sector Seguridad Pública",
+            actividades: [
+              {
+                nombre:"Secretaría de la Defensa Nacional (SEDENA)",
+                codigo:"801",
+                expansion:false,
+            },
+            {
+                nombre:"Instituto de Seguridad Social para las Fuerzas Armadas Mexicanas (ISFAM)",
+                codigo:"802",
+                expansion:false,
+            },
+            {
+                nombre:"Procuraduría General de la República (PGR)",
+                codigo:"803",
+                expansion:false,
+            },
+            {
+                nombre:"Secretaría de Seguridad Pública (SSP)",
+                codigo:"804",
+                expansion:false,
+            },
+            {
+                nombre:"Consejo de la Judicatura Federal (CJF)",
+                codigo:"805",
+                expansion:false,
+            },
+            {
+                nombre:"Tribunal Federal de Justicia Fiscal y Administrativa (TFJFA)",
+                codigo:"806",
+                expansion:false,
+            }
+            ]
+          },
+
             {
                 nombre:"Gobiernos locales",
                 actividades:[

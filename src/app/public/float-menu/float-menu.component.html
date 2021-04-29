@@ -1,0 +1,53 @@
+<div id="float-menu-container" (mouseleave)="catalogSelected = undefined">
+
+  <nav mat-tab-nav-bar id="catalog-tabs">
+    <a mat-tab-link
+    *ngFor="let cat of catalogos; index as i"
+    (click)="select(i)"
+    [active]="catalogSelected == i"
+    >
+      {{cat.nombre}}
+    </a>
+  </nav>
+
+
+  <mat-drawer-container id="float-menu" [hasBackdrop]="false"
+  class="float-menu" [ngClass]="{'show':catalogSelected !== undefined}" >
+
+
+    <mat-drawer [opened]="true" mode="side" id="float-menu-side" *ngIf="catalogSelected !== undefined" >
+      <ul class="especialidades" *ngIf=" catalogos[catalogSelected].especialidades as especialidades">
+        <li class="especialidad" *ngFor="let especialidad of especialidades; index as i"
+        [ngClass]="{'selected': especialidadSelected === i}"
+        (click)="especialidadSelected = i">
+          {{especialidad.nombre}}
+        </li>
+      </ul>
+    </mat-drawer>
+
+    <mat-drawer-content *ngIf="catalogSelected !== undefined">
+      <div class="especialidad-selected" *ngIf="catalogos[catalogSelected].especialidades[especialidadSelected] as especialidad">
+        <ng-container *ngIf="Subespecialidades[0] !== undefined; else notSub">
+          <ul class="actividades-list" *ngFor="let sub of Subespecialidades">
+            <li class="subespecialidad"> {{sub}} </li>
+            <ng-container *ngFor="let actividad of especialidad.actividades">
+              <li class="actividad-item" *ngIf="actividad.subespecialidad && actividad.subespecialidad == sub">
+                {{actividad.codigo}} {{actividad.nombre}}
+              </li>
+            </ng-container>
+          </ul>
+        </ng-container>
+        <ng-template #notSub >
+          <ul class="actividades-list">
+            <ng-container *ngFor="let actividad of especialidad.actividades">
+              <li class="actividad-item">
+                {{actividad.codigo}} {{actividad.nombre}}
+              </li>
+            </ng-container>
+          </ul>
+        </ng-template>
+      </div>
+    </mat-drawer-content>
+
+  </mat-drawer-container>
+</div>

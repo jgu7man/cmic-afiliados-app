@@ -14,6 +14,7 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { GdevResponsiveModule } from 'gdev-responsive';
 import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FloatMenuComponent } from './float-menu/float-menu.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     InicioComponent,
     CreateAccountComponent,
+    FloatMenuComponent,
   ],
   imports: [
     CommonModule,

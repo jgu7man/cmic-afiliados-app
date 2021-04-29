@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { FloatMenuComponent } from './float-menu/float-menu.component';
 import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { MainPerfilComponent } from './perfiles/components/main-perfil/main-perfil.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: 'afiliado/:RFC', component: MainPerfilComponent },
     { path: 'create', component: CreateAccountComponent },
   ]},
+  { path: 'panel', component: FloatMenuComponent },
 ];
 
 @NgModule({
