@@ -1,32 +1,22 @@
 <div id="topbar">
   <div id="red-bar"></div>
   <mat-toolbar class="mat-elevation-z5">
+
+
+    <!-- LOGO -->
     <div class="logo-container" [routerLink]="['/']">
       <img src="/assets/img/cmic-logo-h.png" alt="logo CMIC">
-      <!-- <span class="logo-legend">
-        <b>
-          Cámara Mexicana de la<br>
-          Industria de la Construcción
-        </b>
-      </span> -->
     </div>
+
+    <!-- BUSCADOR -->
     <div class="buscador-container">
-      <!-- <input type="text"> -->
-      <mat-form-field appearance="outline">
-        <mat-label><i class="fas fa-search"></i> Buscar</mat-label>
-        <input
-        matInput
-        type="text"
-        name="name"
-        [formControl]="buscadorCtrl"
-        >
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+
+      <g-searcher></g-searcher>
+
     </div>
+
+
+    <!-- MENÚS -->
     <div>
       <a class="topbar-item link" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
 

@@ -44,12 +44,14 @@ mat-toolbar {
   justify-content:center;
   height: 80%;
   position: relative;
-  mat-form-field {
-    height: 100% !important;
-    width: 80%;
-    font-size: 12px !important;
-    font-weight: normal;
-
+  ::ng-deep {
+    g-searcher {
+      width: 100%;
+      mat-form-field {
+        height: 100% !important;
+        width: 100% !important;
+      }
+    }
   }
 }
 
