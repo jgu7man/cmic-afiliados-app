@@ -15,6 +15,7 @@ export class DatosGeneralesFormComponent implements OnInit {
     RFC: new FormControl('', [Validators.required]),
     comercial_nombre: new FormControl(''),
     moral_nombre: new FormControl(''),
+    slug: new FormControl('')
   })
 
 
@@ -40,6 +41,7 @@ export class DatosGeneralesFormComponent implements OnInit {
           fisica_nombre: new FormControl('', [Validators.required]),
           fisica_apellido_pat: new FormControl('', [Validators.required]),
           fisica_apellido_mat: new FormControl('', [Validators.required]),
+          slug: new FormControl('')
         })
       }
       this.generalesForm.patchValue({RFC: rfc})
@@ -56,6 +58,12 @@ export class DatosGeneralesFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.generalesForm.valueChanges.subscribe((changes) => {
+      let nombre = this.generalesForm.get('comercial_nombre')
+      if (nombre) {
+        let slug = nombre.value.replace(/\s+/g, '-').toLowerCase();
+        this.generalesForm.patchValue({slug})
+      }
+
       this.changes.emit(this.generalesForm.value)
       this.invalid.emit(
         this.generalesForm.invalid && this.generalesForm.pristine

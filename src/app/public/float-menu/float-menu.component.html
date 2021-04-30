@@ -31,7 +31,10 @@
           <ul class="actividades-list" *ngFor="let sub of Subespecialidades">
             <li class="subespecialidad"> {{sub}} </li>
             <ng-container *ngFor="let actividad of especialidad.actividades">
-              <li class="actividad-item" *ngIf="actividad.subespecialidad && actividad.subespecialidad == sub">
+              <li class="actividad-item"
+              *ngIf="actividad.subespecialidad && actividad.subespecialidad == sub"
+              [routerLink]="['/consulta']" [queryParams]="{'codigo':actividad.codigo}"
+              >
                 {{actividad.codigo}} {{actividad.nombre}}
               </li>
             </ng-container>
@@ -40,7 +43,8 @@
         <ng-template #notSub >
           <ul class="actividades-list">
             <ng-container *ngFor="let actividad of especialidad.actividades">
-              <li class="actividad-item">
+              <li class="actividad-item"
+              [routerLink]="['/consulta']" [queryParams]="{'codigo':actividad.codigo}">
                 {{actividad.codigo}} {{actividad.nombre}}
               </li>
             </ng-container>

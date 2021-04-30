@@ -1,0 +1,60 @@
+<div class="container page">
+  <div class="row">
+    <div class="col s12">
+      <h2> <b> {{especialidad}} </b> </h2>
+      <mat-divider style="margin-bottom: 1.5em;" ></mat-divider>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s8">
+
+      <mat-card [style.width]="'100%'"
+      class="afiliado-card"
+      *ngFor="let afiliado of afiliados"
+      >
+        <mat-card-header (click)="goPerfil(afiliado.datos_generales.slug)">
+          <ng-container *ngIf="avatar(afiliado.perfil) as image; else initial">
+            <div mat-card-avatar class="header-image"
+            [ngStyle]="{'background': 'url('+image+')'}"
+            ></div>
+          </ng-container>
+          <ng-template #initial >
+            <div mat-card-avatar class="initial">
+              {{afiliado.datos_generales.comercial_nombre.substring(0,1)}}
+            </div>
+          </ng-template>
+
+          <mat-card-title>{{afiliado.datos_generales.comercial_nombre}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="row">
+
+          <div class="col s12 m4">
+            <p>Afiliado desde: <span class="data-text">
+            {{afiliado.perfil?.primerAfiliacion}}
+            </span> </p>
+            <p>Proyectos por año: <span class="data-text">
+              10
+            </span> </p>
+          </div>
+
+          <div class="col s12 m4">
+            <p>Personas Laborando: <span class="data-text">
+              {{afiliado.adicional?.personal?.planta_fija}}
+            </span> </p>
+          </div>
+
+          <div class="col s12 m4">
+            <p>Nombre empresarial: <span class="data-text">
+              <ng-container *ngIf="afiliado.datos_generales.moral_nombre">
+                {{afiliado.datos_generales.moral_nombre}}
+              </ng-container>
+
+            </span> </p>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+</div>

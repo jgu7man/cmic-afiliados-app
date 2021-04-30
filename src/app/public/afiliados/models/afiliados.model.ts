@@ -39,6 +39,7 @@ export class DatosGeneralesModel {
   constructor(
     public RFC: string,
     public comercial_nombre: string,
+    public slug: string,
     public fisica_nombre?: string,
     public fisica_apellido_pat?: string,
     public fisica_apellido_mat?: string,
@@ -154,7 +155,7 @@ export const emptyContacto = {
 }
 
 export const emptyAfiliado: AfiliadoModel = new AfiliadoModel(
-  new DatosGeneralesModel('', ''),
+  new DatosGeneralesModel('', '', ''),
   new DireccionAfiliadoModel(emptyDireccion, emptyDireccion ),
   {
     ...emptyContacto,

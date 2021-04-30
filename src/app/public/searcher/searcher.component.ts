@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
-import { ActividadData, AfiliadoData, EspecialidadData } from '../afiliados/models/actividades.model';
+import { ActividadQuery, AfiliadoQuery, EspecialidadQuery, QueryParam } from 'src/app/models/consultas.model';
+import { ConsultasService } from 'src/app/services/consultas.service';
 import { ActividadesService } from '../afiliados/services/actividades.service';
 import { AfiliadosService } from '../afiliados/services/afiliados.service';
 
@@ -14,20 +16,22 @@ import { AfiliadosService } from '../afiliados/services/afiliados.service';
 export class SearcherComponent implements OnInit {
 
   buscadorCtrl: FormControl = new FormControl('',);
-  filteredActividades: Observable<(EspecialidadData | ActividadData | AfiliadoData)[]>;
-  afiliadosIndex: AfiliadoData[] = []
+  filteredActividades: Observable<(EspecialidadQuery | ActividadQuery | AfiliadoQuery)[]>;
+  afiliadosIndex: AfiliadoQuery[] = []
 
   logged: boolean = false
 
   constructor(
     private _actividades: ActividadesService,
-    private _afiliados: AfiliadosService
+    private _afiliados: AfiliadosService,
+    private _consultas: ConsultasService,
+    private _router: Router
   ) {
     this._afiliados.indexList().subscribe(list => {
       console.log( list )
       list.forEach(afi => {
         if (afi) this.afiliadosIndex.push({
-          RFC: afi.RFC, nombre: afi.comercial_nombre
+           nombre: afi.comercial_nombre, slug: afi.slug
         })
       })
     })
@@ -42,20 +46,35 @@ export class SearcherComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  displayFn(actividad: ActividadData): string {
+  displayFn(actividad: ActividadQuery): string {
     return actividad && actividad.nombre ? actividad.nombre : '';
   }
 
-  private _filter(nombre: string): (EspecialidadData | ActividadData | AfiliadoData)[] {
+  private _filter(nombre: string): (EspecialidadQuery | ActividadQuery | AfiliadoQuery)[] {
     const filterValue = nombre.toLowerCase();
-    let espResult: EspecialidadData[] = this._actividades.allEspecialidades
+    let espResult: EspecialidadQuery[] = this._actividades.allEspecialidades
       .filter(esp => esp.nombre.toLowerCase().includes(filterValue))
-    let actResult: ActividadData[] = this._actividades.allActividades
+    let actResult: ActividadQuery[] = this._actividades.allActividades
       .filter(act => act.nombre.toLowerCase().includes(filterValue))
-    let afiResult: AfiliadoData[] = this.afiliadosIndex
+    let afiResult: AfiliadoQuery[] = this.afiliadosIndex
       .filter(afi => afi.nombre.toLowerCase().includes(filterValue))
 
     return [...espResult,...actResult, ...afiResult]
+  }
+
+
+  onSubmit() {
+    let value = this.buscadorCtrl.value as (EspecialidadQuery | ActividadQuery | AfiliadoQuery)
+    if ('slug' in value) {
+      this._router.navigate(['/afiliado', value.slug])
+    }
+    else if ('codigo' in value) {
+      this._router.navigate(['/consulta'], { queryParams: {codigo: value.codigo}})
+    }
+    else {
+      this._router.navigate(['/consulta'], { queryParams: {especialidad: value.nombre}})
+    }
+
   }
 
 

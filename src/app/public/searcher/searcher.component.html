@@ -6,6 +6,7 @@
   name="name"
   [formControl]="buscadorCtrl"
   [matAutocomplete]="auto"
+  (keyup.ENTER)="onSubmit()"
   >
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
     <mat-option *ngFor="let actividad of filteredActividades | async" [value]="actividad">

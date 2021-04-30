@@ -44,6 +44,10 @@ export class ActividadesService {
     return especialidades
   }
 
+  getEspecialidadByCode(code: string) {
+    return this.allActividades.find(act => act.codigo === code)?.especialidad
+  }
+
 
 
   Catalogos: Catalogo[] = [

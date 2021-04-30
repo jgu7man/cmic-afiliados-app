@@ -15,6 +15,7 @@ import { GdevResponsiveModule } from 'gdev-responsive';
 import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FloatMenuComponent } from './float-menu/float-menu.component';
+import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { SearcherComponent } from './searcher/searcher.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SearcherComponent } from './searcher/searcher.component';
     InicioComponent,
     CreateAccountComponent,
     FloatMenuComponent,
+    ConsultasComponent,
     SearcherComponent,
   ],
   imports: [

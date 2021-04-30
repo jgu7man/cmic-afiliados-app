@@ -17,7 +17,7 @@ export class FloatMenuComponent implements OnInit {
 
 
   constructor(
-    private _actividades: ActividadesService
+    private _actividades: ActividadesService,
   ) {
     this.catalogos = this._actividades.Catalogos
    }
@@ -43,7 +43,6 @@ export class FloatMenuComponent implements OnInit {
       subespecialidades = uniq(map(especialidad.actividades, 'subespecialidad'))
     }
 
-    console.log( subespecialidades )
     return subespecialidades
 
   }
