@@ -49,11 +49,12 @@
               <mat-expansion-panel-header>
                 <mat-panel-title> Experiencia </mat-panel-title>
                 <mat-panel-description>
-                  {{perfilOutput.experiencia}}
+                  {{afiliado.adicional?.extract?.experiencia}}
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <g-perfil-experiencia
-              ></g-perfil-experiencia>
+
+              <g-perfil-experiencia></g-perfil-experiencia>
+
             </mat-expansion-panel>
 
 
@@ -76,10 +77,12 @@
               <mat-expansion-panel-header>
                 <mat-panel-title> Equipo y maquinaria </mat-panel-title>
                 <mat-panel-description>
-                  {{perfilOutput.eqmaq}}
+                  {{afiliado.adicional?.extract?.equipo_maquinaria}}
                 </mat-panel-description>
               </mat-expansion-panel-header>
+
               <g-perfil-equipo-maquinaria></g-perfil-equipo-maquinaria>
+
             </mat-expansion-panel>
 
             <!-- Recursos humanos panel -->
@@ -87,11 +90,11 @@
               <mat-expansion-panel-header>
                 <mat-panel-title> Recursos Humanos </mat-panel-title>
                 <mat-panel-description>
-                  {{perfilOutput.rrhh}}
+                  {{afiliado.adicional?.extract?.recursos_humanos}}
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <g-perfil-recursos-humanos
-              ></g-perfil-recursos-humanos>
+
+              <g-perfil-recursos-humanos></g-perfil-recursos-humanos>
 
             </mat-expansion-panel>
 
@@ -100,12 +103,12 @@
               <mat-expansion-panel-header>
                 <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
                 <mat-panel-description>
-                  {{perfilOutput.cert}}
+                  {{afiliado.adicional?.extract?.certificaciones}}
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <g-perfil-certificaciones
 
-              ></g-perfil-certificaciones>
+              <g-perfil-certificaciones></g-perfil-certificaciones>
+
             </mat-expansion-panel>
 
 

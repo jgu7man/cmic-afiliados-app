@@ -1,21 +1,26 @@
 
   <article>
-    <div class="profile-img-container"
-    #container>
-      <div class="profile-img" #img
-      *ngIf="afiliado"
-      [ngStyle]="{'height.px': img.offsetWidth, 'width':'66.66%'}">
-      <img
-      width="100%"
-      [src]="afiliado.perfil?.imgPerfil ? afiliado.perfil?.imgPerfil?.url :
-      'http://tritonshall.com/wp-content/themes/photobook/images/blank.png'"
-      alt="Cargar Logo"
-    />
-      </div>
+    <!-- LOGO -->
+  <div class="profile-img-container" #container>
+    <div class="profile-img" #img
+    [ngStyle]="{'height.px':img.offsetWidth  }">
+      <ng-container *ngIf="ImageSrc; else default">
+        <img
+          width="100%"
+          [src]="ImageSrc"
+          alt="{{afiliado.datos_generales.comercial_nombre}}"
+          onerror="this.style.display='none'"
+        />
+      </ng-container>
     </div>
-    <div
-    class="logo-container">
-    </div>
+    <ng-template #default >
+      <p class="center">
+        {{afiliado.datos_generales.comercial_nombre}}
+      </p>
+
+    </ng-template>
+
+  </div>
     <h1 class="afiliado-name">{{ afiliado.datos_generales.comercial_nombre }}</h1>
     <ng-container *ngIf="afiliado.datos_generales.moral_nombre; else elseTemplate">
       <p>Persona Moral: <span class="data-text">
@@ -38,7 +43,7 @@
     </span> </p>
     <p>Afiliado CMIC: <span class="data-text"> {{year}} </span> </p>
     <p>Afiliado desde: <span class="data-text">
-
+      <span class="data-text">{{afiliado.perfil?.primerAfiliacion}}</span>
     </span> </p>
   </article>
 
@@ -77,11 +82,16 @@
 
   <article>
     <p class="article-header">Servicios</p>
-    <p *ngFor="let servicio of afiliado.perfil?.servicios">
-      {{servicio}}
+    <p>
+      <span *ngFor="let servicio of afiliado.perfil?.servicios">
+        {{servicio}} <br>
+      </span>
     </p>
   </article>
 
   <article>
-    <p class="article-header">Capacidad Financiera</p>
+    <p class="article-header">Extras</p>
+    <p>Capacidad Financiera: <span class="data-text">
+      {{afiliado.perfil?.capFinanciera}}
+    </span></p>
   </article>

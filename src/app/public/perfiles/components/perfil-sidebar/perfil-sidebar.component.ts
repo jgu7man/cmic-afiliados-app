@@ -25,6 +25,14 @@ export class PerfilSidebarComponent implements OnInit {
 
   }
 
+  get ImageSrc() {
+    return this.afiliado.perfil
+      ? this.afiliado.perfil.imgPerfil
+        ? this.afiliado.perfil.imgPerfil.url
+        : ''
+      : ''
+  }
+
   get year(): number {
     return new Date().getFullYear()
   }
