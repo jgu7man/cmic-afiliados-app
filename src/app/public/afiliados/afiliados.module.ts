@@ -37,6 +37,8 @@ import { AfiliadosPersonalFormComponent } from './components/editar-perfil/afili
 import { AfiliadosAccesosComponent } from './components/afiliados-accesos/afiliados-accesos.component';
 import { AddManagerComponent } from './components/afiliados-accesos/add-manager/add-manager.component';
 import { DeleteManagerComponent } from './components/afiliados-accesos/delete-manager/delete-manager.component';
+import { ActividadesSelectorComponent } from './components/actividades-form/actividades-selector/actividades-selector.component';
+import { InteresesFormComponent } from './components/actividades-form/intereses-form/intereses-form.component';
 
 
 @NgModule({
@@ -68,6 +70,8 @@ import { DeleteManagerComponent } from './components/afiliados-accesos/delete-ma
     AfiliadosAccesosComponent,
     AddManagerComponent,
     DeleteManagerComponent,
+    ActividadesSelectorComponent,
+    InteresesFormComponent,
   ],
   imports: [
     CommonModule,

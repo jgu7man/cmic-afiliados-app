@@ -1,0 +1,36 @@
+<form class="row" >
+
+
+  <!-- Filtrar por especialidad -->
+  <div class="col s12">
+    <mat-form-field appearance="outline" color="primary">
+      <mat-label class="red-text" >Elige una especialidad</mat-label>
+      <mat-select
+      placeholder="Elige una opción"
+      name="especialidad"
+      [(ngModel)]="especialidadSelected">
+        <mat-option *ngFor="let especialidad of catalogo.especialidades"
+        [value]="especialidad">
+          {{especialidad.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Elegir actividad -->
+  <div class="col s12" *ngIf="especialidadSelected">
+    <mat-form-field appearance="outline" >
+      <mat-label>Selecciona una subespecialidad</mat-label>
+      <mat-select
+      placeholder="Elige una opción"
+      name="actividad"
+      (selectionChange)="onSelectActividad($event)"
+      >
+        <mat-option *ngFor="let actividad of especialidadSelected.actividades" [value]="actividad">
+          {{actividad.codigo}} {{actividad.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</form>

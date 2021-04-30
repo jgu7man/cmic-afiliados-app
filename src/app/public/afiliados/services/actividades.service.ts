@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ActividadData, Catalogo, EspecialidadData } from '../models/actividades.model';
+import { ActividadQuery, EspecialidadQuery } from 'src/app/models/consultas.model';
+import { Catalogo } from '../models/actividades.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class ActividadesService {
     this._afs.collectionGroup('')
   }
 
-  get allActividades(): ActividadData[] {
-    let actividades:ActividadData[] = []
+  get allActividades(): ActividadQuery[] {
+    let actividades:ActividadQuery[] = []
     this.Catalogos.forEach((cat => {
       let catalogo = cat.nombre
       cat.especialidades.forEach(esp => {
@@ -33,7 +34,7 @@ export class ActividadesService {
   }
 
   get allEspecialidades() {
-    let especialidades: EspecialidadData[] = []
+    let especialidades: EspecialidadQuery[] = []
     this.Catalogos.forEach(cat => {
       let catalogo = cat.nombre
       cat.especialidades.forEach(esp => {

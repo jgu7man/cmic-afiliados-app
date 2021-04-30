@@ -1,7 +1,7 @@
 import { iAdtionalInfo, iPerfil } from './perfiles.model';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
-import { Actividad } from './actividades.model';
 import firebase from 'firebase/app'
+import { ActividadQuery } from 'src/app/models/consultas.model';
 
 export interface iManager
 {
@@ -88,25 +88,34 @@ export class RepresentanteAfiliado {
 
 
 
-export interface ContactoInteres {
-  intereses: string[];
-  nombre: string;
-  telefono: string;
-  puesto: string;
-  email: string;
+export class ContactoInteres {
+  constructor(
+    public nombre: string,
+    public telefono: string,
+    public puesto: string,
+    public email: string,
+    public intereses: string[],
+  ){}
+}
+
+export class ActividadesModel {
+  constructor(
+    public tipos_de_obra: ActividadQuery[],
+    public servicios_profesionales: ActividadQuery[],
+    public fuentes_de_trabajo: ActividadQuery[],
+  ){}
 }
 
 export class Intereses {
   constructor(
-    public tipos_de_obra: Actividad[],
-    public servicios_profesionales: Actividad[],
-    public fuentes_de_trabajo: Actividad[],
     public contacto_1: ContactoInteres,
     public contacto_2: ContactoInteres,
     public recibir_info: boolean,
-    public veracidad_datos: boolean
   ) {}
 }
+
+export const emptyContactoInteres: ContactoInteres =
+  new ContactoInteres('','','','',[])
 
 
 
