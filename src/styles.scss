@@ -6,19 +6,26 @@
 
 @include mat-core();
 
-$afiliados-app-primary: mat-palette($cmic-primary, 500);
-$afiliados-app-accent: mat-palette($cmic-accent, 500, 800, A700);
-$afiliados-app-ladrillo: mat-palette($cmic-ladrillo, 500, 800, A700);
+$afiliados-app-primary: mat-palette($cmic-primary, 500, 400, 900);
+$afiliados-app-accent: mat-palette($cmic-accent, 500, 400, 900 );
+$afiliados-app-secondary: mat-palette($cmic-secondary, 500, 100, 900);
 $afiliados-app-warn: mat-palette($mat-red);
 $afiliados-app-theme: mat-light-theme((
   color: (
     primary: $afiliados-app-primary,
     accent: $afiliados-app-accent,
-    ladrillo: $afiliados-app-ladrillo,
+    secondary: $afiliados-app-secondary,
     warn: $afiliados-app-warn,
   )
 ));
 @include angular-material-theme($afiliados-app-theme);
+.mat-secondary {
+  background: mat-color($afiliados-app-secondary) !important;
+  color:#fff !important
+}
+.mat-secondary[disabled]{
+  background:rgb(145, 145, 145) !important;
+}
 
 
 $cmic-typography: mat-typography-config(

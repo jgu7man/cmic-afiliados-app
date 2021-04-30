@@ -12,7 +12,7 @@ export class FloatMenuComponent implements OnInit {
 
   catalogos: Catalogo[]
   show: boolean = false
-  catalogSelected?: number
+  catalogSelected: any
   especialidadSelected: number = 0
 
 
@@ -31,15 +31,19 @@ export class FloatMenuComponent implements OnInit {
   }
 
   select(inde: number) {
-    console.log( inde )
-    this.catalogSelected = inde
-    console.log( this.catalogSelected )
+    this.catalogSelected = this.catalogos[inde]
+  }
+
+  get Especialidades() {
+    // console.log( this.catalogos[this.catalogSelected] )
+    return this.catalogSelected && this.catalogSelected >= 0 ?
+      this.catalogos[this.catalogSelected].especialidades : []
   }
 
   get Subespecialidades() {
     let subespecialidades: (string | undefined)[] = []
     if (this.catalogSelected !== undefined && this.especialidadSelected !== undefined) {
-      let especialidad = this.catalogos[this.catalogSelected].especialidades[this.especialidadSelected]
+      let especialidad = this.catalogSelected.especialidades[this.especialidadSelected]
       subespecialidades = uniq(map(especialidad.actividades, 'subespecialidad'))
     }
 

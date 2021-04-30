@@ -120,6 +120,7 @@
           <mat-checkbox
             formControlName="aviso_privacidad"
             name="aviso_privacidad"
+            color="secondary"
           >
             Acepto la política de privacidad
           </mat-checkbox>
@@ -130,7 +131,7 @@
             [disabled]="afiliado.invalid"
             (click)="onSubmit()"
             mat-raised-button
-            color="primary"
+            color="secondary"
           >
             REGISTRO
           </button>
