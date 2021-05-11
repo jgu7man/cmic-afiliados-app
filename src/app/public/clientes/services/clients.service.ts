@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,9 @@ export class ClientsService {
 
   constructor(
     private _afs: AngularFirestore,
-    private _alert: GdevAlert
+    private _alert: GdevAlert,
+    private _auth: AuthService,
+    private _router: Router
   ) { }
 
 
@@ -34,13 +38,31 @@ export class ClientsService {
           text: `Se te ha invitado a registrarte como cliente en la plataforma de CMIC \n
 
           Por favor da click en el siguiente enlace:\n
-          https://cmic-platform.web.app/clientes/registro?email=${email}`
+          https://cmic-platform.web.app/create?perfil=client&email=${email}`
         }
       } )
       this._alert.sendFloatNotification('Correo enviado')
       return
     } else {
       this._alert.sendMessageAlert('Este correo ya está registrado en la plataforma')
+    }
+  }
+
+
+
+  async createAccount({email, contrasena}: any) {
+    const clientsRef = this._afs.collection('clientes').ref
+    const tempClient =  clientsRef.doc(email)
+    const tempDoc = await tempClient.get()
+    if (!tempDoc.exists) {
+      this._alert.sendMessageAlert(`
+      <h2 class="center">Email incorrecto</h2>
+      <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
+    `, 'html')
+    } else {
+      this._auth.createAccount({ email, contrasena }, 'clientes')
+      tempClient.delete()
+      this._router.navigate(['/'])
     }
   }
 }

@@ -78,7 +78,7 @@ export class ManagersService {
             \t ${perfil.comercial_nombre} \n
 
             Por favor da click en el siguiente enlace:\n
-            https://cmic-platform.web.app/create?email=${email}&rfc=${RFC}"`
+            https://cmic-platform.web.app/create?perfil=manager&email=${email}&rfc=${RFC}"`
           }
         } )
         this._alert.sendFloatNotification('Correo enviado')

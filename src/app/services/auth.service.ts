@@ -46,4 +46,26 @@ export class AuthService {
     return userCredentials
 
   }
+   async createAccount({ email, contrasena }: any, collection: 'clientes'|'admins') {
+    const clientsRef = this._afs.collection(collection)
+    const userCredentials = await this._afAuth
+      .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
+      .catch((error) => {
+        throw { message: 'No se pudo crear el usuario', error };
+      });
+
+    const userRef = clientsRef.doc(userCredentials.user?.uid);
+
+    userRef.set({ email, registrado: new Date() }).catch((error) => {
+      throw { message: 'No se pudo guardar en base de datos', error };
+    });
+
+    let uid = userCredentials.user?.uid;
+    console.log('usuario registrado');
+    this._alert.sendFloatNotification('Usuario registrado');
+    this._cache.updateData('user', {email,  uid});
+
+    return userCredentials
+
+  }
 }

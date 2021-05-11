@@ -113,9 +113,23 @@
       <p class="center">
         Ya has creado tu cuenta antes?
       </p>
-      <button mat-button color='accent'
-      [routerLink]="['/afiliados/login']"
-      >Ir a inicio de sesión</button>
+      <div [ngSwitch]="perfil">
+        <div *ngSwitchCase="'manager'">
+          <button mat-button color='accent'
+          [routerLink]="['/afiliados/login']"
+          >Ir a inicio de sesión</button>
+        </div>
+        <div *ngSwitchCase="'client'">
+          <button mat-button color='accent'
+          [routerLink]="['/clientes/login']"
+          >Ir a inicio de sesión</button>
+        </div>
+        <div *ngSwitchDefault>
+          <button mat-button color='accent'
+          [routerLink]="['/admin/login']"
+          >Ir a inicio de sesión</button>
+        </div>
+      </div>
 
 
     </div>
