@@ -8,7 +8,8 @@
           <mat-card-subtitle>Maneja los accesos a la pltaforma. Envía invitaciones vía email a los diferentes perfiles del sitio</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-          <button mat-raised-button color="accent">Crear nuevo</button>
+          <button mat-raised-button color="accent"
+          (click)="openAddDialog()">Crear nuevo</button>
         </mat-card-actions>
       </mat-card>
 
@@ -20,7 +21,7 @@
     <div class="col s12">
       <mat-tab-group>
         <mat-tab label="Managers de Afiliados">
-          <g-admin-managers-table [managers]="managers"></g-admin-managers-table>
+          <g-admin-managers-table></g-admin-managers-table>
 
         </mat-tab>
         <mat-tab label="Clientes"> Content 2 </mat-tab>

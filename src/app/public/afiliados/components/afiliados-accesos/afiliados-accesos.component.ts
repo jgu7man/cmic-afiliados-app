@@ -26,7 +26,7 @@ export class AfiliadosAccesosComponent implements OnInit {
     private _dialog: MatDialog,
     private _managers: ManagersService
   ) {
-    this.managers$ = this._managers.getAll()
+    this.managers$ = this._managers.getForAfiliado()
     this.currentUser = this._cache.getDataKey<iManager>('user') as iManager
    }
 

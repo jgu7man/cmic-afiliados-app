@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { Observable, of } from 'rxjs';
-import { debounceTime, map, switchMap, take } from 'rxjs/operators';
+import { debounceTime, map, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { AfiliadoModel, iManager } from '../models/afiliados.model';
 import { AfiliadosService } from './afiliados.service';
@@ -28,20 +28,31 @@ export class ManagersService {
       switchMap(user => user ?
       this.retriveManager(user.email as string)
       : of(null)
-      ))
+      ),
+      tap(user => {
+        if (user) {
+          this._afs.doc(`afiliados/${user.RFC}/managers/${user.uid}`)
+            .update({lastAccess: new Date()})
+      }})
+    )
   }
 
   /** Retorna la primera cuenta de manager que obtiene al buscar por email */
   retriveManager(email:string) {
-    return this._afs.collectionGroup<iManager>('managers', ref => ref.where('email', '==', email))
-    .get().pipe(map(list => list.docs[0].data()))
+    return this._afs.collectionGroup<iManager>('managers',
+      ref => ref.where('email', '==', email)).get()
+      .pipe(map(list => list.docs[0].data()))
+  }
+
+
+  getCompleteList() {
+    return this._afs.collectionGroup<iManager>('managers')
+      .valueChanges({ idField: 'uid' })
   }
 
 
 
-
-
-    getAll() {
+    getForAfiliado() {
       let rfc = this._cache.getDataKey<string>('rfc')
       return this._afs.collection<iManager>(`afiliados/${rfc}/managers`).valueChanges({idField: 'uid'})
     }

@@ -11,7 +11,7 @@ import { GdevModule } from '../gdev/gdev.module';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminSidebarComponent } from './components/admin-dashboard/admin-sidebar/admin-sidebar.component';
 import { AdminAccesosComponent } from './components/admin-dashboard/admin-accesos/admin-accesos.component';
-import { AdminManagersTableComponent } from './components/admin-dashboard/admin-accesos/admin-afiliados-table/admin-managers-table.component';
+import { AdminManagersTableComponent } from './components/admin-dashboard/admin-accesos/admin-managers-table/admin-managers-table.component';
 import { DialogAccesoComponent } from './components/admin-dashboard/admin-accesos/dialog-acceso/dialog-acceso.component';
 import { DialogRevokeAccesoComponent } from './components/admin-dashboard/admin-accesos/dialog-revoke-acceso/dialog-revoke-acceso.component';
 

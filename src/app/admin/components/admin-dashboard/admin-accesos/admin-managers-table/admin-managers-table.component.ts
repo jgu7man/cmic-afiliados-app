@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { iManager } from 'src/app/public/afiliados/models/afiliados.model';
 import { DialogAccesoComponent } from '../dialog-acceso/dialog-acceso.component';
 import { DialogRevokeAccesoComponent } from '../dialog-revoke-acceso/dialog-revoke-acceso.component';
+import { ManagersService } from 'src/app/public/afiliados/services/managers.service';
 
 @Component({
   selector: 'g-admin-managers-table',
@@ -14,7 +15,7 @@ import { DialogRevokeAccesoComponent } from '../dialog-revoke-acceso/dialog-revo
 })
 export class AdminManagersTableComponent implements OnInit, AfterViewInit {
 
-  @Input() managers: iManager[] = []
+  managers: iManager[] = []
   displayedColumns = [
     'email', 'RFC', 'lastAccess', 'access', 'options'
   ]
@@ -27,8 +28,12 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit {
   page: number = 1
   constructor(
     private _paginator: MatPaginatorIntl,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _managers: ManagersService
   ) {
+    this._managers.getCompleteList().subscribe(list => {
+      this.managers = list
+    })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
     this._paginator.nextPageLabel="Siguiente página"

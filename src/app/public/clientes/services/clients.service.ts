@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GdevAlert } from 'gdev-alert';
-import { iManager } from 'src/app/public/afiliados/models/afiliados.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class ClientsService {
 
   constructor(
     private _afs: AngularFirestore,
@@ -14,30 +13,28 @@ export class AdminService {
   ) { }
 
 
-
-
-
-  async retriveAdmin(email: string) {
-    const clients = await this._afs.collection('admins').ref
+  async retriveClient(email: string) {
+    const clients = await this._afs.collection('clientes').ref
       .where('email', '==', email).get()
     if (!clients.empty && clients.size < 2) {
       return clients.docs[0].data()
     }
   }
 
+
   async invite(email: string) {
-    let stored = await this.retriveAdmin(email);
-    const adminsRef = this._afs.collection('admin').ref
+    let stored = await this.retriveClient(email);
+    const clientsRef = this._afs.collection('clientes').ref
     if (!stored) {
-      adminsRef.doc(email).set({ email })
+      clientsRef.doc(email).set({ email })
       this._afs.collection( 'mail' ).ref.add( {
         to: email,
         message: {
           subject: `Invitación a CMIC`,
-          text: `Se te ha invitado a registrarte como administrador de la plataforma de CMIC \n
+          text: `Se te ha invitado a registrarte como cliente en la plataforma de CMIC \n
 
           Por favor da click en el siguiente enlace:\n
-          https://cmic-platform.web.app/admin/registro?email=${email}`
+          https://cmic-platform.web.app/clientes/registro?email=${email}`
         }
       } )
       this._alert.sendFloatNotification('Correo enviado')
@@ -46,6 +43,4 @@ export class AdminService {
       this._alert.sendMessageAlert('Este correo ya está registrado en la plataforma')
     }
   }
-
-
 }

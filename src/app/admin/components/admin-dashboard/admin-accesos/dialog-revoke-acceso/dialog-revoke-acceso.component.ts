@@ -1,6 +1,7 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/admin/services/admin.service';
+import { AccesosService } from 'src/app/admin/services/accesos.service';
 
 @Component({
   templateUrl: './dialog-revoke-acceso.component.html',
@@ -10,15 +11,15 @@ export class DialogRevokeAccesoComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public path: string,
-    private _admin: AdminService,
-    public dialog: MatDialogRef<DialogRevokeAccesoComponent>
+    public dialog: MatDialogRef<DialogRevokeAccesoComponent>,
+    private _accesos: AccesosService
   ) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(): void {
-    this._admin.revokeAccess(this.path)
+    this._accesos.revoke(this.path)
       .then(() => {this.dialog.close()})
   }
 
