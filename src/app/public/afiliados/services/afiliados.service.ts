@@ -93,5 +93,10 @@ export class AfiliadosService {
   }
 
 
+  getFullList() {
+    return this._afs.collection<AfiliadoModel>('afiliados')
+    .valueChanges({ idField: 'RFC'})
+  }
+
 
 }

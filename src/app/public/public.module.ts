@@ -41,6 +41,9 @@ import { SearcherComponent } from './searcher/searcher.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  exports: [CreateAccountComponent],
+  exports: [
+    CreateAccountComponent,
+    SearcherComponent
+  ],
 })
 export class PublicModule {}

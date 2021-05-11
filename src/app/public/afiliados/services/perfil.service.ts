@@ -40,6 +40,7 @@ export class PerfilService {
   }
 
   initialize(section: SectionName) {
+    console.log( this.RFC )
     this.filesPath = `afiliados/${this.RFC}/${section}`
     this.getExtract(section)
   }

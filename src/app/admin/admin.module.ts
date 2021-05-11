@@ -17,17 +17,32 @@ import { DialogRevokeAccesoComponent } from './components/admin-dashboard/admin-
 import { AdminClientesTableComponent } from './components/admin-dashboard/admin-accesos/admin-clientes-table/admin-clientes-table.component';
 import { AdminsTableComponent } from './components/admin-dashboard/admin-accesos/admins-table/admins-table.component';
 import { AdminTopbarComponent } from './components/admin-topbar/admin-topbar.component';
-
+import { AdminAfiliadosTableComponent } from './components/admin-dashboard/admin-afiliados-table/admin-afiliados-table.component';
+import { PublicModule } from '../public/public.module';
 
 @NgModule({
-  declarations: [AdminComponent, AdminLoginComponent, AdminDashboardComponent, AdminSidebarComponent, AdminAccesosComponent, AdminManagersTableComponent, DialogAccesoComponent, DialogRevokeAccesoComponent, AdminClientesTableComponent, AdminsTableComponent, AdminTopbarComponent],
+  declarations: [
+    AdminComponent,
+    AdminLoginComponent,
+    AdminDashboardComponent,
+    AdminSidebarComponent,
+    AdminAccesosComponent,
+    AdminManagersTableComponent,
+    DialogAccesoComponent,
+    DialogRevokeAccesoComponent,
+    AdminClientesTableComponent,
+    AdminsTableComponent,
+    AdminTopbarComponent,
+    AdminAfiliadosTableComponent,
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     MaterialModule,
     FirebaseModule,
     ComunesModule,
-    GdevModule
-  ]
+    GdevModule,
+    PublicModule,
+  ],
 })
-export class AdminModule { }
+export class AdminModule {}

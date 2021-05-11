@@ -16,7 +16,7 @@
         mat-icon-button
         [mat-menu-trigger-for]="unloggedMenu"
       >
-        Menu
+        {{admin?.email}}
       </a>
       <mat-menu #unloggedMenu="matMenu">
         <button mat-menu-item (click)="auth_.singOut()">Cerrar Sesión</button>

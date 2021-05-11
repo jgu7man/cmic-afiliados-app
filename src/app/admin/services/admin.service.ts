@@ -26,7 +26,9 @@ export class AdminService {
     const clients = await this._afs.collection('admins').ref
       .where('email', '==', email).get()
     if (!clients.empty && clients.size < 2) {
-      return clients.docs[0].data()
+      return clients.docs[0].data() as iAdmin
+    } else {
+      return null
     }
   }
 
