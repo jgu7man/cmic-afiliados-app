@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { take } from 'rxjs/operators';
 import { ManagersService } from 'src/app/public/afiliados/services/managers.service';
@@ -17,7 +18,8 @@ export class AccesosService {
     private _managers: ManagersService,
     private _clients: ClientsService,
     private _admins: AdminService,
-    private _alert: GdevAlert
+    private _alert: GdevAlert,
+    private _router: Router
   ) { }
 
 
@@ -56,7 +58,13 @@ export class AccesosService {
   }
 
 
-
+  async request(email: string) {
+    await this._afs.collection('peticiones').add({
+      email, request: new Date()
+    })
+    this._alert.sendFloatNotification('Petición realizada con éxito')
+    this._router.navigate(['/'])
+  }
 
 
   async revoke(docPath: string) {

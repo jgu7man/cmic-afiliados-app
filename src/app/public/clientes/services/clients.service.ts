@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
+import { Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { iCliente } from '../models/cliente.model';
 
@@ -10,20 +13,36 @@ import { iCliente } from '../models/cliente.model';
 })
 export class ClientsService {
 
+  current$: Observable<iCliente | null>
   constructor(
     private _afs: AngularFirestore,
+    private _afAuth: AngularFireAuth,
     private _alert: GdevAlert,
     private _auth: AuthService,
     private _router: Router
-  ) { }
+  ) {
+    this.current$ = this._afAuth.authState.pipe(
+      switchMap(user => user ?
+      this.retriveClient(user.email as string)
+      : of(null)
+      ),
+      tap(user => {
+        if (user) {
+          console.log( user )
+          this._afs.doc(`clientes/${user.uid}`)
+            .update({lastAccess: new Date()})
+        }
+      })
+    )
+  }
 
 
   async retriveClient(email: string) {
-    const clients = await this._afs.collection('clientes').ref
+    const clients = await this._afs.collection<iCliente>('clientes').ref
       .where('email', '==', email).get()
     if (!clients.empty && clients.size < 2) {
       return clients.docs[0].data()
-    }
+    } else return null
   }
 
 

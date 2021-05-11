@@ -4,7 +4,7 @@
   <div class="profile-img-container" #container>
     <div class="profile-img" #img
     [ngStyle]="{'height.px':img.offsetWidth  }">
-      <ng-container *ngIf="!ImageSrc; else default">
+      <ng-container *ngIf="ImageSrc; else default">
         <img
           width="100%"
           [src]="ImageSrc"

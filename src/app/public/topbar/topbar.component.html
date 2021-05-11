@@ -21,24 +21,43 @@
       <a class="topbar-item link" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
 
 
+      <ng-container *ngIf="logged !== false; else unlogged">
 
-      <!-- Logged -->
-      <ng-container *ngIf="logged; else unlogged">
 
-        <a  class="topbar-item" color="primary"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
+        <!-- Logged afiliado -->
+        <ng-container *ngIf="logged == 'manager'; else cliente">
+
+          <a  class="topbar-item" color="primary"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
             Afiliado
-        </a>
-        <mat-menu #unloggedMenu="matMenu">
+          </a>
+          <mat-menu #unloggedMenu="matMenu">
             <button mat-menu-item [routerLink]="['/afiliados/perfil']">
-                Administrar Perfil
+              Administrar Perfil
             </button>
             <button mat-menu-item (click)="auth_.singOut()">
-                Cerrar Sesión
+              Cerrar Sesión
             </button>
 
-        </mat-menu>
+          </mat-menu>
 
+        </ng-container>
+
+        <!-- Logged cliente -->
+        <ng-template #cliente >
+
+          <a  class="topbar-item" color="primary"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
+            Cliente
+          </a>
+          <mat-menu #unloggedMenu="matMenu">
+            <button mat-menu-item (click)="auth_.singOut()">
+              Cerrar Sesión
+            </button>
+
+          </mat-menu>
+
+        </ng-template>
       </ng-container>
+
 
 
 
@@ -62,12 +81,12 @@
             Cliente
         </a>
         <mat-menu #clienteMenu="matMenu">
-            <button mat-menu-item>
-                Inciar sesión
+            <button mat-menu-item (click)="openClientLogin()">
+                Ingresar
             </button>
-            <button mat-menu-item>
+            <!-- <button mat-menu-item>
                 Registrarse
-            </button>
+            </button> -->
 
         </mat-menu>
 

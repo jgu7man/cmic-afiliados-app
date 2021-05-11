@@ -1,0 +1,52 @@
+<mat-tab-group>
+  <mat-tab label="Iniciar sesión">
+    <gdev-login-card
+      signInTitle="Inicia sesión como cliente"
+      passwordLabel="Contraseña"
+      forgotPasswordLabel="Olvidé mi contraseña"
+      signInButton="Iniciar"
+      (onSubmit)="onSubmit($event)"
+      (restorePwd)="onRestorePwd()"
+      ></gdev-login-card>
+  </mat-tab>
+  <mat-tab label="Solicitar acceso">
+    <p class="center">Para ingresar necesitas que los administradores de la CMIC te den acceso como cliente. Ingresa tu correo para solicitar el acceso</p>
+
+    <div class="row">
+      <div class="col s12 center request-form">
+        <mat-card>
+          <mat-card-content>
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+              matInput
+              type="text"
+              name="email"
+              [formControl]="emailCtrl"
+              >
+              <mat-error *ngIf="emailCtrl.hasError('required')">
+              Es necesario ingresa el correo
+              </mat-error>
+              <mat-error *ngIf="emailCtrl.hasError('email')">
+              Ingresa una dirección de correo válida
+              </mat-error>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions
+          style="display: flex; justify-content: center;">
+              <button mat-raised-button
+              (click)="accesos.request(emailCtrl.value)"
+              color="secondary"
+              >Enviar</button>
+          </mat-card-actions>
+
+        </mat-card>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<div class="row">
+  <div class="col s12 center">
+    <button mat-raised-button color='accent' (click)="dialog.close()" >Cerrar</button>
+  </div>
+</div>

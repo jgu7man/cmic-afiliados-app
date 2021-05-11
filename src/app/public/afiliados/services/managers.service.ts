@@ -31,6 +31,7 @@ export class ManagersService {
       ),
       tap(user => {
         if (user) {
+          console.log( user )
           this._afs.doc(`afiliados/${user.RFC}/managers/${user.uid}`)
             .update({lastAccess: new Date()})
       }})

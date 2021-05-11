@@ -1,0 +1,34 @@
+<mat-dialog-content>
+  <p class="center">Para restablecer tu contraseña. Ingresa el email vinculado a la cuenta</p>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input
+    matInput
+    type="text"
+    name="email"
+    [formControl]="emailCtrl"
+    >
+    <mat-error *ngIf="emailCtrl.hasError('required')">
+    Es necesario ingresa el correo
+    </mat-error>
+    <mat-error *ngIf="emailCtrl.hasError('email')">
+    Ingresa una dirección de correo válida
+    </mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions
+style="display: flex; justify-content: space-around;">
+
+    <button mat-raised-button
+    (click)="dialog.close()"
+    color="accent"
+    >Cancelar</button>
+
+    <button mat-raised-button
+    (click)="onSubmit()"
+    color="secondary"
+    >Enviar</button>
+
+</mat-dialog-actions>

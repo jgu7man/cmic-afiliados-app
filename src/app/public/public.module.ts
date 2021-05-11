@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FloatMenuComponent } from './float-menu/float-menu.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { SearcherComponent } from './searcher/searcher.component';
+import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SearcherComponent } from './searcher/searcher.component';
     FloatMenuComponent,
     ConsultasComponent,
     SearcherComponent,
+    RestorePwdComponent,
   ],
   imports: [
     CommonModule,
