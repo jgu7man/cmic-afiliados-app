@@ -1,6 +1,6 @@
 <ng-container *ngIf="!storage_.showDropzone; else dropzone">
   <button mat-raised-button color='accent'
-  (click)="storage_.showDropzone = !storage_.showDropzone"
+  (click)="onToggleClicked()"
   >{{toggleButtonLabel}}</button>
 </ng-container>
 <ng-template #dropzone >

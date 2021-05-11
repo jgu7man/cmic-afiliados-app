@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { from, Subscription, timer } from 'rxjs';
 import { concatAll, debounce } from 'rxjs/operators';
 import { GdevStorage } from '../../storage-service.service';
 import { iUploadedFile } from '../../storage.model';
+import { GdevUploadModalComponent } from '../upload-modal/upload-modal.component';
 
 @Component({
   selector: 'gdev-upload-files',
@@ -11,7 +13,6 @@ import { iUploadedFile } from '../../storage.model';
 })
 export class UploadFilesComponent implements OnInit, OnDestroy {
 
-  // public files: any[] = []
   public uploadingFiles: boolean = false
   public cantUploaded: number = 0
   public fileSubscription?: Subscription
@@ -32,13 +33,16 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   @Input() uploadButtonLabel: string = 'Subir'
   @Input() dropzoneLabel: string = 'Arrastra los archivos o toca aquí'
 
+  @Input() openModal: boolean = false
+
   @Output() uploadComplete: EventEmitter<iUploadedFile[]>
     = new EventEmitter();
 
   private triggerSubscription?: Subscription
 
   constructor(
-    public storage_: GdevStorage
+    public storage_: GdevStorage,
+    private _dialog: MatDialog
   ) {
     this.path = this.storage_.path
     this.prefixName = this.storage_.prefixName
@@ -59,10 +63,32 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  onToggleClicked() {
+    if (!this.openModal) {
+      this.storage_.showDropzone = !this.storage_.showDropzone
+    } else {
+      this._dialog.open(GdevUploadModalComponent, {
+        width: '40%',
+        minHeight: '40%',
+        data: {
+          path: this.path,
+          multiple: this.multiple,
+          uploadButton: this.uploadButton,
+          showDropzone: this.showDropzone,
+          uploadStatus: this.uploadStatus,
+          toggleButtonLabel: this.toggleButtonLabel,
+          uploadButtonLabel: this.uploadButtonLabel,
+          dropzoneLabel: this.dropzoneLabel
+        }
+      }).afterClosed().subscribe((files: iUploadedFile[]) => {
+        this.uploadComplete.emit(files)
+      })
+    }
+  }
 
   onSelect(event: any) {
     this.storage_.files.push(...event.addedFiles);
+    // NOTE future property: upload any storage
     // const formData = new FormData();
     // for (var i = 0; i < this._storage.files.length; i++) {
     //   formData.append('file[]', this.files[i]);
@@ -114,7 +140,6 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
       if (this.fileSubscription && this.cantUploaded === this.storage_.files.length) {
         this.fileSubscription.unsubscribe()
         this.storage_.files = []
-        console.log( 'complete' )
       }
     }
     else return percent

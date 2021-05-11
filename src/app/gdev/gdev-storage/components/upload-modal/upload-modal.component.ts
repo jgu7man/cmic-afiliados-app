@@ -11,7 +11,6 @@ import { iUploadedFile, iUploadOptions } from '../../storage.model';
 })
 export class GdevUploadModalComponent implements OnInit, OnDestroy {
 
-  // public files: any[] = []
   public uploadingFiles: boolean = false
   public cantUploaded: number = 0
   public fileSubscription?: Subscription
@@ -107,9 +106,7 @@ export class GdevUploadModalComponent implements OnInit, OnDestroy {
             this.uploadedFiles.push(fileInfo)
           }
           if (this.storage_.files.length === this.cantUploaded) {
-            this.uploadComplete.emit(this.uploadedFiles)
             this.storage_.uploadComplete$.next(this.uploadedFiles)
-
           }
         },
         (err: any) => console.error(err)
@@ -123,7 +120,6 @@ export class GdevUploadModalComponent implements OnInit, OnDestroy {
       this.options.showDropzone = false
       if (this.fileSubscription && this.cantUploaded === this.storage_.files.length) {
         this.storage_.files = []
-        console.log( 'complete' )
         this.dialog_.close(this.uploadedFiles)
       }
     }
