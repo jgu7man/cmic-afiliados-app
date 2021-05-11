@@ -16,10 +16,11 @@ import { DialogAccesoComponent } from './components/admin-dashboard/admin-acceso
 import { DialogRevokeAccesoComponent } from './components/admin-dashboard/admin-accesos/dialog-revoke-acceso/dialog-revoke-acceso.component';
 import { AdminClientesTableComponent } from './components/admin-dashboard/admin-accesos/admin-clientes-table/admin-clientes-table.component';
 import { AdminsTableComponent } from './components/admin-dashboard/admin-accesos/admins-table/admins-table.component';
+import { AdminTopbarComponent } from './components/admin-topbar/admin-topbar.component';
 
 
 @NgModule({
-  declarations: [AdminComponent, AdminLoginComponent, AdminDashboardComponent, AdminSidebarComponent, AdminAccesosComponent, AdminManagersTableComponent, DialogAccesoComponent, DialogRevokeAccesoComponent, AdminClientesTableComponent, AdminsTableComponent],
+  declarations: [AdminComponent, AdminLoginComponent, AdminDashboardComponent, AdminSidebarComponent, AdminAccesosComponent, AdminManagersTableComponent, DialogAccesoComponent, DialogRevokeAccesoComponent, AdminClientesTableComponent, AdminsTableComponent, AdminTopbarComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

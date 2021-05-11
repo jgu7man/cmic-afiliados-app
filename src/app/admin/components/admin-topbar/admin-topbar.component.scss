@@ -1,0 +1,53 @@
+#red-bar {
+  height: 12px;
+  width:100%;
+  background: #e20512;
+  z-index: 10;
+  position: relative;
+}
+
+#topbar {
+  position: relative;
+  z-index: 20;
+}
+
+mat-toolbar {
+  position: relative;
+  z-index: 10;
+}
+
+.logo-container {
+  position: relative;
+  height: 80%;
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: flex-start;
+  cursor: pointer;
+  outline:none;
+  img{
+    position: relative;
+    height:100%;
+    margin-right: .5em;
+  }
+  .logo-legend {
+    font-size: initial;
+    line-height: 1;
+    color: #333;
+    align-self: center;
+  }
+}
+
+.topbar-item {
+  margin: 0 1.5em;
+  font-size: medium;
+}
+
+.link {
+  color: #909090;
+}
+
+.active {
+  border-bottom: #e20512 solid 2px;
+  color: #000
+}

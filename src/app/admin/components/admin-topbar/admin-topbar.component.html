@@ -1,0 +1,26 @@
+<div id="topbar">
+  <div id="red-bar"></div>
+  <mat-toolbar class="mat-elevation-z5">
+    <!-- LOGO -->
+    <div class="logo-container" [routerLink]="['/']">
+      <img src="/assets/img/cmic-logo-h.png" alt="logo CMIC" />
+    </div>
+
+    <!-- MENÚS -->
+    <div>
+      <!-- Logged -->
+
+      <a
+        class="topbar-item"
+        color="primary"
+        mat-icon-button
+        [mat-menu-trigger-for]="unloggedMenu"
+      >
+        Menu
+      </a>
+      <mat-menu #unloggedMenu="matMenu">
+        <button mat-menu-item (click)="auth_.singOut()">Cerrar Sesión</button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+</div>
