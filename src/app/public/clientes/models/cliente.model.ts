@@ -1,0 +1,10 @@
+import firebase from 'firebase/app'
+
+export interface iCliente {
+  email: string;
+  lastAccess: any;
+  access: string;
+  contrasena?: string;
+  uid?: string;
+  registrado?: firebase.firestore.Timestamp
+}

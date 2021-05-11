@@ -41,7 +41,11 @@ export class ManagersService {
   retriveManager(email:string) {
     return this._afs.collectionGroup<iManager>('managers',
       ref => ref.where('email', '==', email)).get()
-      .pipe(map(list => list.docs[0].data()))
+      .pipe(map(list => {
+        if (list.docs.length > 0) {
+          return list.docs[0].data()
+        } else  return null
+      }))
   }
 
 

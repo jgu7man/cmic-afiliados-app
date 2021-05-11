@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { AuthService } from 'src/app/services/auth.service';
+import { iCliente } from '../models/cliente.model';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,10 @@ export class ClientsService {
       tempClient.delete()
       this._router.navigate(['/'])
     }
+  }
+
+
+  getList() {
+    return this._afs.collection<iCliente>('clientes').valueChanges()
   }
 }

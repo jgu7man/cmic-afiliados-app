@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { iManager } from 'src/app/public/afiliados/models/afiliados.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { iAdmin } from '../models/admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,12 @@ export class AdminService {
       tempRef.delete()
       this._router.navigate(['/admin'])
     }
+  }
+
+
+  getList() {
+    return this._afs.collection<iAdmin>('admins')
+      .valueChanges({ idField: 'uid' })
   }
 
 }

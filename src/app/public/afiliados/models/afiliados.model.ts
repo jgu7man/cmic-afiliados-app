@@ -5,10 +5,10 @@ import { ActividadQuery } from 'src/app/models/consultas.model';
 
 export interface iManager
 {
-  uid?: string;
   RFC: string;
   email: string;
   contrasena?: string;
+  uid?: string;
   registrado?: firebase.firestore.Timestamp
 }
 

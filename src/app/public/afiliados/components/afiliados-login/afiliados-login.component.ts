@@ -33,8 +33,10 @@ export class AfiliadosLoginComponent implements OnInit {
           this._managers.retriveManager(user.email as string)
           .pipe(take(1)).subscribe(
             dataUser => {
-              this._cache.updateData('user', dataUser)
-              this._cache.updateData('rfc', dataUser.RFC)
+              if (dataUser) {
+                this._cache.updateData('user', dataUser)
+                this._cache.updateData('rfc', dataUser.RFC)
+              }
             }
           )
         } else {
