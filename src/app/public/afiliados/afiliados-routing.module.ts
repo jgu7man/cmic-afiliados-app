@@ -36,10 +36,10 @@ const routes: Routes = [
         { path: 'editar-perfil', component: EditarPerfilComponent },
         { path: 'accesos', component: AfiliadosAccesosComponent },
       ]},
+      { path: 'login', component: AfiliadosLoginComponent },
+      { path: 'registro', component: AfiliadosRegistroComponent },
     ],
   },
-  { path: 'login', component: AfiliadosLoginComponent },
-  { path: 'registro', component: AfiliadosRegistroComponent },
 ];
 
 @NgModule({
