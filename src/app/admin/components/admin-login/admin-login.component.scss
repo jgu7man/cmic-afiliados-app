@@ -1,0 +1,27 @@
+.full-screen {
+  background: url('/assets/img/cmic-web-background.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  margin: 0;
+  left: 0;
+  max-width: initial;
+  overflow: hidden;
+  .row {
+    width: 100%;
+    .col.s12{
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+    }
+  }
+}
+
+.welcome {
+  text-transform: uppercase;
+  font-size: 2em;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}

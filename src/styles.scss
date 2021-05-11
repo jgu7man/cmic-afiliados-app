@@ -37,7 +37,7 @@ $cmic-typography: mat-typography-config(
 @include mat-core($cmic-typography);
 
 
-html, body { height: 100%; }
+html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .page {
@@ -63,4 +63,15 @@ mat-card {
   label.mat-radio-label {
     margin-right: 1em;
   }
+}
+
+#login-container {
+  height:88vh;
+  width: 100%;
+
+  position: absolute;
+  background-position: 100% bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 1;
 }
