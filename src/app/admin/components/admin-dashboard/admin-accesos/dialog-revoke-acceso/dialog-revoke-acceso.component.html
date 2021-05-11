@@ -1,0 +1,16 @@
+<p mat-dialog-title class="center">Revocar accesos</p>
+<mat-dialog-content>
+  <p class="center">Este usuario ya no podrá tener acceso a la plataforma. <br>
+  ¿Estás seguro de esta acción? </p>
+</mat-dialog-content>
+<mat-dialog-actions
+style="display: flex; justify-content: space-around;">
+    <button mat-raised-button
+    (click)="dialog.close()"
+    color="secondary"
+    >Cancelar</button>
+    <button mat-raised-button
+    (click)="onSubmit()"
+    color="warn"
+    >Revocar accesos</button>
+</mat-dialog-actions>

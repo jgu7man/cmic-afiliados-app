@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Accesos</mat-card-title>
+          <mat-card-subtitle>Maneja los accesos a la pltaforma. Envía invitaciones vía email a los diferentes perfiles del sitio</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="accent">Crear nuevo</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col s12">
+      <mat-tab-group>
+        <mat-tab label="Managers de Afiliados">
+          <g-admin-managers-table [managers]="managers"></g-admin-managers-table>
+
+        </mat-tab>
+        <mat-tab label="Clientes"> Content 2 </mat-tab>
+        <mat-tab label="Administradores"> Content 3 </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

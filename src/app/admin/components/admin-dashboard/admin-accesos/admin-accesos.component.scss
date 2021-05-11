@@ -1,0 +1,18 @@
+.row-item {
+  .fas {
+    opacity: 0;
+    transition: all .3s ease-out;
+    cursor: pointer;
+  }
+  &:hover .fas {
+    opacity: 1;
+  }
+}
+
+.revoke {
+  background: brown;
+  padding: 3px 10px;
+  border-radius: 1em;
+  color: #e4e4e4;
+}
+

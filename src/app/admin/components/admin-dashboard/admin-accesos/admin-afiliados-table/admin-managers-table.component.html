@@ -1,0 +1,49 @@
+<table mat-table [dataSource]="managers" matSort class="mat-elevation-z8">
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+    <td mat-cell *matCellDef="let manager"> {{manager.email}} </td>
+  </ng-container>
+
+  <!-- RFC Column -->
+  <ng-container matColumnDef="RFC">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> RFC </th>
+    <td mat-cell *matCellDef="let manager"> {{manager.RFC}} </td>
+  </ng-container>
+
+  <!-- Last Access Column -->
+  <ng-container matColumnDef="lastAccess">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Último Acceso </th>
+    <td mat-cell *matCellDef="let manager"> {{manager.lastAccess}} </td>
+  </ng-container>
+
+  <!-- Last Access Column -->
+  <ng-container matColumnDef="access">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+    <td mat-cell *matCellDef="let manager">
+      <span [ngClass]="{'revoke': manager.access}">{{manager.access}}</span>
+    </td>
+  </ng-container>
+
+  <!-- Options Column -->
+  <ng-container matColumnDef="options">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+    <td mat-cell class="options" *matCellDef="let manager">
+      <i class="fas fa-times-circle red-text"
+      (click)="onSelect(manager)"></i>
+    </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row class="row-item" *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="managers.length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="onPageEvent($event)"
+
+              >
+</mat-paginator>
