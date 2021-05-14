@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { GdevAuthService } from 'gdev-auth';
-import { GdevCache } from 'gdev-cache';
 import { iAdmin } from '../../models/admin.model';
 import { AdminService } from '../../services/admin.service';
 
@@ -16,24 +14,22 @@ export class AdminTopbarComponent implements OnInit {
   constructor(
     public auth_: GdevAuthService,
     private _admins: AdminService,
-    private _router: Router,
-    private _cache: GdevCache
   ) {
+    this.auth_.unloggedPath = '/admin/login'
     this.auth_.user$.subscribe(user => {
-      if (!user) this._router.navigate(['/admin/login']);
-      this._admins.retriveAdmin(user.email)
-        .then(admin => {
-          console.log( admin )
-          if (!admin) this._router.navigate(['/admin/login']);
-          else {
-            this.admin = admin;
-            this._cache.updateData('admin', this.admin);
-          }
-        })
+      if (user) {
+        this._admins.retriveAdmin(user.email)
+          .then(admin => { if (admin) { this.admin = admin;} })
+      }
     })
    }
 
   ngOnInit(): void {
+  }
+
+  onSingOut() {
+    this.auth_.singOut()
+    delete this.admin
   }
 
 }

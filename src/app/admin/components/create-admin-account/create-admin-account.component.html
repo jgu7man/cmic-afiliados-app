@@ -1,0 +1,177 @@
+<div class="container full-width">
+  <div class="row">
+    <div class="col l5 center" id="form">
+      <h1 class="center">Bienvenido</h1>
+      <p class="center">Crea una cuenta de administrador nueva para tener el acceso a la Plataforma de Afiliados CMIC</p>
+
+      <mat-card>
+        <mat-card-content>
+
+          <form class="row" [formGroup]="accountForm">
+
+            <!-- Email field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Correo Electrónico</mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  type="email"
+                  required
+                  name="email"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'email')">
+                  Por favor ingrese su correo electrónico
+                </mat-error>
+                <mat-error *ngIf="accountForm.hasError('email', 'email')">
+                  Solo se permite correos electrónicos
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Nombre field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input
+                  matInput
+                  formControlName="nombre"
+                  type="nombre"
+                  required
+                  name="nombre"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'nombre')">
+                  Por favor ingrese su nombre
+                </mat-error>
+
+              </mat-form-field>
+            </div>
+
+            <!-- Paterno field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Apellido paterno</mat-label>
+                <input
+                  matInput
+                  formControlName="paterno"
+                  type="paterno"
+                  required
+                  name="paterno"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'paterno')">
+                  Por favor ingrese su apellido paterno
+                </mat-error>
+
+              </mat-form-field>
+            </div>
+
+            <!-- Materno field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Apellido materno</mat-label>
+                <input
+                  matInput
+                  formControlName="materno"
+                  type="materno"
+                  required
+                  name="materno"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'materno')">
+                  Por favor ingrese su apellido materno
+                </mat-error>
+
+              </mat-form-field>
+            </div>
+
+            <!-- Password field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <input
+                  matInput
+                  placeholder="Ingrese su contraseña"
+                  formControlName="contrasena"
+                  [type]="hide ? 'password' : 'text'"
+                  required
+                  name="contrasena"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'contrasena')">
+                  Por favor ingrese su contraseña
+                </mat-error>
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{
+                    hide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+
+            <!-- Confirm Password field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Confirme contraseña</mat-label>
+                <input
+                  matInput
+                  placeholder="Confirme su contraseña"
+                  formControlName="confcontrasena"
+                  [type]="hide ? 'password' : 'text'"
+                  required
+                  [errorStateMatcher]="matcher"
+                  name="confirma"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'confcontrasena')">
+                  Por favor confirme su contraseña
+                </mat-error>
+                <mat-error *ngIf="accountForm.hasError('notSame')">
+                  La contraseña ingresada debe ser igual
+                </mat-error>
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                </button>
+              </mat-form-field>
+
+            </div>
+
+          </form>
+
+        </mat-card-content>
+
+
+        <!-- Submit button -->
+        <mat-card-actions>
+          <button mat-raised-button color="secondary"
+          [disabled]="accountForm.invalid"
+          (click)="onSubmit()"
+          >Guardar</button>
+        </mat-card-actions>
+
+
+
+      </mat-card>
+
+      <!-- Go to login button -->
+      <p class="center">
+        Ya has creado tu cuenta antes?
+      </p>
+
+          <button mat-button color='accent'
+          [routerLink]="['/admin/login']"
+          >Ir a inicio de sesión</button>
+
+    </div>
+    <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomBreak]="1022" [position]="'absolute'" >
+    </div>
+  </div>
+</div>

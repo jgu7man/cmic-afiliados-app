@@ -4,21 +4,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { Rol } from 'src/app/admin/models/roles.model';
 import { AdminService } from 'src/app/admin/services/admin.service';
-import { MyErrorStateMatcher } from '../../afiliados/components/afiliados-registro/afiliados-registro.component';
-import { AfiliadosService } from '../../afiliados/services/afiliados.service';
-import { ManagersService } from '../../afiliados/services/managers.service';
-import { ClientsService } from '../../clientes/services/clients.service';
+import { MyErrorStateMatcher } from '../../../public/afiliados/components/afiliados-registro/afiliados-registro.component';
+import { AfiliadosService } from '../../../public/afiliados/services/afiliados.service';
+import { ManagersService } from '../../../public/afiliados/services/managers.service';
+import { ClientsService } from '../../../public/clientes/services/clients.service';
 
 @Component({
-  selector: 'g-create-account',
-  templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.scss'],
+  templateUrl: './create-admin-account.component.html',
+  styleUrls: ['./create-admin-account.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreateAccountComponent implements OnInit {
+export class CreateAdminAccountComponent implements OnInit {
 
   accountForm: FormGroup = new FormGroup({
-    RFC: new FormControl(''),
     email: new FormControl({ value: '', disabled: true }, [Validators.required]),
     nombre: new FormControl('', [Validators.required]),
     paterno: new FormControl('', [Validators.required]),
@@ -29,7 +27,6 @@ export class CreateAccountComponent implements OnInit {
 
   hide: boolean = true
   matcher = new MyErrorStateMatcher();
-  perfil: Rol
   topScroll: boolean = false
   bottomScroll: boolean = false
 
@@ -41,8 +38,8 @@ export class CreateAccountComponent implements OnInit {
     private _clients: ClientsService,
     private _admin: AdminService
   ) {
-    let { email, rfc, perfil } = this._route.snapshot.queryParams
-    this.perfil = perfil
+    let { email } = this._route.snapshot.queryParams
+
     // if (perfil == 'manager') {
     //   if (email && rfc) { this.accountForm.patchValue({ email, RFC: rfc }) }
     //   else {
@@ -51,11 +48,14 @@ export class CreateAccountComponent implements OnInit {
     //       this._router.navigate(['/'])
     //     })
     //   }
-    // } else if ((perfil == 'client' || perfil == 'admin') && email) {
-    //   this.accountForm.patchValue({ email, })
-    // } else {
-    //   this._alert.sendRequestAlert({message: 'Perfil no encontrado'}).subscribe(() => this._router.navigate(['/']))
-    // }
+    if (email) {
+      this.accountForm.patchValue({ email })
+    } else {
+      this._alert.sendMessageAlert(
+        `<h1>Email no encontrado</h1>
+          <p class="center"> Debes seguir el link que te llegó por email para crear una cuenta. <br> Si no has recibido un correo de invitación, ponete en contacto con la CMIC Colima </p>`
+      , 'html').subscribe(() => this._router.navigate(['/']))
+    }
 
   }
 
@@ -76,17 +76,17 @@ export class CreateAccountComponent implements OnInit {
   }
 
   onSubmit() {
-    switch (this.perfil) {
-      case 'manager':
-        this._managers.createManager(this.accountForm.getRawValue())
-        break;
-      case 'client':
-        this._clients.createAccount(this.accountForm.getRawValue())
-        break;
-      case 'admin':
-        this._admin.createAccount(this.accountForm.getRawValue())
-        break;
-    }
+    this._admin.createAccount(this.accountForm.getRawValue())
+    // switch (this.perfil) {
+    //   case 'manager':
+    //     this._managers.createManager(this.accountForm.getRawValue())
+    //     break;
+    //   case 'client':
+    //     this._clients.createAccount(this.accountForm.getRawValue())
+    //     break;
+    //   case 'admin':
+    //     break;
+    // }
   }
 
 }

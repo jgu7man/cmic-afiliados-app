@@ -9,17 +9,23 @@ import { GdevModule } from 'src/app/gdev/gdev.module';
 import { ClienteLoginComponent } from './components/cliente-login/cliente-login.component';
 import { DialogClienteLoginComponent } from './components/dialog-cliente-login/dialog-cliente-login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
+import { ClienteRegistroComponent } from './components/cliente-registro/cliente-registro.component';
+import { ClienteSolicitudComponent } from './components/cliente-solicitud/cliente-solicitud.component';
+import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module';
 
 
 @NgModule({
-  declarations: [ClientesComponent, ClienteLoginComponent, DialogClienteLoginComponent],
+  declarations: [ClientesComponent, ClienteLoginComponent, DialogClienteLoginComponent, ClienteRegistroComponent, ClienteSolicitudComponent],
   imports: [
     CommonModule,
     ClientesRoutingModule,
     MaterialModule,
     FirebaseModule,
     GdevModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MxResponsiveModule,
+    GdevStorageModule,
   ]
 })
 export class ClientesModule { }

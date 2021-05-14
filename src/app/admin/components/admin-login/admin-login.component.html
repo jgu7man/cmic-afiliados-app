@@ -1,8 +1,7 @@
-
-<div class="container full-screen">
-  <div class="row">
-    <div class="col s12 center">
-      <h1 class="center white-text welcome"> <b>Bienvenido admin</b> </h1>
+<div class="container full-width" strechHeight>
+  <div class="row" >
+    <div class="col l5 center" id="form" >
+      <h1 class="center welcome"> <b>Bienvenido admin</b> </h1>
       <gdev-login-card
       signInTitle="Inicia sesión como administrador"
       passwordLabel="Contraseña"
@@ -13,6 +12,7 @@
 
 
     </div>
-    <!-- <div class="col s8" id="login-image"></div> -->
+    <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomBreak]="1022" [position]="'absolute'" >
+    </div>
   </div>
 </div>

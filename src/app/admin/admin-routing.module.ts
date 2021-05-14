@@ -7,6 +7,7 @@ import { AdminAfiliadosTableComponent } from './components/admin-dashboard/admin
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminInicioComponent } from './components/admin-dashboard/admin-inicio/admin-inicio.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { CreateAdminAccountComponent } from './components/create-admin-account/create-admin-account.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent, children: [
@@ -15,8 +16,10 @@ const routes: Routes = [
       { path: 'accesos', component: AdminAccesosComponent },
       { path: 'afiliados', component: AdminAfiliadosTableComponent },
     ] },
+    { path: 'login', component: AdminLoginComponent },
+    { path: 'create', component: CreateAdminAccountComponent },
   ] },
-  { path: 'login', component: AdminLoginComponent },
+
 ];
 
 @NgModule({

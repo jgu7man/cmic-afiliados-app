@@ -1,13 +1,14 @@
 <div class="container full-width">
   <div class="row">
     <div class="col l5 center" id="form">
-      <h1 class="center">Bienvenido</h1>
-      <p class="center">Crea una contraseña nueva para tener el acceso a la Plataforma de Afiliados CMIC</p>
+      <h1 class="center">Bienvenido Cliente</h1>
+      <p class="center">Crea una cuenta con contraseña y estarás dentro</p>
 
       <mat-card>
         <mat-card-content>
 
           <form class="row" [formGroup]="accountForm">
+
 
             <!-- Email field -->
             <div class="col s12">
@@ -36,7 +37,7 @@
                 <input
                   matInput
                   formControlName="nombre"
-                  type="nombre"
+                  type="text"
                   required
                   name="nombre"
                 />
@@ -54,7 +55,7 @@
                 <input
                   matInput
                   formControlName="paterno"
-                  type="paterno"
+                  type="text"
                   required
                   name="paterno"
                 />
@@ -72,7 +73,7 @@
                 <input
                   matInput
                   formControlName="materno"
-                  type="materno"
+                  type="text"
                   required
                   name="materno"
                 />
@@ -165,26 +166,13 @@
       <p class="center">
         Ya has creado tu cuenta antes?
       </p>
-      <div [ngSwitch]="perfil">
-        <div *ngSwitchCase="'manager'">
-          <button mat-button color='accent'
-          [routerLink]="['/afiliados/login']"
-          >Ir a inicio de sesión</button>
-        </div>
-        <div *ngSwitchCase="'client'">
-          <button mat-button color='accent'
-          [routerLink]="['/clientes/login']"
-          >Ir a inicio de sesión</button>
-        </div>
-        <div *ngSwitchDefault>
+
           <button mat-button color='accent'
           [routerLink]="['/admin/login']"
           >Ir a inicio de sesión</button>
-        </div>
-      </div>
-
 
     </div>
     <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomBreak]="1022" [position]="'absolute'" >
+    </div>
   </div>
 </div>

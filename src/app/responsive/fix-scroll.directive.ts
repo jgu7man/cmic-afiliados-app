@@ -25,12 +25,13 @@ export class MxFixScroll {
     let window = $event.target.scrollingElement
     let scrollOffset = window.scrollTop;
     let clientHeight = window.clientHeight
+    let bottomBreak = this.bottomBreak ? this.bottomBreak - clientHeight : clientHeight
 
     if (this.topBreak) {
-      if (this.bottomBreak) {
-        let bottomBreak = this.bottomBreak - clientHeight
+      // if (this.bottomBreak) {
 
-          // Regresar a la position original
+        // console.log( scrollOffset, bottomBreak )
+        // Regresar a la position original
         if (scrollOffset < this.topBreak) {
           this.element.nativeElement.style.position = this.position;
           // Fijar pasando el punto de quiebre superior
@@ -43,14 +44,14 @@ export class MxFixScroll {
           this.element.nativeElement.style.top = `${bottomBreak - this.topBreak}px`;
         }
 
-
-      } else {
-        if (scrollOffset > this.topBreak) {
-          this.element.nativeElement.style.position = "fixed"
-        } else {
-          this.element.nativeElement.style.position = this.position
-        }
-      }
+      // } else {
+      //   let bottomBreak = clientHeight
+      //   if (scrollOffset > this.topBreak) {
+      //     this.element.nativeElement.style.position = "fixed"
+      //   } else {
+      //     this.element.nativeElement.style.position = this.position
+      //   }
+      // }
     }
 
 

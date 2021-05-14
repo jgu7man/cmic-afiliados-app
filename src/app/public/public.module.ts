@@ -12,13 +12,12 @@ import { ClientesModule } from './clientes/clientes.module';
 import { FooterComponent } from './footer/footer.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { GdevResponsiveModule } from 'gdev-responsive';
-import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FloatMenuComponent } from './float-menu/float-menu.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { SearcherComponent } from './searcher/searcher.component';
 import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
-import { MxResponsiveModule } from '../responsive/responsive.module';
+// import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { MxResponsiveModule } from '../responsive/responsive.module';
     TopbarComponent,
     FooterComponent,
     InicioComponent,
-    CreateAccountComponent,
     FloatMenuComponent,
     ConsultasComponent,
     SearcherComponent,
@@ -43,10 +41,9 @@ import { MxResponsiveModule } from '../responsive/responsive.module';
     GdevResponsiveModule,
     ReactiveFormsModule,
     FormsModule,
-    MxResponsiveModule
+    // MxResponsiveModule
   ],
   exports: [
-    CreateAccountComponent,
     SearcherComponent
   ],
 })

@@ -48,9 +48,10 @@ export class GdevStorage {
   uploadFile(file: any, path:string, prefixName?:string | null, metadata?:any):
     Observable<iUploadedFile> {
 
-      metadata = {
+      metadata = metadata ? {
         customMetadata: metadata
       } as firebase.storage.UploadMetadata
+        : null
 
 
     const
@@ -73,9 +74,10 @@ export class GdevStorage {
               fileName, url, format,
               uploadedState: true,
               uploaded: new Date(),
-            }
-            if (metadata) uploadedFile['metadata'] = metadata
-            this.fileUploadedStatus$.next(uploadedFile)
+          }
+          console.log( metadata )
+          if (metadata) uploadedFile['metadata'] = metadata
+          this.fileUploadedStatus$.next(uploadedFile)
 
 
           });

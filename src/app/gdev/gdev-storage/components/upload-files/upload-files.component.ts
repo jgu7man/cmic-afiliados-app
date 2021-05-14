@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { from, Subscription, timer } from 'rxjs';
-import { concatAll, debounce } from 'rxjs/operators';
+import { concatAll, debounce, take } from 'rxjs/operators';
 import { GdevStorage } from '../../storage-service.service';
 import { iUploadedFile } from '../../storage.model';
 import { GdevUploadModalComponent } from '../upload-modal/upload-modal.component';
@@ -14,6 +14,7 @@ import { GdevUploadModalComponent } from '../upload-modal/upload-modal.component
 export class UploadFilesComponent implements OnInit, OnDestroy {
 
   public uploadingFiles: boolean = false
+  public dropedFiles: any[] = []
   public cantUploaded: number = 0
   public fileSubscription?: Subscription
   public uploadedFiles:iUploadedFile[] = []
@@ -55,9 +56,11 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
       this.triggerSubscription =
       this.storage_.upload$
         .pipe(
-          debounce(() => timer(1000)),
+          // debounce(() => timer(10000)),
+          take(1)
         )
         .subscribe(() => {
+          console.log( 'files' )
         this.loadFiles()
       })
     }
@@ -87,6 +90,7 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   }
 
   onSelect(event: any) {
+    this.dropedFiles.push(...event.addedFiles)
     this.storage_.files.push(...event.addedFiles);
     // NOTE future property: upload any storage
     // const formData = new FormData();

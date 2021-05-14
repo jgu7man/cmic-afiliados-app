@@ -1,16 +1,13 @@
-<div id="login-container"
-style="background-image: url('/assets/img/login-afilliado.png');"
-></div>
-<div class="container" strechHeight>
-  <div class="row">
-    <div class="col s12 l6">
+<div class="container full-width" >
+  <div class="row" >
+    <div class="col l5 center" id="form" >
       <h1>REGISTRO</h1>
       <p>Regístrate aquí y promueve tus servicios</p>
       <form [formGroup]="afiliado">
         <div class="row">
 
           <div class="col s12" id="rfc-field">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>R.F.C.</mat-label>
               <input
                 matInput
@@ -40,7 +37,7 @@ style="background-image: url('/assets/img/login-afilliado.png');"
 
 
           <div class="col s12">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Correo Electrónico</mat-label>
               <input
                 matInput
@@ -59,8 +56,55 @@ style="background-image: url('/assets/img/login-afilliado.png');"
             </mat-form-field>
           </div>
 
+
           <div class="col s12">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input
+              matInput
+              type="text"
+              name="nombre"
+              formControlName="nombre"
+              >
+              <mat-error *ngIf="afiliado.hasError('required', 'nombre')">
+               Nombre es necesario
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col s12">
+            <mat-form-field appearance="outline">
+              <mat-label>Apellido Paterno</mat-label>
+              <input
+              matInput
+              type="text"
+              name="paterno"
+              formControlName="paterno"
+              >
+              <mat-error *ngIf="afiliado.hasError('required', 'paterno')">
+               El apellido paterno es necesario
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col s12">
+            <mat-form-field appearance="outline">
+              <mat-label>Apellido Materno</mat-label>
+              <input
+              matInput
+              type="text"
+              name="materno"
+              formControlName="materno"
+              >
+              <mat-error *ngIf="afiliado.hasError('required', 'materno')">
+               El apellido materno es necesario
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col s12">
+            <mat-form-field appearance="outline">
               <mat-label>Contraseña</mat-label>
               <input
                 matInput
@@ -88,7 +132,7 @@ style="background-image: url('/assets/img/login-afilliado.png');"
           </div>
 
           <div class="col s12">
-            <mat-form-field>
+            <mat-form-field appearance="outline">
               <mat-label>Confirme contraseña</mat-label>
               <input
                 matInput
@@ -157,6 +201,8 @@ style="background-image: url('/assets/img/login-afilliado.png');"
 
 
       </form>
+    </div>
+    <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomBreak]="1171" [position]="'absolute'" >
     </div>
   </div>
 </div>

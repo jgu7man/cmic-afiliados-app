@@ -10,7 +10,8 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GdevAlert } from 'gdev-alert';
 import { take } from 'rxjs/operators';
 
 import { iManager } from '../../models/afiliados.model';
@@ -43,14 +44,19 @@ export class AfiliadosRegistroComponent implements OnInit {
   hide = true;
   matcher = new MyErrorStateMatcher();
   rfcCtrl: FormControl
+  invitado: boolean = false
 
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
     private _afiliadosService: AfiliadosService,
     private _router: Router,
-    private _managers: ManagersService
+    private _managers: ManagersService,
+    private _route: ActivatedRoute,
+    private _alert: GdevAlert,
   ) {
+    let { email, rfc } = this._route.snapshot.queryParams
+
     this._managers.current$.subscribe(user => {
       if (user) { this._router.navigate(['/afiliados']) }
     })
@@ -58,12 +64,24 @@ export class AfiliadosRegistroComponent implements OnInit {
       {
         RFC: this.rfcCtrl = new FormControl( '', [Validators.required, Validators.minLength(12), Validators.maxLength(13), this.validateSymbols]),
         email: ['', [Validators.required, Validators.email]],
+        nombre: ['', [Validators.required]],
+        paterno: ['', [Validators.required]],
+        materno: ['', [Validators.required]],
         contrasena: ['', [Validators.required]],
         confcontrasena: ['', [Validators.required]],
         aviso_privacidad: [false, Validators.requiredTrue],
       },
       { validator: this.checkPasswords }
     );
+
+    if (email) {
+      this.afiliado.patchValue({ email })
+      this.afiliado.get('email')?.disable()
+    }
+    if (email && rfc) {
+      this.afiliado.patchValue({ RFC: rfc })
+      this.afiliado.get('RFC')?.disable()
+    }
   }
   onSubmit(): void {
 

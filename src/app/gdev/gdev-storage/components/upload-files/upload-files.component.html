@@ -10,7 +10,7 @@
       <ngx-dropzone (change)="onSelect($event)" [multiple]="multiple" [attr.maxFileSize]="maxFileSize ? maxFileSize : undefined" >
         <ngx-dropzone-label>{{dropzoneLabel}}</ngx-dropzone-label>
         <ngx-dropzone-preview
-          *ngFor="let f of storage_.files"
+          *ngFor="let f of dropedFiles"
           [removable]="true"
           (removed)="onRemove(f)"
         >

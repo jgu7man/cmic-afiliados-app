@@ -41,9 +41,16 @@ export class ClientsService {
   async retriveClient(email: string) {
     const clients = await this._afs.collection<iCliente>('clientes').ref
       .where('email', '==', email).get()
+    const peticionesRef = this._afs.collection<iCliente>('peticiones').ref
+    const peticionRef = peticionesRef.doc(email)
+    const peticionDoc = await peticionRef.get()
+
     if (!clients.empty && clients.size < 2) {
       return clients.docs[0].data()
-    } else return null
+    } else if (peticionDoc.exists) {
+      return peticionDoc.data() as iCliente
+    }
+    else return null
   }
 
 
@@ -71,19 +78,37 @@ export class ClientsService {
 
 
 
+
+
+  async createSolicitud(client: iCliente) {
+    let { email } = client
+
+
+    const peticionRef = this._afs.collection('peticiones').ref.doc(email)
+    const peticionDoc = await peticionRef.get()
+
+    peticionRef.set({ ...client })
+    this._alert.sendMessageAlert(`
+        <h1 class="center"> Petición enviada </h1>
+        <p class="center"> Se ha enviado la petición a los administradores. Ahora espera un correo de confirmación.</p>
+      `, 'html')
+    this._alert.sendFloatNotification('Solicitud envida')
+    return
+  }
+
   async createAccount(user: iUser) {
     let {email} = user
-    const clientsRef = this._afs.collection('clientes').ref
-    const tempClient =  clientsRef.doc(email)
-    const tempDoc = await tempClient.get()
-    if (!tempDoc.exists) {
+    const tempClient =  this.retriveClient(email)
+
+    if (!tempClient) {
       this._alert.sendMessageAlert(`
       <h2 class="center">Email incorrecto</h2>
       <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
     `, 'html')
     } else {
-      this._auth.createAccount(user, 'clientes')
-      tempClient.delete()
+      user = {...tempClient, ...user}
+      await this._auth.createAccount(user, 'clientes')
+      this._afs.doc(`clientes/${email}`).delete()
       this._router.navigate(['/'])
     }
   }

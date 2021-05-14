@@ -39,6 +39,7 @@ import { AddManagerComponent } from './components/afiliados-accesos/add-manager/
 import { DeleteManagerComponent } from './components/afiliados-accesos/delete-manager/delete-manager.component';
 import { ActividadesSelectorComponent } from './components/actividades-form/actividades-selector/actividades-selector.component';
 import { InteresesFormComponent } from './components/actividades-form/intereses-form/intereses-form.component';
+import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { InteresesFormComponent } from './components/actividades-form/intereses-
     NgxDropzoneModule,
     PerfilesModule,
     MomentDateModule,
-    GdevModule
+    GdevModule,
+    MxResponsiveModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

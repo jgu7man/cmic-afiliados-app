@@ -1,0 +1,133 @@
+<div class="container full-width">
+  <div class="row">
+    <div class="col l5 center" id="form">
+      <h1 class="center">Solicitud de cliente</h1>
+      <p class="center">Solicita el acceso como cliente a la Plataforma de Afiliados CMIC. <br> Podrás descubrir los socios perfectos para ti.</p>
+
+      <mat-card>
+        <mat-card-content>
+
+          <form class="row" [formGroup]="accountForm">
+
+            <div class="col s12" id="rfc-field">
+              <mat-form-field appearance="outline">
+                <mat-label>R.F.C.</mat-label>
+                <input
+                  matInput
+                  placeholder="Ingrese R.F.C. Alfanumérico. No se permiten símbolos"
+                  [formControl]="rfcCtrl"
+                  required
+                  name="rfc"
+                  minlength="12"
+                  maxlength="13"
+                  oninput="this.value = this.value.toUpperCase()"
+                  (keydown)="preventSpaces($event)"
+                />
+                <mat-error *ngIf="rfcCtrl.hasError('required', 'RFC')">
+                  Por favor Ingrese el R.F.C de su empresa.
+                </mat-error>
+                <mat-error *ngIf="rfcCtrl.hasError('minlength')">
+                  El RFC debe contener al menos 12 caracteres.
+                </mat-error>
+                <mat-error *ngIf="rfcCtrl.hasError('maxlength')">
+                  El RFC de una persona física puede tener máximo 13 caracteres
+                </mat-error>
+                <mat-error *ngIf="rfcCtrl.hasError('invalidFormat')">
+                  El RFC no debe contener símbolos o caracteres especiales
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Email field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Correo Electrónico</mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  type="email"
+                  required
+                  name="email"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'email')">
+                  Por favor ingrese su correo electrónico
+                </mat-error>
+                <mat-error *ngIf="accountForm.hasError('email', 'email')">
+                  Solo se permite correos electrónicos
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Nombre field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Nombre comercial</mat-label>
+                <input
+                  matInput
+                  formControlName="nombre_comercial"
+                  type="nombre_comercial"
+                  required
+                  name="nombre_comercial"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'nombre_comercial')">
+                  Por favor ingrese el nombre comercial de su empresa o negocio
+                </mat-error>
+
+              </mat-form-field>
+            </div>
+
+            <div class="col s12">
+              <gdev-upload-files
+              [maxFileSize]="2097152"
+              [path]="'clientes/solicitudes'"
+              [prefixName]="'INEfile'"
+              [multiple]="false"
+              [showDropzone]="true"
+              dropzoneLabel="Sube una imagen de la INE. Toca o arrastra el archivo"
+              [uploadButton]="false">
+              </gdev-upload-files>
+            </div>
+
+            <div class="col s12">
+              <gdev-upload-files
+              [maxFileSize]="2097152"
+              [path]="'clientes/solicitudes'"
+              [prefixName]="'CIFfile'"
+              [multiple]="false"
+              [showDropzone]="true"
+              dropzoneLabel="Sube una imagen de la CIF (Cédula de identificación fiscal o RFC). Toca o arrastra el archivo"
+              [uploadButton]="false">
+              </gdev-upload-files>
+            </div>
+
+          </form>
+
+        </mat-card-content>
+
+
+        <!-- Submit button -->
+        <mat-card-actions>
+          <button mat-raised-button color="secondary"
+          [disabled]="accountForm.invalid || storage_.files.length != 2"
+          (click)="onSubmit()"
+          >Guardar</button>
+        </mat-card-actions>
+
+
+
+      </mat-card>
+
+      <!-- Go to login button -->
+      <p class="center">
+        Ya has creado tu cuenta antes?
+      </p>
+
+          <button mat-button color='accent'
+          [routerLink]="['/admin/login']"
+          >Ir a inicio de sesión</button>
+
+    </div>
+    <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomBreak]="1022" [position]="'absolute'" >
+    </div>
+  </div>
+</div>
