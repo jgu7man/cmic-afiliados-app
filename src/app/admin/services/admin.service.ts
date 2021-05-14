@@ -5,6 +5,7 @@ import { GdevAlert } from 'gdev-alert';
 import { iManager } from 'src/app/public/afiliados/models/afiliados.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { iAdmin } from '../models/admin.model';
+import { iUser } from '../models/roles.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,8 @@ export class AdminService {
   }
 
 
-  async createAccount({email, contrasena}: any) {
+  async createAccount(user: iUser) {
+    let {email} = user
     const adminsRef = this._afs.collection('admins').ref
     const tempRef =  adminsRef.doc(email)
     const tempDoc = await tempRef.get()
@@ -65,7 +67,7 @@ export class AdminService {
       <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
     `, 'html')
     } else {
-      this._auth.createAccount({ email, contrasena }, 'admins')
+      this._auth.createAccount(user, 'admins')
       tempRef.delete()
       this._router.navigate(['/admin'])
     }

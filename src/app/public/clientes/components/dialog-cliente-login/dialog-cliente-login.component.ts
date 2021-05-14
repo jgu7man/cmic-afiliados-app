@@ -18,7 +18,9 @@ export class DialogClienteLoginComponent implements OnInit {
     private _dialog: MatDialog,
     public accesos: AccesosService,
     public dialog: MatDialogRef<DialogClienteLoginComponent>,
-  ) { }
+  ) {
+    this._auth.onLoggedRedirectRoute = ''
+   }
 
   ngOnInit(): void {
   }

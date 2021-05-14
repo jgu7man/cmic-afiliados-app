@@ -20,8 +20,10 @@ export class AdminTopbarComponent implements OnInit {
     private _cache: GdevCache
   ) {
     this.auth_.user$.subscribe(user => {
+      if (!user) this._router.navigate(['/admin/login']);
       this._admins.retriveAdmin(user.email)
         .then(admin => {
+          console.log( admin )
           if (!admin) this._router.navigate(['/admin/login']);
           else {
             this.admin = admin;

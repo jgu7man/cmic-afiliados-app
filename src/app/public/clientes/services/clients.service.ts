@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
+import { iPeticion, iUser } from 'src/app/admin/models/roles.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { iCliente } from '../models/cliente.model';
 
@@ -70,7 +71,8 @@ export class ClientsService {
 
 
 
-  async createAccount({email, contrasena}: any) {
+  async createAccount(user: iUser) {
+    let {email} = user
     const clientsRef = this._afs.collection('clientes').ref
     const tempClient =  clientsRef.doc(email)
     const tempDoc = await tempClient.get()
@@ -80,7 +82,7 @@ export class ClientsService {
       <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
     `, 'html')
     } else {
-      this._auth.createAccount({ email, contrasena }, 'clientes')
+      this._auth.createAccount(user, 'clientes')
       tempClient.delete()
       this._router.navigate(['/'])
     }
@@ -89,5 +91,10 @@ export class ClientsService {
 
   getList() {
     return this._afs.collection<iCliente>('clientes').valueChanges()
+  }
+
+  getPeticiones() {
+    return this._afs.collection<iPeticion>('peticiones')
+      .valueChanges({ idField: 'id'})
   }
 }

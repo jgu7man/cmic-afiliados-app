@@ -7,10 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FirebaseModule } from 'src/shared/firebase.module';
 import { MaterialModule } from 'src/shared/material.module';
 import { GdevModule } from './gdev/gdev.module';
+import { MxResponsiveModule } from './responsive/responsive.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -19,8 +21,10 @@ import { GdevModule } from './gdev/gdev.module';
     FirebaseModule,
     MaterialModule,
     GdevModule,
+    MxResponsiveModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }

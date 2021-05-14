@@ -66,6 +66,10 @@ export class AccesosService {
     this._router.navigate(['/'])
   }
 
+  async deleteRequest(id: string) {
+    this._afs.collection('peticiones').doc(id).delete()
+  }
+
 
   async revoke(docPath: string) {
     await this._afs.doc(docPath).update({ access: 'revoke' })

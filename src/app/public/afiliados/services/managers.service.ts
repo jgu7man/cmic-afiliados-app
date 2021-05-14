@@ -94,7 +94,7 @@ export class ManagersService {
     }
 
 
-    async createManager({email, contrasena, RFC}:iManager) {
+    async createManager({email, RFC, ...rest}:iManager) {
       const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
       const perfil = await this._getPerfil(RFC)
 
@@ -116,8 +116,10 @@ export class ManagersService {
             <p class="center">No esperamos ninguna petición de creación de cuenta para ${perfil?.comercial_nombre}. <br> Por favor contacta con CMIC para cualquier error </p>
           `, 'html')
         } else {
-
-          await this._auth.createManagerAccount({ email, contrasena, RFC })
+          let manager: iManager = {
+            email, RFC, ...rest
+          }
+          await this._auth.createManagerAccount(manager)
           emailRef.delete()
           this._router.navigate(['/afiliados/perfil']);
         }

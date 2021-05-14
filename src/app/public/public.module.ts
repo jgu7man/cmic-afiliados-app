@@ -18,6 +18,7 @@ import { FloatMenuComponent } from './float-menu/float-menu.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { SearcherComponent } from './searcher/searcher.component';
 import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
+import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
     ClientesModule,
     GdevResponsiveModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MxResponsiveModule
   ],
   exports: [
     CreateAccountComponent,

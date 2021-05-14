@@ -75,3 +75,28 @@ mat-card {
   background-size: contain;
   z-index: 1;
 }
+
+
+.full-width {
+  margin: 0;
+  padding:5em 0 2em;
+  width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  max-width: unset !important;
+  #form{
+    padding-left: 5em;
+    padding-right: 2em;
+    width:40vw;
+  }
+  #login-image {
+    background-image: url('/assets/img/login-afilliado.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    width: 60vw;
+    top: 0em;
+    left: 40%;
+
+  }
+}

@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
+import { iUser } from '../admin/models/roles.model';
 import { iManager } from '../public/afiliados/models/afiliados.model';
 
 @Injectable({
@@ -21,7 +22,8 @@ export class AuthService {
    * @param {iManager} { email, contrasena, RFC }
    * @returns {userCredentials}
    */
-   async createManagerAccount({ email, contrasena, RFC }: iManager) {
+  async createManagerAccount(manager: iManager) {
+    let { email, contrasena, RFC,  } = manager;
     const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
     const userCredentials = await this._afAuth
       .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
@@ -33,20 +35,21 @@ export class AuthService {
       .collection('managers')
       .doc(userCredentials.user?.uid);
 
-    userRef.set({ email, RFC, registrado: new Date() }).catch((error) => {
+    userRef.set({ ...manager.personal_data, registrado: new Date() }).catch((error) => {
       throw { message: 'No se pudo guardar en base de datos', error };
     });
 
     let uid = userCredentials.user?.uid;
     console.log('usuario registrado');
     this._alert.sendFloatNotification('Usuario registrado');
-    this._cache.updateData('user', {email, RFC, uid});
+    this._cache.updateData('user', {...manager.personal_data, RFC, uid});
     this._cache.updateData('rfc', RFC);
 
     return userCredentials
 
   }
-   async createAccount({ email, contrasena }: any, collection: 'clientes'|'admins') {
+  async createAccount(user: iUser, collection: 'clientes' | 'admins') {
+    let { email, contrasena } = user
     const clientsRef = this._afs.collection(collection)
     const userCredentials = await this._afAuth
       .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
@@ -56,14 +59,14 @@ export class AuthService {
 
     const userRef = clientsRef.doc(userCredentials.user?.uid);
 
-    userRef.set({ email, registrado: new Date() }).catch((error) => {
+    userRef.set({ ...user.personal_data, registrado: new Date() }).catch((error) => {
       throw { message: 'No se pudo guardar en base de datos', error };
     });
 
     let uid = userCredentials.user?.uid;
     console.log('usuario registrado');
     this._alert.sendFloatNotification('Usuario registrado');
-    this._cache.updateData('user', {email,  uid});
+    this._cache.updateData('user', {...user.personal_data,  uid});
 
     return userCredentials
 

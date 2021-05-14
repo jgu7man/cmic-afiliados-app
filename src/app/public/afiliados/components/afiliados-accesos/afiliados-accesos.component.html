@@ -24,7 +24,7 @@
                 <div mat-line>{{manager.email}}</div>
                 <div mat-line style="font-size: xx-small;">
                   <ng-container *ngIf="manager.registrado; else pendiente">
-                    {{time(manager.registrado)| date}}
+                    {{manager.getRegistradoDate()| date}}
                   </ng-container>
                   <ng-template #pendiente >
                     Pendiente

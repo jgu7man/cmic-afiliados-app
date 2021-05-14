@@ -39,11 +39,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AfiliadosRegistroComponent implements OnInit {
   afiliado: FormGroup;
-  public usuario: iManager = {
-    RFC: '',
-    email: '',
-    contrasena: '',
-  };
+
   hide = true;
   matcher = new MyErrorStateMatcher();
   rfcCtrl: FormControl
@@ -70,10 +66,6 @@ export class AfiliadosRegistroComponent implements OnInit {
     );
   }
   onSubmit(): void {
-
-    /*  console.log(this.afiliado.getRawValue());
-    this.usuario = this.afiliado.getRawValue() as iUserAfiliado;
-    console.log(this.usuario) */
 
     this._afiliadosService.regist(
       this.afiliado.value as iManager
