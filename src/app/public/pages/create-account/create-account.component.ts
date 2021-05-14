@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
@@ -20,13 +20,18 @@ export class CreateAccountComponent implements OnInit {
   accountForm: FormGroup = new FormGroup({
     RFC: new FormControl(''),
     email: new FormControl({ value: '', disabled: true }, [Validators.required]),
+    nombre: new FormControl('', [Validators.required]),
+    paterno: new FormControl('', [Validators.required]),
+    materno: new FormControl('', [Validators.required]),
     contrasena: new FormControl('', [Validators.required]),
     confcontrasena: new FormControl('', [Validators.required])
   })
 
   hide: boolean = true
   matcher = new MyErrorStateMatcher();
-  perfil:Rol
+  perfil: Rol
+  topScroll: boolean = false
+  bottomScroll: boolean = false
 
   constructor(
     private _route: ActivatedRoute,
@@ -38,21 +43,34 @@ export class CreateAccountComponent implements OnInit {
   ) {
     let { email, rfc, perfil } = this._route.snapshot.queryParams
     this.perfil = perfil
-    if (perfil == 'manager') {
-      if (email && rfc) { this.accountForm.patchValue({ email, RFC: rfc }) }
-      else {
-        this._alert.sendRequestAlert({message:'URL no válida.'}).subscribe(() => {
-          console.log('clicked')
-          this._router.navigate(['/'])
-        })
-      }
-    } else if ((perfil == 'client' || perfil == 'admin') && email) {
-      this.accountForm.patchValue({ email, })
-    } else {
-      this._alert.sendRequestAlert({message: 'Perfil no encontrado'}).subscribe(() => this._router.navigate(['/']))
-    }
+    // if (perfil == 'manager') {
+    //   if (email && rfc) { this.accountForm.patchValue({ email, RFC: rfc }) }
+    //   else {
+    //     this._alert.sendRequestAlert({message:'URL no válida.'}).subscribe(() => {
+    //       console.log('clicked')
+    //       this._router.navigate(['/'])
+    //     })
+    //   }
+    // } else if ((perfil == 'client' || perfil == 'admin') && email) {
+    //   this.accountForm.patchValue({ email, })
+    // } else {
+    //   this._alert.sendRequestAlert({message: 'Perfil no encontrado'}).subscribe(() => this._router.navigate(['/']))
+    // }
 
-   }
+  }
+
+  // topBreak: number = 76
+  // bottomBreak: number = 0
+  // @HostListener('window:scroll', ['$event'])
+  // onScroll($event: any) {
+  //   let element = $event.target.scrollingElement
+  //   let scrollOffset = element.scrollTop;
+  //   let clientHeight = element.clientHeight
+  //   this.bottomBreak = 1022 - clientHeight
+  //   console.log( this.bottomBreak )
+  //   this.topScroll = scrollOffset > this.topBreak && scrollOffset < this.bottomBreak  ? true : false
+  //   this.bottomScroll = scrollOffset > this.bottomBreak ? true : false
+  // }
 
   ngOnInit(): void {
   }
