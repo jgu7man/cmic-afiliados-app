@@ -81,12 +81,14 @@
             Cliente
         </a>
         <mat-menu #clienteMenu="matMenu">
-            <button mat-menu-item (click)="openClientLogin()">
+            <button mat-menu-item
+            [routerLink]="['/clientes/login']">
                 Ingresar
             </button>
-            <!-- <button mat-menu-item>
-                Registrarse
-            </button> -->
+            <button mat-menu-item
+            [routerLink]="['/clientes/solicitud']">
+                Solicitar acceso
+            </button>
 
         </mat-menu>
 

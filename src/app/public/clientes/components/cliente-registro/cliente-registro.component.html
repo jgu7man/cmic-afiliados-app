@@ -1,34 +1,13 @@
 <div class="container full-width">
   <div class="row">
     <div class="col l5 center" id="form">
+
       <h1 class="center">Bienvenido Cliente</h1>
       <p class="center">Crea una cuenta con contraseña y estarás dentro</p>
 
       <mat-card>
         <mat-card-content>
-
           <form class="row" [formGroup]="accountForm">
-
-
-            <!-- Email field -->
-            <div class="col s12">
-              <mat-form-field appearance="outline">
-                <mat-label>Correo Electrónico</mat-label>
-                <input
-                  matInput
-                  formControlName="email"
-                  type="email"
-                  required
-                  name="email"
-                />
-                <mat-error *ngIf="accountForm.hasError('required', 'email')">
-                  Por favor ingrese su correo electrónico
-                </mat-error>
-                <mat-error *ngIf="accountForm.hasError('email', 'email')">
-                  Solo se permite correos electrónicos
-                </mat-error>
-              </mat-form-field>
-            </div>
 
             <!-- Nombre field -->
             <div class="col s12">
@@ -81,6 +60,26 @@
                   Por favor ingrese su apellido materno
                 </mat-error>
 
+              </mat-form-field>
+            </div>
+
+            <!-- Email field -->
+            <div class="col s12">
+              <mat-form-field appearance="outline">
+                <mat-label>Correo Electrónico</mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  type="email"
+                  required
+                  name="email"
+                />
+                <mat-error *ngIf="accountForm.hasError('required', 'email')">
+                  Por favor ingrese su correo electrónico
+                </mat-error>
+                <mat-error *ngIf="accountForm.hasError('email', 'email')">
+                  Solo se permite correos electrónicos
+                </mat-error>
               </mat-form-field>
             </div>
 

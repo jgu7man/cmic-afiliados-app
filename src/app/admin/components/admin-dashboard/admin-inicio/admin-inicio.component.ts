@@ -6,6 +6,7 @@ import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from 'src/app/public/clientes/services/clients.service';
 import firebase from 'firebase/app'
+import { DialogAceptClientComponent } from '../dialog-acept-client/dialog-acept-client.component';
 
 @Component({
   templateUrl: './admin-inicio.component.html',
@@ -15,7 +16,7 @@ export class AdminInicioComponent implements OnInit, AfterViewInit {
 
   clientes: iPeticion[] = []
   displayedColumns = [
-    'email', 'request', 'options'
+    'nombre_comercial', 'email', 'request', 'options'
   ]
   @ViewChild(MatSort) sort?: MatSort;
   dataSource = new MatTableDataSource(this.clientes);
@@ -31,6 +32,7 @@ export class AdminInicioComponent implements OnInit, AfterViewInit {
     private _clientes: ClientsService,
   ) {
     this._clientes.getPeticiones().subscribe(list => {
+      console.log( list )
       this.clientes = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
@@ -57,5 +59,13 @@ export class AdminInicioComponent implements OnInit, AfterViewInit {
 
   toDate(date: Date | firebase.firestore.Timestamp) {
     return 'seconds' in date ? new Date(date.seconds * 1000) : date
+  }
+
+  seeRequest(data: any) {
+    this._dialog.open(DialogAceptClientComponent, {
+      minHeight: '50%',
+      minWidth: '50%',
+      data,
+    })
   }
 }

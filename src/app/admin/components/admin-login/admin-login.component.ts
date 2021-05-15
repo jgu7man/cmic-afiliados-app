@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   templateUrl: './admin-login.component.html',
@@ -8,9 +10,18 @@ import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
 export class AdminLoginComponent implements OnInit {
 
   constructor(
-    private _auth: GdevAuthService
+    private _auth: GdevAuthService,
+    private _admin: AdminService,
+    private _router: Router
   ) {
     this._auth.onLoggedRedirectRoute = '/admin'
+    this._auth.user$.subscribe(user => {
+      if (user) {
+        this._admin.retriveAdmin(user.email).then(admin => {
+          if (admin) this._router.navigate(['/admin/'])
+        })
+      }
+    })
    }
 
   ngOnInit(): void {

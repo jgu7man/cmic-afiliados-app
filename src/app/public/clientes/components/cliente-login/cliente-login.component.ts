@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
 import { RestorePwdComponent } from 'src/app/public/restore-pwd/restore-pwd.component';
 
@@ -11,8 +12,13 @@ export class ClienteLoginComponent implements OnInit {
 
   constructor(
     private _authService: GdevAuthService,
-    private _dialog: MatDialog
-  ) { }
+    private _dialog: MatDialog,
+    private _router: Router
+  ) {
+    this._authService.user$.subscribe(user => {
+      if (user) this._router.navigate(['/'])
+    })
+   }
 
   ngOnInit(): void {
   }

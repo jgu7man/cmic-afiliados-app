@@ -1,6 +1,7 @@
 .container {
   position: relative;
   z-index: 2;
+  overflow: hidden;
   .row {
     width:100%;
 

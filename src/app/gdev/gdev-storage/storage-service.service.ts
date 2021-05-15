@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import firebase from 'firebase/app'
 import { AngularFirestore } from '@angular/fire/firestore';
-import { finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { iUploadedFile, iUploadInfo } from './storage.model';
 import { GdevLoading } from 'gdev-loading';
 import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
+import { MatDialog } from '@angular/material/dialog';
+import { UploadingSpinnerComponent } from './components/uploading-spinner/uploading-spinner.component';
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +36,19 @@ export class GdevStorage {
     Subject<iUploadedFile> = new Subject()
   public upload$: Subject<void> = new Subject()
   public uploadComplete$: Subject<iUploadedFile[]> = new Subject
-  public showDropzone:boolean = false
+  public showDropzone: boolean = false
+  public closeSpinner: Subject<void> = new Subject()
+  public fileSubscription?: Subscription
 
   constructor(
     private _aStorage: AngularFireStorage,
+    private _dialog: MatDialog
   ) { }
 
   upload() {
     this.upload$.next()
-    return this.uploadComplete$
+    return this.uploadComplete$.pipe
+    (tap( () =>{this.fileSubscription?.unsubscribe()}))
   }
 
   uploadFile(file: any, path:string, prefixName?:string | null, metadata?:any):
@@ -75,7 +81,6 @@ export class GdevStorage {
               uploadedState: true,
               uploaded: new Date(),
           }
-          console.log( metadata )
           if (metadata) uploadedFile['metadata'] = metadata
           this.fileUploadedStatus$.next(uploadedFile)
 
@@ -133,6 +138,16 @@ export class GdevStorage {
       }
       img.src = dataURL
     })
+  }
+
+  loadingActive: boolean = false
+  toggleLoading() {
+    this.loadingActive = !this.loadingActive
+    if (this.loadingActive) {
+      this._dialog.open(UploadingSpinnerComponent)
+    } else {
+      this._dialog.closeAll()
+    }
   }
 }
 

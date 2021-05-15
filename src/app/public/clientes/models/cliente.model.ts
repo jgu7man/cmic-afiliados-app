@@ -7,6 +7,6 @@ export interface iCliente extends iUser {
   nombre_comercial: string,
   INEfile: iUploadedFile,
   CIFfile: iUploadedFile,
-  status: 'solicitud' | 'aceptado' | 'revoke',
+  status: 'solicitud' | 'aceptado' | 'revoke' | 'pendiente',
   request: Date | firebase.firestore.Timestamp
 }

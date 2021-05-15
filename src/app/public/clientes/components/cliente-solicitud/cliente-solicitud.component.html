@@ -4,11 +4,10 @@
       <h1 class="center">Solicitud de cliente</h1>
       <p class="center">Solicita el acceso como cliente a la Plataforma de Afiliados CMIC. <br> Podrás descubrir los socios perfectos para ti.</p>
 
-      <mat-card>
-        <mat-card-content>
-
-          <form class="row" [formGroup]="accountForm">
-
+      <mat-vertical-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="datosForm">
+          <form [formGroup]="datosForm" class="row">
+            <ng-template matStepLabel>Escribe tus datos generales</ng-template>
             <div class="col s12" id="rfc-field">
               <mat-form-field appearance="outline">
                 <mat-label>R.F.C.</mat-label>
@@ -49,10 +48,10 @@
                   required
                   name="email"
                 />
-                <mat-error *ngIf="accountForm.hasError('required', 'email')">
+                <mat-error *ngIf="datosForm.hasError('required', 'email')">
                   Por favor ingrese su correo electrónico
                 </mat-error>
-                <mat-error *ngIf="accountForm.hasError('email', 'email')">
+                <mat-error *ngIf="datosForm.hasError('email', 'email')">
                   Solo se permite correos electrónicos
                 </mat-error>
               </mat-form-field>
@@ -69,46 +68,93 @@
                   required
                   name="nombre_comercial"
                 />
-                <mat-error *ngIf="accountForm.hasError('required', 'nombre_comercial')">
+                <mat-error *ngIf="datosForm.hasError('required', 'nombre_comercial')">
                   Por favor ingrese el nombre comercial de su empresa o negocio
                 </mat-error>
 
               </mat-form-field>
             </div>
+            <div class="col s12">
+              <button mat-raised-button matStepperNext color="accent"
+              [disabled]="datosForm.invalid">Siguiente</button>
+            </div>
+          </form>
 
+        </mat-step>
+
+
+        <mat-step [stepControl]="INEfileForm">
+          <form [formGroup]="INEfileForm" class="row">
+            <ng-template matStepLabel>Identificación</ng-template>
+            <p>Sube una fotografía de tu Idenficación (INE por ejemplo)</p>
             <div class="col s12">
               <gdev-upload-files
               [maxFileSize]="2097152"
-              [path]="'clientes/solicitudes'"
+              [path]="'clientes/solicitudes/'+datosForm.get('RFC')?.value+'/'"
               [prefixName]="'INEfile'"
               [multiple]="false"
               [showDropzone]="true"
+              [uploadStatus]="false"
               dropzoneLabel="Sube una imagen de la INE. Toca o arrastra el archivo"
-              [uploadButton]="false">
+              uploadButtonLabel="Subir"
+              (uploadComplete)="onFileUploaded($event)">
               </gdev-upload-files>
             </div>
+            <div class="col s12">
+              <!-- <button mat-raised-button matStepperPrevious>Atrás</button> -->
+              <button mat-raised-button matStepperNext
+              [disabled]="INEfileForm.invalid"
+              color="accent">Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
 
+
+
+        <mat-step [stepControl]="CIFfileForm">
+          <form [formGroup]="CIFfileForm" class="row">
+            <ng-template matStepLabel>Registro de contribuyentes</ng-template>
+            <p>Sube un archivo de tu Cédula de identificación fiscal (CIF) o RFC</p>
             <div class="col s12">
               <gdev-upload-files
               [maxFileSize]="2097152"
-              [path]="'clientes/solicitudes'"
+              [path]="'clientes/solicitudes/'+datosForm.get('RFC')?.value+'/'"
               [prefixName]="'CIFfile'"
               [multiple]="false"
               [showDropzone]="true"
+              [uploadStatus]="false"
               dropzoneLabel="Sube una imagen de la CIF (Cédula de identificación fiscal o RFC). Toca o arrastra el archivo"
-              [uploadButton]="false">
+              uploadButtonLabel="Subir"
+              (uploadComplete)="onFileUploaded($event)">
               </gdev-upload-files>
             </div>
-
+            <div class="col s12">
+              <!-- <button mat-raised-button matStepperPrevious>Atrás</button> -->
+              <button mat-raised-button matStepperNext
+              [disabled]="CIFfileForm.invalid"
+              color="accent">Siguiente</button>
+            </div>
           </form>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Enviar</ng-template>
+          <p>Ahora a enviar tu solicitud. <br> Después de enviarla, tomará un tiempo para que los administradores de la plataforma revisen tu solicitud. Así que sé paciente por favor</p>
+          <!-- <button mat-raised-button matStepperPrevious>Atrás</button> -->
+          <button mat-raised-button (click)="onSubmit()"
+          [disabled]="validForms" color="accent">Enviar</button>
+        </mat-step>
+      </mat-vertical-stepper>
+
+      <!-- <mat-card>
+        <mat-card-content>
 
         </mat-card-content>
 
 
-        <!-- Submit button -->
         <mat-card-actions>
-          <button mat-raised-button color="secondary"
-          [disabled]="accountForm.invalid || storage_.files.length != 2"
+          <button mat-raised-button
+          [disabled]="accountForm.invalid"
           (click)="onSubmit()"
           >Guardar</button>
         </mat-card-actions>
@@ -117,17 +163,16 @@
 
       </mat-card>
 
-      <!-- Go to login button -->
       <p class="center">
         Ya has creado tu cuenta antes?
       </p>
 
-          <button mat-button color='accent'
+          <button mat-raised-button color='accent'
           [routerLink]="['/admin/login']"
-          >Ir a inicio de sesión</button>
+          >Ir a inicio de sesión</button> -->
 
     </div>
-    <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomBreak]="1022" [position]="'absolute'" >
+    <div *ngIf="!invisible" class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomBreak]="footerTop" [position]="'absolute'" >
     </div>
   </div>
 </div>

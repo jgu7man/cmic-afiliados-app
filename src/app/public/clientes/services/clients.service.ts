@@ -57,16 +57,18 @@ export class ClientsService {
   async invite(email: string) {
     let stored = await this.retriveClient(email);
     const clientsRef = this._afs.collection('clientes').ref
+    const splitDomain = window.location.href.split('/')
+    const domain = splitDomain[0] === 'localhost' ? splitDomain[0] : splitDomain[2]
     if (!stored) {
       clientsRef.doc(email).set({ email })
       this._afs.collection( 'mail' ).ref.add( {
         to: email,
         message: {
           subject: `Invitación a CMIC`,
-          text: `Se te ha invitado a registrarte como cliente en la plataforma de CMIC \n
+          text: `Se te ha invitado a registrarte como cliente en la plataforma de CMIC
 
-          Por favor da click en el siguiente enlace:\n
-          https://cmic-platform.web.app/create?perfil=client&email=${email}`
+          Por favor da click en el siguiente enlace:
+          https://${domain}/create?perfil=client&email=${email}`
         }
       } )
       this._alert.sendFloatNotification('Correo enviado')
@@ -96,9 +98,61 @@ export class ClientsService {
     return
   }
 
+  async responseRequest(client: iCliente, acept: boolean) {
+    let { email } = client
+    const peticionRef = this._afs.collection('peticiones').ref.doc(email)
+    const peticionDoc = await peticionRef.get()
+    const clientRef = this._afs.collection<iCliente>('clientes').ref.doc(email)
+    const splitDomain = window.location.href.split('/')
+    const domain = splitDomain[0] === 'localhost' ? splitDomain[0] : splitDomain[2]
+
+    if (peticionDoc.exists) {
+      if (acept) {
+        await clientRef.set({ ...client, status: 'pendiente' })
+        await this._afs.collection( 'mail' ).ref.add( {
+          to: email,
+          message: {
+            subject: `Petición aceptada`,
+            text: `Se ha aceptado la petición para registrarte como cliente en la plataforma de CMIC
+
+            Por favor da click en el siguiente enlace para continuar con el registro:
+            https://${domain}/clientes/registro?email=${email}
+
+            Si no has mandado una solicitud de registro, omite este correo`
+          }
+        })
+        await peticionRef.delete()
+        this._alert.sendFloatNotification('Correo enviado')
+      } else {
+        await peticionRef.delete()
+        await this._afs.collection( 'mail' ).ref.add( {
+          to: email,
+          message: {
+            subject: `Petición denegada`,
+            text: `Se ha rechazado la petición para registrarte como cliente en la plataforma de CMIC
+
+            Para mayor información, comunícate a la CMIC Colima:
+            WhatsApp: 312 319 48 20
+            Facebook: https://www.facebook.com/ColimaCMIC/
+            Instagram: https://instagram.com/cmiccolima
+            Twitter: https://twitter.com/cmiccolima2
+
+            Si no has mandado una solicitud de registro, omite este correo`
+          }
+        })
+        this._alert.sendFloatNotification('Petición rechazada')
+      }
+
+
+      return
+    } else {
+      this._alert.sendMessageAlert('No se econtró la petición.')
+    }
+  }
+
   async createAccount(user: iUser) {
     let {email} = user
-    const tempClient =  this.retriveClient(email)
+    const tempClient =  await this.retriveClient(email)
 
     if (!tempClient) {
       this._alert.sendMessageAlert(`
@@ -106,10 +160,11 @@ export class ClientsService {
       <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
     `, 'html')
     } else {
-      user = {...tempClient, ...user}
+      user = { ...tempClient, ...user }
+      console.log( user )
       await this._auth.createAccount(user, 'clientes')
       this._afs.doc(`clientes/${email}`).delete()
-      this._router.navigate(['/'])
+      this._router.navigate(['/clientes/login'])
     }
   }
 

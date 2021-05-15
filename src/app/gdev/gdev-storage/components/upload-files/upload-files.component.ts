@@ -16,7 +16,7 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   public uploadingFiles: boolean = false
   public dropedFiles: any[] = []
   public cantUploaded: number = 0
-  public fileSubscription?: Subscription
+
   public uploadedFiles:iUploadedFile[] = []
 
   @Input() path: string
@@ -33,6 +33,8 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   @Input() toggleButtonLabel: string = 'Subir archivos'
   @Input() uploadButtonLabel: string = 'Subir'
   @Input() dropzoneLabel: string = 'Arrastra los archivos o toca aquí'
+  @Input() disable: boolean = false
+  @Input() color: 'primary' | 'accent' | 'warn' = 'primary'
 
   @Input() openModal: boolean = false
 
@@ -105,10 +107,9 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
 
 
   async loadFiles() {
+    this.storage_.toggleLoading()
     this.uploadedFiles = []
     this.uploadingFiles = true;
-
-
 
     var uploads:any[] = []
 
@@ -118,7 +119,7 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
       )
     })
 
-    return this.fileSubscription = from(uploads)
+    return this.storage_.fileSubscription = from(uploads)
       .pipe(concatAll<iUploadedFile>())
       .subscribe(
         (fileInfo) => {
@@ -129,7 +130,10 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
           if (this.storage_.files.length === this.cantUploaded) {
             this.uploadComplete.emit(this.uploadedFiles)
             this.storage_.uploadComplete$.next(this.uploadedFiles)
-
+            this.storage_.toggleLoading()
+            this.storage_.files = []
+            this.uploadedFiles = []
+            this.cantUploaded = 0
           }
         },
         (err: any) => console.error(err)
@@ -141,8 +145,8 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
     let percent = (100 / this.storage_.files.length) * this.cantUploaded
     if (percent === 100) {
       this.showDropzone = false
-      if (this.fileSubscription && this.cantUploaded === this.storage_.files.length) {
-        this.fileSubscription.unsubscribe()
+      if (this.storage_.fileSubscription && this.cantUploaded === this.storage_.files.length) {
+        this.storage_.fileSubscription.unsubscribe()
         this.storage_.files = []
       }
     }
@@ -150,7 +154,7 @@ export class UploadFilesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.fileSubscription) this.fileSubscription.unsubscribe()
+    if (this.storage_.fileSubscription) this.storage_.fileSubscription.unsubscribe()
     if (this.triggerSubscription) this.triggerSubscription.unsubscribe()
   }
 

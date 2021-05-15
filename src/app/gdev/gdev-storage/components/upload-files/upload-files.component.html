@@ -30,7 +30,7 @@
 
   <div class="row" *ngIf="uploadButton" >
     <div class="col s12 center">
-      <button mat-raised-button color='primary'
+      <button mat-raised-button [color]="color" [disabled]="disable"
       (click)="loadFiles()" >{{uploadButtonLabel}}</button>
     </div>
   </div>

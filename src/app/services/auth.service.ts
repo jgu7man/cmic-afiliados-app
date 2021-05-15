@@ -54,17 +54,22 @@ export class AuthService {
     const userCredentials = await this._afAuth
       .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
       .catch((error) => {
-        throw { message: 'No se pudo crear el usuario', error };
+        if (error.code === "auth/email-already-in-use") {
+          throw this._alert.sendMessageAlert('No se pudo crear el usuario por que el correo ya está en uso')
+        } else {
+          this._alert.sendError('No se pudo crear el usuario', error)
+          throw { message: 'No se pudo crear el usuario', error }
+        };
       });
 
     const userRef = clientsRef.doc(userCredentials.user?.uid);
+    user.uid = userCredentials.user?.uid
 
-    userRef.set({ ...user.personal_data, registrado: new Date() }).catch((error) => {
+    userRef.set({ ...user, registrado: new Date() }).catch((error) => {
       throw { message: 'No se pudo guardar en base de datos', error };
     });
 
     let uid = userCredentials.user?.uid;
-    console.log('usuario registrado');
     this._alert.sendFloatNotification('Usuario registrado');
     this._cache.updateData('user', {...user.personal_data,  uid});
 
