@@ -24,9 +24,5 @@ export class AfiliadosAdminComponent implements OnInit, AfterViewInit {
 
   }
 
-  get footerTop() {
-    let footer: any = document.querySelector('#footer')
-    return of( footer.offsetTop).pipe(delay(1000),)
-  }
 
 }

@@ -120,9 +120,6 @@ export class ClienteSolicitudComponent implements OnInit {
     // this._clients.createAccount(this.accountForm.getRawValue())
   }
 
-  get footerTop() {
-    let footer: any = document.querySelector('#footer')
-    return footer.offsetTop
-  }
+
 
 }
