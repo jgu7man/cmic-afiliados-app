@@ -1,19 +1,26 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[fixScroll]',
 })
-export class MxFixScroll {
+export class MxFixScroll implements AfterViewInit {
+
   @Input() topBreak?: number;
   @Input() bottomBreak?: number;
-  @Input() position?: string;
+  @Input() position: string = 'absolute';
   @Input() height?: number | string = '100vh';
 
-  constructor(private element: ElementRef) {
+  constructor(
+    private element: ElementRef
+  ) {
+  }
+
+  ngAfterViewInit() {
     this.height =
       typeof this.height === 'number' ? `${this.height}vh` : this.height;
     this.element.nativeElement.style.height = `${this.height}`;
   }
+
 
   @HostListener('window:scroll', ['$event'])
   onScroll($event: any) {

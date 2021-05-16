@@ -34,7 +34,7 @@
             <button mat-menu-item [routerLink]="['/afiliados/perfil']">
               Administrar Perfil
             </button>
-            <button mat-menu-item (click)="auth_.singOut()">
+            <button mat-menu-item (click)="onSignOut()">
               Cerrar Sesión
             </button>
 
@@ -49,7 +49,7 @@
             Cliente
           </a>
           <mat-menu #unloggedMenu="matMenu">
-            <button mat-menu-item (click)="auth_.singOut()">
+            <button mat-menu-item (click)="onSignOut()">
               Cerrar Sesión
             </button>
 

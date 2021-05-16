@@ -1,6 +1,7 @@
 <mat-drawer-container autosize [hasBackdrop]="false" >
 
-  <mat-drawer #sidenav mode="side" opened="true" id="sidenav">
+  <mat-drawer #sidenav mode="side" opened="true" id="sidenav"
+  fixScroll [topBreak]="76" [bottomBreak]="footerTop | async"  >
     <g-afiliado-sidebar></g-afiliado-sidebar>
   </mat-drawer>
 

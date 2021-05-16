@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { GdevAuthService } from 'gdev-auth';
 import { of, race } from 'rxjs';
 import { filter, mapTo, switchMap } from 'rxjs/operators';
@@ -21,7 +22,8 @@ export class TopbarComponent implements OnInit {
     public auth_: GdevAuthService,
     private _managers: ManagersService,
     private _clients: ClientsService,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _router: Router
   ) {
     this.loggedBehavior()
 
@@ -51,5 +53,10 @@ export class TopbarComponent implements OnInit {
     })
   }
 
+  onSignOut() {
+    this.auth_.singOut()
+    this._router.navigateByUrl('/', { skipLocationChange: false })
+    .then(() => {this._router.navigate(['/'])})
+  }
 
 }

@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { GdevLoading } from 'gdev-loading';
+import { of } from 'rxjs';
+import { debounceTime, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'g-afiliados-admin',
   templateUrl: './afiliados-admin.component.html',
   styleUrls: ['./afiliados-admin.component.scss']
 })
-export class AfiliadosAdminComponent implements OnInit {
+export class AfiliadosAdminComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  // invisible: boolean = true;
+  constructor(
+    private _loading: GdevLoading,
+  ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this._loading.waitFor(1000)
+    // this.invisible = false
+  }
+
+  ngAfterViewInit() {
+
+  }
+
+  get footerTop() {
+    let footer: any = document.querySelector('#footer')
+    return of( footer.offsetTop).pipe(delay(1000),)
   }
 
 }

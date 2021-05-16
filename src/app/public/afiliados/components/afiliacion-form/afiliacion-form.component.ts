@@ -41,7 +41,10 @@ export class AfiliacionFormComponent implements OnInit {
     console.log( this.afiliado[form] )
   }
 
-
+  get footerTop() {
+    let footer: any = document.querySelector('#footer')
+    return footer.offsetTop
+  }
 
 
 

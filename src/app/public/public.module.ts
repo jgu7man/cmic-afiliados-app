@@ -18,6 +18,9 @@ import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { SearcherComponent } from './searcher/searcher.component';
 import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
 import { CatalogoEspecialidadComponent } from './catalogo-especialidad/catalogo-especialidad.component';
+import { AvisoPrivacidadComponent } from './pages/aviso-privacidad/aviso-privacidad.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
+import { ContactoFormComponent } from './contacto-form/contacto-form.component';
 // import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
@@ -31,6 +34,9 @@ import { CatalogoEspecialidadComponent } from './catalogo-especialidad/catalogo-
     SearcherComponent,
     RestorePwdComponent,
     CatalogoEspecialidadComponent,
+    AvisoPrivacidadComponent,
+    ContactoComponent,
+    ContactoFormComponent,
   ],
   imports: [
     CommonModule,

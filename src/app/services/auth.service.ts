@@ -35,7 +35,9 @@ export class AuthService {
       .collection('managers')
       .doc(userCredentials.user?.uid);
 
-    userRef.set({ ...manager.personal_data, registrado: new Date() }).catch((error) => {
+    manager.uid = userCredentials.user?.uid
+
+    userRef.set({ ...manager,  registrado: new Date() }).catch((error) => {
       throw { message: 'No se pudo guardar en base de datos', error };
     });
 

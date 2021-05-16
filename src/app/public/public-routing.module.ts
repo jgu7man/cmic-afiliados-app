@@ -7,6 +7,8 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { MainPerfilComponent } from './perfiles/components/main-perfil/main-perfil.component';
 
 import { PublicComponent } from './public.component';
+import { AvisoPrivacidadComponent } from './pages/aviso-privacidad/aviso-privacidad.component';
+import { ContactoComponent } from './pages/contacto/contacto.component';
 
 const routes: Routes = [
   { path: '', component: PublicComponent  , children:[
@@ -21,6 +23,8 @@ const routes: Routes = [
     },
     { path: 'afiliado/:slug', component: MainPerfilComponent },
     { path: 'consulta', component: ConsultasComponent },
+    { path: 'aviso-de-privacidad', component: AvisoPrivacidadComponent },
+    { path: 'contacto', component: ContactoComponent },
   ]},
 ];
 
