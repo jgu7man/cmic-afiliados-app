@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GdevCache } from 'gdev-cache';
 import { AfiliadoModel, iContacto, DatosGeneralesModel,  RepresentanteAfiliado, iDireccion, DireccionAfiliadoModel, ContactoAfiliado, iManager, AfiliadoProperty } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
-import {delay, take} from 'rxjs/operators'
+import {delay, take, takeWhile} from 'rxjs/operators'
 import { of } from 'rxjs';
 import { GdevAuthService } from 'gdev-auth';
 import { ManagersService } from '../../services/managers.service';
@@ -37,7 +37,7 @@ export class AfiliacionFormComponent implements OnInit {
     this.user = user
     this.RFC = user.RFC
 
-    this._auth.user$.subscribe(user => {
+    this._auth.user$.pipe(takeWhile(user => user)).subscribe(user => {
       if (!user) this._router.navigate(['/'])
       else this._managers.retriveManager(user.email)
         .subscribe(manager => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
+import { takeWhile } from 'rxjs/operators';
 import { RestorePwdComponent } from 'src/app/public/restore-pwd/restore-pwd.component';
 
 @Component({
@@ -15,7 +16,7 @@ export class ClienteLoginComponent implements OnInit {
     private _dialog: MatDialog,
     private _router: Router
   ) {
-    this._authService.user$.subscribe(user => {
+    this._authService.user$.pipe(takeWhile(user => !user)).subscribe(user => {
       if (user) this._router.navigate(['/'])
     })
    }

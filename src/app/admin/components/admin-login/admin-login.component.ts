@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
+import { take, takeWhile } from 'rxjs/operators';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class AdminLoginComponent implements OnInit {
     private _router: Router
   ) {
     this._auth.onLoggedRedirectRoute = '/admin'
-    this._auth.user$.subscribe(user => {
+    this._auth.user$.pipe(take(1)).subscribe(user => {
       if (user) {
         this._admin.retriveAdmin(user.email).then(admin => {
           if (admin) this._router.navigate(['/admin/'])
@@ -30,7 +31,7 @@ export class AdminLoginComponent implements OnInit {
   onSubmit(fields: GdevLoginFields) {
 		this._auth.emailSignIn(fields.email,  fields.password)
       .then(user => {
-        console.log( user )
+        // console.log( user )
       })
 	}
 

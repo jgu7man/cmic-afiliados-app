@@ -4,6 +4,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GdevAuthService } from 'gdev-auth';
 import { GdevCache } from 'gdev-cache';
+import { takeWhile } from 'rxjs/operators';
 import { ActividadQuery, emptyActividadQuery } from 'src/app/models/consultas.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConsultasService } from 'src/app/services/consultas.service';
@@ -42,7 +43,7 @@ export class ActividadesFormComponent implements OnInit {
     private _managers: ManagersService
   ) {
     this.RFC = this._route.snapshot.params['RFC']
-    this._auth.user$.subscribe(user => {
+    this._auth.user$.pipe(takeWhile(user => user)).subscribe(user => {
       if (!user) this._router.navigate(['/'])
       else this._managers.retriveManager(user.email)
         .subscribe(manager => {
