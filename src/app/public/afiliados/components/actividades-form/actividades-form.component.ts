@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GdevAuthService } from 'gdev-auth';
 import { GdevCache } from 'gdev-cache';
 import { ActividadQuery, emptyActividadQuery } from 'src/app/models/consultas.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { Especialidad,  Actividad, catalogoName } from '../../models/actividades.model';
 import { ActividadesModel, ContactoInteres, DatosGeneralesModel, emptyContactoInteres, Intereses } from '../../models/afiliados.model';
 import { ActividadesService } from '../../services/actividades.service';
 import { AfiliadosService } from '../../services/afiliados.service';
+import { ManagersService } from '../../services/managers.service';
 import { PerfilService } from '../../services/perfil.service';
 
 @Component({
@@ -33,9 +36,19 @@ export class ActividadesFormComponent implements OnInit {
     private _consultas: ConsultasService,
     private _cache: GdevCache,
     private _route: ActivatedRoute,
-    public perfil_: PerfilService
+    public perfil_: PerfilService,
+    private _router: Router,
+    private _auth: GdevAuthService,
+    private _managers: ManagersService
   ) {
     this.RFC = this._route.snapshot.params['RFC']
+    this._auth.user$.subscribe(user => {
+      if (!user) this._router.navigate(['/'])
+      else this._managers.retriveManager(user.email)
+        .subscribe(manager => {
+          if (!manager || manager.RFC != this.RFC) this._router.navigate(['/'])
+        })
+    })
     this.actividades = new ActividadesModel(
       [
         emptyActividadQuery, emptyActividadQuery, emptyActividadQuery

@@ -28,7 +28,6 @@ export class SearcherComponent implements OnInit {
     private _router: Router
   ) {
     this._afiliados.indexList().subscribe(list => {
-      console.log( list )
       list.forEach(afi => {
         if (afi) this.afiliadosIndex.push({
            nombre: afi.comercial_nombre, slug: afi.slug

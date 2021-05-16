@@ -27,7 +27,6 @@ export class DatosGeneralesFormComponent implements OnInit {
   @Input() set form(variable: DatosGeneralesModel | undefined)
   { this._form.next(variable); }
 
-
   @Output() changes: EventEmitter<DatosGeneralesModel> = new EventEmitter()
   @Output() invalid: EventEmitter<boolean> = new EventEmitter()
 

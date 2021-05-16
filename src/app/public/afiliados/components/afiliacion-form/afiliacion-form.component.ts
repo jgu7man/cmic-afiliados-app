@@ -6,6 +6,9 @@ import { AfiliadoModel, iContacto, DatosGeneralesModel,  RepresentanteAfiliado, 
 import { AfiliadosService } from '../../services/afiliados.service';
 import {delay, take} from 'rxjs/operators'
 import { of } from 'rxjs';
+import { GdevAuthService } from 'gdev-auth';
+import { ManagersService } from '../../services/managers.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'g-afiliados-form',
   templateUrl: './afiliacion-form.component.html',
@@ -24,13 +27,23 @@ export class AfiliacionFormComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public afiliados_: AfiliadosService,
-    private _cache: GdevCache
+    private _cache: GdevCache,
+    private _auth: GdevAuthService,
+    private _managers: ManagersService,
+    private _router: Router
   ) {
     // Se obtiene el usuario del cache
     let user = this._cache.getDataKey<iManager>('user') as iManager
-      this.user = user
-      this.RFC = user.RFC
+    this.user = user
+    this.RFC = user.RFC
 
+    this._auth.user$.subscribe(user => {
+      if (!user) this._router.navigate(['/'])
+      else this._managers.retriveManager(user.email)
+        .subscribe(manager => {
+          if (!manager || manager.RFC != this.RFC) this._router.navigate(['/'])
+        })
+    })
   }
 
   ngOnInit(): void { }
