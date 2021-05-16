@@ -4,7 +4,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GdevCache } from 'gdev-cache';
 import { AfiliadoModel, iContacto, DatosGeneralesModel,  RepresentanteAfiliado, iDireccion, DireccionAfiliadoModel, ContactoAfiliado, iManager, AfiliadoProperty } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
-import {take} from 'rxjs/operators'
+import {delay, take} from 'rxjs/operators'
+import { of } from 'rxjs';
 @Component({
   selector: 'g-afiliados-form',
   templateUrl: './afiliacion-form.component.html',
@@ -41,10 +42,10 @@ export class AfiliacionFormComponent implements OnInit {
     console.log( this.afiliado[form] )
   }
 
-  get footerTop() {
-    let footer: any = document.querySelector('#footer')
-    return footer.offsetTop
-  }
+  // get footerTop() {
+  //   let footer: any = document.querySelector('#footer')
+  //   return of( footer.offsetTop).pipe(delay(1000),)
+  // }
 
 
 
