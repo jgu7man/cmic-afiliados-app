@@ -13,6 +13,7 @@ import { MaterialModule } from 'src/shared/material.module';
 import { FirebaseModule } from 'src/shared/firebase.module';
 import { GdevModule } from 'src/app/gdev/gdev.module';
 import { PerfilSidebarComponent } from './components/perfil-sidebar/perfil-sidebar.component';
+import { PerfilActividadesComponent } from './components/perfil-actividades/perfil-actividades.component';
 
 @NgModule({
   declarations: [
@@ -24,13 +25,14 @@ import { PerfilSidebarComponent } from './components/perfil-sidebar/perfil-sideb
     PerfilRecursosHumanosComponent,
     PerfilCertificacionesComponent,
     PerfilSidebarComponent,
+    PerfilActividadesComponent,
   ],
   imports: [
     CommonModule,
     PerfilesRoutingModule,
     MaterialModule,
     FirebaseModule,
-    GdevModule
+    GdevModule,
   ],
   exports: [
     MainPerfilComponent,

@@ -1,6 +1,7 @@
 import { iAdtionalInfo, iPerfil } from './perfiles.model';
 import { ActividadQuery } from 'src/app/models/consultas.model';
 import { iUser } from 'src/app/admin/models/roles.model';
+import { Actividad } from './actividades.model';
 
 export interface iManager extends iUser {
   RFC: string;
@@ -14,7 +15,10 @@ export class AfiliadoModel {
     public representante_legal: RepresentanteAfiliado,
     public director: RepresentanteAfiliado,
     public perfil?: iPerfil,
-    public adicional?: iAdtionalInfo
+    public adicional?: iAdtionalInfo,
+    public fuentes_de_trabajo?: ActividadEmpresa[],
+    public servicios_profesionales?: ActividadEmpresa[],
+    public tipos_de_obra?:ActividadEmpresa[],
   ) {}
 }
 
@@ -92,13 +96,22 @@ export class ContactoInteres {
     public intereses: string[],
   ){}
 }
-
 export class ActividadesModel {
   constructor(
-    public tipos_de_obra: ActividadQuery[],
-    public servicios_profesionales: ActividadQuery[],
-    public fuentes_de_trabajo: ActividadQuery[],
-  ){}
+    public tipos_de_obra: ActividadEmpresa[],
+    public servicios_profesionales: ActividadEmpresa[],
+    public fuentes_de_trabajo: ActividadEmpresa[],
+  ) { }
+}
+
+export interface CatalogoEmpresa {
+  nombre: string,
+  actividades?: ActividadEmpresa[]
+}
+
+export interface ActividadEmpresa extends Actividad{
+  catalogo: string,
+  especialidad: string
 }
 
 export class Intereses {
@@ -159,3 +172,8 @@ export const emptyAfiliado: AfiliadoModel = new AfiliadoModel(
   new RepresentanteAfiliado('', '', '', '', '', '', emptyContacto),
 
 );
+
+export const emptyCatalogoEmpresa: CatalogoEmpresa = {
+    nombre: '',
+    actividades:[],
+  }

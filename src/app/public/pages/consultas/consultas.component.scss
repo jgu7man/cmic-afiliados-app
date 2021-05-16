@@ -3,12 +3,12 @@
 }
 
 .afiliado-card {
+  cursor: pointer;
   ::ng-deep {
     mat-card-header {
       flex-direction: row-reverse;
       justify-content: flex-end;
       margin-bottom: 1em;
-      cursor: pointer;
       .mat-card-avatar.initial {
         display: flex;
         justify-content: center;
@@ -28,4 +28,9 @@
       }
     }
   }
+}
+
+
+mat-card {
+  width: 100%;
 }

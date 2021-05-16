@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatSelectionListChange } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil, iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
@@ -53,5 +54,9 @@ export class MainPerfilComponent implements OnInit {
   get banner() {
     return this.afiliado.perfil?.imgBanner ? this.afiliado.perfil.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
   }
+
+  // setCatalogos(nombre: string, actividades: A) {
+
+  // }
 
 }

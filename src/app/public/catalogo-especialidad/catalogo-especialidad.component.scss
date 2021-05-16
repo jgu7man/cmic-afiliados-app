@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  top: -3em;
+  mat-list-option {
+    cursor: pointer;
+    outline: none;
+    font-size: 12px;
+    height: inherit;
+    padding: 5px 0;
+    line-height: 1.5;
+  }
+}
+

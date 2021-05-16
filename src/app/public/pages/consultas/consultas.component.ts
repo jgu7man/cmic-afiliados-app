@@ -10,6 +10,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { GdevAlert } from 'gdev-alert';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogClienteLoginComponent } from '../../clientes/components/dialog-cliente-login/dialog-cliente-login.component';
+import { Actividad } from '../../afiliados/models/actividades.model';
 
 @Component({
   templateUrl: './consultas.component.html',
@@ -20,7 +21,8 @@ export class ConsultasComponent implements OnInit {
   queryValue: string
   queryKey: QueryParam
   afiliados: AfiliadoModel[] = []
-  especialidad: string
+  especialidad: string = ''
+  actividad: string = ''
 
   constructor(
     private _route: ActivatedRoute,
@@ -35,9 +37,16 @@ export class ConsultasComponent implements OnInit {
     this.queryKey = queryParams[0]
     this.queryValue = this._route.snapshot.queryParams[this.queryKey]
 
-    this.especialidad = this.queryKey == 'especialidad' ? this.queryValue
-      : this._actividades.getEspecialidadByCode(this.queryValue) as string
-
+    if (this.queryKey == 'codigo') {
+      let actividad = this._actividades.allActividades
+        .find(act => act.codigo === this.queryValue)
+      if (actividad) {
+        this.actividad = actividad.nombre
+        this.especialidad = actividad.especialidad
+      }
+    } else {
+      this.especialidad = this.queryValue
+    }
 
     let result =  this._consultas.consulta(this.queryKey, this.queryValue)
     result.subscribe(data => {
@@ -60,8 +69,9 @@ export class ConsultasComponent implements OnInit {
       if (user) this._router.navigate(['/afiliado', slug])
       else this._dialog.open(DialogClienteLoginComponent, {
         width: '370px',
-      }).afterClosed().subscribe(logged => {
-        if(logged) this._router.navigate(['/afiliado', slug])
+        data: slug
+      }).afterClosed().subscribe(slug => {
+        if(slug) this._router.navigate(['/afiliado', slug])
       })
     })
   }

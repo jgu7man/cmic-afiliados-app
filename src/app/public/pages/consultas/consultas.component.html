@@ -2,7 +2,7 @@
 <div class="container page">
   <div class="row">
     <div class="col s12">
-      <h2> <b> {{especialidad}} </b> </h2>
+      <h2> <b> {{actividad || especialidad}} </b> </h2>
       <mat-divider style="margin-bottom: 1.5em;" ></mat-divider>
     </div>
   </div>
@@ -12,8 +12,9 @@
       <mat-card [style.width]="'100%'"
       class="afiliado-card"
       *ngFor="let afiliado of afiliados"
+      (click)="goPerfil(afiliado.datos_generales.slug)"
       >
-        <mat-card-header (click)="goPerfil(afiliado.datos_generales.slug)">
+        <mat-card-header>
           <ng-container *ngIf="avatar(afiliado.perfil) as image; else initial">
             <div mat-card-avatar class="header-image"
             [ngStyle]="{'background': 'url('+image+')'}"
@@ -56,6 +57,12 @@
         </mat-card-content>
       </mat-card>
 
+    </div>
+    <div class="col s4">
+      <g-catalogo-especialidad
+      [especialidadName]="especialidad"
+      [actSelected]="actividad"
+      ></g-catalogo-especialidad>
     </div>
   </div>
 </div>

@@ -30,7 +30,7 @@ $afiliados-app-theme: mat-light-theme((
 
 $cmic-typography: mat-typography-config(
   $font-family: 'Montserrat',
-  $body-1: mat-typography-level(16px, 24px, 500)
+  $body-1: mat-typography-level(1em, 24px, 500)
 );
 
 @include mat-base-typography($cmic-typography);

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GdevAuthService } from 'gdev-auth';
 import { of, race } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, mapTo, switchMap } from 'rxjs/operators';
 
 import { ManagersService } from '../afiliados/services/managers.service';
 import { DialogClienteLoginComponent } from '../clientes/components/dialog-cliente-login/dialog-cliente-login.component';
@@ -15,7 +15,7 @@ import { ClientsService } from '../clientes/services/clients.service';
 })
 export class TopbarComponent implements OnInit {
 
-  logged: 'client' | 'manager' | boolean = false
+  logged: string | boolean = false
 
   constructor(
     public auth_: GdevAuthService,
@@ -33,14 +33,15 @@ export class TopbarComponent implements OnInit {
   loggedBehavior(): void {
     this._managers.current$
       .pipe(
-        switchMap( user => user ? of(user) : this._clients.current$),
+        switchMap(user => user ? of('manager') : this._clients.current$
+          .pipe(
+            filter(client => !!client),
+            mapTo('client')
+          )),
       ).subscribe(user => {
       console.log( user )
-      if (user && 'RFC' in user) {
-        this.logged = 'manager'
-      } else  {
-        this.logged = user ? 'client' : false
-      }
+      this.logged = user
+
     })
   }
 

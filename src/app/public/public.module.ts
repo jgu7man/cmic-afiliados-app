@@ -17,6 +17,7 @@ import { FloatMenuComponent } from './float-menu/float-menu.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { SearcherComponent } from './searcher/searcher.component';
 import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
+import { CatalogoEspecialidadComponent } from './catalogo-especialidad/catalogo-especialidad.component';
 // import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
     ConsultasComponent,
     SearcherComponent,
     RestorePwdComponent,
+    CatalogoEspecialidadComponent,
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,7 @@ import { RestorePwdComponent } from './restore-pwd/restore-pwd.component';
     // MxResponsiveModule
   ],
   exports: [
-    SearcherComponent
+    SearcherComponent,
   ],
 })
 export class PublicModule {}
