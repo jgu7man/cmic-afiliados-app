@@ -22,6 +22,7 @@ import { AvisoPrivacidadComponent } from './pages/aviso-privacidad/aviso-privaci
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { ContactoFormComponent } from './contacto-form/contacto-form.component';
 import { GdevModule } from '../gdev/gdev.module';
+import { CatalogoNuevosComponent } from './catalogo-nuevos/catalogo-nuevos.component';
 // import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { GdevModule } from '../gdev/gdev.module';
     AvisoPrivacidadComponent,
     ContactoComponent,
     ContactoFormComponent,
+    CatalogoNuevosComponent,
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-<g-float-menu></g-float-menu>
+<g-float-menu #floatMenu></g-float-menu>
 <div id="hero">
   <div class="container" strechHeight>
     <div class="row">
@@ -12,6 +12,8 @@
         (mouseleave)="hover = false"
         mat-raised-button
         [ngStyle]="{'mat-primary': hover}"
+        type="button"
+        (click)="onVerCatalogos()"
         >Ver catálogo</button>
         <button
         (mouseenter)="hover = true"
@@ -26,4 +28,19 @@
 
 <div id="slider">
   <gdev-slider [slidesCollection]="'sitio'"></gdev-slider>
+</div>
+
+<div id="catalogo">
+  <div class="container">
+    <div class="row">
+    <div class="col s12">
+      <h2 class="center"> Catálogo de afiliados </h2>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col s12">
+        <g-catalogo-nuevos [cantidad]="6"></g-catalogo-nuevos>
+      </div>
+    </div>
+  </div>
 </div>

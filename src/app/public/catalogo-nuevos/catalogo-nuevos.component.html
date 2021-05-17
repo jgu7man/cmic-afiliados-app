@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12 m6 l4" *ngFor="let afiliado of afiliados">
+      <mat-card>
+        <mat-card-header>
+          <img mat-card-avatar [style.background-image]="'url('+ afiliado.perfil?.imgPerfil?.url+')'" style="background-size: cover;" >
+          <mat-card-title>{{afiliado.datos_generales.comercial_nombre }}</mat-card-title>
+          <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
+        </mat-card-header>
+        <img mat-card-image
+        [src]="afiliado.perfil?.imgBanner?.url"
+        [alt]="afiliado.datos_generales.comercial_nombre">
+        <mat-card-content>
+          <p>{{afiliado.perfil?.somos}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button
+          [routerLink]="['/afiliado', afiliado.datos_generales.slug]">Ver</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

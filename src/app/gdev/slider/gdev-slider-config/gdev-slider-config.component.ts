@@ -46,7 +46,6 @@ export class GdevSliderConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this._slider.$sliderConfig.subscribe( config => {
-      console.log('hay config: ', config);
       if ( config ) {
         this.SliderConfig = config
         this.timing = +config.timings.split('ms')[0]

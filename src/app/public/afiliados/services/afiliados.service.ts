@@ -98,5 +98,9 @@ export class AfiliadosService {
     .valueChanges({ idField: 'RFC'})
   }
 
+  getRecentAfiliados(cant: number = 6) {
+    return this._afs.collection<AfiliadoModel>('afiliados',
+    ref => ref.orderBy('creado', 'desc').limit(cant)).valueChanges()
+  }
 
 }

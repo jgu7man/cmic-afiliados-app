@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FloatMenuComponent } from '../../float-menu/float-menu.component';
 
 @Component({
   templateUrl: './inicio.component.html',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class InicioComponent implements OnInit {
 
   hover: boolean = false
+  @ViewChild('floatMenu') private floatMenu?: FloatMenuComponent
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onVerCatalogos() {
+    this.floatMenu?.select(0)
   }
 
 }

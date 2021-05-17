@@ -20,11 +20,9 @@ export class AdminDashboardComponent implements OnInit {
     private _alert: GdevAlert,
   ) {
     this.auth_.user$.pipe(takeWhile(user => user)).subscribe(user => {
-      console.log( user )
       if (!user) this._router.navigate(['/admin/login']);
       this._admins.retriveAdmin(user.email)
         .then(admin => {
-          console.log( admin )
           if (!admin) {
             this._alert.sendMessageAlert('Esta no es una cuenta de administrador')
             this.auth_.singOut()
