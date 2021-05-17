@@ -26,6 +26,10 @@ import { MxResponsiveModule } from '../responsive/responsive.module';
 import { AdminClientesComponent } from './components/admin-dashboard/admin-clientes/admin-clientes.component';
 import { AdminSeeClientComponent } from './components/admin-dashboard/admin-clientes/admin-see-client/admin-see-client.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { AdminSitioComponent } from './components/admin-dashboard/admin-sitio/admin-sitio.component';
+import { AdminSliderComponent } from './components/admin-dashboard/admin-sitio/admin-slider/admin-slider.component';
+import { AdminSlideComponent } from './components/admin-dashboard/admin-sitio/admin-slide/admin-slide.component';
+import { GdevStorageModule } from '../gdev/gdev-storage/gdev-storage.module';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     DialogAceptClientComponent,
     CreateAdminAccountComponent,
     AdminClientesComponent,
-    AdminSeeClientComponent
+    AdminSeeClientComponent,
+    AdminSitioComponent,
+    AdminSliderComponent,
+    AdminSlideComponent
   ],
   imports: [
     CommonModule,
@@ -57,6 +64,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     PublicModule,
     MxResponsiveModule,
     PdfViewerModule,
+    GdevStorageModule
   ],
 })
 export class AdminModule {}

@@ -8,6 +8,7 @@ import { AdminClientesComponent } from './components/admin-dashboard/admin-clien
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminInicioComponent } from './components/admin-dashboard/admin-inicio/admin-inicio.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { AdminSitioComponent } from './components/admin-dashboard/admin-sitio/admin-sitio.component';
 import { CreateAdminAccountComponent } from './components/create-admin-account/create-admin-account.component';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'accesos', component: AdminAccesosComponent },
       { path: 'afiliados', component: AdminAfiliadosTableComponent },
       { path: 'clientes', component: AdminClientesComponent },
+      { path: 'sitio', component: AdminSitioComponent },
     ] },
     { path: 'login', component: AdminLoginComponent },
     { path: 'create', component: CreateAdminAccountComponent },

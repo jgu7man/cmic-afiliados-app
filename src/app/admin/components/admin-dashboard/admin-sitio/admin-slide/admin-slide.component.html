@@ -1,0 +1,60 @@
+<form  class="row" [formGroup]="slideForm">
+
+
+  <!-- Nombre -->
+  <div class="col s12">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input
+      matInput
+      type="text"
+      name="nombre"
+      formControlName="nombre"
+      required
+      >
+      <mat-error *ngIf="slideForm.hasError('required', 'nombre')">
+       El nombre es necesario
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="col s12">
+    <div class="slide-preview" *ngIf="slide">
+      <img [src]="slide.imageURL" alt="">
+    </div>
+    <gdev-upload-files
+    [maxFileSize]="2097152"
+    path="slides"
+    [multiple]="false"
+    [showDropzone]="false"
+    [uploadStatus]="true"
+    dropzoneLabel="Arrastra o da click en esta area para cargar una imagen"
+    uploadButtonLabel="Subir"
+    toggleButtonLabel="Subir imagen"
+    (uploadComplete)="onFileUploaded($event)">
+    </gdev-upload-files>
+  </div>
+
+  <!-- Enlace -->
+  <div class="col s12">
+    <mat-form-field appearance="outline">
+      <mat-label>Enlace</mat-label>
+      <input
+      matInput
+      type="text"
+      name="enlace"
+      formControlName="enlace"
+      >
+    </mat-form-field>
+  </div>
+
+
+  <!-- OPTIONS -->
+  <div class="col s12 m6">
+    <mat-checkbox formControlName="activado">Activar mostrar</mat-checkbox>
+  </div>
+  <div class="col s12 m6">
+    <mat-checkbox formControlName="newTab">Abrir en nueva pestaña</mat-checkbox>
+  </div>
+
+</form>

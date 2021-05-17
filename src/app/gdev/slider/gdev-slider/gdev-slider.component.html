@@ -1,0 +1,25 @@
+<mat-carousel
+  [timings]="sliderConfig.timings"
+  [autoplay]="sliderConfig.autoplay"
+  [interval]="sliderConfig.interval"
+  [color]="sliderConfig.color"
+  [maxWidth]="sliderConfig.maxWidth"
+  [proportion]="sliderConfig.proportion"
+  [slides]="slides.length"
+  [loop]="sliderConfig.loop"
+  [hideArrows]="sliderConfig.hideArrows"
+  [hideIndicators]="sliderConfig.hideIndicators"
+  [useKeyboard]="sliderConfig.useKeyboard"
+  [useMouseWheel]="sliderConfig.useMouseWheel"
+  [orientation]="sliderConfig.orientation"
+>
+  <mat-carousel-slide
+    #matCarouselSlide
+    *ngFor="let slide of slides; let i = index"
+    [image]="slide.imageURL"
+    overlayColor="#00000040"
+    [hideOverlay]="true"
+    templateRef="'hola'"
+    [enlace]="slide.enlace"
+  ></mat-carousel-slide>
+</mat-carousel>

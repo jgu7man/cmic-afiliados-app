@@ -21,6 +21,7 @@ import { CatalogoEspecialidadComponent } from './catalogo-especialidad/catalogo-
 import { AvisoPrivacidadComponent } from './pages/aviso-privacidad/aviso-privacidad.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { ContactoFormComponent } from './contacto-form/contacto-form.component';
+import { GdevModule } from '../gdev/gdev.module';
 // import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
@@ -49,6 +50,7 @@ import { ContactoFormComponent } from './contacto-form/contacto-form.component';
     GdevResponsiveModule,
     ReactiveFormsModule,
     FormsModule,
+    GdevModule
     // MxResponsiveModule
   ],
   exports: [

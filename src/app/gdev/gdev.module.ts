@@ -10,6 +10,8 @@ import { YearSelectorComponent } from './year-selector/year-selector.component';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MaterialModule } from 'src/shared/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GdevSliderModule } from './slider/gdev-slider.module';
+import { ListCrudModule } from './list-crud/list-crud.module';
 
 
 
@@ -23,7 +25,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MomentDateModule,
     MaterialModule,
     // FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GdevSliderModule,
+    ListCrudModule
   ],
   exports: [
     GdevAlertModule,
@@ -32,6 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     GdevLoadingModule,
     GdevResponsiveModule,
     YearSelectorComponent,
+    GdevSliderModule,
+    ListCrudModule
   ]
 })
 export class GdevModule { }

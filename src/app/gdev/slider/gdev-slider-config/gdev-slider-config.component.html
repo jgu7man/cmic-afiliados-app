@@ -1,0 +1,169 @@
+<div class="container">
+    <div class="row">
+        <div class="col s10">
+            <h5>Configuración del Slider</h5>
+        </div>
+        <div class="col s2">
+            <button mat-raised-button (click)="location.back()">Regresar</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <form (ngSubmit)="onSubmit()" #sliderConfig="ngForm" >
+                <div class="row">
+                    <div class="col s12 m6 l4 slide-config-sec">
+                        <p><b>Movimiento</b></p>
+                        <mat-form-field matTooltip="El tiempo que dura el efecto de cambio">
+                            <mat-label>Tiempo de transición</mat-label>
+                            <input matInput
+                            id="timing"
+                            name="timing"
+                            [(ngModel)]="timing"
+                            type="number">
+                        </mat-form-field>
+
+                        <mat-form-field matTooltip="Suavidad del efecto de cambio">
+                            <mat-label>Efecto de transición</mat-label>
+                            <mat-select [(ngModel)]="efect" name="efect">
+                                <mat-option *ngFor="let fx of efects" [value]="fx.value">
+                                    {{fx.display}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-slide-toggle
+                        name="autoplay"
+                        [(ngModel)]="SliderConfig.autoplay"
+                         >
+                            AutoPLay
+                        </mat-slide-toggle>
+
+                        <mat-slide-toggle
+                        name="loop"
+                        [(ngModel)]="SliderConfig.loop"
+                         >
+                            Loop (Repetir)
+                        </mat-slide-toggle>
+
+                        <mat-form-field matTooltip="El tiempo que permanece el slide (En milisegundos)">
+                            <mat-label>Duración de espera (ms)</mat-label>
+                            <input matInput
+                            id="interval"
+                            name="interval"
+                            [(ngModel)]="SliderConfig.interval"
+                            type="number">
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-label>Orientación</mat-label>
+                            <mat-select name="orientation" [(ngModel)]="SliderConfig.orientation">
+                                <mat-option *ngFor="let dir of orientaciones" [value]="dir.value">
+                                    {{dir.display}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+
+
+                    <div class="col s12 m6 l4 slide-config-sec">
+                        <p><b>Tamaño</b></p>
+
+                        <mat-slide-toggle
+                        [checked]="SliderConfig.maxWidth != ''"
+                        (change)="onMaxwidth($event)"
+                        >
+                            Ancho Completo
+                        </mat-slide-toggle>
+
+                        <div class="col s12">
+                            <mat-label>Anchura máxima: </mat-label><br>
+                            <mat-slider
+                            id="maxWidth"
+                            name="maxWidth"
+                            [(ngModel)]="maxWidth"
+                            thumbLabel
+                            [disabled]="SliderConfig.maxWidth == 'auto'"
+                            [displayWith]="formatLabel"
+                            tickInterval="1"
+                            min="1"
+                            max="100">
+                            </mat-slider>
+                        </div>
+
+                        <mat-slide-toggle
+                        name="aspect"
+                        [(ngModel)]="SliderConfig.maintainAspectRatio"
+                        >
+                            Mantener el aspecto
+                        </mat-slide-toggle>
+
+                        <div class="col s12">
+                            <mat-label>Proporción de altura: </mat-label><br>
+                            <mat-slider
+                            id="proportion"
+                            name="proportion"
+                            [(ngModel)]="SliderConfig.proportion"
+                            thumbLabel
+                            [disabled]="!SliderConfig.maintainAspectRatio"
+                            [displayWith]="formatLabel"
+                            tickInterval="1"
+                            min="1"
+                            max="100">
+                            </mat-slider>
+                        </div>
+
+                        <mat-form-field matTooltip="La altura que mantendrá fija (En pixeles)">
+                            <mat-label>Altura fija (px)</mat-label>
+                            <input matInput
+                            id="height"
+                            name="height"
+                            [(ngModel)]="slideHeight"
+                            type="number"
+                            placeholder="Porcentaje de altura"
+                            [disabled]="SliderConfig.maintainAspectRatio"
+                            >
+                        </mat-form-field>
+                    </div>
+
+
+
+
+                    <div class="col s12 m6 l4 slide-config-sec">
+                        <p><b>Decoraciones</b></p>
+                        <mat-slide-toggle
+                        name="hideArrows"
+                        [(ngModel)]="SliderConfig.hideArrows"
+                        >
+                            Ocultar Flechas
+                        </mat-slide-toggle><br>
+                        <mat-slide-toggle
+                        name="hideIndi"
+                        [(ngModel)]="SliderConfig.hideIndicators"
+                        >
+                            Ocultar Indicadores
+                        </mat-slide-toggle><br>
+                         <mat-slide-toggle
+                        name="hideIndi"
+                        [(ngModel)]="SliderConfig.useKeyboard"
+                        >
+                            Usar teclado
+                        </mat-slide-toggle><br>
+                        <mat-slide-toggle
+                        name="mouseWheel"
+                        [(ngModel)]="SliderConfig.useMouseWheel"
+                        >
+                            Permitir usar la rueda del mouse
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 center">
+                        <button mat-raised-button color="primary">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
