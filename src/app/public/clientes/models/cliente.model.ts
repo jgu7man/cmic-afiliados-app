@@ -10,3 +10,4 @@ export interface iCliente extends iUser {
   status: 'solicitud' | 'aceptado' | 'revoke' | 'pendiente',
   request: Date | firebase.firestore.Timestamp
 }
+

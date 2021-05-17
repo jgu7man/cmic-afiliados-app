@@ -23,7 +23,7 @@ export class AuthService {
    * @returns {userCredentials}
    */
   async createManagerAccount(manager: iManager) {
-    let { email, contrasena, RFC,  } = manager;
+    let { email, contrasena, RFC, confcontrasena, ...managerData  } = manager;
     const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
     const userCredentials = await this._afAuth
       .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
@@ -35,9 +35,12 @@ export class AuthService {
       .collection('managers')
       .doc(userCredentials.user?.uid);
 
-    manager.uid = userCredentials.user?.uid
-
-    userRef.set({ ...manager,  registrado: new Date() }).catch((error) => {
+    userRef.set({
+      ...managerData,
+      email, RFC,
+      uid: userCredentials.user?.uid,
+      registrado: new Date()
+    }).catch((error) => {
       throw { message: 'No se pudo guardar en base de datos', error };
     });
 
@@ -51,7 +54,7 @@ export class AuthService {
 
   }
   async createAccount(user: iUser, collection: 'clientes' | 'admins') {
-    let { email, contrasena } = user
+    let { email, contrasena, confcontrasena, ...userData } = user
     const clientsRef = this._afs.collection(collection)
     const userCredentials = await this._afAuth
       .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
@@ -65,9 +68,13 @@ export class AuthService {
       });
 
     const userRef = clientsRef.doc(userCredentials.user?.uid);
-    user.uid = userCredentials.user?.uid
 
-    userRef.set({ ...user, registrado: new Date() }).catch((error) => {
+    userRef.set({
+      ...userData,
+      email,
+      uid: userCredentials.user?.uid,
+      registrado: new Date()
+    }).catch((error) => {
       throw { message: 'No se pudo guardar en base de datos', error };
     });
 

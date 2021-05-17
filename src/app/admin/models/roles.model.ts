@@ -4,6 +4,7 @@ export class iUser {
 
   lastAccess: any;
   contrasena?: any;
+  confcontrasena?: any
   uid: any;
 
   access?: 'revoke';

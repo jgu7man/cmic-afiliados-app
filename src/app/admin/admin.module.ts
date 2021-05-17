@@ -23,6 +23,8 @@ import { AdminInicioComponent } from './components/admin-dashboard/admin-inicio/
 import { DialogAceptClientComponent } from './components/admin-dashboard/dialog-acept-client/dialog-acept-client.component';
 import { CreateAdminAccountComponent } from './components/create-admin-account/create-admin-account.component';
 import { MxResponsiveModule } from '../responsive/responsive.module';
+import { AdminClientesComponent } from './components/admin-dashboard/admin-clientes/admin-clientes.component';
+import { AdminSeeClientComponent } from './components/admin-dashboard/admin-clientes/admin-see-client/admin-see-client.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { MxResponsiveModule } from '../responsive/responsive.module';
     AdminAfiliadosTableComponent,
     AdminInicioComponent,
     DialogAceptClientComponent,
-    CreateAdminAccountComponent
+    CreateAdminAccountComponent,
+    AdminClientesComponent,
+    AdminSeeClientComponent
   ],
   imports: [
     CommonModule,
