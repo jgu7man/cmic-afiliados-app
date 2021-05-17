@@ -25,6 +25,7 @@ import { CreateAdminAccountComponent } from './components/create-admin-account/c
 import { MxResponsiveModule } from '../responsive/responsive.module';
 import { AdminClientesComponent } from './components/admin-dashboard/admin-clientes/admin-clientes.component';
 import { AdminSeeClientComponent } from './components/admin-dashboard/admin-clientes/admin-see-client/admin-see-client.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { AdminSeeClientComponent } from './components/admin-dashboard/admin-clie
     ComunesModule,
     GdevModule,
     PublicModule,
-    MxResponsiveModule
+    MxResponsiveModule,
+    PdfViewerModule,
   ],
 })
 export class AdminModule {}

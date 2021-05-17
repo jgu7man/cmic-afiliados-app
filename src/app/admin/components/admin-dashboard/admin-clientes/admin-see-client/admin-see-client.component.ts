@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GdevDate } from 'src/app/gdev/gdev-date.service';
+import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { iCliente } from 'src/app/public/clientes/models/cliente.model';
 
 @Component({
@@ -17,6 +18,12 @@ export class AdminSeeClientComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  viewPDF(file: iUploadedFile) {
+    if (file.url && file.format?.includes('pdf')) {
+      return file.url as string
+    } else return null
   }
 
 }

@@ -37,8 +37,34 @@
         </mat-list>
 
         <mat-grid-list cols="2" rowHeight="1:1">
-          <mat-grid-tile>1</mat-grid-tile>
-          <mat-grid-tile>2</mat-grid-tile>
+          <mat-grid-tile>
+            <ng-container *ngIf="cliente.INEfile.url && cliente.INEfile.format?.includes('pdf'); else ineImage">
+              <pdf-viewer [src]="cliente.INEfile.url"
+              [render-text]="false"
+              [show-all]="false"
+              style="display: block;"
+              ></pdf-viewer>
+            </ng-container>
+            <ng-template #ineImage >
+              <div class="file-image">
+                <img [src]="cliente.INEfile.url">
+              </div>
+            </ng-template>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <ng-container *ngIf="viewPDF(cliente.CIFfile) as PDFurl; else cifImage">
+              <!-- <pdf-viewer [src]="PDFurl"
+              [render-text]="true"
+              style="display: block;"
+              ></pdf-viewer> -->
+              <a mat-button [href]="cliente.CIFfile.url" target="_blank">Descargar archivo</a>
+            </ng-container>
+            <ng-template #cifImage >
+              <div class="file-image">
+                <img [src]="cliente.CIFfile.url">
+              </div>
+            </ng-template>
+          </mat-grid-tile>
         </mat-grid-list>
         </mat-card-content>
         <mat-card-actions>
