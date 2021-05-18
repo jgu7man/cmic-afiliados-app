@@ -72,6 +72,11 @@ export class ActividadesFormComponent implements OnInit {
     this.currentCatalogo.splice(index, 0, data)
   }
 
+  updateIntereses(field: string, data: ContactoInteres) {
+    if (!Object.values(data).find(v => v == undefined)) {
+      this.perfil_.updateInfoDoc(field, data)
+    }
+  }
 
 
   saveCatalogo(field: catalogoName) {

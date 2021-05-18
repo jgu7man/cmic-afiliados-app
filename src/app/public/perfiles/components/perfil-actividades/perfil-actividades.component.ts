@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
+import { Router } from '@angular/router';
 import { ActividadEmpresa, CatalogoEmpresa, emptyCatalogoEmpresa } from 'src/app/public/afiliados/models/afiliados.model';
 
 @Component({
@@ -10,13 +11,17 @@ import { ActividadEmpresa, CatalogoEmpresa, emptyCatalogoEmpresa } from 'src/app
 export class PerfilActividadesComponent implements OnInit {
 
   @Input() catalogo: CatalogoEmpresa  = emptyCatalogoEmpresa
-  constructor() { }
+  constructor(
+    private _router: Router,
+  ) { }
 
   ngOnInit(): void {
   }
 
   onSelectAct(selected: MatSelectionListChange) {
-
+    let actividad: ActividadEmpresa = selected.options[0].value
+    let {codigo} = actividad
+    this._router.navigate(['/consulta' ], { queryParams: {codigo}})
   }
 
 

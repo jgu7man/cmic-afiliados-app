@@ -58,9 +58,14 @@ export class AfiliadosPerfilComponent implements OnInit {
       this._afiliados.getPerfil(this.RFC).subscribe((data) => {
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
-          this.afiliado = data;
-          this.RFC = data.datos_generales?.RFC as string;
-          this.somos = data.perfil?.somos ? data.perfil.somos : ''
+          if (data.datos_generales.comercial_nombre) {
+            this.afiliado = data;
+            this.RFC = data.datos_generales?.RFC as string;
+            this.somos = data.perfil?.somos ? data.perfil.somos : ''
+          } else {
+            console.log( 'to afiliacion' )
+            this._router.navigate(['/afiliados/afiliacion', this.RFC])
+          }
 
         }
         else {

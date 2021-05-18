@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col s12 m6 l4" *ngFor="let afiliado of afiliados">
-      <mat-card>
+      <mat-card *ngIf="afiliado.perfil" >
         <mat-card-header>
           <img mat-card-avatar [style.background-image]="'url('+ afiliado.perfil?.imgPerfil?.url+')'" style="background-size: cover;" >
           <mat-card-title>{{afiliado.datos_generales.comercial_nombre }}</mat-card-title>

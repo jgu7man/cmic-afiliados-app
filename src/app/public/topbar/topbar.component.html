@@ -21,7 +21,7 @@
       <a class="topbar-item link" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
 
 
-      <ng-container *ngIf="logged !== false; else unlogged">
+      <ng-container *ngIf="logged; else unlogged">
 
 
         <!-- Logged afiliado -->

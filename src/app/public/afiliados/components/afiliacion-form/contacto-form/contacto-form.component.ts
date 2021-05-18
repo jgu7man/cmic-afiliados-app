@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { iContacto } from '../../../models/afiliados.model';
-import { take } from 'rxjs/operators';
+import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 
 @Component({
   selector: 'g-contacto-form',
@@ -13,7 +13,7 @@ import { take } from 'rxjs/operators';
 export class ContactoFormComponent implements OnInit {
 
   contactoForm: FormGroup = new FormGroup({
-    telefono: new FormControl('', [Validators.required]),
+    telefono: new FormControl(''),
     celular: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required]),
     pagina_web: new FormControl(''),
@@ -28,7 +28,9 @@ export class ContactoFormComponent implements OnInit {
   @Output() invalid: EventEmitter<boolean> = new EventEmitter()
 
   constructor() {
-    this._form.pipe(take(2)).subscribe(form => {
+    this._form.pipe(
+      distinctUntilKeyChanged('email')
+    ).subscribe(form => {
       this.contactoForm.setValue(form)
       this.contactoForm.markAsPristine()
       this.invalid.emit(true)
@@ -36,11 +38,13 @@ export class ContactoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactoForm.valueChanges.subscribe(() => {
+    this.contactoForm.valueChanges
+    .pipe(delay(1000), startWith(true))
+      .subscribe((changes) => {
       this.changes.emit(this.contactoForm.value)
       this.invalid.emit(
-        this.contactoForm.invalid && this.contactoForm.pristine
-        ? true : false
+        this.contactoForm.invalid || this.contactoForm.pristine
+
       )
     })
   }

@@ -64,7 +64,8 @@ import { GdevStorageModule } from '../gdev/gdev-storage/gdev-storage.module';
     PublicModule,
     MxResponsiveModule,
     PdfViewerModule,
-    GdevStorageModule
+    GdevStorageModule,
+
   ],
 })
 export class AdminModule {}

@@ -75,6 +75,9 @@ export class EditarPerfilComponent implements OnInit {
 
 
   saveData(field: string, form: FormGroup): void {
+    console.log(form.value)
+    if (!form.value.primerAfiliacion)
+    this.perfilForm.patchValue({primerAfiliacion: new Date()})
     this.perfil_.updateInfoDoc(field, form.value)
     form.markAsPristine()
   }

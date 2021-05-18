@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { GdevDate } from 'src/app/gdev/gdev-date.service';
 import { AfiliadoModel,  emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
 
@@ -19,7 +20,9 @@ export class PerfilSidebarComponent implements OnInit {
 
   @Input() personal: iPersonal = {} as iPersonal;
 
-  constructor() { }
+  constructor(
+    public date_: GdevDate
+  ) { }
 
   ngOnInit(): void {
 

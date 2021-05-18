@@ -9,8 +9,8 @@ import {
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 import { MatCarouselSlide } from './carousel-slide';
-import { Slide, Enlace } from '../../gdev-slider.service';
 import { Router } from '@angular/router';
+import { Enlace } from '../../gdev-slide.model';
 
 @Component({
   selector: 'mat-carousel-slide',

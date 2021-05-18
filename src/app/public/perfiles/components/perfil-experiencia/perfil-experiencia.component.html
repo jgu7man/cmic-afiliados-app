@@ -22,8 +22,8 @@
               </div>
               <div class="col s12 m7 proyect-gallery">
                 <mat-grid-list cols="1" rowHeight="4:3">
-                  <mat-grid-tile *ngFor="let img of item.evidencia">
-                    <img [src]="img.url" [alt]="img.fileName">
+                  <mat-grid-tile *ngFor="let file of item.evidencia">
+                    <g-file-viewer [file]="file"></g-file-viewer>
                   </mat-grid-tile>
                 </mat-grid-list>
               </div>

@@ -18,7 +18,8 @@ export class AfiliadosLoginComponent implements OnInit {
     private _router: Router,
     private _managers: ManagersService
   ) {
-    this._managers.current$.subscribe(user => {
+    this._managers.current$.pipe(take(1)).subscribe(user => {
+      console.log( 'ejecucion' )
       if (user) { this._router.navigate(['/afiliados']) }
     })
    }

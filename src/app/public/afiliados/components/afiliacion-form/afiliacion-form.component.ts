@@ -21,6 +21,7 @@ export class AfiliacionFormComponent implements OnInit {
   public afiliado: AfiliadoModel = emptyAfiliado
   public addCorrespondencia: boolean = false
   public director_igual_legal: boolean = false
+  public director_invalid: boolean = true
 
   public RFC: string
 
@@ -38,9 +39,12 @@ export class AfiliacionFormComponent implements OnInit {
     this.RFC = user.RFC
 
     this._auth.user$.pipe(takeWhile(user => user)).subscribe(user => {
+      console.log( user )
       if (!user) this._router.navigate(['/'])
       else this._managers.retriveManager(user.email)
         .subscribe(manager => {
+          console.log(manager)
+          console.log(  manager?.RFC != this.RFC )
           if (!manager || manager.RFC != this.RFC) this._router.navigate(['/'])
         })
     })
@@ -49,10 +53,7 @@ export class AfiliacionFormComponent implements OnInit {
   ngOnInit(): void { }
 
   onChanges(form: AfiliadoProperty, data: any) {
-    console.log( form, data )
     this.afiliado[form] = data
-    console.log( this.afiliado )
-    console.log( this.afiliado[form] )
   }
 
 

@@ -29,7 +29,7 @@ import { DatosGeneralesFormComponent } from './components/afiliacion-form/datos-
 import { DireccionFormComponent } from './components/afiliacion-form/direccion-form/direccion-form.component';
 import { ContactoFormComponent } from './components/afiliacion-form/contacto-form/contacto-form.component';
 import { RepresentanteFormComponent } from './components/afiliacion-form/representante-form/representante-form.component';
-import { MomentDateModule } from '@angular/material-moment-adapter';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateModule } from '@angular/material-moment-adapter';
 import { AfiliadoPerfilSidebarComponent } from './components/afiliado-perfil-sidebar/afiliado-perfil-sidebar.component';
 import { GdevModule } from 'src/app/gdev/gdev.module';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
@@ -91,6 +91,9 @@ import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  exports: [AfiliadosPersonalFormComponent]
+  exports: [AfiliadosPersonalFormComponent],
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: 'es-MX'}
+  ]
 })
 export class AfiliadosModule {}

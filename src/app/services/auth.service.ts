@@ -80,7 +80,7 @@ export class AuthService {
 
     let uid = userCredentials.user?.uid;
     this._alert.sendFloatNotification('Usuario registrado');
-    this._cache.updateData('user', {...user.personal_data,  uid});
+    this._cache.updateData('user', {...userData, email, uid});
 
     return userCredentials
 

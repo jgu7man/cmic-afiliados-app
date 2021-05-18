@@ -1,0 +1,10 @@
+::ng-deep {
+  mat-option {
+    height:initial;
+    .mat-option-text {
+      white-space: break-spaces;
+      line-height: 1;
+      height: initial;
+    }
+  }
+}

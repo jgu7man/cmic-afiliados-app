@@ -11,6 +11,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, delay, map, mapTo, take, tap } from 'rxjs/operators';
 import { GdevLoading } from 'gdev-loading';
 import { PerfilService } from '../../services/perfil.service';
+import { GdevDate } from 'src/app/gdev/gdev-date.service';
 
 @Component({
   selector: 'g-afiliado-perfil-sidebar',
@@ -26,7 +27,7 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
   get afiliado() { return this._afiliado.getValue() }
 
   @Input() personal: iPersonal = {} as iPersonal;
-  @ViewChild('img') imgContainer?: HTMLDivElement;
+  @ViewChild('img') imgContainer?: ElementRef;
   imgWidth?: number
   imgStyle: any
 
@@ -34,6 +35,7 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private _loading: GdevLoading,
     public perfil_: PerfilService,
+    public date_: GdevDate
   ) { }
 
   async ngOnInit() {
@@ -43,12 +45,19 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     if (this.imgContainer) {
-      this.imgWidth = this.imgContainer.offsetWidth
-      this.imgStyle = { 'height.px':this.imgWidth, 'width': '66.66%' }
+      // console.log( this.imgWidth )
+      await this._loading.waitFor(1000)
+      this.imgWidth = this.imgContainer.nativeElement.offsetWidth
+      // this.imgStyle = { 'height.px':this.imgWidth, 'width': '66.66%' }
     }
 
+  }
+
+  get containerWidth(): Observable<number> {
+    // console.log( this.imgContainer?.nativeElement.offsetWidth )
+    return of(this.imgContainer?.nativeElement.offsetWidth).pipe(delay(1000), tap(console.log))
   }
 
 

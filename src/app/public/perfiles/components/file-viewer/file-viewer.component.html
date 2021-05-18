@@ -1,0 +1,8 @@
+<ng-container *ngIf="file?.format?.includes('image'); else notImage">
+  <div class="image-file">
+    <img [src]="file?.url" [alt]="file?.fileName">
+  </div>
+</ng-container>
+<ng-template #notImage >
+  <a [href]="file?.url" target="_blank"> Ver archivo </a>
+</ng-template>

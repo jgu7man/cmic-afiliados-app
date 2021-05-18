@@ -2,102 +2,140 @@
   <div class="row">
     <div class="col s12 l5" id="form">
       <mat-vertical-stepper [linear]="true" #stepper="matVerticalStepper">
-
         <!-- Catálogos -->
-          <mat-step *ngFor="let catalogo of actividades_.Catalogos; index as index">
+        <mat-step
+          *ngFor="let catalogo of actividades_.Catalogos; index as index"
+        >
+          <ng-template matStepLabel
+            >Catálogo de {{ catalogo.nombre }}</ng-template
+          >
+          <p class="instruction">{{ catalogo.instrucciones }}</p>
 
-            <ng-template matStepLabel>Catálogo de {{catalogo.nombre}}</ng-template>
-            <p class="instruction" > {{catalogo.instrucciones}} </p>
-
-
-            <g-actividades-selector
+          <g-actividades-selector
             *ngFor="let actividad of actividades[catalogo.id]; index as index"
             [catalogo]="catalogo"
             [value]="actividad"
             (selected)="onActividadSelected($event, index)"
-            ></g-actividades-selector>
+          ></g-actividades-selector>
 
-            <div>
-              <button mat-button matStepperPrevious
-              *ngIf="index != 0"
-              >Atrás</button>
-              <button mat-button matStepperNext
-              [disabled]="currentCatalogo.length < 3"
+          <div>
+            <button mat-button matStepperPrevious *ngIf="index != 0">
+              Atrás
+            </button>
+            <button
+              mat-raised-button
+              matStepperNext
+              color="secondary"
               (click)="saveCatalogo(catalogo.id)"
-              >Siguiente</button>
-            </div>
+            >
+              Siguiente
+            </button>
+          </div>
         </mat-step>
-
 
         <mat-step>
           <ng-template matStepLabel>Recibir información</ng-template>
 
           <p>
-            Estimado afiliado: <br>A la CMIC y sus Instituciones les interesa tener mejor comunicación con su empresa de forma adecuada, para ello le solicitamos nos indique los datos de los contactos para recibir información.
+            Estimado afiliado: <br />A la CMIC y sus Instituciones les interesa
+            tener mejor comunicación con su empresa de forma adecuada, para ello
+            le solicitamos nos indique los datos de los contactos para recibir
+            información.
           </p>
 
           <div class="row">
             <div class="col s12">
-              <mat-checkbox [(ngModel)]="intereses.recibir_info" #info="ngModel" >
+              <mat-checkbox
+                [(ngModel)]="intereses.recibir_info"
+                #info="ngModel"
+              >
                 ¿Desea recibir información?
               </mat-checkbox>
             </div>
           </div>
 
-
-          <button mat-button matStepperPrevious
-          >Atrás</button>
-          <button mat-button
-          (click)="perfil_.updateInfoDoc('intereses.recibir_info', intereses.recibir_info)"
-          >Siguiente</button>
-
+          <button mat-button matStepperPrevious>Atrás</button>
+          <button
+            mat-raised-button
+            matStepperNext
+            color="secondary"
+            (click)="
+              perfil_.updateInfoDoc(
+                'intereses.recibir_info',
+                intereses.recibir_info
+              )
+            "
+          >
+            Siguiente
+          </button>
 
           <!-- Contacto 1 -->
-
         </mat-step>
 
         <mat-step *ngIf="intereses.recibir_info">
-          <ng-template matStepLabel>Contacto 1 para recibir información</ng-template>
+          <ng-template matStepLabel
+            >Contacto 1 para recibir información</ng-template
+          >
 
-            <g-intereses-form
+          <g-intereses-form
             (changes)="intereses.contacto_1 = $event"
-            ></g-intereses-form>
+          ></g-intereses-form>
 
-          <button mat-button matStepperPrevious
-          >Atrás</button>
-          <button mat-button matStepperNext
-          (click)="perfil_.updateInfoDoc('intereses.contacto_1', intereses.contacto_1)"
-          >Siguiente</button>
+          <button mat-button matStepperPrevious>Atrás</button>
+          <button
+            mat-raised-button
+            matStepperNext
+            color="secondary"
+            (click)="updateIntereses( 'intereses.contacto_1', intereses.contacto_1)"
+          >
+            Siguiente
+          </button>
         </mat-step>
-
 
         <!-- Contacto 2 -->
         <mat-step *ngIf="intereses.recibir_info">
-          <ng-template matStepLabel>Contacto 2 para recibir información</ng-template>
-
+          <ng-template matStepLabel
+            >Contacto 2 para recibir información</ng-template
+          >
 
           <g-intereses-form
             (changes)="intereses.contacto_2 = $event"
-            ></g-intereses-form>
+          ></g-intereses-form>
 
-
-            <button mat-button matStepperPrevious>Atrás</button>
-            <button mat-button matStepperNext
-            (click)="perfil_.updateInfoDoc('intereses.contacto_2', intereses.contacto_2)"
-            >Siguiente</button>
+          <button mat-button matStepperPrevious>Atrás</button>
+          <button
+            mat-raised-button
+            matStepperNext
+            color="secondary"
+            (click)="updateIntereses( 'intereses.contacto_2', intereses.contacto_2)"
+          >
+            Siguiente
+          </button>
         </mat-step>
-
 
         <mat-step>
           <ng-template matStepLabel>Terminado!</ng-template>
-          <p>Has terminado con el registro de afiliación. Podrás editar los datos en la sección de edición de empresa</p>
+          <p>
+            Has terminado con el registro de afiliación. Podrás editar los datos
+            en la sección de edición de empresa
+          </p>
           <button mat-button matStepperPrevious>Atrás</button>
-            <button mat-raised-button color='primary' [routerLink]="['/afiliados/perfil']"
-            >Perfil</button>
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/afiliados/perfil']"
+          >
+            Perfil
+          </button>
         </mat-step>
       </mat-vertical-stepper>
-
     </div>
-    <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomSelector]="'#footer'"  ></div>
+    <div
+      class="col l7"
+      id="login-image"
+      fixScroll
+      [topBreak]="76"
+      [bottomSelector]="'#footer'"
+    ></div>
   </div>
 </div>

@@ -53,6 +53,11 @@ export class ClientsService {
     else return null
   }
 
+  updateLastAccess( uid: string) {
+    this._afs.doc(`clientes/${uid}`).update({lastAccess: new Date()})
+  }
+
+
 
   async invite(email: string) {
     let stored = await this.retriveClient(email);

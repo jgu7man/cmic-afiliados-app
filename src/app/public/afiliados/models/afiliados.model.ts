@@ -22,6 +22,17 @@ export class AfiliadoModel {
   ) {}
 }
 
+export type AfiliadoModelKey =
+| "datos_generales"
+| "domicilio"
+| "contacto"
+| "representante_legal"
+| "director"
+| "perfil"
+| "adicional"
+| "fuentes_de_trabajo"
+| "servicios_profesionales"
+| "tipos_de_obra"
 
 
 export interface iAfiliadoModel {

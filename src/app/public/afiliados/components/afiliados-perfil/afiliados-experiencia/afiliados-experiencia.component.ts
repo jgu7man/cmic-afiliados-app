@@ -63,6 +63,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
   }
 
   async onSetProyecto() {
+    console.log( this.proyectoForm )
     await this.perfil_.saveItems(this.proyectoForm, 'experiencia')
     let {updated, id, ...item} = emptyProyecto
     this.proyectoForm.setValue(item)

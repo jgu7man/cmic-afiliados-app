@@ -36,11 +36,17 @@ export class AdminAfiliadosTableComponent implements OnInit {
   ) {
     this._afiliados.getFullList().subscribe(list => {
       this.afiliados = list
+      let rawValue = this._afiliados.getRawValue(this.afiliados[0])
+      console.log( rawValue )
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
     this._paginator.nextPageLabel="Siguiente página"
     this._paginator.previousPageLabel = "Página anterior"
+
+
+
+
   }
 
   ngOnInit(): void {

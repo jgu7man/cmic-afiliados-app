@@ -57,7 +57,8 @@ export class AfiliadosRegistroComponent implements OnInit {
   ) {
     let { email, rfc } = this._route.snapshot.queryParams
 
-    this._managers.current$.subscribe(user => {
+    this._managers.current$.pipe(take(1)).subscribe(user => {
+      console.log( 'ejecuta' )
       if (user) { this._router.navigate(['/afiliados']) }
     })
     this.afiliado = this.formBuilder.group(

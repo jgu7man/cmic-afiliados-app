@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { RepresentanteAfiliado } from '../../../models/afiliados.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class RepresentanteFormComponent implements OnInit {
     nombre: new FormControl('', [Validators.required]),
     apellido_pat: new FormControl('', [Validators.required]),
     apellido_mat: new FormControl(''),
-    titulo: new FormControl('', [Validators.required]),
+    titulo: new FormControl(''),
     sexo: new FormControl(''),
     fecha_nacimiento: new FormControl(''),
     contacto: new FormGroup({
@@ -37,7 +37,9 @@ export class RepresentanteFormComponent implements OnInit {
    @Output() invalid: EventEmitter<boolean> = new EventEmitter()
 
   constructor() {
-    this._form.pipe(take(2)).subscribe(form => {
+    this._form.pipe(
+      distinctUntilKeyChanged('nombre')
+    ).subscribe(form => {
       this.representanteForm.setValue(form)
       this.representanteForm.markAsPristine()
       this.invalid.emit(true)
@@ -45,12 +47,13 @@ export class RepresentanteFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.representanteForm.valueChanges.subscribe(() => {
+    this.representanteForm.valueChanges
+    .pipe(delay(1000), startWith(true))
+      .subscribe((changes) => {
       this.changes.emit(this.representanteForm.value)
       this.invalid.emit(
-        this.representanteForm.invalid
-        && this.representanteForm.pristine
-        ? true : false
+        this.representanteForm.invalid || this.representanteForm.pristine
+
       )
     })
   }

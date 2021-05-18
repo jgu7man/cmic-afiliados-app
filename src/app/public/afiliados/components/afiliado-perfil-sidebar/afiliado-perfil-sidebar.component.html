@@ -2,15 +2,16 @@
   <!-- LOGO -->
   <div class="profile-img-container" #container>
     <div class="profile-img" #img
-    [ngStyle]="{'height.px':img.offsetWidth  }">
-      <ng-container *ngIf="ImageSrc; else default">
-        <img
-          width="100%"
-          [src]="ImageSrc"
-          alt="{{afiliado.datos_generales.comercial_nombre}}"
-          onerror="this.style.display='none'"
-        />
-      </ng-container>
+    [style.height.px]="imgWidth">
+
+    <ng-container *ngIf="ImageSrc; else default">
+      <img
+      width="100%"
+      [src]="ImageSrc"
+      alt="{{afiliado.datos_generales.comercial_nombre}}"
+      onerror="this.style.display='none'"
+      />
+    </ng-container>
     </div>
     <ng-template #default >
       <p class="center">
@@ -21,7 +22,7 @@
 
     <!-- Upload Image Perfil -->
     <button mat-mini-fab class="upload-btn"
-    color="accent"
+    color="secondary"
     (click)="uploadProfileImage()">
       <i class="fas fa-upload"></i>
     </button>
@@ -48,13 +49,23 @@
 
   <!-- AFILIACION DATA -->
   <p>Representante: <span class="data-text">
+    {{afiliado.representante_legal?.titulo}}
     {{afiliado.representante_legal?.nombre}}
     {{afiliado.representante_legal?.apellido_pat}}
     {{afiliado.representante_legal?.apellido_mat}}
   </span> </p>
+  <p *ngIf="afiliado.director?.nombre">
+    Director: <span class="data-text">
+    {{afiliado.director?.titulo}}
+    {{afiliado.director?.nombre}}
+    {{afiliado.director?.apellido_pat}}
+    {{afiliado.director?.apellido_mat}}
+  </span> </p>
   <p>Afiliado CMIC: <span class="data-text"> {{year}} </span> </p>
   <p>Afiliado desde:
-    <span class="data-text">{{afiliado.perfil?.primerAfiliacion}}</span>
+    <span class="data-text">{{
+      date_.toDate( afiliado.perfil?.primerAfiliacion) | date: 'yyyy'
+    }}</span>
   </p>
 </article>
 
@@ -62,29 +73,45 @@
 
 <article>
   <p class="article-header" >Ubicación</p>
-  <p>
+  <p> Domicilio: <span class="data-text">
     {{ afiliado.domicilio?.publica?.calle }}
     {{ afiliado.domicilio?.publica?.num_ext }}
     <span *ngIf="afiliado.domicilio?.publica?.num_int">int.</span>
     {{ afiliado.domicilio?.publica?.num_int }}
-  </p>
-  <p>
-    col. {{ afiliado.domicilio?.publica?.colonia }}
-    C.P. {{ afiliado.domicilio?.publica?.codigo_postal }}
-  </p>
-  <p>{{ afiliado.domicilio?.publica?.municipio_alcaldia }}</p>
-  <p>{{ afiliado.domicilio?.publica?.entidad_federativa }}</p>
+  </span></p>
+  <p> Colonia: <span class="data-text">
+      {{ afiliado.domicilio?.publica?.colonia }}
+  </span></p>
+  <p> C.P.: <span class="data-text">
+      {{ afiliado.domicilio?.publica?.codigo_postal }}
+  </span></p>
+  <p> Ciudad: <span class="data-text">
+    {{ afiliado.domicilio?.publica?.municipio_alcaldia }}
+  </span></p>
+  <p>Estado: <span class="data-text">
+    {{ afiliado.domicilio?.publica?.entidad_federativa }}
+  </span></p>
 </article>
 <article>
   <p class="article-header">Contacto</p>
-  <p>Tel.{{ afiliado.contacto?.telefono }}</p>
-  <p>{{ afiliado.contacto?.email }}</p>
-  <p>{{ afiliado.contacto?.pagina_web }}</p>
+  <p *ngIf="afiliado.contacto?.telefono">
+    Tel. <span class="data-text">
+    {{ afiliado.contacto?.telefono }}
+  </span> </p>
+  <p>Celular<span class="data-text">
+    {{ afiliado.contacto?.celualar }}
+  </span> </p>
+  <p>Email: <span class="data-text">
+    {{ afiliado.contacto?.email }}
+  </span></p>
+  <p>Sitio web: <span class="data-text">
+    {{ afiliado.contacto?.pagina_web }}
+  </span></p>
 </article>
 <article>
   <p class="article-header">Personal</p>
   <p>
-    Planta fija de {{personal.planta_fija}} colaboradores, dentro de los cuales el {{Hombres}}% son hombres, y el {{Mujeres}}% son mujeres.
+    Planta fija de <span class="data-text">{{personal.planta_fija}}</span> colaboradores, dentro de los cuales el <span class="data-text">{{Hombres}}%</span> son hombres, y el <span class="data-text">{{Mujeres}}%</span> son mujeres.
   </p>
   <!-- <p>
     Del total de colaboradores, el 25% cuentan con estudios de especialización o posgrado

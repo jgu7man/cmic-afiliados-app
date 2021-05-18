@@ -55,7 +55,7 @@ export class ActividadesService {
       id: 'tipos_de_obra',
       nombre: 'Especialidades y Tipos de Obra',
       instrucciones:
-        'Enumere por orden de importancia del 1 al 3 los principales tipos de obra que realiza',
+        'Seleccione por orden de importancia los 3 principales tipos de obra que realiza',
       especialidades: [
         {
           nombre: 'Sector Energía',
@@ -1238,7 +1238,7 @@ export class ActividadesService {
       id: 'servicios_profesionales',
       nombre: 'Servicios profesionales',
       instrucciones:
-        'Enumere por orden de importancia del 1 al 3 los principales tipos de obra que realiza',
+        'Seleccione por orden de importancia los 3 principales servicios profesionales realiza',
       especialidades: [
         {
           nombre: 'Estudios Técnicos',
@@ -1522,7 +1522,7 @@ export class ActividadesService {
       id: 'fuentes_de_trabajo',
       nombre: 'Fuentes de Trabajo',
       instrucciones:
-        'Enumere por orden de importancia del 1 al 6 las principales fuentes de trabajo',
+        'Seleccione por orden de importancia sólo las 3 las principales fuentes de trabajo que tiene',
       especialidades: [
         {
           nombre: 'Sector Energía',

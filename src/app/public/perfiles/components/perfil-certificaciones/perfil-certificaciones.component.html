@@ -9,6 +9,16 @@
         </mat-card-header>
         <mat-card-content>
           <p>Persona certificada: <span class="data-text">{{item.miembro}}</span></p>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Evidencias</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-grid-list cols="2" rowHeight="1:1" *ngIf="item.evidencia && item.evidencia.length > 0">
+              <mat-grid-tile *ngFor="let item of item.evidencia">
+                <g-file-viewer [file]="item"></g-file-viewer>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </mat-expansion-panel>
         </mat-card-content>
         <mat-card-actions *ngIf="edit"
         style="display: flex; justify-content: space-around;">

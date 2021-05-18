@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { BehaviorSubject, interval, of, Subject } from 'rxjs';
+import { concatMap, delay, distinctUntilKeyChanged, filter, finalize, startWith, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { DatosGeneralesModel } from '../../../models/afiliados.model';
 
 @Component({
@@ -13,8 +13,8 @@ export class DatosGeneralesFormComponent implements OnInit {
 
   generalesForm: FormGroup = new FormGroup({
     RFC: new FormControl('', [Validators.required]),
-    comercial_nombre: new FormControl(''),
-    moral_nombre: new FormControl(''),
+    comercial_nombre: new FormControl('', [Validators.required]),
+    moral_nombre: new FormControl('', [Validators.required]),
     slug: new FormControl('')
   })
 
@@ -36,7 +36,7 @@ export class DatosGeneralesFormComponent implements OnInit {
       if (rfc && rfc.length === 13) {
         this.generalesForm = new FormGroup({
           RFC: new FormControl('', [Validators.required]),
-          comercial_nombre: new FormControl(''),
+          comercial_nombre: new FormControl('', [Validators.required]),
           fisica_nombre: new FormControl('', [Validators.required]),
           fisica_apellido_pat: new FormControl('', [Validators.required]),
           fisica_apellido_mat: new FormControl('', [Validators.required]),
@@ -45,10 +45,20 @@ export class DatosGeneralesFormComponent implements OnInit {
       }
       this.generalesForm.patchValue({RFC: rfc})
     })
-    this._form.pipe( filter(data => !!data), take(2)).subscribe(data => {
-      console.log( data.fisica_apellido_mat )
+
+    this._form.pipe(
+      distinctUntilKeyChanged('RFC'),
+      concatMap(data => {
+        return  of(data)
+      }),
+      // takeWhile(data => {
+      //   console.log(data)
+      //   return !data
+      // })
+    ).subscribe(data => {
       if (data) {
-        this.generalesForm.setValue(data)
+        this.RFC$.next(data.RFC)
+        this.generalesForm.patchValue(data)
         this.generalesForm.markAsPristine()
         this.invalid.emit(true)
       }
@@ -56,17 +66,18 @@ export class DatosGeneralesFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.generalesForm.valueChanges.subscribe((changes) => {
+    this.generalesForm.valueChanges
+      .pipe(delay(1000),startWith(true))
+      .subscribe((changes) => {
       let nombre = this.generalesForm.get('comercial_nombre')
       if (nombre) {
         let slug = nombre.value.replace(/\s+/g, '-').toLowerCase();
         this.generalesForm.patchValue({slug})
-      }
+        }
 
       this.changes.emit(this.generalesForm.value)
       this.invalid.emit(
-        this.generalesForm.invalid && this.generalesForm.pristine
-        ? true : false
+        this.generalesForm.invalid || this.generalesForm.pristine
       )
     })
   }

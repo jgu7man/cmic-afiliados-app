@@ -25,7 +25,7 @@ export class EditarInformacionComponent implements OnInit {
     private _afiliados: AfiliadosService,
     private _route: ActivatedRoute,
     private _alert: GdevAlert,
-    public location_: Location
+    public location_: Location,
   ) {
     this.RFC = this._route.snapshot.params['RFC']
     if (this.RFC) {

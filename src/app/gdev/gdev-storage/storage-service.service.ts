@@ -11,6 +11,21 @@ import { GdevCache } from 'gdev-cache';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadingSpinnerComponent } from './components/uploading-spinner/uploading-spinner.component';
 
+import { ExportToCsv } from 'export-to-csv';
+
+const options = {
+  fieldSeparator: ',',
+  quoteStrings: '"',
+  decimalSeparator: '.',
+  showLabels: true,
+  showTitle: true,
+  useTextFile: false,
+  useBom: true,
+  useKeysAsHeaders: true,
+  // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+};
+const csvExporter = new ExportToCsv(options);
+
 @Injectable({
   providedIn: 'root'
 })
@@ -148,6 +163,10 @@ export class GdevStorage {
     } else {
       this._dialog.closeAll()
     }
+  }
+
+  downloadList(list: any[]) {
+    csvExporter.generateCsv(list)
   }
 }
 

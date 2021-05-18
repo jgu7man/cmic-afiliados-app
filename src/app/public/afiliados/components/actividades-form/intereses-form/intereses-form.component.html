@@ -1,48 +1,86 @@
 <form [formGroup]="contactoForm">
   <div class="row">
     <div class="col s12">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder=""  name="nombre" formControlName="nombre" required>
+        <input
+          matInput
+          placeholder=""
+          name="nombre"
+          formControlName="nombre"
+          required
+        />
+        <mat-error *ngIf="contactoForm.hasError('required', 'nombre')">
+          Este campo es necesario
+        </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <div class="col s12">
+        <mat-form-field appearance="outline">
+          <mat-label>Puesto</mat-label>
+          <input
+            matInput
+            placeholder=""
+            name="puesto"
+            formControlName="puesto"
+            required
+          />
+          <mat-error *ngIf="contactoForm.hasError('required', 'puesto')">
+            Este campo es necesario
+          </mat-error>
+        </mat-form-field>
+
+      <mat-form-field appearance="outline">
         <mat-label> Teléfono</mat-label>
-        <input matInput placeholder="Ingrese teléfono"  name="telefono"
-          formControlName="telefono" required>
+        <input
+          matInput
+          placeholder="Ingrese teléfono"
+          name="telefono"
+          formControlName="telefono"
+          required
+        />
+        <mat-error *ngIf="contactoForm.hasError('required', 'telefono')">
+          Este campo es necesario
+        </mat-error>
       </mat-form-field>
     </div>
 
-    <div class="col s12">
 
-      <mat-form-field>
-        <mat-label>Puesto</mat-label>
-        <input matInput placeholder=""  name="puesto"
-          formControlName="puesto" required>
-      </mat-form-field>
-
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>E-mail</mat-label>
-        <input matInput placeholder="Ingrese email"  type="email" name="email"
-          formControlName="email" required>
+        <input
+          matInput
+          placeholder="Ingrese email"
+          type="email"
+          name="email"
+          formControlName="email"
+          required
+        />
+        <mat-error *ngIf="contactoForm.hasError('required', 'email')">
+          Este campo es necesario
+        </mat-error>
       </mat-form-field>
-
     </div>
   </div>
 
-
   <div class="row">
     <div class="col s12">
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Intereses de contacto</mat-label>
-        <mat-select placeholder="Elige las temas que creas convenientes por los que quieres ser contactado"
-        formControlName="intereses"  name="item" multiple>
-          <mat-option *ngFor="let item of actividades_.ListaDeIntereses" [value]="item">
-            {{item}}
+        <mat-select
+          placeholder="Elige las temas que creas convenientes por los que quieres ser contactado"
+          formControlName="intereses"
+          name="item"
+          multiple
+        >
+          <mat-option
+            *ngFor="let item of actividades_.ListaDeIntereses"
+            [value]="item"
+          >
+            {{ item }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
-
 </form>

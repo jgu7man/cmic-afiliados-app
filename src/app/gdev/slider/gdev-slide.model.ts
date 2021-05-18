@@ -6,7 +6,7 @@ export class SlideModel {
     public nombre: string,
     public imageURL: string,
     public activado: boolean,
-    public enlace?: string,
+    public enlace?: Enlace,
     public newTab?: boolean,
     public id?: string,
   ) {

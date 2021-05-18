@@ -21,7 +21,6 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
     this.memberForm = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
       cargo: new FormControl('', [Validators.required]),
-      contacto: new FormControl('', [Validators.required]),
     })
 
     this.perfil_.initialize('recursos_humanos')

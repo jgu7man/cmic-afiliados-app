@@ -66,6 +66,7 @@ export class PerfilService {
 
   async updateInfoItem( col: SectionName, data: any, itemId?: string,) {
     data = pickBy(data, identity)
+    console.log( data )
     const ref = this._afs.collection(`afiliados/${this.RFC}/${col}`).ref
     await ref.doc(itemId).set({ ...data, updated: new Date() }, { merge: true })
     this._alert.sendFloatNotification(`${col} guardado`)
@@ -128,6 +129,7 @@ export class PerfilService {
         form = await this.saveFiles(form)
       }
 
+      console.log( collection )
       this.updateInfoItem( collection, form.value, this.editingItem)
         .then(() => {
           console.log('done!')

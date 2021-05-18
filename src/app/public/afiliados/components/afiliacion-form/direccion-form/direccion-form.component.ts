@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { DireccionAfiliadoModel, iDireccion } from '../../../models/afiliados.model';
 
 @Component({
@@ -51,7 +51,9 @@ export class DireccionFormComponent implements OnInit {
   @Output() invalid: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {
-    this._form.pipe(take(2)).subscribe(form => {
+    this._form.pipe(
+      distinctUntilKeyChanged('publica', (x,y) => x.calle == y.calle)
+    ).subscribe(form => {
       this.direccionForm.setValue(form)
       if (form.correspondencia) {
         Object.keys(form.correspondencia).forEach(key => {
@@ -66,12 +68,13 @@ export class DireccionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.direccionForm.valueChanges.subscribe(() => {
+    this.direccionForm.valueChanges
+      .pipe(delay(1000), startWith(true))
+      .subscribe((changes) => {
       this.changes.emit(this.direccionForm.value)
       this.invalid.emit(
-        this.direccionForm.invalid
-          && this.direccionForm.pristine
-          ? true : false
+        this.direccionForm.invalid ||this.direccionForm.pristine
+
       )
     })
   }

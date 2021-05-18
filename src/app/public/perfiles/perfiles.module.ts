@@ -14,6 +14,7 @@ import { FirebaseModule } from 'src/shared/firebase.module';
 import { GdevModule } from 'src/app/gdev/gdev.module';
 import { PerfilSidebarComponent } from './components/perfil-sidebar/perfil-sidebar.component';
 import { PerfilActividadesComponent } from './components/perfil-actividades/perfil-actividades.component';
+import { FileViewerComponent } from './components/file-viewer/file-viewer.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,8 @@ import { PerfilActividadesComponent } from './components/perfil-actividades/perf
     PerfilCertificacionesComponent,
     PerfilSidebarComponent,
     PerfilActividadesComponent,
+    FileViewerComponent,
+
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { PerfilActividadesComponent } from './components/perfil-actividades/perf
     PerfilRecursosHumanosComponent,
     PerfilCertificacionesComponent,
     PerfilSidebarComponent,
+    FileViewerComponent,
   ],
 })
 export class PerfilesModule {}
