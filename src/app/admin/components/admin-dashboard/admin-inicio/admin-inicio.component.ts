@@ -32,7 +32,6 @@ export class AdminInicioComponent implements OnInit, AfterViewInit {
     private _clientes: ClientsService,
   ) {
     this._clientes.getPeticiones().subscribe(list => {
-      console.log( list )
       this.clientes = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"

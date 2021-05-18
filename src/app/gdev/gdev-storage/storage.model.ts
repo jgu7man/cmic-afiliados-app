@@ -26,3 +26,7 @@ export interface iUploadOptions {
   dropzoneLabel?: string
   compareDimensions?: 'equals' | 'notEquals'
 }
+
+export interface RawValue {
+  [value: string]:any
+}

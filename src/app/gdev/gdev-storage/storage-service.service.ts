@@ -10,6 +10,7 @@ import { GdevAlert } from 'gdev-alert';
 import { GdevCache } from 'gdev-cache';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadingSpinnerComponent } from './components/uploading-spinner/uploading-spinner.component';
+import { RawValue } from "src/app/gdev/gdev-storage/storage.model";
 
 import { ExportToCsv } from 'export-to-csv';
 
@@ -22,6 +23,7 @@ const options = {
   useTextFile: false,
   useBom: true,
   useKeysAsHeaders: true,
+  filename: 'CMIC Reporte ' + new Date()
   // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
 };
 const csvExporter = new ExportToCsv(options);
@@ -165,8 +167,52 @@ export class GdevStorage {
     }
   }
 
-  downloadList(list: any[]) {
-    csvExporter.generateCsv(list)
+  async downloadList(list: any[]) {
+    let listRaw: any[] = []
+    await this.asyncForEach(list, async (item:any) => {
+      let row = await this.getRawValue(item)
+      listRaw.push(row)
+      return
+    })
+    csvExporter.generateCsv(listRaw)
+    return
+  }
+
+  async getRawValue(value: any) {
+    let headerKeys = Object.keys(value)
+    let rawValue: RawValue = {};
+
+    await this.asyncForEach(headerKeys, async(key:any) => {
+      if (typeof value[key] === 'object') {
+        let object = value[key]
+        Object.keys(object).forEach(sh => {
+          if (typeof object[sh] === 'object') {
+            let subObject = object[sh]
+            Object.keys(subObject).forEach(ssh => {
+              Object.defineProperty(rawValue, `${key}.${sh}.${ssh}`, {
+                value: subObject[ssh],
+                enumerable: true,
+                writable: true,
+                configurable: true,
+              })
+              return
+            })
+          } else {
+            Object.defineProperty(rawValue, `${key}.${sh}`, {
+              value: object[sh],
+              enumerable: true,
+              writable: true,
+              configurable: true
+            })
+            return
+          }
+        })
+      } else {
+        rawValue[key] = value[key]
+        return
+      }
+    })
+    return rawValue
   }
 }
 

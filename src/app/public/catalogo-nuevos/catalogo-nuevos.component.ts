@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { AfiliadoModel } from '../afiliados/models/afiliados.model';
+import { iPerfil } from '../afiliados/models/perfiles.model';
 import { AfiliadosService } from '../afiliados/services/afiliados.service';
 
 @Component({
@@ -25,6 +26,10 @@ export class CatalogoNuevosComponent implements OnInit {
 
   logoImage(img: iUploadedFile) {
     return `url('${img.url}')`
+  }
+
+  avatar(perfil?: iPerfil) {
+    return perfil?.imgPerfil ? perfil.imgPerfil.url : ''
   }
 
 }

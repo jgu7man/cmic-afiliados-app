@@ -103,32 +103,8 @@ export class AfiliadosService {
     ref => ref.orderBy('creado', 'desc').limit(cant)).valueChanges()
   }
 
-  getRawValue(value: any) {
-    let headerKeys = Object.keys(value)
-    let rawValue: RawValue = {};
 
-    headerKeys.forEach(key => {
-      if (typeof value[key] === 'object') {
-        let object = value[key]
-        Object.keys(object).forEach(sh => {
-          if (typeof object[sh] === 'object') {
-            let subObject = object[sh]
-            Object.keys(subObject).forEach(ssh => {
-              Object.defineProperty(rawValue, `${key}.${sh}.${ssh}`, {value: subObject[ssh]})
-            })
-          } else {
-            Object.defineProperty(rawValue, `${key}.${sh}`, {value: object[sh]})
-          }
-        })
-      } else {
-        rawValue[key] = value[key as keyof AfiliadoModel]
-      }
-    })
-    return rawValue
-  }
 
 }
 
-export interface RawValue {
-  [value: string]:any
-}
+

@@ -1,0 +1,22 @@
+mat-card-header {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+  .mat-card-avatar.initial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #cf3917;
+    font-weight: 900;
+    color: #721c09;
+  }
+  .mat-card-header-text {
+    display: flex;
+    align-items: center;
+    .mat-card-title {
+      margin-bottom: 0;
+      font-size: 30px;
+      font-weight: 300;
+    }
+  }
+}

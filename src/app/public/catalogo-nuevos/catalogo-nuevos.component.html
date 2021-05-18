@@ -3,12 +3,24 @@
     <div class="col s12 m6 l4" *ngFor="let afiliado of afiliados">
       <mat-card *ngIf="afiliado.perfil" >
         <mat-card-header>
-          <img mat-card-avatar [style.background-image]="'url('+ afiliado.perfil?.imgPerfil?.url+')'" style="background-size: cover;" >
+          <ng-container *ngIf="avatar(afiliado.perfil) as image; else initial">
+            <div mat-card-avatar class="header-image"
+            [ngStyle]="{'background': 'url('+image+')'}"
+            ></div>
+          </ng-container>
+          <ng-template #initial >
+            <div mat-card-avatar class="initial">
+              {{afiliado.datos_generales.comercial_nombre.substring(0,1)}}
+            </div>
+          </ng-template>
+          <!-- <img mat-card-avatar [style.background-image]="'url('+ afiliado.perfil?.imgPerfil?.url+')'" style="background-size: cover;" > -->
           <mat-card-title>{{afiliado.datos_generales.comercial_nombre }}</mat-card-title>
           <!-- <mat-card-subtitle>subtitle</mat-card-subtitle> -->
         </mat-card-header>
         <img mat-card-image
-        [src]="afiliado.perfil?.imgBanner?.url"
+        [src]="afiliado.perfil?.imgBanner?.url
+          ? afiliado.perfil?.imgBanner?.url
+          : '/assets/img/cmic-perfil-banner.jpg'"
         [alt]="afiliado.datos_generales.comercial_nombre">
         <mat-card-content>
           <p>{{afiliado.perfil?.somos}}</p>

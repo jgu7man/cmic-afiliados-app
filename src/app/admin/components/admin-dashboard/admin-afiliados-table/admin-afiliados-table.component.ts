@@ -8,6 +8,7 @@ import { ManagersService } from 'src/app/public/afiliados/services/managers.serv
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
 import { Router } from '@angular/router';
 import { GdevCache } from 'gdev-cache';
+import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 
 
 @Component({
@@ -32,12 +33,11 @@ export class AdminAfiliadosTableComponent implements OnInit {
     private _dialog: MatDialog,
     private _afiliados: AfiliadosService,
     private _router: Router,
-    private _cache: GdevCache
+    private _cache: GdevCache,
+    private _storage:GdevStorage
   ) {
     this._afiliados.getFullList().subscribe(list => {
       this.afiliados = list
-      let rawValue = this._afiliados.getRawValue(this.afiliados[0])
-      console.log( rawValue )
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
@@ -68,6 +68,10 @@ export class AdminAfiliadosTableComponent implements OnInit {
   onSelect(afiliado: AfiliadoModel) {
     this._cache.updateData('rfc',afiliado.datos_generales.RFC )
     this._router.navigate(['/afiliados/perfil' ])
+  }
+
+  onDownload() {
+    this._storage.downloadList(this.afiliados)
   }
 
 }
