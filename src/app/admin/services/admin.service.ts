@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { GdevAlert } from 'gdev-alert';
-import { iManager } from 'src/app/public/afiliados/models/afiliados.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { iAdmin } from '../models/admin.model';
 import { iUser } from '../models/roles.model';

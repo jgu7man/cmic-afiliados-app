@@ -1,8 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 import { Proyecto } from 'src/app/public/afiliados/models/perfiles.model';
-import { filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'g-perfil-experiencia',

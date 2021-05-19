@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
-import { ActividadQuery, AfiliadoQuery, EspecialidadQuery, QueryParam } from 'src/app/models/consultas.model';
+import { map, startWith } from 'rxjs/operators';
+import { ActividadQuery, AfiliadoQuery, EspecialidadQuery } from 'src/app/models/consultas.model';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { ActividadesService } from '../afiliados/services/actividades.service';
 import { AfiliadosService } from '../afiliados/services/afiliados.service';
@@ -24,7 +24,7 @@ export class SearcherComponent implements OnInit {
   constructor(
     private _actividades: ActividadesService,
     private _afiliados: AfiliadosService,
-    private _consultas: ConsultasService,
+    private _: ConsultasService,
     private _router: Router
   ) {
     this._afiliados.indexList().subscribe(list => {

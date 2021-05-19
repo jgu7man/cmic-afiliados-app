@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import {  Observable } from 'rxjs';
 import { MaqEquipItem } from 'src/app/public/afiliados/models/perfiles.model';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 
