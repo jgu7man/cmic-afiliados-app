@@ -40,19 +40,6 @@ export class PerfilSidebarComponent implements OnInit {
     return new Date().getFullYear()
   }
 
-  get Hombres() {
-    if (this.personal.hombres) {
-      return (this.personal.hombres * 100) / this.personal.planta_fija
-    } else {
-      return 0
-    }
-  }
-  get Mujeres() {
-    if (this.personal.mujeres) {
-      return ( this.personal.mujeres * 100 ) / this.personal.planta_fija
-    } else {
-      return 0
-    }
-  }
+
 
 }

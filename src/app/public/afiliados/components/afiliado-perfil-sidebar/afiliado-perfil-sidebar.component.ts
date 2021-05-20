@@ -94,19 +94,7 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
     return new Date().getFullYear()
   }
 
-  get Hombres() {
-    if (this.personal && this.personal.hombres) {
-      return (this.personal.hombres * 100) / this.personal.planta_fija
-    } else {
-      return 0
-    }
-  }
-  get Mujeres() {
-    if (this.personal && this.personal.mujeres) {
-      return ( this.personal.mujeres * 100 ) / this.personal.planta_fija
-    } else {
-      return 0
-    }
-  }
+
+
 
 }

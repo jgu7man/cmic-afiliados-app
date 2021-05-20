@@ -72,7 +72,11 @@
                   <div class="col s12 m6">
                     <mat-form-field>
                       <mat-label>Monto</mat-label>
-                      <input matInput type="text" name="monto" formControlName="monto">
+                      <input matInput type="text" name="monto"
+                      (keypress)="text.onlyAllow(['numbers'], $event)"
+                      formControlName="monto">
+                      <span matPrefix>$&nbsp;</span>
+                      <span matSuffix>.00</span>
                       <mat-error *ngIf="proyectoForm.hasError('required', 'monto')">
                         Este dato es necesario
                       </mat-error>

@@ -70,8 +70,6 @@ export const emptyMaqEquip: MaqEquipItem =
 export interface iPersonal {
   planta_fija: number;
   capacidad_proyecto: number;
-  hombres?: number;
-  mujeres?: number;
   updated?: Date | firebase.firestore.Timestamp
 }
 

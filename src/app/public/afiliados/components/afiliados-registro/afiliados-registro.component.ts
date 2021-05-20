@@ -67,7 +67,7 @@ export class AfiliadosRegistroComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         nombre: ['', [Validators.required]],
         paterno: ['', [Validators.required]],
-        materno: ['', [Validators.required]],
+        materno: [''],
         contrasena: ['', [Validators.required]],
         confcontrasena: ['', [Validators.required]],
         aviso_privacidad: [false, Validators.requiredTrue],

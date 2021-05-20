@@ -19,8 +19,6 @@ export class AfiliadosPersonalFormComponent implements OnInit {
   personalForm: FormGroup  = new FormGroup({
     planta_fija: new FormControl('', [Validators.required]),
     capacidad_proyecto: new FormControl('', [Validators.required]),
-    hombres: new FormControl('',),
-    mujeres: new FormControl('',),
   });
 
 

@@ -27,7 +27,7 @@ export class ClienteRegistroComponent implements OnInit {
       email: new FormControl('', [Validators.required]),
       nombre: new FormControl('', [Validators.required]),
       paterno: new FormControl('', [Validators.required]),
-      materno: new FormControl('', [Validators.required]),
+      materno: new FormControl(''),
       contrasena: new FormControl('', [Validators.required]),
       confcontrasena: new FormControl('', [Validators.required])
     })

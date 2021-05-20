@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MxText } from '@marxa/devkit';
 import { BehaviorSubject } from 'rxjs';
 import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { RepresentanteAfiliado } from '../../../models/afiliados.model';
@@ -19,8 +20,10 @@ export class RepresentanteFormComponent implements OnInit {
     sexo: new FormControl(''),
     fecha_nacimiento: new FormControl(''),
     contacto: new FormGroup({
-      telefono: new FormControl(''),
-      celular: new FormControl(''),
+      area_tel: new FormControl(52),
+      telefono: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
+      area_cel: new FormControl(52),
+      celular: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
       email: new FormControl(''),
       pagina_web: new FormControl('')
     })
@@ -36,11 +39,13 @@ export class RepresentanteFormComponent implements OnInit {
    @Output() changes: EventEmitter<RepresentanteAfiliado> = new EventEmitter()
    @Output() invalid: EventEmitter<boolean> = new EventEmitter()
 
-  constructor() {
+  constructor(
+    public text: MxText
+  ) {
     this._form.pipe(
       distinctUntilKeyChanged('nombre')
     ).subscribe(form => {
-      this.representanteForm.setValue(form)
+      this.representanteForm.patchValue(form)
       this.representanteForm.markAsPristine()
       this.invalid.emit(true)
     })

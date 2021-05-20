@@ -4,5 +4,7 @@
   </div>
 </ng-container>
 <ng-template #notImage >
-  <a [href]="file?.url" target="_blank"> Ver archivo </a>
+  <p>{{file?.fileName}} </p>
 </ng-template>
+<a [href]="file?.url" target="_blank"> Descargar archivo </a>
+

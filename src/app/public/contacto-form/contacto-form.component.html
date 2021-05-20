@@ -31,8 +31,25 @@
               </mat-form-field>
             </div>
 
+            <div class="col s3">
+              <mat-form-field appearance="outline">
+                <mat-label>Área país</mat-label>
+                <input
+                matInput
+                type="number"
+                name="area_cel"
+                formControlName="area_cel"
+
+                maxlength="2"
+        minlength="1"
+                >
+                <mat-error *ngIf="contactoForm.hasError('required', 'area_cel')">
+                  Área es necesario
+                </mat-error>
+              </mat-form-field>
+            </div>
             <!-- Celular -->
-            <div class="col s12">
+            <div class="col s9">
               <mat-form-field appearance="outline" color="accent">
                 <mat-label>Celular</mat-label>
                 <input
@@ -41,9 +58,17 @@
                   name="celular"
                   formControlName="celular"
                   required
+                  (keypress)="text.onlyAllow(['numbers'], $event)"
+                  maxlength="10"
                 />
                 <mat-error *ngIf="contactoForm.hasError('required', 'celular')">
                   Celular es necesario
+                </mat-error>
+                <mat-error *ngIf="contactoForm.hasError('minlength', 'celular')">
+                  El número de celular debe ser al menos de 10 dígitos
+                </mat-error>
+                <mat-error *ngIf="contactoForm.hasError('maxlength', 'celular')">
+                  El numero de celular no puede contener más de 10 dígitos
                 </mat-error>
               </mat-form-field>
             </div>

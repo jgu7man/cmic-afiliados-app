@@ -169,7 +169,7 @@ export class ClientsService {
       console.log( user )
       await this._auth.createAccount(user, 'clientes')
       this._afs.doc(`clientes/${email}`).delete()
-      this._router.navigate(['/clientes/login'])
+      this._router.navigate(['/'])
     }
   }
 

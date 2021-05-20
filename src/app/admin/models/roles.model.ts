@@ -17,7 +17,7 @@ export class iUser {
     public email: string,
     public nombre: string,
     public paterno:string,
-    public materno:string,
+    public materno?:string,
   ) {
     this.full_name = `${this.nombre} ${this.paterno} ${this.materno}`
     this.personal_data = {
@@ -47,7 +47,7 @@ export interface PersonalData {
   email: string,
   nombre: string,
   paterno:string
-  materno:string
+  materno?:string
 }
 
 export interface iRol {

@@ -86,7 +86,7 @@
         <mat-step [stepControl]="INEfileForm">
           <form [formGroup]="INEfileForm" class="row">
             <ng-template matStepLabel>Identificación</ng-template>
-            <p>Sube una fotografía de tu Idenficación (INE por ejemplo)</p>
+            <p>Sube un archivo de la identificación del Representante Legal (INE por ejemplo)</p>
             <div class="col s12">
               <mx-upload-files
               [maxFileSize]="2097152"
@@ -95,7 +95,7 @@
               [multiple]="false"
               [showDropzone]="true"
               [uploadStatus]="false"
-              dropzoneLabel="Sube una imagen de la INE. Toca o arrastra el archivo"
+              dropzoneLabel="Sube un archivo de la INE por ejemplo. Toca o arrastra el archivo"
               uploadButtonLabel="Subir"
               (uploadComplete)="onFileUploaded($event)">
               </mx-upload-files>
@@ -114,7 +114,7 @@
         <mat-step [stepControl]="CIFfileForm">
           <form [formGroup]="CIFfileForm" class="row">
             <ng-template matStepLabel>Registro de contribuyentes</ng-template>
-            <p>Sube un archivo de tu Cédula de identificación fiscal (CIF) o RFC</p>
+            <p>Sube un archivo de la constancia de la situación fiscal de la empresa</p>
             <div class="col s12">
               <mx-upload-files
               [maxFileSize]="2097152"
@@ -123,7 +123,7 @@
               [multiple]="false"
               [showDropzone]="true"
               [uploadStatus]="false"
-              dropzoneLabel="Sube una imagen de la CIF (Cédula de identificación fiscal o RFC). Toca o arrastra el archivo"
+              dropzoneLabel="Sube un archivo de constancia de sitiacuón fiscal. Toca o arrastra el archivo"
               uploadButtonLabel="Subir"
               (uploadComplete)="onFileUploaded($event)">
               </mx-upload-files>
@@ -172,7 +172,7 @@
           >Ir a inicio de sesión</button> -->
 
     </div>
-    <div *ngIf="!invisible" class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomSelector]="'#footer'"  >
+    <div *ngIf="!invisible" class="col l7" id="login-image" mxFix [topBreak]="76" [bottomSelector]="'#footer'"  >
     </div>
   </div>
 </div>

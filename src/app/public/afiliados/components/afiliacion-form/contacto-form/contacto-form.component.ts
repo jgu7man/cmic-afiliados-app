@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { iContacto } from '../../../models/afiliados.model';
 import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
+import { MxText } from '@marxa/devkit';
 
 @Component({
   selector: 'g-contacto-form',
@@ -13,8 +14,10 @@ import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators'
 export class ContactoFormComponent implements OnInit {
 
   contactoForm: FormGroup = new FormGroup({
-    telefono: new FormControl(''),
-    celular: new FormControl('', [Validators.required]),
+    area_tel: new FormControl(52),
+    telefono: new FormControl('', [Validators.minLength(10), Validators.maxLength(10)]),
+    area_cel: new FormControl(52),
+    celular: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
     email: new FormControl('', [Validators.required]),
     pagina_web: new FormControl(''),
     mostrar_en_directorios: new FormControl(false),
@@ -27,11 +30,13 @@ export class ContactoFormComponent implements OnInit {
   @Output() changes: EventEmitter<ContactoAfiliado> = new EventEmitter()
   @Output() invalid: EventEmitter<boolean> = new EventEmitter()
 
-  constructor() {
+  constructor(
+    public text: MxText
+  ) {
     this._form.pipe(
       distinctUntilKeyChanged('email')
     ).subscribe(form => {
-      this.contactoForm.setValue(form)
+      this.contactoForm.patchValue(form)
       this.contactoForm.markAsPristine()
       this.invalid.emit(true)
     })

@@ -74,7 +74,9 @@ export interface iDireccion {
 }
 
 export interface iContacto {
+  area_tel: number;
   telefono: string;
+  area_cel: number;
   celular: string;
   email: string;
   pagina_web?: string;
@@ -166,7 +168,9 @@ export const emptyDireccion = {
 }
 
 export const emptyContacto = {
+  area_tel: 52,
   telefono: '',
+  area_cel: 52,
   celular: '',
   email: '',
   pagina_web:'',

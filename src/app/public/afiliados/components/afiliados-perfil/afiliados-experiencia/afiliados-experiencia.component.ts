@@ -5,6 +5,7 @@ import { MxStorage } from '@marxa/storage';
 import { emptyProyecto } from '../../../models/perfiles.model';
 import { PerfilService } from '../../../services/perfil.service';
 import { iUploadedFile } from '@marxa/storage';
+import { MxText } from '@marxa/devkit';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
     public storage_: MxStorage,
     public perfil_: PerfilService,
     public location_: Location,
+    public text: MxText
   ) {
 
     this.proyectoForm = new FormGroup({

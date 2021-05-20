@@ -53,13 +53,8 @@
                   matInput
                   formControlName="materno"
                   type="text"
-                  required
                   name="materno"
                 />
-                <mat-error *ngIf="accountForm.hasError('required', 'materno')">
-                  Por favor ingrese su apellido materno
-                </mat-error>
-
               </mat-form-field>
             </div>
 
@@ -171,7 +166,7 @@
           >Ir a inicio de sesión</button>
 
     </div>
-    <div class="col l7" id="login-image" fixScroll [topBreak]="76" [bottomSelector]="'#footer'" >
+    <div class="col l7" id="login-image" mxFix [topBreak]="76" [bottomSelector]="'#footer'" >
     </div>
   </div>
 </div>

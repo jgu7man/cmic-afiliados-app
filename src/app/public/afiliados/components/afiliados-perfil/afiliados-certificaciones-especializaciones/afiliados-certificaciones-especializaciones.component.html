@@ -10,15 +10,13 @@
         <mat-card-header>
           <mat-card-title>Certificaciones y especializaciones</mat-card-title>
           <mat-card-subtitle>
-            En este apartado, puedes agregar las certificaciones y especializaciones que tiene tu empresa, de manera que
-            tus clientes
-            puedan ver la calidad de tu trabajo.
+            En este apartado, puedes agregar las certificaciones y especializaciones que tiene tu empresa, de manera que tus clientes puedan ver la calidad de tu trabajo.
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <mat-form-field>
             <mat-label>Extracto</mat-label>
-            <textarea placeholder="Explica en breves palabras las certificaciones con las que cuenta la empresa" matInput type="text"
+            <textarea placeholder="Explica en breves palabras las certificaciones, diplomas o reconocimientos con los que cuenta la empresa" matInput type="text"
               name="extractCtrl" [formControl]="perfil_.extractCtrl"></textarea>
           </mat-form-field>
         </mat-card-content>
@@ -44,14 +42,14 @@
 
                   <div class="col s12 m6">
                     <mat-form-field>
-                      <mat-label>Nombre de la certificación</mat-label>
+                      <mat-label>Nombre de la constancia</mat-label>
                       <input matInput type="text" name="nombre" formControlName="nombre" required />
                     </mat-form-field>
                   </div>
 
                   <div class="col s12 m6">
                     <mat-form-field>
-                      <mat-label>Aval</mat-label>
+                      <mat-label>Institución que emite</mat-label>
                       <input matInput type="text" name="aval" formControlName="aval" required />
                     </mat-form-field>
                   </div>

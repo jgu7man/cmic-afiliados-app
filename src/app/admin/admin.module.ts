@@ -62,8 +62,8 @@ import { SharedModule } from '../shared/shared.module';
     ComunesModule,
     SharedModule,
     PublicModule,
-    MxResponsiveModule,
     PdfViewerModule,
+    MxResponsiveModule,
     MxStorageModule,
 
   ],
