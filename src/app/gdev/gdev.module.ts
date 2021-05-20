@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GdevAlertModule } from 'gdev-alert';
-import { GdevAuthModule } from 'gdev-auth';
-import { GdevCacheModule } from 'gdev-cache';
-import { GdevLoadingModule } from 'gdev-loading';
-import { GdevResponsiveModule } from 'gdev-responsive';
+import { MxAuthModule } from '@marxa/auth';
 import { GdevStorageModule } from './gdev-storage/gdev-storage.module';
 import { YearSelectorComponent } from './year-selector/year-selector.component';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MaterialModule } from 'src/shared/material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { GdevSliderModule } from './slider/gdev-slider.module';
 import { ListCrudModule } from './list-crud/list-crud.module';
 
@@ -30,11 +26,8 @@ import { ListCrudModule } from './list-crud/list-crud.module';
     ListCrudModule
   ],
   exports: [
-    GdevAlertModule,
-    GdevAuthModule,
-    GdevCacheModule,
-    GdevLoadingModule,
-    GdevResponsiveModule,
+    GdevStorageModule,
+    MxAuthModule,
     YearSelectorComponent,
     GdevSliderModule,
     ListCrudModule

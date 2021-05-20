@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { Rol } from 'src/app/admin/models/roles.model';
 import { AdminService } from 'src/app/admin/services/admin.service';
 import { MyErrorStateMatcher } from '../../../public/afiliados/components/afiliados-registro/afiliados-registro.component';
@@ -32,7 +32,7 @@ export class CreateAdminAccountComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _router: Router,
     private _managers: ManagersService,
     private _clients: ClientsService,
@@ -43,7 +43,7 @@ export class CreateAdminAccountComponent implements OnInit {
     // if (perfil == 'manager') {
     //   if (email && rfc) { this.accountForm.patchValue({ email, RFC: rfc }) }
     //   else {
-    //     this._alert.sendRequestAlert({message:'URL no válida.'}).subscribe(() => {
+    //     this._alert.request({message:'URL no válida.'}).subscribe(() => {
     //       console.log('clicked')
     //       this._router.navigate(['/'])
     //     })
@@ -51,7 +51,7 @@ export class CreateAdminAccountComponent implements OnInit {
     if (email) {
       this.accountForm.patchValue({ email })
     } else {
-      this._alert.sendMessageAlert(
+      this._alert.message(
         `<h1>Email no encontrado</h1>
           <p class="center"> Debes seguir el link que te llegó por email para crear una cuenta. <br> Si no has recibido un correo de invitación, ponete en contacto con la CMIC Colima </p>`
       , 'html').subscribe(() => this._router.navigate(['/']))

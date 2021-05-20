@@ -7,7 +7,7 @@ import { AfiliadoModel, iManager } from 'src/app/public/afiliados/models/afiliad
 import { ManagersService } from 'src/app/public/afiliados/services/managers.service';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
 import { Router } from '@angular/router';
-import { GdevCache } from 'gdev-cache';
+import { MxCache } from '@marxa/devkit';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 
 
@@ -33,7 +33,7 @@ export class AdminAfiliadosTableComponent implements OnInit {
     private _dialog: MatDialog,
     private _afiliados: AfiliadosService,
     private _router: Router,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _storage:GdevStorage
   ) {
     this._afiliados.getFullList().subscribe(list => {

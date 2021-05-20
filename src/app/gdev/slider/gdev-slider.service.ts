@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-// import { GdevAlert } from '../alert/alert.service';
+// import { MxAlert } from '../alert/alert.service';
 import { Location } from '@angular/common';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ThemePalette } from '@angular/material/core';
@@ -38,7 +38,7 @@ export class GdevSliderService {
   constructor (
     private fs: AngularFirestore,
     private storage: AngularFireStorage,
-    // private alertas: GdevAlert,
+    // private alertas: MxAlert,
     private location: Location
   ) {
   }
@@ -87,7 +87,7 @@ export class GdevSliderService {
       ? `${ collection }/slider/slides`
       : 'gdev-tools/slider/slides' ).ref
     slidesRef.doc( slide.id ).update( slide )
-    // this.alertas.sendFloatNotification('Slide modificada')
+    // this.alertas.notify('Slide modificada')
     return
   }
 
@@ -98,7 +98,7 @@ export class GdevSliderService {
       : 'gdev-tools/slider/slides' ).ref
       .doc( slide.id ).delete()
     await this.storage.storage.refFromURL( slide.imageURL ).delete()
-    // this.alertas.sendFloatNotification('Se borró la slide')
+    // this.alertas.notify('Se borró la slide')
     return
   }
 
@@ -117,7 +117,7 @@ export class GdevSliderService {
       const sliderRef = this.fs.collection( collection
         ? collection : 'gdev-tools' ).ref.doc( 'slider' )
       await sliderRef.set( config, { merge: true } )
-      // this.alertas.sendMessageAlert( 'Se guardó la configuración' )
+      // this.alertas.message( 'Se guardó la configuración' )
       // this.location.back()
       return
     } catch ( error ) {

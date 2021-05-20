@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { GdevAlert } from 'gdev-alert';
-import { GdevCache } from 'gdev-cache';
+import { MxAlert } from '@marxa/devkit';
+import { MxCache } from '@marxa/devkit';
 import { iUser } from '../admin/models/roles.model';
 import { iManager } from '../public/afiliados/models/afiliados.model';
 
@@ -14,8 +14,8 @@ export class AuthService {
   constructor(
     private _afs: AngularFirestore,
     private _afAuth: AngularFireAuth,
-    private _alert: GdevAlert,
-    private _cache: GdevCache
+    private _alert: MxAlert,
+    private _cache: MxCache
   ) { }
 
   /** Crea la cuenta de manager en firebase
@@ -46,7 +46,7 @@ export class AuthService {
 
     let uid = userCredentials.user?.uid;
     console.log('usuario registrado');
-    this._alert.sendFloatNotification('Usuario registrado');
+    this._alert.notify('Usuario registrado');
     this._cache.updateData('user', {...manager.personal_data, RFC, uid});
     this._cache.updateData('rfc', RFC);
 
@@ -60,7 +60,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
-          throw this._alert.sendMessageAlert('No se pudo crear el usuario por que el correo ya está en uso')
+          throw this._alert.message('No se pudo crear el usuario por que el correo ya está en uso')
         } else {
           this._alert.sendError('No se pudo crear el usuario', error)
           throw { message: 'No se pudo crear el usuario', error }
@@ -79,7 +79,7 @@ export class AuthService {
     });
 
     let uid = userCredentials.user?.uid;
-    this._alert.sendFloatNotification('Usuario registrado');
+    this._alert.notify('Usuario registrado');
     this._cache.updateData('user', {...userData, email, uid});
 
     return userCredentials

@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
-import { GdevCache } from 'gdev-cache';
+import { MxAlert } from '@marxa/devkit';
+import { MxCache } from '@marxa/devkit';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AfiliadoModel, AfiliadoProperty, emptyAfiliado, iAfiliadoModel, iManager, PartialAfiliado } from '../../models/afiliados.model';
@@ -21,10 +21,10 @@ export class EditarInformacionComponent implements OnInit {
 
 
   constructor(
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _afiliados: AfiliadosService,
     private _route: ActivatedRoute,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     public location_: Location,
   ) {
     this.RFC = this._route.snapshot.params['RFC']
@@ -36,7 +36,7 @@ export class EditarInformacionComponent implements OnInit {
           this.RFC = data.datos_generales?.RFC as string;
         }
         else {
-          this._alert.sendMessageAlert('No se encontró el perfil')
+          this._alert.message('No se encontró el perfil')
         }
       });
     }

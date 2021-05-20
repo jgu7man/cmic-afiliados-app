@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { MyErrorStateMatcher } from 'src/app/public/afiliados/components/afiliados-registro/afiliados-registro.component';
 import { ClientsService } from '../../services/clients.service';
 
@@ -19,7 +19,7 @@ export class ClienteRegistroComponent implements OnInit {
   constructor(
     private _clients: ClientsService,
     private _route: ActivatedRoute,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _router: Router
   ) {
     let {email} = this._route.snapshot.queryParams
@@ -32,7 +32,7 @@ export class ClienteRegistroComponent implements OnInit {
       confcontrasena: new FormControl('', [Validators.required])
     })
     if (email) this.accountForm.patchValue({ email })
-    else this._alert.sendMessageAlert(
+    else this._alert.message(
       `<h1>Email no encontrado</h1>
         <p class="center"> Debes seguir el link que te llegó por email para crear una cuenta. <br> Si no has recibido un correo de invitación, ponete en contacto con la CMIC Colima </p>`
     , 'html').subscribe(() => this._router.navigate(['/']))

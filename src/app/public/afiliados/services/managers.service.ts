@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
-import { GdevCache } from 'gdev-cache';
+import { MxAlert } from '@marxa/devkit';
+import { MxCache } from '@marxa/devkit';
 import { Observable, of } from 'rxjs';
 import { debounceTime, map, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,9 +19,9 @@ export class ManagersService {
   constructor(
     private _afAuth: AngularFireAuth,
     private _afs: AngularFirestore,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _router: Router,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _auth: AuthService
   ) {
     this.current$ = this._afAuth.authState.pipe(
@@ -90,7 +90,7 @@ export class ManagersService {
             https://cmic-platform.web.app/create?perfil=manager&email=${email}&rfc=${RFC}"`
           }
         } )
-        this._alert.sendFloatNotification('Correo enviado')
+        this._alert.notify('Correo enviado')
         return
 
       }
@@ -104,7 +104,7 @@ export class ManagersService {
 
       console.log( { email, RFC, perfil} )
       if (!RFC || !perfil) {
-        this._alert.sendMessageAlert(`
+        this._alert.message(`
           <h2 class="center">Perfil de empresa no encontrado</h2>
           <p class="center">No se encontró la empresa para esta acción. <br>
           Por favor revisa el enlace que usaste, debe ser el que recibiste por email o contacta con la CMIC</p>
@@ -115,7 +115,7 @@ export class ManagersService {
         const emailDoc = await emailRef.get()
 
         if (!emailDoc.exists) {
-          this._alert.sendMessageAlert(`
+          this._alert.message(`
             <h2 class="center">Email incorrecto</h2>
             <p class="center">No esperamos ninguna petición de creación de cuenta para ${perfil?.comercial_nombre}. <br> Por favor contacta con CMIC para cualquier error </p>
           `, 'html')
@@ -137,7 +137,7 @@ export class ManagersService {
       let user: iManager = this._cache.getDataKey<iManager>('user') as iManager
       const managersRef = this._afs.collection(`afiliados/${rfc}/managers`).ref
       await managersRef.doc(id).delete()
-      this._alert.sendFloatNotification('Perfil eliminado')
+      this._alert.notify('Perfil eliminado')
       return
     }
 

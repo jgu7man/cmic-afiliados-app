@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
-import { GdevCache } from 'gdev-cache';
+import { MxAlert } from '@marxa/devkit';
+import { MxCache } from '@marxa/devkit';
 import { take } from 'rxjs/operators';
 import { iAdmin } from 'src/app/admin/models/admin.model';
 import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
@@ -38,9 +38,9 @@ export class AfiliadosPerfilComponent implements OnInit {
   constructor(
     private _afiliados: AfiliadosService,
     private _router: Router,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _route: ActivatedRoute,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _dialog: MatDialog,
     public perfil_: PerfilService
   ) {
@@ -52,7 +52,7 @@ export class AfiliadosPerfilComponent implements OnInit {
     this.admin = this._cache.getDataKey<iAdmin>('admin')
 
     if (!this.RFC && !this.admin) {
-      this._alert.sendMessageAlert('Primero necesitas iniciar sesión como afiliado o administrador')
+      this._alert.message('Primero necesitas iniciar sesión como afiliado o administrador')
         this._router.navigate(['/afiliados/login'])
     } else {
       this._afiliados.getPerfil(this.RFC).subscribe((data) => {
@@ -69,7 +69,7 @@ export class AfiliadosPerfilComponent implements OnInit {
 
         }
         else {
-          this._alert.sendMessageAlert('No se encontró el perfil')
+          this._alert.message('No se encontró el perfil')
         }
       });
     }

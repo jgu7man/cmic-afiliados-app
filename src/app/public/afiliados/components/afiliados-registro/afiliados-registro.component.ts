@@ -11,7 +11,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { take } from 'rxjs/operators';
 
 import { iManager } from '../../models/afiliados.model';
@@ -53,7 +53,7 @@ export class AfiliadosRegistroComponent implements OnInit {
     private _router: Router,
     private _managers: ManagersService,
     private _route: ActivatedRoute,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
   ) {
     let { email, rfc } = this._route.snapshot.queryParams
 

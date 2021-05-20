@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectionListChange } from '@angular/material/list';
-import { GdevCache } from 'gdev-cache';
+import { MxCache } from '@marxa/devkit';
 import { Observable } from 'rxjs';
 import { iManager } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
@@ -22,7 +22,7 @@ export class AfiliadosAccesosComponent implements OnInit {
   currentUser: iManager
   constructor(
     public location_: Location,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _dialog: MatDialog,
     private _managers: ManagersService
   ) {

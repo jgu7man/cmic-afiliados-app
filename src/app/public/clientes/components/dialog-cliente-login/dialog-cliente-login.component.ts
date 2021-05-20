@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
+import { MxAuth, MxLoginFields } from '@marxa/auth';
 import { AccesosService } from 'src/app/admin/services/accesos.service';
 import { RestorePwdComponent } from 'src/app/public/restore-pwd/restore-pwd.component';
 
@@ -15,7 +15,7 @@ export class DialogClienteLoginComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private slug: string,
-    private _auth: GdevAuthService,
+    private _auth: MxAuth,
     private _dialog: MatDialog,
     public accesos: AccesosService,
     public dialog: MatDialogRef<DialogClienteLoginComponent>,
@@ -26,7 +26,7 @@ export class DialogClienteLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(fields: GdevLoginFields) {
+  onSubmit(fields: MxLoginFields) {
     this._auth.emailSignIn(fields.email, fields.password)
       .then(() => { this.dialog.close(this.slug) })
 

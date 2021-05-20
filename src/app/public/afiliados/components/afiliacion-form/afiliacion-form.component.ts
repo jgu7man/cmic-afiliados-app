@@ -1,12 +1,12 @@
 import { emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { GdevCache } from 'gdev-cache';
+import { MxCache } from '@marxa/devkit';
 import { AfiliadoModel, iContacto, DatosGeneralesModel,  RepresentanteAfiliado, iDireccion, DireccionAfiliadoModel, ContactoAfiliado, iManager, AfiliadoProperty } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 import {delay, take, takeWhile} from 'rxjs/operators'
 import { of } from 'rxjs';
-import { GdevAuthService } from 'gdev-auth';
+import { MxAuth } from '@marxa/auth';
 import { ManagersService } from '../../services/managers.service';
 import { Router } from '@angular/router';
 @Component({
@@ -28,8 +28,8 @@ export class AfiliacionFormComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public afiliados_: AfiliadosService,
-    private _cache: GdevCache,
-    private _auth: GdevAuthService,
+    private _cache: MxCache,
+    private _auth: MxAuth,
     private _managers: ManagersService,
     private _router: Router
   ) {

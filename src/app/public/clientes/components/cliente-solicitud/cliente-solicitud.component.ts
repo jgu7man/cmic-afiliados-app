@@ -4,9 +4,9 @@ import { MyErrorStateMatcher } from 'src/app/public/afiliados/components/afiliad
 import { ClientsService } from '../../services/clients.service';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iCliente } from '../../models/cliente.model';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { Router } from '@angular/router';
-import { GdevLoading } from 'gdev-loading';
+import { MxLoading } from '@marxa/devkit';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 
 @Component({
@@ -29,9 +29,9 @@ export class ClienteSolicitudComponent implements OnInit {
   constructor(
     private _clients: ClientsService,
     public storage_: GdevStorage,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _router: Router,
-    private _loading: GdevLoading,
+    private _loading: MxLoading,
   ) {
 
     this.datosForm = new FormGroup({
@@ -83,17 +83,17 @@ export class ClienteSolicitudComponent implements OnInit {
     let file = files[0]
     if (file.fileName?.includes('INEfile')) {
       this.INEfileForm.patchValue({ INEfile: file })
-      this._alert.sendFloatNotification('INE Cargada')
+      this._alert.notify('INE Cargada')
       this.INEfileForm.disable()
     } else {
       this.CIFfileForm.patchValue({ CIFfile: file })
-      this._alert.sendFloatNotification('CIF Cargada')
+      this._alert.notify('CIF Cargada')
       this.CIFfileForm.disable()
     }
   }
 
   async onSubmit() {
-    this._loading.toggleWaitingSpinner('open')
+    this._loading.toggleWaiting('open')
     let solicitud: iCliente = {
       ...this.datosForm.getRawValue(),
       ...this.CIFfileForm.getRawValue(),
@@ -106,13 +106,10 @@ export class ClienteSolicitudComponent implements OnInit {
     if (!stored) {
       await this._clients.createSolicitud(solicitud)
       this._router.navigate(['/'])
-      this._loading.toggleWaitingSpinner('close')
+      this._loading.toggleWaiting('close')
     } else {
-      this._alert.sendRequestAlert({
-        message: 'Este correo ya está registrado en la plataforma.Te invitamos a iniciar sesión',
-        trueMsg: 'Iniciar sesión',
-        falseMsg: 'Cancelar'
-      }).subscribe(confirmation => {
+      this._alert.message('Este correo ya está registrado en la plataforma.Te invitamos a iniciar sesión'
+      ).subscribe(confirmation => {
         if (confirmation) this._router.navigate(['/clientes/login'])
       })
     }

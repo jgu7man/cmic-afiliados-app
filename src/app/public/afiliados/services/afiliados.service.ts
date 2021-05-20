@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
-import { GdevCache } from 'gdev-cache';
+import { MxAlert } from '@marxa/devkit';
+import { MxCache } from '@marxa/devkit';
 import { Observable, of, throwError } from 'rxjs';
 import { debounceTime, flatMap, map, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,9 +18,9 @@ export class AfiliadosService {
 
   constructor(
     private _afs: AngularFirestore,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _router: Router,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _auth: AuthService
   ) {
 
@@ -69,7 +69,7 @@ export class AfiliadosService {
       }
 
     } catch (e) {
-      this._alert.sendMessageAlert(e.message);
+      this._alert.message(e.message);
       console.error(e);
     }
   }

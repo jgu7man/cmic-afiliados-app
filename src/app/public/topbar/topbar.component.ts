@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { GdevAuthService } from 'gdev-auth';
-import { GdevCache } from 'gdev-cache';
+import { MxAuth } from '@marxa/auth';
+import { MxCache } from '@marxa/devkit';
 import { of, race } from 'rxjs';
 import { filter, mapTo, switchMap, tap } from 'rxjs/operators';
 
@@ -20,12 +20,12 @@ export class TopbarComponent implements OnInit {
   logged?: string
 
   constructor(
-    public auth_: GdevAuthService,
+    public auth_: MxAuth,
     private _managers: ManagersService,
     private _clients: ClientsService,
     private _dialog: MatDialog,
     private _router: Router,
-    private _cache: GdevCache
+    private _cache: MxCache
   ) {
     this.loggedBehavior()
 

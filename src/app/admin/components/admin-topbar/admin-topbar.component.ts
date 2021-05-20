@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GdevAuthService } from 'gdev-auth';
+import { MxAuth } from '@marxa/auth';
 import { iAdmin } from '../../models/admin.model';
 import { AdminService } from '../../services/admin.service';
 
@@ -12,7 +12,7 @@ export class AdminTopbarComponent implements OnInit {
 
   admin?: iAdmin
   constructor(
-    public auth_: GdevAuthService,
+    public auth_: MxAuth,
     private _admins: AdminService,
   ) {
     this.auth_.unloggedPath = '/admin/login'

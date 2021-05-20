@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
-import { GdevCache } from 'gdev-cache';
+import { MxAuth, MxLoginFields } from '@marxa/auth';
+import { MxCache } from '@marxa/devkit';
 import { take } from 'rxjs/operators';
 import { AfiliadosService } from '../../services/afiliados.service';
 import { ManagersService } from '../../services/managers.service';
@@ -13,8 +13,8 @@ import { ManagersService } from '../../services/managers.service';
 export class AfiliadosLoginComponent implements OnInit {
 
   constructor(
-    private _authService: GdevAuthService,
-    private _cache: GdevCache,
+    private _authService: MxAuth,
+    private _cache: MxCache,
     private _router: Router,
     private _managers: ManagersService
   ) {
@@ -27,7 +27,7 @@ export class AfiliadosLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(fields:  GdevLoginFields)  {
+  onSubmit(fields:  MxLoginFields)  {
 		this._authService.emailSignIn(fields.email,  fields.password)
       .then(user => {
         if (user) {

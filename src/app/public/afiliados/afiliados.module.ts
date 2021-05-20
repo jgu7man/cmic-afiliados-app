@@ -12,7 +12,7 @@ import { AfiliadosComponent } from './afiliados.component';
 import { AfiliacionFormComponent, DialogPrivacidad, DialogRetencion } from './components/afiliacion-form/afiliacion-form.component';
 import { ActividadesFormComponent } from './components/actividades-form/actividades-form.component';
 import { AfiliadosLoginComponent } from './components/afiliados-login/afiliados-login.component';
-import { GdevAuthModule } from 'gdev-auth';
+import { MxAuthModule } from '@marxa/auth';
 import { AfiliadosRegistroComponent, DialogPrivacidadRegistro } from './components/afiliados-registro/afiliados-registro.component';
 import { AfiliadosPerfilComponent } from './components/afiliados-perfil/afiliados-perfil.component';
 import { AfiliadosAdminComponent } from './components/afiliados-admin/afiliados-admin.component';
@@ -80,7 +80,7 @@ import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
     MaterialModule,
     FirebaseModule,
     ComunesModule,
-    GdevAuthModule,
+    MxAuthModule,
     GdevStorageModule,
     NgxDropzoneModule,
     PerfilesModule,

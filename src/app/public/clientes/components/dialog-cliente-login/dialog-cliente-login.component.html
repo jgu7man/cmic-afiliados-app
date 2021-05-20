@@ -1,13 +1,13 @@
 <mat-tab-group>
   <mat-tab label="Iniciar sesión">
-    <gdev-login-card
+    <mx-login-card
       signInTitle="Inicia sesión como cliente"
       passwordLabel="Contraseña"
       forgotPasswordLabel="Olvidé mi contraseña"
       signInButton="Iniciar"
       (onSubmit)="onSubmit($event)"
       (restorePwd)="onRestorePwd()"
-      ></gdev-login-card>
+      ></mx-login-card>
   </mat-tab>
   <mat-tab label="Solicitar acceso">
     <p class="center">Para ingresar necesitas que los administradores de la CMIC te den acceso como cliente. Ingresa tu correo para solicitar el acceso</p>

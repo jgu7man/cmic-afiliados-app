@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { iPeticion, iUser } from 'src/app/admin/models/roles.model';
@@ -18,7 +18,7 @@ export class ClientsService {
   constructor(
     private _afs: AngularFirestore,
     private _afAuth: AngularFireAuth,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _auth: AuthService,
     private _router: Router
   ) {
@@ -76,10 +76,10 @@ export class ClientsService {
           https://${domain}/create?perfil=client&email=${email}`
         }
       } )
-      this._alert.sendFloatNotification('Correo enviado')
+      this._alert.notify('Correo enviado')
       return
     } else {
-      this._alert.sendMessageAlert('Este correo ya está registrado en la plataforma')
+      this._alert.message('Este correo ya está registrado en la plataforma')
     }
   }
 
@@ -95,11 +95,11 @@ export class ClientsService {
     const peticionDoc = await peticionRef.get()
 
     peticionRef.set({ ...client })
-    this._alert.sendMessageAlert(`
+    this._alert.message(`
         <h1 class="center"> Petición enviada </h1>
         <p class="center"> Se ha enviado la petición a los administradores. Ahora espera un correo de confirmación.</p>
       `, 'html')
-    this._alert.sendFloatNotification('Solicitud envida')
+    this._alert.notify('Solicitud envida')
     return
   }
 
@@ -127,7 +127,7 @@ export class ClientsService {
           }
         })
         await peticionRef.delete()
-        this._alert.sendFloatNotification('Correo enviado')
+        this._alert.notify('Correo enviado')
       } else {
         await peticionRef.delete()
         await this._afs.collection( 'mail' ).ref.add( {
@@ -145,13 +145,13 @@ export class ClientsService {
             Si no has mandado una solicitud de registro, omite este correo`
           }
         })
-        this._alert.sendFloatNotification('Petición rechazada')
+        this._alert.notify('Petición rechazada')
       }
 
 
       return
     } else {
-      this._alert.sendMessageAlert('No se econtró la petición.')
+      this._alert.message('No se econtró la petición.')
     }
   }
 
@@ -160,7 +160,7 @@ export class ClientsService {
     const tempClient =  await this.retriveClient(email)
 
     if (!tempClient) {
-      this._alert.sendMessageAlert(`
+      this._alert.message(`
       <h2 class="center">Email incorrecto</h2>
       <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
     `, 'html')

@@ -4,12 +4,12 @@ import { map } from 'rxjs/operators';
 import { iAdtionalInfo, PerfilCol, SectionName } from '../models/perfiles.model';
 import firebase from 'firebase/app'
 import { identity, pickBy } from 'lodash';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
-import { GdevLoading } from 'gdev-loading';
-import { GdevCache } from 'gdev-cache';
+import { MxLoading } from '@marxa/devkit';
+import { MxCache } from '@marxa/devkit';
 import { iManager } from '../models/afiliados.model';
 import { Observable, of, Subject, Subscription } from 'rxjs';
 
@@ -28,10 +28,10 @@ export class PerfilService {
 
   constructor(
     private _afs: AngularFirestore,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _storage: GdevStorage,
-    private _loading: GdevLoading,
-    private _cache: GdevCache
+    private _loading: MxLoading,
+    private _cache: MxCache
   ) {
     this.extractCtrl = new FormControl('', [Validators.required])
     this.RFC = this._cache.getDataKey<string>('rfc') as string
@@ -48,7 +48,7 @@ export class PerfilService {
   async updateInfoDoc( field: SectionName | string, data: any, ) {
     const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
     await ref.update({ [field]: data, updated: new Date() })
-    this._alert.sendFloatNotification('Guardado')
+    this._alert.notify('Guardado')
     return
   }
 
@@ -69,7 +69,7 @@ export class PerfilService {
     console.log( data )
     const ref = this._afs.collection(`afiliados/${this.RFC}/${col}`).ref
     await ref.doc(itemId).set({ ...data, updated: new Date() }, { merge: true })
-    this._alert.sendFloatNotification(`${col} guardado`)
+    this._alert.notify(`${col} guardado`)
     return
   }
 
@@ -118,7 +118,7 @@ export class PerfilService {
 
     // Valida menos de 3 archivos por proyecto
     if (evidencia.length + this._storage.files.length > 3) {
-      this._alert.sendMessageAlert(
+      this._alert.message(
         'No está permitido subir más de 3 imágenes por proyecto'
       )
     }

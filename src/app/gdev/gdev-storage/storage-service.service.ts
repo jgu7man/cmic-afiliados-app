@@ -2,12 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable, Subject, Subscription } from 'rxjs';
 import firebase from 'firebase/app'
-import { AngularFirestore } from '@angular/fire/firestore';
 import { finalize, tap } from 'rxjs/operators';
 import { iUploadedFile, iUploadInfo } from './storage.model';
-import { GdevLoading } from 'gdev-loading';
-import { GdevAlert } from 'gdev-alert';
-import { GdevCache } from 'gdev-cache';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadingSpinnerComponent } from './components/uploading-spinner/uploading-spinner.component';
 import { RawValue } from "src/app/gdev/gdev-storage/storage.model";

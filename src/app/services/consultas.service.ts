@@ -5,9 +5,9 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { ActividadQuery, QueryParam } from '../models/consultas.model';
 import { AfiliadoModel } from '../public/afiliados/models/afiliados.model';
 import firebase from 'firebase/app'
-import { GdevLoading } from 'gdev-loading';
+import { MxLoading } from '@marxa/devkit';
 import { Observable, of } from 'rxjs';
-import { GdevCache } from 'gdev-cache';
+import { MxCache } from '@marxa/devkit';
 import { catalogoName } from '../public/afiliados/models/actividades.model';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class ConsultasService {
 
   constructor(
     private _afs: AngularFirestore,
-    private _loading: GdevLoading,
-    private _cache: GdevCache
+    private _loading: MxLoading,
+    private _cache: MxCache
   ) { }
 
 

@@ -4,11 +4,11 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { ActivatedRoute } from '@angular/router';
 import { AfiliadoModel, AfiliadoProperty, emptyAfiliado } from '../../models/afiliados.model';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PerfilService } from '../../services/perfil.service';
 import { iAdtionalInfo, iPerfil, iPersonal } from '../../models/perfiles.model';
-import { GdevCache } from 'gdev-cache';
+import { MxCache } from '@marxa/devkit';
 import { Location } from '@angular/common';
 
 @Component({
@@ -33,9 +33,9 @@ export class EditarPerfilComponent implements OnInit {
   constructor(
     public afiliados_: AfiliadosService,
     private _route: ActivatedRoute,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     public  perfil_: PerfilService,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     public location_: Location  ,
   ) {
     this.RFC = this._cache.getDataKey<string>('rfc') as string;
@@ -51,7 +51,7 @@ export class EditarPerfilComponent implements OnInit {
           this.servicios = servicios ? servicios : []
         }
         else {
-          this._alert.sendMessageAlert('No se encontró el perfil')
+          this._alert.message('No se encontró el perfil')
         }
       });
    }

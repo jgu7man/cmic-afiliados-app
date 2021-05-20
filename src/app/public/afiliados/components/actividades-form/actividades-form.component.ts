@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GdevAuthService } from 'gdev-auth';
-import { GdevCache } from 'gdev-cache';
+import { MxAuth } from '@marxa/auth';
+import { MxCache } from '@marxa/devkit';
 import { takeWhile } from 'rxjs/operators';
 import { ActividadQuery, emptyActividadQuery } from 'src/app/models/consultas.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -35,11 +35,11 @@ export class ActividadesFormComponent implements OnInit {
     public actividades_: ActividadesService,
     public afiliados_: AfiliadosService,
     private _consultas: ConsultasService,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _route: ActivatedRoute,
     public perfil_: PerfilService,
     private _router: Router,
-    private _auth: GdevAuthService,
+    private _auth: MxAuth,
     private _managers: ManagersService
   ) {
     this.RFC = this._route.snapshot.params['RFC']

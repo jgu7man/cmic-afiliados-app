@@ -7,7 +7,7 @@ import { ConsultasService } from 'src/app/services/consultas.service';
 import { iPerfil } from '../../afiliados/models/perfiles.model';
 import { ActividadesService } from '../../afiliados/services/actividades.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogClienteLoginComponent } from '../../clientes/components/dialog-cliente-login/dialog-cliente-login.component';
 import { Actividad } from '../../afiliados/models/actividades.model';
@@ -30,7 +30,7 @@ export class ConsultasComponent implements OnInit {
     private _actividades: ActividadesService,
     private _router: Router,
     private _afAuth: AngularFireAuth,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _dialog: MatDialog
   ) {
     let queryParams = Object.keys(this._route.snapshot.queryParams) as QueryParam[]

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { GdevLoading } from 'gdev-loading';
+import { MxLoading } from '@marxa/devkit';
 import { of } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
 
@@ -12,7 +12,7 @@ export class AfiliadosAdminComponent implements OnInit, AfterViewInit {
 
   // invisible: boolean = true;
   constructor(
-    private _loading: GdevLoading,
+    private _loading: MxLoading,
   ) { }
 
   async ngOnInit() {

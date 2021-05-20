@@ -11,7 +11,7 @@ import { AfiliadosModule } from './afiliados/afiliados.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { FooterComponent } from './footer/footer.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
-import { GdevResponsiveModule } from 'gdev-responsive';
+import { MxResponsiveModule } from '@marxa/devkit';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FloatMenuComponent } from './float-menu/float-menu.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
@@ -49,7 +49,7 @@ import { CatalogoNuevosComponent } from './catalogo-nuevos/catalogo-nuevos.compo
     ComunesModule,
     AfiliadosModule,
     ClientesModule,
-    GdevResponsiveModule,
+    MxResponsiveModule,
     ReactiveFormsModule,
     FormsModule,
     GdevModule

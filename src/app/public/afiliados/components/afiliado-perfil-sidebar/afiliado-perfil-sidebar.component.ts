@@ -9,9 +9,9 @@ import { AfiliadosService } from '../../services/afiliados.service';
 
 import { FormControl, Validators } from '@angular/forms';
 import { debounceTime, delay, map, mapTo, take, tap } from 'rxjs/operators';
-import { GdevLoading } from 'gdev-loading';
+import { MxLoading } from '@marxa/devkit';
 import { PerfilService } from '../../services/perfil.service';
-import { GdevDate } from 'src/app/gdev/gdev-date.service';
+import { MxDate } from '@marxa/devkit';
 
 @Component({
   selector: 'g-afiliado-perfil-sidebar',
@@ -33,9 +33,9 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private _loading: GdevLoading,
+    private _loading: MxLoading,
     public perfil_: PerfilService,
-    public date_: GdevDate
+    public date_: MxDate
   ) { }
 
   async ngOnInit() {

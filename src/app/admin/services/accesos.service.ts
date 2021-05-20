@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
+import { MxAlert } from '@marxa/devkit';
 import { take } from 'rxjs/operators';
 import { ManagersService } from 'src/app/public/afiliados/services/managers.service';
 import { ClientsService } from 'src/app/public/clientes/services/clients.service';
@@ -18,7 +18,7 @@ export class AccesosService {
     private _managers: ManagersService,
     private _clients: ClientsService,
     private _admins: AdminService,
-    private _alert: GdevAlert,
+    private _alert: MxAlert,
     private _router: Router
   ) { }
 
@@ -50,10 +50,10 @@ export class AccesosService {
           https://cmic-platform.web.app/afiliados/registro`
         }
       } )
-      this._alert.sendFloatNotification('Correo enviado')
+      this._alert.notify('Correo enviado')
       return
     } else {
-      this._alert.sendMessageAlert('Este correo ya está registrado en la plataforma')
+      this._alert.message('Este correo ya está registrado en la plataforma')
     }
   }
 
@@ -62,7 +62,7 @@ export class AccesosService {
     await this._afs.collection('peticiones').add({
       email, request: new Date()
     })
-    this._alert.sendFloatNotification('Petición realizada con éxito')
+    this._alert.notify('Petición realizada con éxito')
     this._router.navigate(['/'])
   }
 

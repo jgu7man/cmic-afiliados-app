@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { GdevAuthService, GdevLoginFields } from 'gdev-auth';
+import { MxAuth, MxLoginFields } from '@marxa/auth';
 import { takeWhile } from 'rxjs/operators';
 import { RestorePwdComponent } from 'src/app/public/restore-pwd/restore-pwd.component';
 
@@ -12,7 +12,7 @@ import { RestorePwdComponent } from 'src/app/public/restore-pwd/restore-pwd.comp
 export class ClienteLoginComponent implements OnInit {
 
   constructor(
-    private _authService: GdevAuthService,
+    private _authService: MxAuth,
     private _dialog: MatDialog,
     private _router: Router
   ) {
@@ -24,7 +24,7 @@ export class ClienteLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(fields: GdevLoginFields) {
+  onSubmit(fields: MxLoginFields) {
     this._authService.emailSignIn(fields.email, fields.password)
       .then(user => {
         console.log( user )

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GdevDate } from 'src/app/gdev/gdev-date.service';
+import { MxDate } from '@marxa/devkit';
 import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
 import { iCliente } from 'src/app/public/clientes/models/cliente.model';
 
@@ -14,7 +14,7 @@ export class AdminSeeClientComponent implements OnInit {
   @Output() closePanel: EventEmitter<void> = new EventEmitter()
 
   constructor(
-    public date_: GdevDate
+    public date_: MxDate
   ) { }
 
   ngOnInit(): void {

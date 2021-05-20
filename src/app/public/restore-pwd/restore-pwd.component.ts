@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { GdevAuthService } from 'gdev-auth';
+import { MxAuth } from '@marxa/auth';
 
 @Component({
   templateUrl: './restore-pwd.component.html',
@@ -13,7 +13,7 @@ export class RestorePwdComponent implements OnInit {
 
   constructor(
     public dialog: MatDialogRef<RestorePwdComponent>,
-    private _auth: GdevAuthService
+    private _auth: MxAuth
   ) { }
 
   ngOnInit(): void {

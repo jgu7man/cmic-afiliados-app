@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { GdevCache } from 'gdev-cache';
-import { GdevLoading } from 'gdev-loading';
+import { MxCache } from '@marxa/devkit';
+import { MxLoading } from '@marxa/devkit';
 import { Location } from '@angular/common';
 import { iManager } from '../../../models/afiliados.model';
 import { PerfilService } from '../../../services/perfil.service';
@@ -18,9 +18,9 @@ export class AfiliadosCertificacionesEspecializacionesComponent
   certForm: FormGroup;
 
   constructor(
-    private _loading: GdevLoading,
+    private _loading: MxLoading,
     public location_: Location,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     public perfil_: PerfilService,
     private _storage: GdevStorage
   ) {

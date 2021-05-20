@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GdevAlert } from 'gdev-alert';
-import { GdevAuthService } from 'gdev-auth';
-import { GdevCache } from 'gdev-cache';
+import { MxAlert } from '@marxa/devkit';
+import { MxAuth } from '@marxa/auth';
+import { MxCache } from '@marxa/devkit';
 import { takeWhile } from 'rxjs/operators';
 import { AdminService } from '../../services/admin.service';
 
@@ -13,18 +13,18 @@ import { AdminService } from '../../services/admin.service';
 export class AdminDashboardComponent implements OnInit {
 
   constructor(
-    public auth_: GdevAuthService,
+    public auth_: MxAuth,
     private _router: Router,
     private _admins: AdminService,
-    private _cache: GdevCache,
-    private _alert: GdevAlert,
+    private _cache: MxCache,
+    private _alert: MxAlert,
   ) {
     this.auth_.user$.pipe(takeWhile(user => user)).subscribe(user => {
       if (!user) this._router.navigate(['/admin/login']);
       this._admins.retriveAdmin(user.email)
         .then(admin => {
           if (!admin) {
-            this._alert.sendMessageAlert('Esta no es una cuenta de administrador')
+            this._alert.message('Esta no es una cuenta de administrador')
             this.auth_.singOut()
             this._router.navigate(['/admin/login']);
           }

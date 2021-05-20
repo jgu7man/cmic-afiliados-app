@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GdevCache } from 'gdev-cache';
+import { MxCache } from '@marxa/devkit';
 
 @Component({
   selector: 'g-root',
@@ -9,7 +9,7 @@ import { GdevCache } from 'gdev-cache';
 export class AppComponent {
   title = 'afiliados-app';
   constructor(
-    private _cache: GdevCache,
+    private _cache: MxCache,
   ) {
     this._cache.cacheTagName = 'cmic-data';
     this._cache.storage = 'local'

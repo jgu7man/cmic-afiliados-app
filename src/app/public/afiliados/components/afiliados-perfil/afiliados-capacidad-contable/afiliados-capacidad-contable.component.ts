@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormArrayName, FormControl, FormGroup, Validators } from '@angular/forms';
-import { GdevCache } from 'gdev-cache';
-import { GdevLoading } from 'gdev-loading';
+import { MxCache } from '@marxa/devkit';
+import { MxLoading } from '@marxa/devkit';
 import { orderBy } from 'lodash';
 import { map } from 'rxjs/operators';
 import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
@@ -26,9 +26,9 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
   RFC: string
 
   constructor(
-    private _loading: GdevLoading,
+    private _loading: MxLoading,
     public location_: Location,
-    private _cache: GdevCache,
+    private _cache: MxCache,
     private _perfil: PerfilService,
     private _storage: GdevStorage
   ) {
