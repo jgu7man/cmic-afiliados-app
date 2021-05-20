@@ -2,10 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy, HostListener } from '@angul
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
-import { Rol } from 'src/app/admin/models/roles.model';
 import { AdminService } from 'src/app/admin/services/admin.service';
 import { MyErrorStateMatcher } from '../../../public/afiliados/components/afiliados-registro/afiliados-registro.component';
-import { AfiliadosService } from '../../../public/afiliados/services/afiliados.service';
 import { ManagersService } from '../../../public/afiliados/services/managers.service';
 import { ClientsService } from '../../../public/clientes/services/clients.service';
 

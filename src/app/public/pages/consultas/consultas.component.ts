@@ -1,7 +1,6 @@
 import { AfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { iUploadedFile } from '@marxa/storage';
 import { QueryParam } from "src/app/models/consultas.model";
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { iPerfil } from '../../afiliados/models/perfiles.model';
@@ -10,7 +9,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MxAlert } from '@marxa/devkit';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogClienteLoginComponent } from '../../clientes/components/dialog-cliente-login/dialog-cliente-login.component';
-import { Actividad } from '../../afiliados/models/actividades.model';
 
 @Component({
   templateUrl: './consultas.component.html',

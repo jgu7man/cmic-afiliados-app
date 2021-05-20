@@ -1,12 +1,10 @@
-import { EspecialidadQuery } from './../models/consultas.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
-import { filter, map, switchMap } from 'rxjs/operators';
+import {switchMap } from 'rxjs/operators';
 import { ActividadQuery, QueryParam } from '../models/consultas.model';
 import { AfiliadoModel } from '../public/afiliados/models/afiliados.model';
-import firebase from 'firebase/app'
 import { MxLoading } from '@marxa/devkit';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MxCache } from '@marxa/devkit';
 import { catalogoName } from '../public/afiliados/models/actividades.model';
 

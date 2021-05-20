@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FloatMenuComponent } from './float-menu/float-menu.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
-import { CreateAdminAccountComponent } from '../admin/components/create-admin-account/create-admin-account.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { MainPerfilComponent } from './perfiles/components/main-perfil/main-perfil.component';
 

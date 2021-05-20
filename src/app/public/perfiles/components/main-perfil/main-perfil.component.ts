@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MatSelectionListChange } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil, iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
