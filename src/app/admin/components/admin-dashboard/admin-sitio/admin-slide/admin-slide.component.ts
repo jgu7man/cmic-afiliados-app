@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 import { SlideModel } from 'src/app/gdev/slider/gdev-slide.model';
 
 @Component({

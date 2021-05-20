@@ -5,11 +5,11 @@ import { MxCache } from '@marxa/devkit';
 import { MxLoading } from '@marxa/devkit';
 import { orderBy } from 'lodash';
 import { map } from 'rxjs/operators';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { MxStorage } from '@marxa/storage';
+import { iUploadedFile } from '@marxa/storage';
 import { iManager } from '../../../models/afiliados.model';
 import { PerfilService } from '../../../services/perfil.service';
-//import { StorageService } from 'Src/app/gdev/gdev-storage/gdev-storage.module';
+//import { StorageService } from 'Src/app/gdev/@marxa/storage';
 
 @Component({
   templateUrl: './afiliados-capacidad-contable.component.html',
@@ -30,7 +30,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     public location_: Location,
     private _cache: MxCache,
     private _perfil: PerfilService,
-    private _storage: GdevStorage
+    private _storage: MxStorage
   ) {
     this.extractCtrl = new FormControl('', [Validators.required]);
     this.capContableForm = new FormGroup({

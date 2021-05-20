@@ -5,8 +5,8 @@ import { MxAlert } from '@marxa/devkit';
 import { MxCache } from '@marxa/devkit';
 import { take } from 'rxjs/operators';
 import { iAdmin } from 'src/app/admin/models/admin.model';
-import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
-import { iUploadedFile, iUploadOptions } from 'src/app/gdev/gdev-storage/storage.model';
+import { MxUploadModalComponent } from '@marxa/storage';
+import { iUploadedFile, iUploadOptions } from '@marxa/storage';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel, iManager } from '../../models/afiliados.model';
 import { iPersonal } from '../../models/perfiles.model';
 import { AfiliadosService } from '../../services/afiliados.service';
@@ -86,7 +86,7 @@ export class AfiliadosPerfilComponent implements OnInit {
       'uploadButton': true
     }
 
-    this._dialog.open(GdevUploadModalComponent, {
+    this._dialog.open(MxUploadModalComponent, {
       width: '40%',
       minHeight: '40%',
       data: options

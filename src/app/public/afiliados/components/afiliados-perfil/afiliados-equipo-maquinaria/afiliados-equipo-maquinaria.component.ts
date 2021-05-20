@@ -7,9 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { PerfilService } from '../../../services/perfil.service';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
+import { MxStorage } from '@marxa/storage';
 import { emptyMaqEquip } from '../../../models/perfiles.model';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 @Component({
   templateUrl: './afiliados-equipo-maquinaria.component.html',
   styleUrls: ['./afiliados-equipo-maquinaria.component.scss'],
@@ -21,7 +21,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
   constructor(
     public location_: Location,
     public perfil_: PerfilService,
-    private _storage: GdevStorage,
+    private _storage: MxStorage,
     _formBuilder: FormBuilder,
   ) {
     this.eqpmaqForm = _formBuilder.group({

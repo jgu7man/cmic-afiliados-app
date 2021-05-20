@@ -21,7 +21,6 @@ import { AfiliadosCapacidadContableComponent } from './components/afiliados-perf
 import { AfiliadosEquipoMaquinariaComponent } from './components/afiliados-perfil/afiliados-equipo-maquinaria/afiliados-equipo-maquinaria.component';
 import { AfiliadosRecursosHumanosComponent } from './components/afiliados-perfil/afiliados-recursos-humanos/afiliados-recursos-humanos.component';
 import { AfiliadosCertificacionesEspecializacionesComponent } from './components/afiliados-perfil/afiliados-certificaciones-especializaciones/afiliados-certificaciones-especializaciones.component';
-import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module';
 import { PerfilesModule } from '../perfiles/perfiles.module';
 import { AfiliadoSidebarComponent } from './components/afiliados-admin/afiliado-sidebar/afiliado-sidebar.component';
 import { EditarInformacionComponent } from './components/editar-informacion/editar-informacion.component';
@@ -40,6 +39,7 @@ import { DeleteManagerComponent } from './components/afiliados-accesos/delete-ma
 import { ActividadesSelectorComponent } from './components/actividades-form/actividades-selector/actividades-selector.component';
 import { InteresesFormComponent } from './components/actividades-form/intereses-form/intereses-form.component';
 import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
+import { MxStorageModule } from '@marxa/storage';
 
 
 @NgModule({
@@ -81,7 +81,7 @@ import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
     FirebaseModule,
     ComunesModule,
     MxAuthModule,
-    GdevStorageModule,
+    MxStorageModule,
     NgxDropzoneModule,
     PerfilesModule,
     MomentDateModule,

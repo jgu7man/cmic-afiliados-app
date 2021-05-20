@@ -1,10 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
+import { MxStorage } from '@marxa/storage';
 import { emptyProyecto } from '../../../models/perfiles.model';
 import { PerfilService } from '../../../services/perfil.service';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
   proyectoForm: FormGroup;
 
   constructor(
-    public storage_: GdevStorage,
+    public storage_: MxStorage,
     public perfil_: PerfilService,
     public location_: Location,
   ) {

@@ -2,12 +2,12 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Component, OnInit } from '@angular/core';
 import { MyErrorStateMatcher } from 'src/app/public/afiliados/components/afiliados-registro/afiliados-registro.component';
 import { ClientsService } from '../../services/clients.service';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
+import { MxStorage } from '@marxa/storage';
 import { iCliente } from '../../models/cliente.model';
 import { MxAlert } from '@marxa/devkit';
 import { Router } from '@angular/router';
 import { MxLoading } from '@marxa/devkit';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 
 @Component({
   templateUrl: './cliente-solicitud.component.html',
@@ -28,7 +28,7 @@ export class ClienteSolicitudComponent implements OnInit {
   invisible: boolean = true
   constructor(
     private _clients: ClientsService,
-    public storage_: GdevStorage,
+    public storage_: MxStorage,
     private _alert: MxAlert,
     private _router: Router,
     private _loading: MxLoading,

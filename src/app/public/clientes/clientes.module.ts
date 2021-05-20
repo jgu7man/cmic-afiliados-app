@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
 import { ClienteRegistroComponent } from './components/cliente-registro/cliente-registro.component';
 import { ClienteSolicitudComponent } from './components/cliente-solicitud/cliente-solicitud.component';
-import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module';
+import { MxStorageModule } from '@marxa/storage';
 
 
 @NgModule({
@@ -25,7 +25,7 @@ import { GdevStorageModule } from 'src/app/gdev/gdev-storage/gdev-storage.module
     GdevModule,
     ReactiveFormsModule,
     MxResponsiveModule,
-    GdevStorageModule,
+    MxStorageModule,
   ]
 })
 export class ClientesModule { }

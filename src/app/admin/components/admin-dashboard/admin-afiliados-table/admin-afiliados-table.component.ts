@@ -8,7 +8,7 @@ import { ManagersService } from 'src/app/public/afiliados/services/managers.serv
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
 import { Router } from '@angular/router';
 import { MxCache } from '@marxa/devkit';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
+import { MxStorage } from '@marxa/storage';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class AdminAfiliadosTableComponent implements OnInit {
     private _afiliados: AfiliadosService,
     private _router: Router,
     private _cache: MxCache,
-    private _storage:GdevStorage
+    private _storage:MxStorage
   ) {
     this._afiliados.getFullList().subscribe(list => {
       this.afiliados = list

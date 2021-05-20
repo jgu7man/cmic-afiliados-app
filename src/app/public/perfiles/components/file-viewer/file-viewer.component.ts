@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 
 @Component({
   selector: 'g-file-viewer',

@@ -29,7 +29,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { AdminSitioComponent } from './components/admin-dashboard/admin-sitio/admin-sitio.component';
 import { AdminSliderComponent } from './components/admin-dashboard/admin-sitio/admin-slider/admin-slider.component';
 import { AdminSlideComponent } from './components/admin-dashboard/admin-sitio/admin-slide/admin-slide.component';
-import { GdevStorageModule } from '../gdev/gdev-storage/gdev-storage.module';
+import { MxStorageModule } from '@marxa/storage';
 
 @NgModule({
   declarations: [
@@ -64,7 +64,7 @@ import { GdevStorageModule } from '../gdev/gdev-storage/gdev-storage.module';
     PublicModule,
     MxResponsiveModule,
     PdfViewerModule,
-    GdevStorageModule,
+    MxStorageModule,
 
   ],
 })

@@ -88,7 +88,7 @@
             <ng-template matStepLabel>Identificación</ng-template>
             <p>Sube una fotografía de tu Idenficación (INE por ejemplo)</p>
             <div class="col s12">
-              <gdev-upload-files
+              <mx-upload-files
               [maxFileSize]="2097152"
               [path]="'clientes/solicitudes/'+datosForm.get('RFC')?.value+'/'"
               [prefixName]="'INEfile'"
@@ -98,7 +98,7 @@
               dropzoneLabel="Sube una imagen de la INE. Toca o arrastra el archivo"
               uploadButtonLabel="Subir"
               (uploadComplete)="onFileUploaded($event)">
-              </gdev-upload-files>
+              </mx-upload-files>
             </div>
             <div class="col s12">
               <!-- <button mat-raised-button matStepperPrevious>Atrás</button> -->
@@ -116,7 +116,7 @@
             <ng-template matStepLabel>Registro de contribuyentes</ng-template>
             <p>Sube un archivo de tu Cédula de identificación fiscal (CIF) o RFC</p>
             <div class="col s12">
-              <gdev-upload-files
+              <mx-upload-files
               [maxFileSize]="2097152"
               [path]="'clientes/solicitudes/'+datosForm.get('RFC')?.value+'/'"
               [prefixName]="'CIFfile'"
@@ -126,7 +126,7 @@
               dropzoneLabel="Sube una imagen de la CIF (Cédula de identificación fiscal o RFC). Toca o arrastra el archivo"
               uploadButtonLabel="Subir"
               (uploadComplete)="onFileUploaded($event)">
-              </gdev-upload-files>
+              </mx-upload-files>
             </div>
             <div class="col s12">
               <!-- <button mat-raised-button matStepperPrevious>Atrás</button> -->

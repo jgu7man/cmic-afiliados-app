@@ -10,7 +10,7 @@ import { DialogAceptClientComponent } from '../dialog-acept-client/dialog-acept-
 import { iCliente } from 'src/app/public/clientes/models/cliente.model';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatSelectionListChange } from '@angular/material/list';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
+import { MxStorage } from '@marxa/storage';
 
 @Component({
   templateUrl: './admin-clientes.component.html',
@@ -37,7 +37,7 @@ export class AdminClientesComponent implements OnInit {
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
     private _clientes: ClientsService,
-    private _storage: GdevStorage
+    private _storage: MxStorage
   ) {
     this._clientes.getList().subscribe(list => {
       console.log( list )

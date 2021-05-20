@@ -1,6 +1,6 @@
 import { emptyDireccion, iDireccion } from "./afiliados.model";
 import firebase from "firebase/app"
-import { iUploadedFile } from "src/app/gdev/gdev-storage/storage.model";
+import { iUploadedFile } from "@marxa/storage";
 
 export interface iPerfil {
   somos?: string,

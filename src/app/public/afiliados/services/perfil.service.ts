@@ -6,8 +6,8 @@ import firebase from 'firebase/app'
 import { identity, pickBy } from 'lodash';
 import { MxAlert } from '@marxa/devkit';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { MxStorage } from '@marxa/storage';
+import { iUploadedFile } from '@marxa/storage';
 import { MxLoading } from '@marxa/devkit';
 import { MxCache } from '@marxa/devkit';
 import { iManager } from '../models/afiliados.model';
@@ -29,7 +29,7 @@ export class PerfilService {
   constructor(
     private _afs: AngularFirestore,
     private _alert: MxAlert,
-    private _storage: GdevStorage,
+    private _storage: MxStorage,
     private _loading: MxLoading,
     private _cache: MxCache
   ) {

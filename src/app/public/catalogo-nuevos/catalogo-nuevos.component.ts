@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 import { AfiliadoModel } from '../afiliados/models/afiliados.model';
 import { iPerfil } from '../afiliados/models/perfiles.model';
 import { AfiliadosService } from '../afiliados/services/afiliados.service';

@@ -22,7 +22,7 @@
     <div class="slide-preview" *ngIf="slide">
       <img [src]="slide.imageURL" alt="">
     </div>
-    <gdev-upload-files
+    <mx-upload-files
     [maxFileSize]="2097152"
     path="slides"
     [multiple]="false"
@@ -32,7 +32,7 @@
     uploadButtonLabel="Subir"
     toggleButtonLabel="Subir imagen"
     (uploadComplete)="onFileUploaded($event)">
-    </gdev-upload-files>
+    </mx-upload-files>
   </div>
 
   <!-- Enlace -->

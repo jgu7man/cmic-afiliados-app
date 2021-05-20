@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 import { iUser } from 'src/app/admin/models/roles.model';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 
 export interface iCliente extends iUser {
   RFC: string,

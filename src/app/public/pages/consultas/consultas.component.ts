@@ -1,7 +1,7 @@
 import { AfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 import { QueryParam } from "src/app/models/consultas.model";
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { iPerfil } from '../../afiliados/models/perfiles.model';

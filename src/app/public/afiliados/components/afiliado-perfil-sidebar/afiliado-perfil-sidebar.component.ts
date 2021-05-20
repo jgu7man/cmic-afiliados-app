@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, AfterViewChecked, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, interval, Observable, of } from 'rxjs';
-import { GdevUploadModalComponent } from 'src/app/gdev/gdev-storage/components/upload-modal/upload-modal.component';
+import { MxUploadModalComponent } from '@marxa/storage';
 import { AfiliadoModel,  emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
-import { iUploadedFile, iUploadOptions } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile, iUploadOptions } from '@marxa/storage';
 import { AfiliadosService } from '../../services/afiliados.service';
 
 import { FormControl, Validators } from '@angular/forms';
@@ -77,7 +77,7 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
       'uploadButton': true
     }
 
-    this.dialog.open(GdevUploadModalComponent, {
+    this.dialog.open(MxUploadModalComponent, {
       width: '40%',
       minHeight: '40%',
       data: options

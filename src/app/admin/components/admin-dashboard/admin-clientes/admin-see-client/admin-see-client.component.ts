@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MxDate } from '@marxa/devkit';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { iUploadedFile } from '@marxa/storage';
 import { iCliente } from 'src/app/public/clientes/models/cliente.model';
 
 @Component({

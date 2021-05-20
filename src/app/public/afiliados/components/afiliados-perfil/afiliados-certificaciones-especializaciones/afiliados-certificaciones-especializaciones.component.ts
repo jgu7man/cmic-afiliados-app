@@ -6,8 +6,8 @@ import { Location } from '@angular/common';
 import { iManager } from '../../../models/afiliados.model';
 import { PerfilService } from '../../../services/perfil.service';
 import { iAdtionalInfo, CertificacionModel, emptyCert } from '../../../models/perfiles.model';
-import { GdevStorage } from 'src/app/gdev/gdev-storage/storage-service.service';
-import { iUploadedFile } from 'src/app/gdev/gdev-storage/storage.model';
+import { MxStorage } from '@marxa/storage';
+import { iUploadedFile } from '@marxa/storage';
 @Component({
   templateUrl: './afiliados-certificaciones-especializaciones.component.html',
   styleUrls: ['./afiliados-certificaciones-especializaciones.component.scss'],
@@ -22,7 +22,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
     public location_: Location,
     private _cache: MxCache,
     public perfil_: PerfilService,
-    private _storage: GdevStorage
+    private _storage: MxStorage
   ) {
 
 
