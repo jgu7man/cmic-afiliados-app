@@ -6,9 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FirebaseModule } from 'src/shared/firebase.module';
 import { MaterialModule } from 'src/shared/material.module';
-import { GdevModule } from './gdev/gdev.module';
-import { MxResponsiveModule } from './responsive/responsive.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,9 +20,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     BrowserAnimationsModule,
     FirebaseModule,
     MaterialModule,
-    GdevModule,
-    MxResponsiveModule,
     PdfViewerModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

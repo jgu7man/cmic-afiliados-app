@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { iUploadedFile } from '@marxa/storage';
-import { SlideModel } from 'src/app/gdev/slider/gdev-slide.model';
+import { SlideModel } from 'src/app/shared/slider/gdev-slide.model';
 
 @Component({
   selector: 'g-admin-slide',

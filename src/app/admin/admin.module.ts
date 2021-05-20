@@ -7,7 +7,6 @@ import { MaterialModule } from 'src/shared/material.module';
 import { FirebaseModule } from 'src/shared/firebase.module';
 import { ComunesModule } from 'src/shared/comunes.module';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
-import { GdevModule } from '../gdev/gdev.module';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminSidebarComponent } from './components/admin-dashboard/admin-sidebar/admin-sidebar.component';
 import { AdminAccesosComponent } from './components/admin-dashboard/admin-accesos/admin-accesos.component';
@@ -22,7 +21,6 @@ import { PublicModule } from '../public/public.module';
 import { AdminInicioComponent } from './components/admin-dashboard/admin-inicio/admin-inicio.component';
 import { DialogAceptClientComponent } from './components/admin-dashboard/dialog-acept-client/dialog-acept-client.component';
 import { CreateAdminAccountComponent } from './components/create-admin-account/create-admin-account.component';
-import { MxResponsiveModule } from '../responsive/responsive.module';
 import { AdminClientesComponent } from './components/admin-dashboard/admin-clientes/admin-clientes.component';
 import { AdminSeeClientComponent } from './components/admin-dashboard/admin-clientes/admin-see-client/admin-see-client.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
@@ -30,6 +28,8 @@ import { AdminSitioComponent } from './components/admin-dashboard/admin-sitio/ad
 import { AdminSliderComponent } from './components/admin-dashboard/admin-sitio/admin-slider/admin-slider.component';
 import { AdminSlideComponent } from './components/admin-dashboard/admin-sitio/admin-slide/admin-slide.component';
 import { MxStorageModule } from '@marxa/storage';
+import { MxResponsiveModule } from '@marxa/devkit';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -60,7 +60,7 @@ import { MxStorageModule } from '@marxa/storage';
     MaterialModule,
     FirebaseModule,
     ComunesModule,
-    GdevModule,
+    SharedModule,
     PublicModule,
     MxResponsiveModule,
     PdfViewerModule,

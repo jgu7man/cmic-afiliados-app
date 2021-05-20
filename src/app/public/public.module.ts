@@ -21,8 +21,8 @@ import { CatalogoEspecialidadComponent } from './catalogo-especialidad/catalogo-
 import { AvisoPrivacidadComponent } from './pages/aviso-privacidad/aviso-privacidad.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { ContactoFormComponent } from './contacto-form/contacto-form.component';
-import { GdevModule } from '../gdev/gdev.module';
 import { CatalogoNuevosComponent } from './catalogo-nuevos/catalogo-nuevos.component';
+import { SharedModule } from '../shared/shared.module';
 // import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
@@ -52,7 +52,7 @@ import { CatalogoNuevosComponent } from './catalogo-nuevos/catalogo-nuevos.compo
     MxResponsiveModule,
     ReactiveFormsModule,
     FormsModule,
-    GdevModule
+    SharedModule
     // MxResponsiveModule
   ],
   exports: [

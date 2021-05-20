@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MxAuthModule } from '@marxa/auth';
 import { YearSelectorComponent } from './year-selector/year-selector.component';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MaterialModule } from 'src/shared/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GdevSliderModule } from './slider/gdev-slider.module';
 import { ListCrudModule } from './list-crud/list-crud.module';
+import { MxAuthModule } from '@marxa/auth';
+import { GdevSliderModule } from './slider/gdev-slider.module';
 
 
 
@@ -18,7 +18,6 @@ import { ListCrudModule } from './list-crud/list-crud.module';
     CommonModule,
     MomentDateModule,
     MaterialModule,
-    // FormsModule,
     ReactiveFormsModule,
     GdevSliderModule,
     ListCrudModule
@@ -30,4 +29,4 @@ import { ListCrudModule } from './list-crud/list-crud.module';
     ListCrudModule
   ]
 })
-export class GdevModule { }
+export class SharedModule { }

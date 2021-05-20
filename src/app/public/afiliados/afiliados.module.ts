@@ -30,7 +30,6 @@ import { ContactoFormComponent } from './components/afiliacion-form/contacto-for
 import { RepresentanteFormComponent } from './components/afiliacion-form/representante-form/representante-form.component';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateModule } from '@angular/material-moment-adapter';
 import { AfiliadoPerfilSidebarComponent } from './components/afiliado-perfil-sidebar/afiliado-perfil-sidebar.component';
-import { GdevModule } from 'src/app/gdev/gdev.module';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
 import { AfiliadosPersonalFormComponent } from './components/editar-perfil/afiliados-personal-form/afiliados-personal-form.component';
 import { AfiliadosAccesosComponent } from './components/afiliados-accesos/afiliados-accesos.component';
@@ -38,8 +37,9 @@ import { AddManagerComponent } from './components/afiliados-accesos/add-manager/
 import { DeleteManagerComponent } from './components/afiliados-accesos/delete-manager/delete-manager.component';
 import { ActividadesSelectorComponent } from './components/actividades-form/actividades-selector/actividades-selector.component';
 import { InteresesFormComponent } from './components/actividades-form/intereses-form/intereses-form.component';
-import { MxResponsiveModule } from 'src/app/responsive/responsive.module';
+import { MxResponsiveModule } from '@marxa/devkit';
 import { MxStorageModule } from '@marxa/storage';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -85,7 +85,7 @@ import { MxStorageModule } from '@marxa/storage';
     NgxDropzoneModule,
     PerfilesModule,
     MomentDateModule,
-    GdevModule,
+    SharedModule,
     MxResponsiveModule
   ],
   schemas: [

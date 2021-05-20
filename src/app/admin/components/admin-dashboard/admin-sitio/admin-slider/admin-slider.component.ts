@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { Subscription } from 'rxjs';
-import { SlideModel } from 'src/app/gdev/slider/gdev-slide.model';
-import { GdevSliderService } from 'src/app/gdev/slider/gdev-slider.service';
+import { SlideModel } from 'src/app/shared/slider/gdev-slide.model';
+import { GdevSliderService } from 'src/app/shared/slider/gdev-slider.service';
 
 @Component({
   selector: 'g-admin-slider',

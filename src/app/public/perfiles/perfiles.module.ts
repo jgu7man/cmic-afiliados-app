@@ -11,10 +11,10 @@ import { PerfilRecursosHumanosComponent } from './components/perfil-recursos-hum
 import { PerfilCertificacionesComponent } from './components/perfil-certificaciones/perfil-certificaciones.component';
 import { MaterialModule } from 'src/shared/material.module';
 import { FirebaseModule } from 'src/shared/firebase.module';
-import { GdevModule } from 'src/app/gdev/gdev.module';
 import { PerfilSidebarComponent } from './components/perfil-sidebar/perfil-sidebar.component';
 import { PerfilActividadesComponent } from './components/perfil-actividades/perfil-actividades.component';
 import { FileViewerComponent } from './components/file-viewer/file-viewer.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { FileViewerComponent } from './components/file-viewer/file-viewer.compon
     PerfilesRoutingModule,
     MaterialModule,
     FirebaseModule,
-    GdevModule,
+    SharedModule,
   ],
   exports: [
     MainPerfilComponent,
