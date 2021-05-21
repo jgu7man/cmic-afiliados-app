@@ -3,28 +3,7 @@
     <div id="form" class="col s12 l5">
       <mat-vertical-stepper [linear]="true" #stepper>
         <mat-step>
-          <ng-template matStepLabel>Datos Generales de la empresa</ng-template>
 
-          <g-datos-generales-form
-            [RFC]="user?.RFC"
-            (changes)="onChanges('datos_generales', $event)"
-            (invalid)="datosGeneralesBtn.disabled = $event"
-          ></g-datos-generales-form>
-
-          <div>
-            <button
-              mat-button
-              matStepperNext
-              #datosGeneralesBtn="matButton"
-              color="secondary"
-              type="button"
-              (click)="
-                afiliados_.patch('datos_generales', afiliado.datos_generales)
-              "
-            >
-              Siguiente
-            </button>
-          </div>
         </mat-step>
 
         <!-- DOMICILIO -->

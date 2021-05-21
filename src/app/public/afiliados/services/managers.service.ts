@@ -99,7 +99,9 @@ export class ManagersService {
 
 
     async createManager({email, RFC, ...rest}:iManager) {
-      const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
+      const afiliadoRef = this._afs.collection<AfiliadoModel>('afiliados')
+        .doc(RFC).ref;
+      const afiliadoDoc = await afiliadoRef.get()
       const perfil = await this._getPerfil(RFC)
 
       console.log( { email, RFC, perfil} )
@@ -120,12 +122,27 @@ export class ManagersService {
             <p class="center">No esperamos ninguna petición de creación de cuenta para ${perfil?.comercial_nombre}. <br> Por favor contacta con CMIC para cualquier error </p>
           `, 'html')
         } else {
+          let afiliado: AfiliadoModel = afiliadoDoc.data() as AfiliadoModel
           let manager: iManager = {
             email, RFC, ...rest
           }
           await this._auth.createManagerAccount(manager)
           emailRef.delete()
-          this._router.navigate(['/afiliados/perfil']);
+
+          if (!afiliado.contacto
+            || !afiliado.domicilio
+            || !afiliado.representante_legal) {
+            this._router.navigate(['/afiliados/afiliacion', RFC]);
+
+          } else if (!afiliado.fuentes_de_trabajo
+            || !afiliado.servicios_profesionales
+            || !afiliado.tipos_de_obra) {
+            this._router.navigate(['/afiliados/elegir-actividades', RFC]);
+
+          } else {
+            this._router.navigate([ '/afiliados/perfil'])
+          }
+
         }
       }
 

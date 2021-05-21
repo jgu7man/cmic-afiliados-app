@@ -58,7 +58,7 @@ export class AfiliadosPerfilComponent implements OnInit {
       this._afiliados.getPerfil(this.RFC).subscribe((data) => {
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
-          if (data.datos_generales.comercial_nombre) {
+          if (data.datos_generales.fisica_nombre || data.datos_generales.moral_nombre) {
             this.afiliado = data;
             this.RFC = data.datos_generales?.RFC as string;
             this.somos = data.perfil?.somos ? data.perfil.somos : ''

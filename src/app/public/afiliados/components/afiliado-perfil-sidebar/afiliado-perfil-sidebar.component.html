@@ -66,13 +66,16 @@
     <span class="data-text">{{
       date_.toDate( afiliado.perfil?.primerAfiliacion) | date: 'yyyy'
     }}</span>
+    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/editar-perfil', afiliado.datos_generales.RFC]"></i>
   </p>
 </article>
 
 
 
 <article>
-  <p class="article-header" >Ubicación</p>
+  <p class="article-header" >Ubicación
+    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]"></i>
+  </p>
   <p> Domicilio: <span class="data-text">
     {{ afiliado.domicilio?.publica?.calle }}
     {{ afiliado.domicilio?.publica?.num_ext }}
@@ -91,9 +94,12 @@
   <p>Estado: <span class="data-text">
     {{ afiliado.domicilio?.publica?.entidad_federativa }}
   </span></p>
+
 </article>
 <article>
-  <p class="article-header">Contacto</p>
+  <p class="article-header">Contacto
+    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]"></i>
+  </p>
   <p *ngIf="afiliado.contacto?.telefono">
     Tel. <span class="data-text">
     {{ afiliado.contacto?.telefono }}
@@ -107,12 +113,16 @@
   <p>Sitio web: <span class="data-text">
     {{ afiliado.contacto?.pagina_web }}
   </span></p>
+
 </article>
 <article>
-  <p class="article-header">Personal</p>
+  <p class="article-header">Personal
+    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/editar-perfil', afiliado.datos_generales.RFC]"></i>
+  </p>
   <p>
     Planta fija: <span class="data-text">{{personal.planta_fija}}</span> <br>
     Cap. de contratación por proyecto <span class="data-text">{{personal.capacidad_proyecto}} </span>
+
   </p>
   <!-- <p>
     Del total de colaboradores, el 25% cuentan con estudios de especialización o posgrado
@@ -120,11 +130,14 @@
 </article>
 
 <article>
-  <p class="article-header">Servicios</p>
+  <p class="article-header">Servicios
+    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/editar-perfil', afiliado.datos_generales.RFC]"></i>
+  </p>
   <p>
     <span *ngFor="let servicio of afiliado.perfil?.servicios">
       {{servicio}} <br>
     </span>
+
   </p>
 </article>
 
@@ -132,5 +145,7 @@
   <p class="article-header">Extras</p>
   <p>Capacidad Financiera: <span class="data-text">
     {{afiliado.perfil?.capFinanciera}}
-  </span></p>
+  </span>
+  <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/editar-perfil', afiliado.datos_generales.RFC]"></i>
+</p>
 </article>

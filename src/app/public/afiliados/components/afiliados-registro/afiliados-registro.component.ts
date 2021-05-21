@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
 import { take } from 'rxjs/operators';
 
-import { iManager } from '../../models/afiliados.model';
+import { DatosGeneralesModel, iAfiliadoRequest, iManager } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 import { ManagersService } from '../../services/managers.service';
 
@@ -39,70 +39,70 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./afiliados-registro.component.scss'],
 })
 export class AfiliadosRegistroComponent implements OnInit {
-  afiliado: FormGroup;
+  afiliado: DatosGeneralesModel;
+  request: iAfiliadoRequest
+  datosForm: FormGroup = new FormGroup({
+    RFC: new FormControl('', [Validators.required, Validators.minLength(12), Validators.maxLength(13), this.validateSymbols]),
+    email: new FormControl('', [Validators.required, Validators.email])
+  })
+  fileForm: FormGroup = new FormGroup({
+    file: new FormControl('', [Validators.required])
+  })
+  privacyForm: FormGroup = new FormGroup({
+    aviso_privacidad: new FormControl(false, [Validators.required])
+  })
 
-  hide = true;
-  matcher = new MyErrorStateMatcher();
-  rfcCtrl: FormControl
+
   invitado: boolean = false
 
   constructor(
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
     private _afiliadosService: AfiliadosService,
-    private _router: Router,
-    private _managers: ManagersService,
-    private _route: ActivatedRoute,
-    private _alert: MxAlert,
   ) {
-    let { email, rfc } = this._route.snapshot.queryParams
+    this.afiliado = new DatosGeneralesModel('','','')
+    this.request = {
+      afiliado: this.afiliado,
+      email: '',
+      file: {}
+    }
+  }
 
-    this._managers.current$.pipe(take(1)).subscribe(user => {
-      console.log( 'ejecuta' )
-      if (user) { this._router.navigate(['/afiliados']) }
+  onFormChanges(event: any) {
+    console.log( event )
+    this.afiliado = event
+  }
+
+  onFileUploaded(event: any) {
+    console.log( event )
+    this.fileForm.patchValue({file: event})
+  }
+
+  get validRequest() {
+    console.log({
+      datos: this.datosForm.valid,
+      prvacy: this.privacyForm.valid,
+      file: this.fileForm.valid
     })
-    this.afiliado = this.formBuilder.group(
-      {
-        RFC: this.rfcCtrl = new FormControl( '', [Validators.required, Validators.minLength(12), Validators.maxLength(13), this.validateSymbols]),
-        email: ['', [Validators.required, Validators.email]],
-        nombre: ['', [Validators.required]],
-        paterno: ['', [Validators.required]],
-        materno: [''],
-        contrasena: ['', [Validators.required]],
-        confcontrasena: ['', [Validators.required]],
-        aviso_privacidad: [false, Validators.requiredTrue],
-      },
-      { validator: this.checkPasswords }
-    );
-
-    if (email) {
-      this.afiliado.patchValue({ email })
-      this.afiliado.get('email')?.disable()
-    }
-    if (email && rfc) {
-      this.afiliado.patchValue({ RFC: rfc })
-      this.afiliado.get('RFC')?.disable()
+    if (this.afiliado.slug) {
+      return this.datosForm.valid && this.privacyForm.valid && this.fileForm.valid
+    } else {
+      return false
     }
   }
+
   onSubmit(): void {
-
-    this._afiliadosService.regist(
-      this.afiliado.value as iManager
-    );
-  }
-  checkPasswords(group: FormGroup) {
-    let pass = group.controls.contrasena.value;
-    let confirmPass = group.controls.confcontrasena.value;
-    return pass === confirmPass ? null : { notSame: true };
+    this.request.email = this.datosForm.controls.email.value
+    this.request.file = this.fileForm.controls.file.value
+    this._afiliadosService.registRequest(this.request);
   }
 
-  //.pipe(take(1))
+
   OpenPrivacidadRegistro(): void {
     const dialogRef = this.dialog.open(DialogPrivacidadRegistro);
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.afiliado.controls.aviso_privacidad.setValue(true);
+        this.privacyForm.controls.aviso_privacidad.setValue(true);
       }
     });
   }

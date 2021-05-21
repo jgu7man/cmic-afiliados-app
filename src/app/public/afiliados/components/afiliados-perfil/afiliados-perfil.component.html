@@ -67,7 +67,6 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-experiencia
-          [rfc]="RFC"
           ></g-perfil-experiencia>
           <mat-action-row>
             <a [routerLink]="['../experiencia']"
@@ -87,7 +86,7 @@
               {{afiliado.adicional?.extract?.equipo_maquinaria}}
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <g-perfil-equipo-maquinaria [rfc]="RFC"></g-perfil-equipo-maquinaria>
+          <g-perfil-equipo-maquinaria ></g-perfil-equipo-maquinaria>
           <mat-action-row>
             <a [routerLink]="['../equipo-maquinaria']"
             mat-raised-button color='primary' >Editar</a>
@@ -119,7 +118,6 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-certificaciones
-          [rfc]="RFC"
           ></g-perfil-certificaciones>
           <mat-action-row>
             <a [routerLink]="['../certificaciones-especializaciones']"

@@ -18,7 +18,6 @@
 
               <mat-list #managersPanel>
                 <mat-list-item
-                [checkboxPosition]="'before'"
                 *ngFor="let manager of managers$ | async"
                 >
                 <div mat-line>{{manager.email}}</div>

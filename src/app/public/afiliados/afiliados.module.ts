@@ -40,6 +40,7 @@ import { InteresesFormComponent } from './components/actividades-form/intereses-
 import { MxResponsiveModule } from '@marxa/devkit';
 import { MxStorageModule } from '@marxa/storage';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AfiliadosCreateComponent } from './components/afiliados-create/afiliados-create.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     DeleteManagerComponent,
     ActividadesSelectorComponent,
     InteresesFormComponent,
+    AfiliadosCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -89,7 +91,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MxResponsiveModule
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+    // CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [AfiliadosPersonalFormComponent],
   providers: [

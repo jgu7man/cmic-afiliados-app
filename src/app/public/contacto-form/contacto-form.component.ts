@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MxText } from '@marxa/devkit';
+import { MxAlert, MxText } from '@marxa/devkit';
 
 @Component({
   selector: 'g-contacto-form',
@@ -16,13 +17,25 @@ export class ContactoFormComponent implements OnInit {
     celular: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
     mensaje: new FormControl('', [Validators.required])
   })
+  sended: boolean = false
   constructor(
-    public text: MxText
+    public text: MxText,
+    private _afs: AngularFirestore,
+    private _alert: MxAlert
   ) { }
 
   ngOnInit(): void {
   }
 
+  onSubmit() {
+    this._afs.collection('mensajes_publicos').add({
+      ...this.contactoForm.value,
+      enviado: new Date()
+    }).then(() => {
+      this._alert.notify('enviado')
+      this.sended = true
+    })
+  }
 
 
 }

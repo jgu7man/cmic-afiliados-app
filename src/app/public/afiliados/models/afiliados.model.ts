@@ -2,12 +2,22 @@ import { iAdtionalInfo, iPerfil } from './perfiles.model';
 import { ActividadQuery } from 'src/app/models/consultas.model';
 import { iUser } from 'src/app/admin/models/roles.model';
 import { Actividad } from './actividades.model';
+import { iUploadedFile } from '@marxa/storage';
+import firebase from 'firebase/app'
 
 export interface iManager extends iUser {
   RFC: string;
 }
 
+export interface iAfiliadoRequest {
+  afiliado: DatosGeneralesModel,
+  email: string,
+  file: iUploadedFile
+}
+
 export class AfiliadoModel {
+  constancia?: iUploadedFile
+  creado?: Date | firebase.firestore.Timestamp
   constructor(
     public datos_generales: DatosGeneralesModel,
     public domicilio: DireccionAfiliadoModel,
