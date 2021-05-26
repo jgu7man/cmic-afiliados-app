@@ -10,9 +10,11 @@ export interface iManager extends iUser {
 }
 
 export interface iAfiliadoRequest {
-  afiliado: DatosGeneralesModel,
+  empresa: DatosGeneralesModel,
   email: string,
-  file: iUploadedFile
+  file: iUploadedFile,
+  request: Date | firebase.firestore.Timestamp
+  RFC?: string
 }
 
 export class AfiliadoModel {

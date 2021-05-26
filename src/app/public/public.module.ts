@@ -23,6 +23,7 @@ import { ContactoComponent } from './pages/contacto/contacto.component';
 import { ContactoFormComponent } from './contacto-form/contacto-form.component';
 import { CatalogoNuevosComponent } from './catalogo-nuevos/catalogo-nuevos.component';
 import { SharedModule } from '../shared/shared.module';
+import { PipesModule } from '../pipes/pipes.module';
 // import { MxResponsiveModule } from '../responsive/responsive.module';
 
 @NgModule({
@@ -52,7 +53,8 @@ import { SharedModule } from '../shared/shared.module';
     MxResponsiveModule,
     ReactiveFormsModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    PipesModule
     // MxResponsiveModule
   ],
   exports: [

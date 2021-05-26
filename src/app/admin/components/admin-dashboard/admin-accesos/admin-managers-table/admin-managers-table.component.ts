@@ -3,10 +3,14 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { iManager } from 'src/app/public/afiliados/models/afiliados.model';
+import { DatosGeneralesModel, iManager } from 'src/app/public/afiliados/models/afiliados.model';
 import { DialogAccesoComponent } from '../dialog-acceso/dialog-acceso.component';
 import { DialogRevokeAccesoComponent } from '../dialog-revoke-acceso/dialog-revoke-acceso.component';
 import { ManagersService } from 'src/app/public/afiliados/services/managers.service';
+import { MxCache } from '@marxa/devkit';
+import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
+import { take } from 'rxjs/operators';
+import firebase from 'firebase/app'
 
 @Component({
   selector: 'g-admin-managers-table',
@@ -26,10 +30,14 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit {
   pageSize: number = 10
   first: number = 0
   page: number = 1
+
+  afiliadosIndex: DatosGeneralesModel[] = []
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
-    private _managers: ManagersService
+    private _managers: ManagersService,
+    private _cache: MxCache,
+    private _afiliados: AfiliadosService
   ) {
     this._managers.getCompleteList().subscribe(list => {
       this.managers = list
@@ -42,6 +50,15 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.currentPage = this.managers.slice(this.first, this.first + this.pageSize)
+  }
+
+  getAfiliadosList() {
+    this._cache.listenForChanges<DatosGeneralesModel[]>('afiliadosList')
+      .subscribe(list => { this.afiliadosIndex = list})
+
+      if (!this._cache.getDataKey('afiliadosList')) {
+        this._afiliados.indexList().pipe(take(1)).subscribe()
+      }
   }
 
   ngAfterViewInit() {
@@ -62,5 +79,7 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit {
       data: path
     })
   }
+
+
 
 }

@@ -6,11 +6,16 @@
     <td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
   </ng-container>
 
+  <!-- Name Column -->
+  <ng-container matColumnDef="comercial_nombre">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Empresa </th>
+    <td mat-cell *matCellDef="let cliente"> {{cliente.comercial_nombre}} </td>
+  </ng-container>
 
   <!-- Last Access Column -->
   <ng-container matColumnDef="lastAccess">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Último Acceso </th>
-    <td mat-cell *matCellDef="let cliente"> {{cliente.lastAccess}} </td>
+    <td mat-cell *matCellDef="let cliente"> {{cliente.lastAccess | toDate | date: 'short'}} </td>
   </ng-container>
 
   <!-- Last Access Column -->

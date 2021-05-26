@@ -9,6 +9,21 @@
         <mat-card-content>
           <form class="row" [formGroup]="accountForm">
 
+            <!-- Email -->
+          <div class="col s12">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+              matInput
+              type="text"
+              name="email"
+              formControlName="email"
+              required
+              disable
+              >
+            </mat-form-field>
+          </div>
+
             <!-- Nombre field -->
             <div class="col s12">
               <mat-form-field appearance="outline">

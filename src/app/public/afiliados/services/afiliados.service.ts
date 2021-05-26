@@ -49,9 +49,10 @@ export class AfiliadosService {
   }
 
 
+  // 1 AFILIADO REQUEST
   async registRequest(request: iAfiliadoRequest) {
-    const { RFC } = request.afiliado;
-    try {
+    const { RFC } = request.empresa;
+      try {
       const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
       const afiliadoDoc = await afiliadoRef.get();
 
@@ -77,6 +78,7 @@ export class AfiliadosService {
   }
 
 
+  // 2 ACEPT AFILIADO
   /** Registra un afiliado cuando un RFC no se ha registrado antes y registra el manager que está registrando
    *
    */
@@ -90,7 +92,7 @@ export class AfiliadosService {
 
 
       if (requestDoc.exists) {
-        let {afiliado, email, file } = requestDoc.data() as iAfiliadoRequest
+        let {empresa: afiliado, email, file } = requestDoc.data() as iAfiliadoRequest
         if (acept) {
           afiliadoRef.set({
             datos_generales: afiliado,
@@ -105,7 +107,7 @@ export class AfiliadosService {
               text: `Se ha aceptado la petición para registrarte como afiliado en la plataforma de CMIC
 
               Por favor da click en el siguiente enlace para continuar con el registro:
-              https://${domain}/create?perfil=manager&email=${email}&rfc=${RFC}"
+              https://${domain}/afiliados/create?email=${email}&rfc=${RFC}"
 
               Si no has mandado una solicitud de registro, omite este correo`
             }
@@ -125,7 +127,10 @@ export class AfiliadosService {
   }
 
 
-
+  getPeticiones() {
+    return this._afs.collection<iAfiliadoRequest>('afiliaciones')
+    .valueChanges({ idField: 'RFC' })
+  }
 
 
   getPerfil(RFC: string): Observable<AfiliadoModel | undefined>{

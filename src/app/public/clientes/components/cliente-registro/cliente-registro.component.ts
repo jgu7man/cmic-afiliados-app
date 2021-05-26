@@ -24,7 +24,7 @@ export class ClienteRegistroComponent implements OnInit {
   ) {
     let {email} = this._route.snapshot.queryParams
     this.accountForm = new FormGroup({
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl({value:'', disabled: true}),
       nombre: new FormControl('', [Validators.required]),
       paterno: new FormControl('', [Validators.required]),
       materno: new FormControl(''),

@@ -16,6 +16,7 @@ import { AfiliadosCertificacionesEspecializacionesComponent } from './components
 import { EditarInformacionComponent } from './components/editar-informacion/editar-informacion.component';
 import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
 import { AfiliadosAccesosComponent } from './components/afiliados-accesos/afiliados-accesos.component';
+import { AfiliadosCreateComponent } from './components/afiliados-create/afiliados-create.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
       ]},
       { path: 'login', component: AfiliadosLoginComponent },
       { path: 'registro', component: AfiliadosRegistroComponent },
+      { path: 'create', component: AfiliadosCreateComponent },
     ],
   },
 ];

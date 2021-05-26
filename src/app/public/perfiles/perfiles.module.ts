@@ -15,6 +15,8 @@ import { PerfilSidebarComponent } from './components/perfil-sidebar/perfil-sideb
 import { PerfilActividadesComponent } from './components/perfil-actividades/perfil-actividades.component';
 import { FileViewerComponent } from './components/file-viewer/file-viewer.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
+import { MxResponsiveModule } from '@marxa/devkit';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MaterialModule,
     FirebaseModule,
     SharedModule,
+    PipesModule,
+    MxResponsiveModule
   ],
   exports: [
     MainPerfilComponent,

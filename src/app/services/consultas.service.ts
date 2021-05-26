@@ -7,6 +7,7 @@ import { MxLoading } from '@marxa/devkit';
 import { Observable } from 'rxjs';
 import { MxCache } from '@marxa/devkit';
 import { catalogoName } from '../public/afiliados/models/actividades.model';
+import { uniq, uniqBy } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -33,17 +34,20 @@ export class ConsultasService {
   actividad(value: string, queryKey: 'codigo' | 'especialidad'): Observable<AfiliadoModel[]> {
     return this._afs.collectionGroup<ActividadQuery>('actividades',
       ref => ref.where(queryKey, '==', value))
-      .get().pipe(switchMap<QuerySnapshot<ActividadQuery>, Promise<AfiliadoModel[]>>(
+      .get().pipe(
+        switchMap<QuerySnapshot<ActividadQuery>, Promise<AfiliadoModel[]>>(
         async list => {
           if (list.empty) return []
           else {
             const afiliados: AfiliadoModel[] = []
+            console.log( list.size )
             await this._loading.asyncForEach(list.docs,
               async (doc: QueryDocumentSnapshot<ActividadQuery>) => {
                 let afiliado = await doc.ref.parent.parent?.get()
                 if (afiliado) afiliados.push(afiliado.data() as AfiliadoModel)
-            })
-            return afiliados
+              })
+            let uniqAfiliados = uniqBy(afiliados, 'datos_generales.RFC')
+            return uniqAfiliados
           }
       }))
   }

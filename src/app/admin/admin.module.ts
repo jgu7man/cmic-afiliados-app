@@ -19,7 +19,6 @@ import { AdminTopbarComponent } from './components/admin-topbar/admin-topbar.com
 import { AdminAfiliadosTableComponent } from './components/admin-dashboard/admin-afiliados-table/admin-afiliados-table.component';
 import { PublicModule } from '../public/public.module';
 import { AdminInicioComponent } from './components/admin-dashboard/admin-inicio/admin-inicio.component';
-import { DialogAceptClientComponent } from './components/admin-dashboard/dialog-acept-client/dialog-acept-client.component';
 import { CreateAdminAccountComponent } from './components/create-admin-account/create-admin-account.component';
 import { AdminClientesComponent } from './components/admin-dashboard/admin-clientes/admin-clientes.component';
 import { AdminSeeClientComponent } from './components/admin-dashboard/admin-clientes/admin-see-client/admin-see-client.component';
@@ -30,6 +29,10 @@ import { AdminSlideComponent } from './components/admin-dashboard/admin-sitio/ad
 import { MxStorageModule } from '@marxa/storage';
 import { MxResponsiveModule } from '@marxa/devkit';
 import { SharedModule } from '../shared/shared.module';
+import { AdminSolicitudesClientesComponent } from './components/admin-dashboard/admin-inicio/admin-solicitudes-clientes/admin-solicitudes-clientes.component';
+import { AdminSolicitudesAfiliadosComponent, DialogAceptAfiliadoComponent } from './components/admin-dashboard/admin-inicio/admin-solicitudes-afiliados/admin-solicitudes-afiliados.component';
+import { DialogAceptClientComponent } from './components/admin-dashboard/admin-inicio/admin-solicitudes-clientes/admin-solicitudes-clientes.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -47,12 +50,15 @@ import { SharedModule } from '../shared/shared.module';
     AdminAfiliadosTableComponent,
     AdminInicioComponent,
     DialogAceptClientComponent,
+    DialogAceptAfiliadoComponent,
     CreateAdminAccountComponent,
     AdminClientesComponent,
     AdminSeeClientComponent,
     AdminSitioComponent,
     AdminSliderComponent,
-    AdminSlideComponent
+    AdminSlideComponent,
+    AdminSolicitudesClientesComponent,
+    AdminSolicitudesAfiliadosComponent
   ],
   imports: [
     CommonModule,
@@ -65,6 +71,7 @@ import { SharedModule } from '../shared/shared.module';
     PdfViewerModule,
     MxResponsiveModule,
     MxStorageModule,
+    PipesModule,
 
   ],
 })

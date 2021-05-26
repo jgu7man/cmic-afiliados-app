@@ -37,7 +37,7 @@ export class ClienteSolicitudComponent implements OnInit {
     this.datosForm = new FormGroup({
       RFC: this.rfcCtrl = new FormControl( '', [Validators.required, Validators.minLength(12), Validators.maxLength(13), this.validateSymbols]),
       email: new FormControl('', [Validators.required]),
-      nombre_comercial: new FormControl('', [Validators.required]),
+      comercial_nombre: new FormControl('', [Validators.required]),
     });
     this.INEfileForm = new FormGroup({
       INEfile: new FormControl('', [Validators.required]),

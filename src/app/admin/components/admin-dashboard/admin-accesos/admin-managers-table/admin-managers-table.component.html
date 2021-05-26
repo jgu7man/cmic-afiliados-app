@@ -9,13 +9,15 @@
   <!-- RFC Column -->
   <ng-container matColumnDef="RFC">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> RFC </th>
-    <td mat-cell *matCellDef="let manager"> {{manager.RFC}} </td>
+    <td mat-cell *matCellDef="let manager"> {{manager.RFC | comercialName}} </td>
   </ng-container>
 
   <!-- Last Access Column -->
   <ng-container matColumnDef="lastAccess">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Último Acceso </th>
-    <td mat-cell *matCellDef="let manager"> {{manager.lastAccess}} </td>
+    <td mat-cell *matCellDef="let manager">
+      {{manager.lastAccess | toDate | date: 'short'}}
+    </td>
   </ng-container>
 
   <!-- Last Access Column -->

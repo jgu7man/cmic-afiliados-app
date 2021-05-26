@@ -17,7 +17,7 @@ import { ClientsService } from 'src/app/public/clientes/services/clients.service
 export class AdminClientesTableComponent implements OnInit {
   clientes: iCliente[] = []
   displayedColumns = [
-    'email', 'lastAccess', 'access', 'options'
+    'email', 'comercial_nombre', 'lastAccess', 'access', 'options'
   ]
   @ViewChild(MatSort) sort?: MatSort;
   dataSource = new MatTableDataSource(this.clientes);

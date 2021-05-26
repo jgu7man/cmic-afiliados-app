@@ -8,7 +8,8 @@
   [matAutocomplete]="auto"
   (keyup.ENTER)="onSubmit()"
   >
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+  (optionSelected)="onSubmit()">
     <mat-option *ngFor="let actividad of filteredActividades | async" [value]="actividad">
       {{actividad.nombre}}
     </mat-option>

@@ -9,6 +9,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MxAlert } from '@marxa/devkit';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogClienteLoginComponent } from '../../clientes/components/dialog-cliente-login/dialog-cliente-login.component';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   templateUrl: './consultas.component.html',
@@ -18,7 +19,7 @@ export class ConsultasComponent implements OnInit {
 
   queryValue: string
   queryKey: QueryParam
-  afiliados: AfiliadoModel[] = []
+  afiliados?: AfiliadoModel[]
   especialidad: string = ''
   actividad: string = ''
 
@@ -63,7 +64,9 @@ export class ConsultasComponent implements OnInit {
   }
 
   goPerfil(slug: string) {
-    this._afAuth.authState.subscribe(user => {
+    this._afAuth.authState
+      .pipe(takeWhile(user => !user, true))
+      .subscribe(user => {
       if (user) this._router.navigate(['/afiliado', slug])
       else this._dialog.open(DialogClienteLoginComponent, {
         width: '370px',

@@ -62,9 +62,10 @@ export class AfiliadosRegistroComponent implements OnInit {
   ) {
     this.afiliado = new DatosGeneralesModel('','','')
     this.request = {
-      afiliado: this.afiliado,
+      empresa: this.afiliado,
       email: '',
-      file: {}
+      file: {},
+      request: new Date()
     }
   }
 

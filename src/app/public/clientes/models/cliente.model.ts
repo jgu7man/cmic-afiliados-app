@@ -4,7 +4,7 @@ import { iUploadedFile } from '@marxa/storage';
 
 export interface iCliente extends iUser {
   RFC: string,
-  nombre_comercial: string,
+  comercial_nombre: string,
   INEfile: iUploadedFile,
   CIFfile: iUploadedFile,
   status: 'solicitud' | 'aceptado' | 'revoke' | 'pendiente',

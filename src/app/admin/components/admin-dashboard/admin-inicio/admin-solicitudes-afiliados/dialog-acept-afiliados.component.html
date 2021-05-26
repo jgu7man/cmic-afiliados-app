@@ -1,9 +1,9 @@
 <mat-dialog-content>
   <div class="row">
     <div class="col s12">
-      <p class="center">Enviar correo de creación de cuenta para {{peticion.nombre_comercial}} </p>
+      <p class="center">Enviar correo de creación de cuenta para {{peticion.empresa.comercial_nombre}} </p>
       <p>RFC: <span class="data-text">
-        {{peticion.RFC}}
+        {{peticion.empresa.RFC}}
       </span></p>
       <p>Email: <span class="data-text">
         {{peticion.email}}
@@ -15,7 +15,7 @@
     <div class="col s12">
       <mat-grid-list cols="2" rowHeight="1:1" >
         <mat-grid-tile class="file-container">
-          <img [src]="peticion.INEfile.url" [alt]="peticion.INEfile.fileName">
+          <img [src]="peticion.file.url" [alt]="peticion.file.fileName">
         </mat-grid-tile>
       </mat-grid-list>
 
@@ -26,12 +26,12 @@
 style="display: flex; justify-content: space-around;">
     <button mat-raised-button
     color="accent"
-    (click)="clientes.responseRequest(peticion, false)"
+    (click)="afiliados.aceptRegist(peticion.empresa.RFC, false)"
     (click)="dialog.close()"
     >Eliminar</button>
     <button mat-raised-button
     color="secondary"
-    (click)="clientes.responseRequest(peticion, true)"
+    (click)="afiliados.aceptRegist(peticion.empresa.RFC, true)"
     (click)="dialog.close()"
     >Aceptar</button>
 </mat-dialog-actions>

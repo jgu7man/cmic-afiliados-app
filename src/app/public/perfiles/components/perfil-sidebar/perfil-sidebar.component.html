@@ -15,7 +15,7 @@
     </div>
     <ng-template #default >
       <p class="center">
-        {{afiliado.datos_generales.comercial_nombre}}
+        {{afiliado.datos_generales.comercial_nombre | cutText:[0,1]}}
       </p>
 
     </ng-template>
