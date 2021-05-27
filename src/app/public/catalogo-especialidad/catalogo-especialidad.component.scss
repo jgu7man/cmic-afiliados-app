@@ -1,6 +1,9 @@
 .container {
   position: relative;
   top: -3em;
+  @media (max-width: 768px){
+    top: 0
+  }
   mat-list-option {
     cursor: pointer;
     outline: none;

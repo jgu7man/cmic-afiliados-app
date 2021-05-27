@@ -40,7 +40,6 @@ export class AdminClientesComponent implements OnInit {
     private _storage: MxStorage
   ) {
     this._clientes.getList().subscribe(list => {
-      console.log( list )
       this.clientes = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"

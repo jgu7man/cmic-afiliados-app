@@ -15,28 +15,50 @@
       max-width: 60%;
       font-weight: 900;
       text-shadow: 2px 2px 2px rgb(0 0 0 / 30%);
+      @media (max-width: 500px){
+        font-size: 3em !important;
+        max-width: 100%;
+        text-align: center;
+      }
     }
     h2 {
       font-size: 2em;
       text-shadow: 2px 2px 2px rgb(0 0 0 / 30%);
+      @media (max-width: 500px){
+        text-align: center;
+      }
     }
   }
 }
 
+@mixin red {
+  background:#e20512;
+  border-color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  border-radius: 6px;
+}
 
-#botones button {
-  margin-right: 3em;
-  border: solid 2px #fff;
-  background: transparent;
-  color: #fff;
-  font-size: 1.5em;
-  padding: 5px 15px;
-  text-shadow: 1px 1px 3px rgb(0 0 0 / 70%);
-  &:hover{
-    background:#e20512;
-    border-color: rgba(0, 0, 0, 0);
-    text-shadow: none;
-    border-radius: 6px;
+#botones {
+  @media (max-width: 768px){
+    display: flex;
+    justify-content: space-between;
+  }
+  button {
+    margin-right: 3em;
+    border: solid 2px #fff;
+    background: transparent;
+    color: #fff;
+    font-size: 1.5em;
+    padding: 5px 15px;
+    text-shadow: 1px 1px 3px rgb(0 0 0 / 70%);
+    &:hover{
+      @include red
+    }
+    @media (max-width: 768px) {
+      margin-bottom: 1em;
+      margin-right: 0;
+      @include red
+    }
   }
 }
 
@@ -46,5 +68,8 @@ mat-card {
 
 
 #slider {
-  height: 90vh
+  height: 90vh;
+  @media (max-width: 768px) {
+    height: initial;
+  }
 }

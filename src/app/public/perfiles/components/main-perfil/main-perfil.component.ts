@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MxResponsive } from '@marxa/devkit';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil, iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
@@ -30,6 +31,7 @@ export class MainPerfilComponent implements OnInit {
     private _perfil: PerfilService,
     private _afiliados: AfiliadosService,
     private _consultas: ConsultasService,
+    public responsive: MxResponsive
   ) {
     let slug = this._route.snapshot.params['slug']
     this._consultas.consulta('slug', slug).subscribe(list => {

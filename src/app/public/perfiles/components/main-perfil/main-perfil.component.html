@@ -1,24 +1,22 @@
 <mat-drawer-container>
   <!-- NAVIGATION SIDEBAR -->
-  <mat-drawer mode="side" opened="true" position="end" id="navigation-bar" >
+  <mat-drawer mode="side" opened="true" position="end" id="navigation-bar">
     <div class="container" id="catalogos">
       <div class="row">
 
         <div class="col s12">
           <g-perfil-actividades
-          [catalogo]="{'nombre': 'Tipos de obra', 'actividades': afiliado.tipos_de_obra}"
+          [catalogo]="{'nombre': 'Fuentes de trabajo', 'actividades': afiliado.fuentes_de_trabajo}"
           ></g-perfil-actividades>
         </div>
-
         <div class="col s12">
           <g-perfil-actividades
           [catalogo]="{'nombre': 'Servicios profesionales', 'actividades': afiliado.servicios_profesionales}"
           ></g-perfil-actividades>
         </div>
-
         <div class="col s12">
           <g-perfil-actividades
-          [catalogo]="{'nombre': 'Fuentes de trabajo', 'actividades': afiliado.fuentes_de_trabajo}"
+          [catalogo]="{'nombre': 'Tipos de obra', 'actividades': afiliado.tipos_de_obra}"
           ></g-perfil-actividades>
         </div>
 
@@ -28,7 +26,7 @@
   </mat-drawer>
 
   <!-- PERFIL -->
-  <mat-drawer-content >
+  <mat-drawer-content>
     <div class="container" id="perfil-content">
       <div class="row">
 

@@ -6,10 +6,45 @@
   position: relative;
 }
 
+#topbar-container {
+  z-index: 15;
+  mat-drawer {
+    width: 100%;
+    position: fixed;
+    height: 100vh;
+    .fa-2x {
+      font-size: large;
+    }
+    .mat-divider {
+      border-color: #cf3917;
+    }
+    .logo-container {
+      position: relative;
+      img {
+        width: 100%;
+        padding: 1.5em
+      }
+    }
+    .buscador-container {
+      padding: 0 1.5em;
+      display: block !important;
+    }
+    #menus .col {
+      display: flex;
+      flex-direction: column;
+      .topbar-item {
+        margin-top: .5em;
+        margin-bottom: .5em;
+      }
+    }
+  }
+}
+
 #topbar {
   position: relative;
   z-index: 20;
 }
+
 
 mat-toolbar {
   position: relative;

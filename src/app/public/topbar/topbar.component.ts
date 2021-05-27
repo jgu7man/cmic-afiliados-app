@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MxAuth } from '@marxa/auth';
-import { MxCache } from '@marxa/devkit';
+import { MxCache, MxResponsive } from '@marxa/devkit';
 import { of, race } from 'rxjs';
 import { filter, mapTo, switchMap, tap } from 'rxjs/operators';
 
@@ -25,7 +25,8 @@ export class TopbarComponent implements OnInit {
     private _clients: ClientsService,
     private _dialog: MatDialog,
     private _router: Router,
-    private _cache: MxCache
+    private _cache: MxCache,
+    public responsive: MxResponsive
   ) {
     this.loggedBehavior()
 

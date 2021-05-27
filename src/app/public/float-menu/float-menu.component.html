@@ -15,19 +15,29 @@
   class="float-menu" [ngClass]="{'show':catalogSelected !== undefined}" >
 
 
-    <mat-drawer [opened]="true" mode="side" id="float-menu-side" >
+    <mat-drawer #especialidades [opened]="openDrawer" mode="side" id="float-menu-side" >
+      <button mat-icon-button (click)="catalogSelected = undefined"
+      *ngIf="responsive.small || responsive.med" >
+          <i class="fas fa-times fa-lg white-text"></i>
+      </button>
       <ul class="especialidades" *ngIf="catalogSelected">
         <li class="especialidad" *ngFor="let especialidad of catalogSelected.especialidades; index as i"
         [ngClass]="{'selected': especialidadSelected === i}"
-        (click)="especialidadSelected = i">
+        (click)="selectEspecialidad(i)">
           {{especialidad.nombre}}
         </li>
       </ul>
     </mat-drawer>
 
-    <mat-drawer-content *ngIf="catalogSelected !== undefined">
-      <div class="especialidad-selected" *ngIf="catalogSelected.especialidades[especialidadSelected] as especialidad">
+    <mat-drawer-content
+    *ngIf="catalogSelected !== undefined && especialidadSelected !== undefined">
+      <div class="especialidad-selected"
+      *ngIf="catalogSelected.especialidades[especialidadSelected] as especialidad">
         <ng-container *ngIf="Subespecialidades[0] !== undefined; else notSub">
+          <button mat-icon-button (click)="especialidades.toggle()"
+          *ngIf="responsive.small || responsive.med" >
+              <i class="fas fa-arrow-left fa-lg"></i>
+          </button>
           <ul class="actividades-list" *ngFor="let sub of Subespecialidades">
             <li class="subespecialidad"> {{sub}} </li>
             <ng-container *ngFor="let actividad of especialidad.actividades">

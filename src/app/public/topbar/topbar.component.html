@@ -1,98 +1,197 @@
-<div id="topbar">
-  <div id="red-bar"></div>
-  <mat-toolbar class="mat-elevation-z5">
+<mat-drawer-container id="topbar-container">
+  <!-- MOBILE MENU -->
+  <mat-drawer #sidebar position="end">
+    <div class="container" id="mobile-menu">
+      <div class="row">
+        <div class="col s12" (click)="sidebar.toggle()">
+          <button mat-icon-button>
+              <i class="fas fa-times fa-2x"></i>
+          </button>
+        </div>
+        <div class="col s12">
+          <!-- LOGO -->
+          <div class="logo-container" [routerLink]="['/']">
+            <img src="/assets/img/cmic-logo-h.png" alt="logo CMIC" />
+          </div>
 
+          <!-- BUSCADOR -->
+          <div class="buscador-container">
+            <span class="center">Buscar actividad o empresa</span>
+            <g-searcher></g-searcher>
+          </div>
+        </div>
+      </div>
 
-    <!-- LOGO -->
-    <div class="logo-container" [routerLink]="['/']">
-      <img src="/assets/img/cmic-logo-h.png" alt="logo CMIC">
+      <mat-divider color="primary"></mat-divider>
+
+      <!-- MENÚS -->
+      <div class="row" id="menus">
+
+        <div class="col s12">
+          <!-- logged -->
+          <ng-container *ngIf="logged; else unlogged">
+            <!-- Logged afiliado -->
+            <ng-container *ngIf="logged == 'manager'">
+              <a class="topbar-item link"
+              [routerLink]="['/afiliados/perfil']"
+              [routerLinkActive]="'active'"
+              >
+                Administrar Perfil
+              </a>
+            </ng-container>
+
+            <a class="topbar-item link"
+            [routerLink]="['/contacto']"
+            [routerLinkActive]="'active'"
+            >Contacto</a>
+
+            <a class="topbar-item link" (click)="onSignOut()"> Cerrar Sesión </a>
+          </ng-container>
+          <!-- unlogged -->
+          <ng-template #unlogged>
+            <a class="topbar-item link" [routerLink]="['/afiliados/login']">
+              Ingresar Afiliado
+            </a>
+            <a class="topbar-item link" [routerLink]="['/afiliados/registro']">
+              Registrarse Afiliado
+            </a>
+
+            <mat-divider></mat-divider>
+            <a class="topbar-item link" [routerLink]="['/clientes/login']">
+              Iniciar sesión Cliente
+            </a>
+            <a class="topbar-item link" [routerLink]="['/clientes/solicitud']">
+              Solicitar acceso como cliente
+            </a>
+
+            <mat-divider></mat-divider>
+
+            <a
+            class="topbar-item link"
+            [routerLink]="['/contacto']"
+            [routerLinkActive]="'active'"
+            >Contacto</a
+          >
+          </ng-template>
+        </div>
+
+      </div>
     </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div id="topbar">
+      <div id="red-bar"></div>
+      <mat-toolbar class="mat-elevation-z5">
+        <!-- MOBILE -->
+        <ng-template #mobile>
+          <!-- LOGO -->
+          <div class="logo-container" [routerLink]="['/']">
+            <img src="/assets/img/cmic-logo.png" alt="logo CMIC" />
+          </div>
 
-    <!-- BUSCADOR -->
-    <div class="buscador-container">
-
-      <g-searcher></g-searcher>
-
-    </div>
-
-
-    <!-- MENÚS -->
-    <div>
-      <a class="topbar-item link" [routerLink]="[ '/contacto' ]" [routerLinkActive]="'active'">Contacto</a>
-
-
-      <ng-container *ngIf="logged; else unlogged">
-
-
-        <!-- Logged afiliado -->
-        <ng-container *ngIf="logged == 'manager'; else cliente">
-
-          <a  class="topbar-item" color="primary"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
-            Afiliado
-          </a>
-          <mat-menu #unloggedMenu="matMenu">
-            <button mat-menu-item [routerLink]="['/afiliados/perfil']">
-              Administrar Perfil
-            </button>
-            <button mat-menu-item (click)="onSignOut()">
-              Cerrar Sesión
-            </button>
-
-          </mat-menu>
-
-        </ng-container>
-
-        <!-- Logged cliente -->
-        <ng-template #cliente >
-
-          <a  class="topbar-item" color="primary"  mat-icon-button [mat-menu-trigger-for]="unloggedMenu">
-            Cliente
-          </a>
-          <mat-menu #unloggedMenu="matMenu">
-            <button mat-menu-item (click)="onSignOut()">
-              Cerrar Sesión
-            </button>
-
-          </mat-menu>
-
+          <button mat-icon-button (click)="sidebar?.toggle()">
+            <i class="fas fa-bars"></i>
+          </button>
         </ng-template>
-      </ng-container>
 
+        <!-- DESKTOP -->
+        <ng-container *ngIf="responsive.large; else mobile">
+          <!-- LOGO -->
+          <div class="logo-container" [routerLink]="['/']">
+            <img src="/assets/img/cmic-logo-h.png" alt="logo CMIC" />
+          </div>
 
+          <!-- BUSCADOR -->
+          <div class="buscador-container">
+            <g-searcher></g-searcher>
+          </div>
 
+          <!-- MENÚS -->
+          <div>
+            <a
+              class="topbar-item link"
+              [routerLink]="['/contacto']"
+              [routerLinkActive]="'active'"
+              >Contacto</a
+            >
 
+            <ng-container *ngIf="logged; else unlogged">
+              <!-- Logged afiliado -->
+              <ng-container *ngIf="logged == 'manager'; else cliente">
+                <a
+                  class="topbar-item"
+                  color="primary"
+                  mat-icon-button
+                  [mat-menu-trigger-for]="unloggedMenu"
+                >
+                  Afiliado
+                </a>
+                <mat-menu #unloggedMenu="matMenu">
+                  <button mat-menu-item [routerLink]="['/afiliados/perfil']">
+                    Administrar Perfil
+                  </button>
+                  <button mat-menu-item (click)="onSignOut()">
+                    Cerrar Sesión
+                  </button>
+                </mat-menu>
+              </ng-container>
 
+              <!-- Logged cliente -->
+              <ng-template #cliente>
+                <a
+                  class="topbar-item"
+                  color="primary"
+                  mat-icon-button
+                  [mat-menu-trigger-for]="unloggedMenu"
+                >
+                  Cliente
+                </a>
+                <mat-menu #unloggedMenu="matMenu">
+                  <button mat-menu-item (click)="onSignOut()">
+                    Cerrar Sesión
+                  </button>
+                </mat-menu>
+              </ng-template>
+            </ng-container>
 
-
-      <!-- Not logged -->
-      <ng-template #unlogged>
-        <a class="topbar-item link" mat-icon-button [mat-menu-trigger-for]="afiliadoMenu" [routerLinkActive]="'active'">
-            Afiliado
-        </a>
-        <mat-menu #afiliadoMenu="matMenu">
-            <button mat-menu-item [routerLink]="['/afiliados/login']">
-                Inciar sesión
-            </button>
-            <button mat-menu-item [routerLink]="['/afiliados/registro']">
-                Registrarse
-            </button>
-        </mat-menu>
-        <a class="topbar-item link" mat-icon-button [mat-menu-trigger-for]="clienteMenu" [routerLinkActive]="'active'">
-            Cliente
-        </a>
-        <mat-menu #clienteMenu="matMenu">
-            <button mat-menu-item
-            [routerLink]="['/clientes/login']">
-                Ingresar
-            </button>
-            <button mat-menu-item
-            [routerLink]="['/clientes/solicitud']">
-                Solicitar acceso
-            </button>
-
-        </mat-menu>
-
-      </ng-template>
+            <!-- Not logged -->
+            <ng-template #unlogged>
+              <a
+                class="topbar-item link"
+                mat-icon-button
+                [mat-menu-trigger-for]="afiliadoMenu"
+                [routerLinkActive]="'active'"
+              >
+                Afiliado
+              </a>
+              <mat-menu #afiliadoMenu="matMenu">
+                <button mat-menu-item [routerLink]="['/afiliados/login']">
+                  Inciar sesión
+                </button>
+                <button mat-menu-item [routerLink]="['/afiliados/registro']">
+                  Registrarse
+                </button>
+              </mat-menu>
+              <a
+                class="topbar-item link"
+                mat-icon-button
+                [mat-menu-trigger-for]="clienteMenu"
+                [routerLinkActive]="'active'"
+              >
+                Cliente
+              </a>
+              <mat-menu #clienteMenu="matMenu">
+                <button mat-menu-item [routerLink]="['/clientes/login']">
+                  Ingresar
+                </button>
+                <button mat-menu-item [routerLink]="['/clientes/solicitud']">
+                  Solicitar acceso
+                </button>
+              </mat-menu>
+            </ng-template>
+          </div>
+        </ng-container>
+      </mat-toolbar>
     </div>
-  </mat-toolbar>
-</div>
+  </mat-drawer-content>
+</mat-drawer-container>
