@@ -88,6 +88,6 @@ export class AdminClientesComponent implements OnInit {
   }
 
   onDownload() {
-    this._storage.downloadList(this.clientes)
+    this._storage.downloadList(this.clientes, 'Lista de clientes')
   }
 }

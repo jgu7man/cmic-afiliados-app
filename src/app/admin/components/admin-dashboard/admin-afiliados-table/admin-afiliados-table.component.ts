@@ -71,7 +71,7 @@ export class AdminAfiliadosTableComponent implements OnInit {
   }
 
   onDownload() {
-    this._storage.downloadList(this.afiliados)
+    this._storage.downloadList(this.afiliados, 'Lista de afiliados')
   }
 
 }
