@@ -1,12 +1,22 @@
 <div class="container">
-  <div class="row">
-    <div class="col s12">
-      <g-admin-solicitudes-clientes></g-admin-solicitudes-clientes>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col s12">
-      <g-admin-solicitudes-afiliados></g-admin-solicitudes-afiliados>
-    </div>
-  </div>
+  <mat-tab-group dynamicHeight="false">
+    <mat-tab label="Solicitudes de cliente">
+      <div class="row">
+        <div class="col s12">
+          <g-admin-solicitudes-clientes></g-admin-solicitudes-clientes>
+        </div>
+      </div>
+
+    </mat-tab>
+    <mat-tab label="Solicitudes de afiliación">
+      <div class="row">
+        <div class="col s12">
+          <g-admin-solicitudes-afiliados></g-admin-solicitudes-afiliados>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Contacto">
+      <g-admin-contacto></g-admin-contacto>
+    </mat-tab>
+  </mat-tab-group>
 </div>

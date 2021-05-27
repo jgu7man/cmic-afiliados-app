@@ -33,6 +33,7 @@ import { AdminSolicitudesClientesComponent } from './components/admin-dashboard/
 import { AdminSolicitudesAfiliadosComponent, DialogAceptAfiliadoComponent } from './components/admin-dashboard/admin-inicio/admin-solicitudes-afiliados/admin-solicitudes-afiliados.component';
 import { DialogAceptClientComponent } from './components/admin-dashboard/admin-inicio/admin-solicitudes-clientes/admin-solicitudes-clientes.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { AdminContactoComponent, DialogContactoMensajeComponent } from './components/admin-dashboard/admin-inicio/admin-contacto/admin-contacto.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { PipesModule } from '../pipes/pipes.module';
     AdminInicioComponent,
     DialogAceptClientComponent,
     DialogAceptAfiliadoComponent,
+    DialogContactoMensajeComponent,
     CreateAdminAccountComponent,
     AdminClientesComponent,
     AdminSeeClientComponent,
@@ -58,7 +60,8 @@ import { PipesModule } from '../pipes/pipes.module';
     AdminSliderComponent,
     AdminSlideComponent,
     AdminSolicitudesClientesComponent,
-    AdminSolicitudesAfiliadosComponent
+    AdminSolicitudesAfiliadosComponent,
+    AdminContactoComponent
   ],
   imports: [
     CommonModule,

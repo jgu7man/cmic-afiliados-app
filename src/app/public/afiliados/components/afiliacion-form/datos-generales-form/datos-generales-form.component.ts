@@ -91,7 +91,6 @@ export class DatosGeneralesFormComponent implements OnInit, OnDestroy {
         )
       }
       this.generalesForm.patchValue({ RFC: rfc })
-      console.log(this.generalesForm.value)
 
     })
   }
@@ -101,16 +100,13 @@ export class DatosGeneralesFormComponent implements OnInit, OnDestroy {
     return this.generalesForm.valueChanges
       .pipe(delay(1000),startWith(true))
       .subscribe((changes) => {
-        console.log( changes )
         let nombre = this.generalesForm.get('comercial_nombre')
         if (nombre) {
           let slug = nombre.value.replace(/\s+/g, '-').toLowerCase();
           this.generalesForm.patchValue({slug})
         }
 
-        console.log( this.generalesForm.value )
         this.changes.emit(this.generalesForm.value)
-        console.log( this.generalesForm.invalid || this.generalesForm.pristine )
         this.invalid.emit(
           this.generalesForm.invalid || this.generalesForm.pristine
         )

@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
+import { MxAlert } from '@marxa/devkit';
+import { MxStorage } from '@marxa/storage';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { SlideModel } from 'src/app/shared/slider/gdev-slide.model';
 import { GdevSliderService } from 'src/app/shared/slider/gdev-slider.service';
 
@@ -15,7 +18,9 @@ export class AdminSliderComponent implements OnInit, OnDestroy {
   currentSlide?: SlideModel
   slidesSubscription: Subscription
   constructor(
-    private _slider: GdevSliderService
+    private _slider: GdevSliderService,
+    private _storage: MxStorage,
+    private _alert: MxAlert
   ) {
     this.slidesSubscription = this._slider.getSlidesList('sitio')
       .subscribe(list => {this.slides = list})
@@ -25,7 +30,7 @@ export class AdminSliderComponent implements OnInit, OnDestroy {
   }
 
   onChanges(event: any) {
-    this.currentSlide = event
+    this.currentSlide = { ...this.currentSlide, ...event}
   }
 
   onAddSlide() {
@@ -34,8 +39,10 @@ export class AdminSliderComponent implements OnInit, OnDestroy {
   }
 
   onUpdateSlide() {
-    if (this.currentSlide)
+    if (this.currentSlide) {
       this._slider.updateSlide(this.currentSlide, 'sitio')
+      .then(() => this._alert.notify('Slide guardada'))
+    }
   }
 
   ngOnDestroy() {

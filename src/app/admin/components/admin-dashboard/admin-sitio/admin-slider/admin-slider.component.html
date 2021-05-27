@@ -8,15 +8,14 @@ listName="Slides"
 (onSave)="onUpdateSlide()"
 [List]="slides"
 itemSelector="nombre"
+mxStrechHeight
 >
     <ng-template #select let-slide="item" >
       <g-admin-slide (changes)="onChanges($event)" [slide]="slide"></g-admin-slide>
-        <!-- <gdev-branch-form (updated)="onUpdate()" [Sucursal]="branch"></gdev-branch-form> -->
       </ng-template>
 
       <ng-template #add>
         <g-admin-slide (changes)="onChanges($event)"></g-admin-slide>
-        <!-- <gdev-branch-form (updated)="onUpdate()"></gdev-branch-form> -->
     </ng-template>
 
 </gdev-list-crud>

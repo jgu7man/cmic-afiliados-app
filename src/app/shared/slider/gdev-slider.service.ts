@@ -82,12 +82,11 @@ export class GdevSliderService {
     }
   }
 
-  async updateSlide( slide: SlideModel, collection?: string ) {
+  async updateSlide(slide: SlideModel, collection?: string) {
     const slidesRef = this.fs.collection( collection
       ? `${ collection }/slider/slides`
       : 'gdev-tools/slider/slides' ).ref
     slidesRef.doc( slide.id ).update( slide )
-    // this.alertas.notify('Slide modificada')
     return
   }
 

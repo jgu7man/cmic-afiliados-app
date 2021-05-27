@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { iUploadedFile } from '@marxa/storage';
+import { iUploadedFile, MxStorage } from '@marxa/storage';
 import { SlideModel } from 'src/app/shared/slider/gdev-slide.model';
 
 @Component({
@@ -18,13 +18,16 @@ export class AdminSlideComponent implements OnInit, OnDestroy {
     enlace: new FormControl(''),
     activado: new FormControl(false),
     newTab: new FormControl(true),
+    id: new FormControl('')
   })
 
   @Input() slide?: SlideModel
 
   changesSubscription: Subscription
   @Output() changes: EventEmitter<any> = new EventEmitter()
-  constructor() {
+  constructor(
+    public storage: MxStorage
+  ) {
     this.changesSubscription = this.slideForm.valueChanges
       .subscribe(data => {
         this.changes.emit(data)
@@ -38,7 +41,10 @@ export class AdminSlideComponent implements OnInit, OnDestroy {
   onFileUploaded(files: iUploadedFile[]) {
     this.slideForm.patchValue({ imageURL: files[0].url })
     if (this.slide) this.slide.imageURL = files[0].url as string
+    console.log( this.slide )
   }
+
+
 
   ngOnDestroy(): void {
     this.changesSubscription.unsubscribe()

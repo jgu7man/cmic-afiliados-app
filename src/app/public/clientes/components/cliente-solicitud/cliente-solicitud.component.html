@@ -63,12 +63,12 @@
                 <mat-label>Nombre comercial</mat-label>
                 <input
                   matInput
-                  formControlName="nombre_comercial"
-                  type="nombre_comercial"
+                  formControlName="comercial_nombre"
+                  type="comercial_nombre"
                   required
-                  name="nombre_comercial"
+                  name="comercial_nombre"
                 />
-                <mat-error *ngIf="datosForm.hasError('required', 'nombre_comercial')">
+                <mat-error *ngIf="datosForm.hasError('required', 'comercial_nombre')">
                   Por favor ingrese el nombre comercial de su empresa o negocio
                 </mat-error>
 
@@ -88,7 +88,7 @@
             <ng-template matStepLabel>Identificación</ng-template>
             <p>Sube un archivo de la identificación del Representante Legal (INE por ejemplo)</p>
             <div class="col s12">
-              <mx-upload-files
+              <mx-files-picker
               [maxFileSize]="2097152"
               [path]="'clientes/solicitudes/'+datosForm.get('RFC')?.value+'/'"
               [prefixName]="'INEfile'"
@@ -97,8 +97,9 @@
               [uploadStatus]="false"
               dropzoneLabel="Sube un archivo de la INE por ejemplo. Toca o arrastra el archivo"
               uploadButtonLabel="Subir"
+              [disable]="storage_.files.length < 1"
               (uploadComplete)="onFileUploaded($event)">
-              </mx-upload-files>
+              </mx-files-picker>
             </div>
             <div class="col s12">
               <!-- <button mat-raised-button matStepperPrevious>Atrás</button> -->
@@ -116,7 +117,7 @@
             <ng-template matStepLabel>Registro de contribuyentes</ng-template>
             <p>Sube un archivo de la constancia de la situación fiscal de la empresa</p>
             <div class="col s12">
-              <mx-upload-files
+              <mx-files-picker
               [maxFileSize]="2097152"
               [path]="'clientes/solicitudes/'+datosForm.get('RFC')?.value+'/'"
               [prefixName]="'CIFfile'"
@@ -125,8 +126,9 @@
               [uploadStatus]="false"
               dropzoneLabel="Sube un archivo de constancia de sitiacuón fiscal. Toca o arrastra el archivo"
               uploadButtonLabel="Subir"
+              [disable]="storage_.files.length < 1"
               (uploadComplete)="onFileUploaded($event)">
-              </mx-upload-files>
+              </mx-files-picker>
             </div>
             <div class="col s12">
               <!-- <button mat-raised-button matStepperPrevious>Atrás</button> -->

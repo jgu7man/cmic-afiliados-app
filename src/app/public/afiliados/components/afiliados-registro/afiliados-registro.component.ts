@@ -12,6 +12,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
+import { MxStorage } from '@marxa/storage';
 import { take } from 'rxjs/operators';
 
 import { DatosGeneralesModel, iAfiliadoRequest, iManager } from '../../models/afiliados.model';
@@ -48,9 +49,7 @@ export class AfiliadosRegistroComponent implements OnInit {
   fileForm: FormGroup = new FormGroup({
     file: new FormControl('', [Validators.required])
   })
-  privacyForm: FormGroup = new FormGroup({
-    aviso_privacidad: new FormControl(false, [Validators.required])
-  })
+  privacy: boolean = false
 
 
   invitado: boolean = false
@@ -59,6 +58,7 @@ export class AfiliadosRegistroComponent implements OnInit {
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
     private _afiliadosService: AfiliadosService,
+    public storage: MxStorage,
   ) {
     this.afiliado = new DatosGeneralesModel('','','')
     this.request = {
@@ -70,31 +70,26 @@ export class AfiliadosRegistroComponent implements OnInit {
   }
 
   onFormChanges(event: any) {
-    console.log( event )
     this.afiliado = event
   }
 
   onFileUploaded(event: any) {
-    console.log( event )
     this.fileForm.patchValue({file: event})
   }
 
   get validRequest() {
-    console.log({
-      datos: this.datosForm.valid,
-      prvacy: this.privacyForm.valid,
-      file: this.fileForm.valid
-    })
-    if (this.afiliado.slug) {
-      return this.datosForm.valid && this.privacyForm.valid && this.fileForm.valid
+    if (this.afiliado.slug != '') {
+      return this.datosForm.valid && this.privacy && this.fileForm.valid
     } else {
       return false
     }
   }
 
+
   onSubmit(): void {
     this.request.email = this.datosForm.controls.email.value
     this.request.file = this.fileForm.controls.file.value
+    this.request.empresa = this.afiliado
     this._afiliadosService.registRequest(this.request);
   }
 
@@ -102,9 +97,7 @@ export class AfiliadosRegistroComponent implements OnInit {
   OpenPrivacidadRegistro(): void {
     const dialogRef = this.dialog.open(DialogPrivacidadRegistro);
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.privacyForm.controls.aviso_privacidad.setValue(true);
-      }
+      if (result) { this.privacy = true }
     });
   }
 

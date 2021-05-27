@@ -13,3 +13,8 @@ mat-card {
   width: 100% !important;
 }
 
+::ng-deep {
+  .mat-tab-body-content {
+    min-height: 75vh;
+  }
+}

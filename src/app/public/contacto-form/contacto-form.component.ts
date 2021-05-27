@@ -28,7 +28,7 @@ export class ContactoFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this._afs.collection('mensajes_publicos').add({
+    this._afs.collection('contacto').add({
       ...this.contactoForm.value,
       enviado: new Date()
     }).then(() => {

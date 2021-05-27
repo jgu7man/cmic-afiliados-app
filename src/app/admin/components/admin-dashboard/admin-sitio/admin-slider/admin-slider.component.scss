@@ -1,0 +1,10 @@
+gdev-list-crud {
+  ::ng-deep {
+    mat-drawer {
+      height:fit-content;
+      .mat-drawer-inner-container {
+        padding-bottom: 5em;
+      }
+    }
+  }
+}

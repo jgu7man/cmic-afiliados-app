@@ -25,7 +25,7 @@
     "@angular/router": "~11.0.5",
     "@marxa/auth": "0.0.1",
     "@marxa/devkit": "0.0.3",
-    "@marxa/storage": "0.0.3",
+    "@marxa/storage": "0.0.12",
     "export-to-csv": "^0.2.1",
     "firebase": "^7.0 || ^8.0",
     "gdev-alert": "0.0.5",

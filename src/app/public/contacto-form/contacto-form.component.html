@@ -96,7 +96,11 @@
 
         </mat-card-content>
         <mat-card-actions style="justify-content: center; display:flex">
-          <button mat-raised-button color="accent" [disabled]="contactoForm.invalid">
+          <button mat-raised-button
+          color="accent"
+          [disabled]="contactoForm.invalid"
+          (click)="onSubmit()"
+          >
             Enviar
           </button>
         </mat-card-actions>
