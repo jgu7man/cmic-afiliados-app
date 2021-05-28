@@ -16,7 +16,7 @@ import { iCliente } from 'src/app/public/clientes/models/cliente.model';
 export class AdminSolicitudesClientesComponent implements OnInit {
   clientes: iPeticion[] = []
   displayedColumns = [
-    'nombre_comercial', 'email', 'request', 'options'
+    'comercial_nombre', 'email', 'request', 'options'
   ]
   @ViewChild(MatSort) sort?: MatSort;
   dataSource = new MatTableDataSource(this.clientes);

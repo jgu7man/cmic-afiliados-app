@@ -20,7 +20,7 @@ export class AdminClientesComponent implements OnInit {
 
   clientes: iCliente[] = []
   displayedColumns = [
-    'nombre_comercial', 'email', 'request', 'options'
+    'comercial_nombre', 'email', 'request', 'options'
   ]
   @ViewChild(MatSort) sort?: MatSort;
   dataSource = new MatTableDataSource(this.clientes);

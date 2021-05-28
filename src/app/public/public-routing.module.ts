@@ -10,7 +10,7 @@ import { ContactoComponent } from './pages/contacto/contacto.component';
 
 const routes: Routes = [
   { path: '', component: PublicComponent  , children:[
-    { path: '', component: InicioComponent },
+    { path: '', component: InicioComponent, data: {title: 'Inicio'}},
     {
       path: 'afiliados',
       loadChildren: () => import('./afiliados/afiliados.module').then(m => m.AfiliadosModule)

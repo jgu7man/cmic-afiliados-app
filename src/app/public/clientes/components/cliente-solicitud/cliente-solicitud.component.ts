@@ -48,7 +48,7 @@ export class ClienteSolicitudComponent implements OnInit {
     // this.accountForm = new FormGroup({
     //   RFC: new FormControl( '', [Validators.required, ]),
     //   email: new FormControl('', [Validators.required]),
-    //   nombre_comercial: new FormControl('', [Validators.required]),
+    //   comercial_nombre: new FormControl('', [Validators.required]),
     //   INEfile: new FormControl('', [Validators.required]),
     //   CIFfile: new FormControl('', [Validators.required])
     // })
@@ -81,6 +81,7 @@ export class ClienteSolicitudComponent implements OnInit {
 
   onFileUploaded(files: iUploadedFile[]) {
     let file = files[0]
+    this.storage_.showDropzone = true
     if (file.fileName?.includes('INEfile')) {
       this.INEfileForm.patchValue({ INEfile: file })
       this._alert.notify('INE Cargada')

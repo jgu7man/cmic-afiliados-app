@@ -31,9 +31,9 @@
                 <table mat-table [dataSource]="clientes" matSort>
 
                   <!-- Nombre comercial Column -->
-                  <ng-container matColumnDef="nombre_comercial">
+                  <ng-container matColumnDef="comercial_nombre">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Comercio </th>
-                    <td mat-cell *matCellDef="let cliente"> {{cliente.nombre_comercial}} </td>
+                    <td mat-cell *matCellDef="let cliente"> {{cliente.comercial_nombre}} </td>
                   </ng-container>
 
                   <!-- Email Column -->

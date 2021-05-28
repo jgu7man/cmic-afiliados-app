@@ -74,6 +74,7 @@ export class AfiliadosRegistroComponent implements OnInit {
   }
 
   onFileUploaded(event: any) {
+    this.storage.showDropzone = true
     this.fileForm.patchValue({file: event})
   }
 
