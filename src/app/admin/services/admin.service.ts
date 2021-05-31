@@ -35,6 +35,9 @@ export class AdminService {
   async invite(email: string) {
     let stored = await this.retriveAdmin(email);
     const adminsRef = this._afs.collection('admins').ref
+    let urlSplited = window.location.href.split('/')
+    let currentURL = urlSplited[2].includes('localhost')
+      ? 'localhost:4200' : `https://${urlSplited[2]}`
     if (!stored) {
       adminsRef.doc(email).set({ email })
       this._afs.collection( 'mail' ).ref.add( {
@@ -44,7 +47,7 @@ export class AdminService {
           text: `Se te ha invitado a registrarte como administrador de la plataforma de CMIC \n
 
           Por favor da click en el siguiente enlace:\n
-          https://cmic-platform.web.app/create?perfil=admin&email=${email}`
+          ${currentURL}/admin/create?perfil=admin&email=${email}`
         }
       } )
       this._alert.notify('Correo enviado')

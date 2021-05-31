@@ -88,7 +88,8 @@ export class AfiliadosService {
       const requestDoc = await requestRef.get()
       const afiliadoRef = this._afs.doc(`afiliados/${RFC}`).ref;
       const splitDomain = window.location.href.split('/')
-      const domain = splitDomain[0] === 'localhost' ? splitDomain[0] : splitDomain[2]
+      const domain = splitDomain[0] === 'localhost' ? splitDomain[0]
+        : 'https://' + splitDomain[2]
 
 
       if (requestDoc.exists) {
@@ -107,7 +108,7 @@ export class AfiliadosService {
               text: `Se ha aceptado la petición para registrarte como afiliado en la plataforma de CMIC
 
               Por favor da click en el siguiente enlace para continuar con el registro:
-              https://${domain}/afiliados/create?email=${email}&rfc=${RFC}"
+              ${domain}/afiliados/create?email=${email}&rfc=${RFC}"
 
               Si no has mandado una solicitud de registro, omite este correo`
             }

@@ -15,7 +15,14 @@
   <!-- Last Access Column -->
   <ng-container matColumnDef="lastAccess">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Último Acceso </th>
-    <td mat-cell *matCellDef="let admin"> {{admin.lastAccess | toDate | date: "short"}} </td>
+    <td mat-cell *matCellDef="let admin">
+      <ng-container *ngIf="admin.lastAccess; else noDate">
+        {{admin.lastAccess | toDate | date: "short"}}
+      </ng-container>
+      <ng-template #noDate >
+        -
+      </ng-template>
+    </td>
   </ng-container>
 
   <!-- Last Access Column -->

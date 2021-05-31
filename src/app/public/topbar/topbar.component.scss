@@ -8,6 +8,7 @@
 
 #topbar-container {
   z-index: 15;
+  overflow: hidden;
   mat-drawer {
     width: 100%;
     position: fixed;

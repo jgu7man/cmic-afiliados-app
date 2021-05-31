@@ -39,6 +39,11 @@ export class AccesosService {
       .pipe(take(1))
       .toPromise()
 
+    let urlSplited = window.location.href.split('/')
+    let currentURL = urlSplited[2].includes('localhost')
+      ? 'localhost:4200' : `https://${urlSplited[2]}`
+
+
     if (!stored) {
       this._afs.collection( 'mail' ).ref.add( {
         to: email,
@@ -47,7 +52,7 @@ export class AccesosService {
           text: `Se te ha invitado a registrarte como afiliado CMIC \n
 
           Por favor da click en el siguiente enlace:\n
-          https://cmic-platform.web.app/afiliados/registro`
+          ${currentURL}/afiliados/registro`
         }
       } )
       this._alert.notify('Correo enviado')

@@ -8,9 +8,9 @@ import { ClienteSolicitudComponent } from './components/cliente-solicitud/client
 
 const routes: Routes = [
   { path: '', component: ClientesComponent },
-  { path: 'login', component: ClienteLoginComponent },
-  { path: 'registro', component: ClienteRegistroComponent },
-  { path: 'solicitud', component: ClienteSolicitudComponent },
+  { path: 'login', component: ClienteLoginComponent, data:{title: 'Login'}, },
+  { path: 'registro', component: ClienteRegistroComponent,data:{title: 'Registro'}, },
+  { path: 'solicitud', component: ClienteSolicitudComponent, data:{title: 'Solicitud'}, },
 ];
 
 @NgModule({

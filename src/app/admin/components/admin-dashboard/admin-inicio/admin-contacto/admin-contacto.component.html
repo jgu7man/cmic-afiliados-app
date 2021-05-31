@@ -8,11 +8,11 @@
       <table mat-table [dataSource]="mensajes" matSort>
 
         <!-- Fecha -->
-        <ng-container matColumnDef="date">
+        <ng-container matColumnDef="enviado">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
           <td mat-cell *matCellDef="let mensaje">
-            <ng-container *ngIf="mensaje.date; else noDate">
-              {{mensaje.date | toDate | date: 'short'}}
+            <ng-container *ngIf="mensaje.enviado; else noDate">
+              {{mensaje.enviado | toDate | date: 'short'}}
             </ng-container>
             <ng-template #noDate >
               No fecha

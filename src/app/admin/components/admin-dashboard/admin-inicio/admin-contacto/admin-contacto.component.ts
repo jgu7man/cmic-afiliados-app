@@ -17,7 +17,7 @@ export class AdminContactoComponent implements OnInit {
 
   mensajes: iMensaje[] = []
   displayedColumns = [
-    'date', 'nombre', 'options'
+    'enviado', 'nombre', 'options'
   ]
   @ViewChild(MatSort) sort?: MatSort;
   dataSource = new MatTableDataSource(this.mensajes);

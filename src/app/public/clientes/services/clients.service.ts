@@ -63,7 +63,8 @@ export class ClientsService {
     let stored = await this.retriveClient(email);
     const clientsRef = this._afs.collection('clientes').ref
     const splitDomain = window.location.href.split('/')
-    const domain = splitDomain[0] === 'localhost' ? splitDomain[0] : splitDomain[2]
+    const domain = splitDomain[0] === 'localhost' ? splitDomain[0]
+      : 'https://'+splitDomain[2]
     if (!stored) {
       clientsRef.doc(email).set({ email })
       this._afs.collection( 'mail' ).ref.add( {
@@ -73,7 +74,7 @@ export class ClientsService {
           text: `Se te ha invitado a registrarte como cliente en la plataforma de CMIC
 
           Por favor da click en el siguiente enlace:
-          https://${domain}/create?perfil=client&email=${email}`
+          ${domain}/create?perfil=client&email=${email}`
         }
       } )
       this._alert.notify('Correo enviado')
@@ -109,7 +110,8 @@ export class ClientsService {
     const peticionDoc = await peticionRef.get()
     const clientRef = this._afs.collection<iCliente>('clientes').ref.doc(email)
     const splitDomain = window.location.href.split('/')
-    const domain = splitDomain[0] === 'localhost' ? splitDomain[0] : splitDomain[2]
+    const domain = splitDomain[0] === 'localhost' ? splitDomain[0]
+      : 'https://'+splitDomain[2]
 
     if (peticionDoc.exists) {
       if (acept) {
@@ -121,7 +123,7 @@ export class ClientsService {
             text: `Se ha aceptado la petición para registrarte como cliente en la plataforma de CMIC
 
             Por favor da click en el siguiente enlace para continuar con el registro:
-            https://${domain}/clientes/registro?email=${email}
+            ${domain}/clientes/registro?email=${email}
 
             Si no has mandado una solicitud de registro, omite este correo`
           }

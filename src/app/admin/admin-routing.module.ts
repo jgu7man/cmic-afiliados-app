@@ -12,16 +12,17 @@ import { AdminSitioComponent } from './components/admin-dashboard/admin-sitio/ad
 import { CreateAdminAccountComponent } from './components/create-admin-account/create-admin-account.component';
 
 const routes: Routes = [
-  { path: '', component: AdminComponent, children: [
+  { path: '', component: AdminComponent, data:{title: 'Administración'}, children: [
     { path: '', component: AdminDashboardComponent, children:[
-      { path: '', component: AdminInicioComponent },
-      { path: 'accesos', component: AdminAccesosComponent },
-      { path: 'afiliados', component: AdminAfiliadosTableComponent },
-      { path: 'clientes', component: AdminClientesComponent },
-      { path: 'sitio', component: AdminSitioComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'panel' },
+      { path: 'panel', component: AdminInicioComponent, data:{title: 'Panel'} },
+      { path: 'accesos', component: AdminAccesosComponent, data:{title: 'Accesos'} },
+      { path: 'afiliados', component: AdminAfiliadosTableComponent, data:{title: 'Afiliados'} },
+      { path: 'clientes', component: AdminClientesComponent, data:{title: 'Clientes'} },
+      { path: 'sitio', component: AdminSitioComponent, data:{title: 'Sitio'} },
     ] },
-    { path: 'login', component: AdminLoginComponent },
-    { path: 'create', component: CreateAdminAccountComponent },
+    { path: 'login', component: AdminLoginComponent, data:{title: 'Login'} },
+    { path: 'create', component: CreateAdminAccountComponent, data:{title: 'Crear cuenta'} },
   ] },
 
 ];

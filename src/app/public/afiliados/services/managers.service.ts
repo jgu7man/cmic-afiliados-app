@@ -77,6 +77,9 @@ export class ManagersService {
 
         const perfil = await this._getPerfil(RFC as string)
         await managersRef.doc(email).set({ email, RFC })
+        let urlSplited = window.location.href.split('/')
+        let currentURL = urlSplited[2].includes('localhost')
+          ? 'localhost:4200' : `https://${urlSplited[2]}`
 
         this._afs.collection( 'mail' ).ref.add( {
           to: email,
@@ -87,7 +90,7 @@ export class ManagersService {
             \t ${perfil.comercial_nombre} \n
 
             Por favor da click en el siguiente enlace:\n
-            https://cmic-platform.web.app/create?perfil=manager&email=${email}&rfc=${RFC}"`
+            ${currentURL}/create?perfil=manager&email=${email}&rfc=${RFC}"`
           }
         } )
         this._alert.notify('Correo enviado')

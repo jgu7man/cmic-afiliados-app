@@ -20,18 +20,17 @@ export class AppComponent {
   ) {
     this._cache.cacheTagName = 'cmic-data';
     this._cache.storage = 'local'
-    console.log( this.activatedRoute.snapshot.data )
-    this._loading.collectRouteData().subscribe(data => {
-      console.log( data )
-    })
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       map(() => this.activatedRoute),
       map((route) => {
-        let title = 'CMIC'
+        let title
         while (route.firstChild) {
           let data = route.firstChild.snapshot.data
-          title = data.title ? `${title} - ${data.title}` : title
+          title = title ?
+            data.title ?
+              `${title} - ${data.title}` : title
+            : data.title
           route = route.firstChild;
         }
         this._title.setTitle(title)

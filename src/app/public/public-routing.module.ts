@@ -20,9 +20,9 @@ const routes: Routes = [
       loadChildren: () => import('./clientes/clientes.module').then(m => m.ClientesModule)
     },
     { path: 'afiliado/:slug', component: MainPerfilComponent },
-    { path: 'consulta', component: ConsultasComponent },
-    { path: 'aviso-de-privacidad', component: AvisoPrivacidadComponent },
-    { path: 'contacto', component: ContactoComponent },
+    { path: 'consulta', component: ConsultasComponent,data:{title: 'Consulta'} },
+    { path: 'aviso-de-privacidad', component: AvisoPrivacidadComponent, data:{title: 'Aviso de privacidad'}, },
+    { path: 'contacto', component: ContactoComponent, data:{title: 'Contacto'}, },
   ]},
 ];
 
