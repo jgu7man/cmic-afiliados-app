@@ -1,7 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 import { Proyecto } from 'src/app/public/afiliados/models/perfiles.model';
+import { MxResponsive } from '@marxa/devkit';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'g-perfil-experiencia',
@@ -9,7 +11,7 @@ import { Proyecto } from 'src/app/public/afiliados/models/perfiles.model';
   styleUrls: ['./perfil-experiencia.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PerfilExperienciaComponent implements OnInit {
+export class PerfilExperienciaComponent implements OnInit, AfterViewInit {
 
 
 
@@ -18,14 +20,23 @@ export class PerfilExperienciaComponent implements OnInit {
 
   items$?: Observable<Proyecto[]>
 
+  @ViewChild('expPanel') private expPanel?: MatAccordion
+
   constructor(
-    public  perfil_: PerfilService,
+    public perfil_: PerfilService,
+    public responsive: MxResponsive
   ) {
 
     this.items$ = this.perfil_.getInfoCollection<Proyecto>('experiencia')
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    if (this.responsive.large || this.responsive.xLarge) {
+      this.expPanel?.openAll()
+    }
   }
 
   sendToEdit(item: Proyecto, index: number) {

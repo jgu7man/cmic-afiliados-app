@@ -20,8 +20,8 @@
 
     </ng-template>
 
-  </div>
     <h1 class="afiliado-name">{{ afiliado.datos_generales.comercial_nombre }}</h1>
+  </div>
     <ng-container *ngIf="afiliado.datos_generales.moral_nombre; else elseTemplate">
       <p>Persona Moral: <span class="data-text">
         {{afiliado.datos_generales.moral_nombre}}

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { MxResponsive } from '@marxa/devkit';
+import {  Observable } from 'rxjs';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 import { CertificacionModel } from '../../../afiliados/models/perfiles.model';
 
@@ -18,6 +18,7 @@ export class PerfilCertificacionesComponent implements OnInit {
 
   constructor(
     public perfil_: PerfilService,
+    public responsive: MxResponsive
   ) {
 
     this.items$ = this.perfil_.getInfoCollection

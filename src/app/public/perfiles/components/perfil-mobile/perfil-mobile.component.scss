@@ -1,27 +1,9 @@
-#navigation-bar {
-  width:25vw;
-  border: none;
-  background: transparent
-}
-
-.container {
-  margin-top: 0;
-}
-
-
-#perfil-content{
-  margin-right: 1em;
-  ::ng-deep {
-    @media screen and (max-width: 768px){
-      .mat-expansion-panel-body {
-        padding: 0 10px 16px;
-      }
-    }
-  }
-}
-
 #perfil-sidebar {
-  margin-top: 2em
+  margin-top: 2em;
+  @media screen and (max-width: 768px){
+    position: relative;
+    top: -5em;
+  }
 }
 ::ng-deep {
   mat-expansion-panel-header {

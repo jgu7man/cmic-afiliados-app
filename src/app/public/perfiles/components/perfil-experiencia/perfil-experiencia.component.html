@@ -1,10 +1,11 @@
 <ng-container *ngIf="(items$ | async) as items; else empty" >
   <div class="row">
     <div class="col s12">
-      <mat-accordion *ngIf="items.length > 0; else empty" >
+      <mat-accordion #expPanel="matAccordion"
+      displayMode="flat" *ngIf="items.length > 0; else empty" >
         <div class="proyect-item"
         *ngFor="let item of items; index as i">
-        <mat-expansion-panel *ngIf="i != editingItem">
+        <mat-expansion-panel [hideToggle]="responsive.large || responsive.xLarge" class="mat-elevation-z0" *ngIf="i != editingItem">
           <mat-expansion-panel-header>
             <mat-panel-title><b>{{item.nombre}}</b></mat-panel-title>
             <mat-panel-description>Cliente: <span class="data-text">{{item.cliente}}</span> </mat-panel-description>

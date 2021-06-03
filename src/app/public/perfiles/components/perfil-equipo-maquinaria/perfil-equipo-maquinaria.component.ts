@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { MxResponsive } from '@marxa/devkit';
 import {  Observable } from 'rxjs';
 import { MaqEquipItem } from 'src/app/public/afiliados/models/perfiles.model';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
@@ -18,6 +19,7 @@ export class PerfilEquipoMaquinariaComponent implements OnInit {
 
   constructor(
     public perfil_: PerfilService,
+    public responsive: MxResponsive
   ) {
 
     this.items$ = this.perfil_.getInfoCollection<MaqEquipItem>('equipo_maquinaria')

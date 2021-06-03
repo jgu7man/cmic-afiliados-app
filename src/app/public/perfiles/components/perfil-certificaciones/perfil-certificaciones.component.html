@@ -2,14 +2,14 @@
   <ng-container *ngIf="items.length > 0; else empty">
   <div class="row" *ngFor="let item of items$ | async; index as i">
     <div class="col s12">
-      <mat-card>
+      <mat-card class="mat-elevation-z0">
         <mat-card-header>
           <mat-card-title>{{item.nombre}}</mat-card-title>
           <mat-card-subtitle> {{item.aval}} </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <p>Persona certificada: <span class="data-text">{{item.miembro}}</span></p>
-          <mat-expansion-panel>
+          <mat-expansion-panel [hideToggle]="responsive.large || responsive.xLarge" class="mat-elevation-z0">
             <mat-expansion-panel-header>
               <mat-panel-title>Evidencias</mat-panel-title>
             </mat-expansion-panel-header>

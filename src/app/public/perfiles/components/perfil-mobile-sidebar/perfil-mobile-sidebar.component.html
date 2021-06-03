@@ -1,0 +1,132 @@
+
+  <article>
+    <!-- LOGO -->
+    <div class="profile-img-container" #container>
+      <div class="profile-img" #img
+      [ngStyle]="{'height.px':img.offsetWidth  }">
+        <ng-container *ngIf="ImageSrc; else default">
+          <img
+            width="100%"
+            [src]="ImageSrc"
+            alt="{{afiliado.datos_generales.comercial_nombre}}"
+            onerror="this.style.display='none'"
+          />
+        </ng-container>
+      </div>
+      <ng-template #default >
+        <p class="center">
+          {{afiliado.datos_generales.comercial_nombre | cutText:[0,1]}}
+        </p>
+
+      </ng-template>
+
+      <h1 class="afiliado-name">{{ afiliado.datos_generales.comercial_nombre }}</h1>
+    </div>
+  </article>
+
+  <mat-card>
+    <ng-container *ngIf="afiliado.datos_generales.moral_nombre; else elseTemplate">
+      <p>Persona Moral: <span class="data-text">
+        {{afiliado.datos_generales.moral_nombre}}
+      </span>
+      </p>
+    </ng-container>
+    <ng-template #elseTemplate >
+      <p>Persona Física: <span class="data-text">
+        {{afiliado.datos_generales.fisica_nombre}}
+        {{afiliado.datos_generales.fisica_apellido_pat}}
+        {{afiliado.datos_generales.fisica_apellido_mat}}
+      </span>
+      </p>
+    </ng-template>
+    <p>Representante: <span class="data-text">
+      {{afiliado.representante_legal?.titulo}}
+      {{afiliado.representante_legal?.nombre}}
+      {{afiliado.representante_legal?.apellido_pat}}
+      {{afiliado.representante_legal?.apellido_mat}}
+    </span> </p>
+    <p *ngIf="afiliado.director?.nombre">
+      Director: <span class="data-text">
+      {{afiliado.director?.titulo}}
+      {{afiliado.director?.nombre}}
+      {{afiliado.director?.apellido_pat}}
+      {{afiliado.director?.apellido_mat}}
+    </span> </p>
+    <p>Afiliado CMIC: <span class="data-text"> {{year}} </span> </p>
+    <p>Afiliado desde: <span class="data-text">
+      <span class="data-text">{{
+        date_.toDate( afiliado.perfil?.primerAfiliacion) | date: 'yyyy'
+      }}</span>
+    </span> </p>
+  </mat-card>
+
+
+  <mat-card>
+    <mat-tab-group>
+      <mat-tab label="Contacto">
+        <p *ngIf="afiliado.contacto?.telefono">
+          Tel. <span class="data-text">
+          {{ afiliado.contacto?.telefono }}
+        </span> </p>
+        <p>Celular <span class="data-text">
+          {{ afiliado.contacto?.celular }}
+        </span> </p>
+        <p>Email: <span class="data-text">
+          {{ afiliado.contacto?.email }}
+        </span></p>
+        <p>Sitio web: <span class="data-text">
+          {{ afiliado.contacto?.pagina_web }}
+        </span></p>
+      </mat-tab>
+
+      <mat-tab label="Ubicación">
+        <p> Domicilio: <span class="data-text">
+          {{ afiliado.domicilio?.publica?.calle }}
+          {{ afiliado.domicilio?.publica?.num_ext }}
+          <span *ngIf="afiliado.domicilio?.publica?.num_int">int.</span>
+          {{ afiliado.domicilio?.publica?.num_int }}
+        </span></p>
+        <p> Colonia: <span class="data-text">
+            {{ afiliado.domicilio?.publica?.colonia }}
+        </span></p>
+        <p> C.P.: <span class="data-text">
+            {{ afiliado.domicilio?.publica?.codigo_postal }}
+        </span></p>
+        <p> Ciudad: <span class="data-text">
+          {{ afiliado.domicilio?.publica?.municipio_alcaldia }}
+        </span></p>
+        <p>Estado: <span class="data-text">
+          {{ afiliado.domicilio?.publica?.entidad_federativa }}
+        </span></p>
+      </mat-tab>
+
+      <mat-tab label="Personal">
+        <p>
+          Planta fija: <span class="data-text">{{personal.planta_fija}}</span> <br>
+          Cap. de contratación por proyecto <span class="data-text">{{personal.capacidad_proyecto}} </span>
+        </p>
+        <!-- <p>
+          Del total de colaboradores, el 25% cuentan con estudios de especialización o posgrado
+        </p> -->
+      </mat-tab>
+      <mat-tab label="Extras">
+        <p>Capacidad Financiera: <span class="data-text">
+          {{afiliado.perfil?.capFinanciera}}
+        </span></p>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Servicios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <span *ngFor="let servicio of afiliado.perfil?.servicios">
+        {{servicio}} <br>
+      </span>
+    </mat-card-content>
+  </mat-card>
+
+

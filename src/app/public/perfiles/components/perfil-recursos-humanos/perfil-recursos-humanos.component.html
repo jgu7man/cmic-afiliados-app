@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col s12" *ngIf="items.length > 0; else empty">
       <ng-container *ngFor="let item of items$ | async; index as i">
-        <mat-card *ngIf="editingItem != i">
+        <mat-card class="mat-elevation-z0" *ngIf="editingItem != i">
           <mat-card-header>
             <mat-card-title> {{item.nombre}} </mat-card-title>
             <mat-card-subtitle> {{item.cargo}} </mat-card-subtitle>

@@ -17,6 +17,10 @@ import { FileViewerComponent } from './components/file-viewer/file-viewer.compon
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { MxResponsiveModule } from '@marxa/devkit';
+import { PerfilMobileComponent } from './components/perfil-mobile/perfil-mobile.component';
+import { DirectivesModule } from '../../directives/directives.module';
+import { PerfilDesktopComponent } from './components/perfil-desktop/perfil-desktop.component';
+import { PerfilMobileSidebarComponent } from './components/perfil-mobile-sidebar/perfil-mobile-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,9 @@ import { MxResponsiveModule } from '@marxa/devkit';
     PerfilSidebarComponent,
     PerfilActividadesComponent,
     FileViewerComponent,
-
+    PerfilMobileComponent,
+    PerfilDesktopComponent,
+    PerfilMobileSidebarComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +45,8 @@ import { MxResponsiveModule } from '@marxa/devkit';
     FirebaseModule,
     SharedModule,
     PipesModule,
-    MxResponsiveModule
+    MxResponsiveModule,
+    DirectivesModule
   ],
   exports: [
     MainPerfilComponent,
