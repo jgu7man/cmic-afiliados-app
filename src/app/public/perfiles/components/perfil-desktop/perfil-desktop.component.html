@@ -1,14 +1,14 @@
 <div class="row">
 
   <!-- Sidebar -->
-  <section class="col s12 l4" id="perfil-sidebar">
+  <section class="col s12 l4" id="perfil-sidebar" >
     <g-perfil-sidebar
     [afiliado]="afiliado"
     ></g-perfil-sidebar>
   </section>
 
   <!-- Empresa Content -->
-  <div class="col s12 l8">
+  <div class="col s12 l8" id="perfil-content">
 
     <div class="bannerPerfil">
       <div id="img"
@@ -35,17 +35,17 @@
 
 
       <!-- Experiencia panel -->
-      <mat-expansion-panel #expPanel style="margin-top: 5px">
-        <mat-expansion-panel-header>
-          <mat-panel-title> Experiencia </mat-panel-title>
-          <mat-panel-description>
+      <mat-card #expPanel  class="mat-elevation-z0 perfil-section">
+        <mat-card-header>
+          <mat-card-title> Experiencia </mat-card-title>
+          <mat-card-subtitle>
             {{afiliado.adicional?.extract?.experiencia}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider [inset]="true"></mat-divider>
         <g-perfil-experiencia></g-perfil-experiencia>
 
-      </mat-expansion-panel>
+      </mat-card>
 
 
       <!-- Contabilidad panel -->
@@ -63,43 +63,43 @@
       </mat-expansion-panel> -->
 
       <!-- Equipo y maquinaria panel -->
-      <mat-expansion-panel #maqPanel style="margin-top: 5px">
-        <mat-expansion-panel-header>
-          <mat-panel-title> Equipo y maquinaria </mat-panel-title>
-          <mat-panel-description>
+      <mat-card #maqPanel  class="mat-elevation-z0 perfil-section">
+        <mat-card-header>
+          <mat-card-title> Equipo y maquinaria </mat-card-title>
+          <mat-card-subtitle>
             {{afiliado.adicional?.extract?.equipo_maquinaria}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider [inset]="true"></mat-divider>
         <g-perfil-equipo-maquinaria></g-perfil-equipo-maquinaria>
 
-      </mat-expansion-panel>
+      </mat-card>
 
       <!-- Recursos humanos panel -->
-      <mat-expansion-panel #rhPanel style="margin-top: 5px">
-        <mat-expansion-panel-header>
-          <mat-panel-title> Recursos Humanos </mat-panel-title>
-          <mat-panel-description>
+      <mat-card #rhPanel  class="mat-elevation-z0 perfil-section">
+        <mat-card-header>
+          <mat-card-title> Recursos Humanos </mat-card-title>
+          <mat-card-subtitle>
             {{afiliado.adicional?.extract?.recursos_humanos}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider [inset]="true"></mat-divider>
         <g-perfil-recursos-humanos></g-perfil-recursos-humanos>
 
-      </mat-expansion-panel>
+      </mat-card>
 
       <!-- Certificaciones panel -->
-      <mat-expansion-panel #certPanel style="margin-top: 5px">
-        <mat-expansion-panel-header>
-          <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
-          <mat-panel-description>
+      <mat-card #certPanel  class="mat-elevation-z0 perfil-section">
+        <mat-card-header>
+          <mat-card-title> Certificaciones y especializaciones </mat-card-title>
+          <mat-card-subtitle>
             {{afiliado.adicional?.extract?.certificaciones}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider [inset]="true"></mat-divider>
         <g-perfil-certificaciones></g-perfil-certificaciones>
 
-      </mat-expansion-panel>
+      </mat-card>
 
 
 

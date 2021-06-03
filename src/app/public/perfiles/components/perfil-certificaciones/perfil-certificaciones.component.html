@@ -2,30 +2,38 @@
   <ng-container *ngIf="items.length > 0; else empty">
   <div class="row" *ngFor="let item of items$ | async; index as i">
     <div class="col s12">
-      <mat-card class="mat-elevation-z0">
+      <mat-card >
+
         <mat-card-header>
           <mat-card-title>{{item.nombre}}</mat-card-title>
           <mat-card-subtitle> {{item.aval}} </mat-card-subtitle>
         </mat-card-header>
+
         <mat-card-content>
           <p>Persona certificada: <span class="data-text">{{item.miembro}}</span></p>
-          <mat-expansion-panel [hideToggle]="responsive.large || responsive.xLarge" class="mat-elevation-z0">
-            <mat-expansion-panel-header>
+          <mat-card class="mat-elevation-z0">
+            <mat-card-header>
               <mat-panel-title>Evidencias</mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-grid-list cols="2" rowHeight="1:1" *ngIf="item.evidencia && item.evidencia.length > 0">
-              <mat-grid-tile *ngFor="let item of item.evidencia">
-                <g-file-viewer [file]="item"></g-file-viewer>
-              </mat-grid-tile>
-            </mat-grid-list>
-          </mat-expansion-panel>
+            </mat-card-header>
+
+            <mat-card-content>
+              <mat-grid-list cols="2" rowHeight="1:1" *ngIf="item.evidencia && item.evidencia.length > 0">
+                <mat-grid-tile *ngFor="let item of item.evidencia">
+                  <g-file-viewer [file]="item"></g-file-viewer>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </mat-card-content>
+
+          </mat-card>
+
         </mat-card-content>
+
         <mat-card-actions *ngIf="edit"
-        style="display: flex; justify-content: space-around;">
-        <button mat-raised-button color='accent'
-        (click)="sendToEdit(item, i)" >Editar</button>
-        <button mat-raised-button color='primary'
-        (click)="perfil_.deleteInfoItem( 'certificaciones', item.id)" >Eliminar</button>
+          style="display: flex; justify-content: space-around;">
+          <button mat-raised-button color='accent'
+          (click)="sendToEdit(item, i)" >Editar</button>
+          <button mat-raised-button color='primary'
+          (click)="perfil_.deleteInfoItem( 'certificaciones', item.id)" >Eliminar</button>
         </mat-card-actions>
       </mat-card>
     </div>
