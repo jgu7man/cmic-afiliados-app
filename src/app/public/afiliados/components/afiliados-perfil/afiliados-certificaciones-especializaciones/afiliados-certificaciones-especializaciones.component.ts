@@ -16,6 +16,8 @@ export class AfiliadosCertificacionesEspecializacionesComponent
   implements OnInit, OnDestroy {
 
   certForm: FormGroup;
+  listDoc?: iUploadedFile
+  items: CertificacionModel[] = []
 
   constructor(
     private _loading: MxLoading,
@@ -41,7 +43,8 @@ export class AfiliadosCertificacionesEspecializacionesComponent
     this.perfil_.editSubscription = this.perfil_
       .listenEditingItem.subscribe(item => {
       this.certForm.patchValue(item)
-    })
+      })
+      this.perfil_.getList('certificaciones').then(file => this.listDoc = file)
   }
 
   get now() {
@@ -54,6 +57,10 @@ export class AfiliadosCertificacionesEspecializacionesComponent
 
   catchYear(year: any) {
     this.certForm.patchValue({fecha: year});
+  }
+
+  onListUploaded(files: any) {
+    this.perfil_.saveList(files[0], 'certificaciones')
   }
 
 

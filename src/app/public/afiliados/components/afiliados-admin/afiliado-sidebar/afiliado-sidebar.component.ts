@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MxCache } from '@marxa/devkit';
+import { Component, Input, OnInit } from '@angular/core';
+import { MxCache, MxLoading } from '@marxa/devkit';
 import { iManager } from '../../../models/afiliados.model';
 
 @Component({
@@ -9,15 +9,16 @@ import { iManager } from '../../../models/afiliados.model';
 })
 export class AfiliadoSidebarComponent implements OnInit {
 
-  RFC?:string
+  RFC?: string
+  @Input() slug?: string
   constructor(
-    private _cache: MxCache
+    private _cache: MxCache,
+    private _loading: MxLoading,
   ) {
-    const user = this._cache.getDataKey<iManager>('user')
-    if (user) this.RFC = user.RFC
-    else {
+    this._loading.getRouteParams().subscribe(({ RFC }) => {
+      this.RFC = RFC
+    })
 
-    }
    }
 
   ngOnInit(): void {

@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 import { Proyecto } from 'src/app/public/afiliados/models/perfiles.model';
 import { MxResponsive } from '@marxa/devkit';
 import { MatAccordion } from '@angular/material/expansion';
+import { iUploadedFile } from '@marxa/storage';
 
 @Component({
   selector: 'g-perfil-experiencia',
@@ -21,13 +22,18 @@ export class PerfilExperienciaComponent implements OnInit, AfterViewInit {
   items$?: Observable<Proyecto[]>
 
   @ViewChild('expPanel') private expPanel?: MatAccordion
+  listDoc?: iUploadedFile
+  @Output() items: EventEmitter<Proyecto[]> = new EventEmitter()
 
   constructor(
     public perfil_: PerfilService,
     public responsive: MxResponsive
   ) {
-
     this.items$ = this.perfil_.getInfoCollection<Proyecto>('experiencia')
+    this.items$.subscribe(items => this.items.emit(items))
+    this.perfil_.getList('experiencia').then(file => {
+      this.listDoc = file
+    })
   }
 
   ngOnInit(): void {

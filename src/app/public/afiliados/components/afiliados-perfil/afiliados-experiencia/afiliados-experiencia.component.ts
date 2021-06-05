@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MxStorage } from '@marxa/storage';
-import { emptyProyecto } from '../../../models/perfiles.model';
+import { emptyProyecto, Proyecto } from '../../../models/perfiles.model';
 import { PerfilService } from '../../../services/perfil.service';
 import { iUploadedFile } from '@marxa/storage';
 import { MxText } from '@marxa/devkit';
@@ -16,6 +16,8 @@ import { MxText } from '@marxa/devkit';
 export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
 
   proyectoForm: FormGroup;
+  listDoc?: iUploadedFile
+  items: Proyecto[] = []
 
   constructor(
     public storage_: MxStorage,
@@ -45,11 +47,12 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
     this.perfil_.initialize('experiencia')
    }
 
-  ngOnInit(): void {
+  async ngOnInit(){
     this.perfil_.editSubscription = this.perfil_
       .listenEditingItem.subscribe(item => {
       this.proyectoForm.patchValue(item)
-    })
+      })
+    this.listDoc = await this.perfil_.getList('experiencia')
   }
 
   get now() {
@@ -58,6 +61,10 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
 
   get evidencias(): iUploadedFile[]{
     return this.proyectoForm.get('evidencia')?.value as iUploadedFile[]
+  }
+
+  onListUploaded(files: any) {
+    this.perfil_.saveList(files[0], 'experiencia')
   }
 
   catchYear(year: any) {

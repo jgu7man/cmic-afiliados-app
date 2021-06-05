@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { PerfilService } from '../../../services/perfil.service';
 import { MxStorage } from '@marxa/storage';
-import { emptyMaqEquip } from '../../../models/perfiles.model';
+import { emptyMaqEquip, MaqEquipItem } from '../../../models/perfiles.model';
 import { iUploadedFile } from '@marxa/storage';
 @Component({
   templateUrl: './afiliados-equipo-maquinaria.component.html',
@@ -17,6 +17,8 @@ import { iUploadedFile } from '@marxa/storage';
 export class AfiliadosEquipoMaquinariaComponent implements OnInit {
 
   eqpmaqForm: FormGroup;
+  listDoc?: iUploadedFile
+  items: MaqEquipItem[] = []
 
   constructor(
     public location_: Location,
@@ -34,6 +36,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
     });
 
     this.perfil_.initialize('equipo_maquinaria')
+    this.perfil_.getList('equipo_maquinaria').then(file => this.listDoc = file)
   }
 
   ngOnInit(): void {
@@ -48,6 +51,9 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
     return this.eqpmaqForm.get('evidencia')?.value as iUploadedFile[]
   }
 
+  onListUploaded(files: any) {
+    this.perfil_.saveList(files[0], 'equipo_maquinaria')
+  }
 
   async onSaveItem() {
     await this.perfil_.saveItems(this.eqpmaqForm, 'equipo_maquinaria')

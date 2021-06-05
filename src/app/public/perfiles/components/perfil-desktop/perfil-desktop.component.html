@@ -1,108 +1,119 @@
 <div class="row">
 
-  <!-- Sidebar -->
-  <section class="col s12 l4" id="perfil-sidebar" >
-    <g-perfil-sidebar
-    [afiliado]="afiliado"
-    ></g-perfil-sidebar>
-  </section>
+  <mat-drawer-container>
 
-  <!-- Empresa Content -->
-  <div class="col s12 l8" id="perfil-content">
+    <!-- Sidebar -->
+    <mat-drawer opened="true" id="perfil-sidebar" mode="side"
+    mxFix [topBreak]="76" [bottomSelector]="'#footer'"
+    mxStrechHeight>
+      <g-perfil-sidebar
+      [afiliado]="afiliado"
+      ></g-perfil-sidebar>
+    </mat-drawer>
 
-    <div class="bannerPerfil">
-      <div id="img"
-        width="100%"
-        height="200px"
-        [gImageBg]="banner"
-        alt="Cargar Imagen de Portada"
-        style="margin-bottom: 15px"
-      ></div>
-    </div>
-
-
-    <mat-accordion>
-
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>¿Quiénes Somos?</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            {{perfil.somos}}
-          </mat-card-content>
-        </mat-card>
+    <mat-drawer-content>
 
 
 
-      <!-- Experiencia panel -->
-      <mat-card #expPanel  class="mat-elevation-z0 perfil-section">
-        <mat-card-header>
-          <mat-card-title> Experiencia </mat-card-title>
-          <mat-card-subtitle>
-            {{afiliado.adicional?.extract?.experiencia}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider [inset]="true"></mat-divider>
-        <g-perfil-experiencia></g-perfil-experiencia>
+      <!-- Empresa Content -->
+      <div class="col s12" id="perfil-content">
 
-      </mat-card>
+        <div class="bannerPerfil">
+          <div id="img"
+            width="100%"
+            height="200px"
+            [gImageBg]="banner"
+            alt="Cargar Imagen de Portada"
+            style="margin-bottom: 15px"
+          ></div>
+        </div>
 
 
-      <!-- Contabilidad panel -->
-      <!-- <mat-expansion-panel #contaPanel style="margin-top: 5px">
-        <mat-expansion-panel-header>
-          <mat-panel-title> Capacidad Contable </mat-panel-title>
-          <mat-panel-description>
-            {{perfilOutput.conta}}
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <g-perfil-cap-contable
-        [rfc]="RFC"
-        (extract$)="perfilOutput.conta = $event"
-        ></g-perfil-cap-contable>
-      </mat-expansion-panel> -->
+        <mat-accordion>
 
-      <!-- Equipo y maquinaria panel -->
-      <mat-card #maqPanel  class="mat-elevation-z0 perfil-section">
-        <mat-card-header>
-          <mat-card-title> Equipo y maquinaria </mat-card-title>
-          <mat-card-subtitle>
-            {{afiliado.adicional?.extract?.equipo_maquinaria}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider [inset]="true"></mat-divider>
-        <g-perfil-equipo-maquinaria></g-perfil-equipo-maquinaria>
-
-      </mat-card>
-
-      <!-- Recursos humanos panel -->
-      <mat-card #rhPanel  class="mat-elevation-z0 perfil-section">
-        <mat-card-header>
-          <mat-card-title> Recursos Humanos </mat-card-title>
-          <mat-card-subtitle>
-            {{afiliado.adicional?.extract?.recursos_humanos}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider [inset]="true"></mat-divider>
-        <g-perfil-recursos-humanos></g-perfil-recursos-humanos>
-
-      </mat-card>
-
-      <!-- Certificaciones panel -->
-      <mat-card #certPanel  class="mat-elevation-z0 perfil-section">
-        <mat-card-header>
-          <mat-card-title> Certificaciones y especializaciones </mat-card-title>
-          <mat-card-subtitle>
-            {{afiliado.adicional?.extract?.certificaciones}}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-divider [inset]="true"></mat-divider>
-        <g-perfil-certificaciones></g-perfil-certificaciones>
-
-      </mat-card>
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>¿Quiénes Somos?</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                {{perfil.somos}}
+              </mat-card-content>
+            </mat-card>
 
 
 
-    </mat-accordion>
-  </div>
+          <!-- Experiencia panel -->
+          <mat-card #expPanel  class="mat-elevation-z0 perfil-section">
+            <mat-card-header>
+              <mat-card-title> Experiencia </mat-card-title>
+              <mat-card-subtitle>
+                {{afiliado.adicional?.extract?.experiencia}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-divider [inset]="true"></mat-divider>
+            <g-perfil-experiencia></g-perfil-experiencia>
+
+          </mat-card>
+
+
+          <!-- Contabilidad panel -->
+          <!-- <mat-expansion-panel #contaPanel style="margin-top: 5px">
+            <mat-expansion-panel-header>
+              <mat-panel-title> Capacidad Contable </mat-panel-title>
+              <mat-panel-description>
+                {{perfilOutput.conta}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <g-perfil-cap-contable
+            [rfc]="RFC"
+            (extract$)="perfilOutput.conta = $event"
+            ></g-perfil-cap-contable>
+          </mat-expansion-panel> -->
+
+          <!-- Equipo y maquinaria panel -->
+          <mat-card #maqPanel  class="mat-elevation-z0 perfil-section">
+            <mat-card-header>
+              <mat-card-title> Equipo y maquinaria </mat-card-title>
+              <mat-card-subtitle>
+                {{afiliado.adicional?.extract?.equipo_maquinaria}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-divider [inset]="true"></mat-divider>
+            <g-perfil-equipo-maquinaria></g-perfil-equipo-maquinaria>
+
+          </mat-card>
+
+          <!-- Recursos humanos panel -->
+          <mat-card #rhPanel  class="mat-elevation-z0 perfil-section">
+            <mat-card-header>
+              <mat-card-title> Recursos Humanos </mat-card-title>
+              <mat-card-subtitle>
+                {{afiliado.adicional?.extract?.recursos_humanos}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-divider [inset]="true"></mat-divider>
+            <g-perfil-recursos-humanos></g-perfil-recursos-humanos>
+
+          </mat-card>
+
+          <!-- Certificaciones panel -->
+          <mat-card #certPanel  class="mat-elevation-z0 perfil-section">
+            <mat-card-header>
+              <mat-card-title> Certificaciones y especializaciones </mat-card-title>
+              <mat-card-subtitle>
+                {{afiliado.adicional?.extract?.certificaciones}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-divider [inset]="true"></mat-divider>
+            <g-perfil-certificaciones></g-perfil-certificaciones>
+
+          </mat-card>
+
+
+
+        </mat-accordion>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+
 </div>

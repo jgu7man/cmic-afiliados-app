@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { MxAlert } from '@marxa/devkit';
+import { MxAlert, MxCache } from '@marxa/devkit';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { iPeticion, iUser } from 'src/app/admin/models/roles.model';
@@ -20,7 +20,8 @@ export class ClientsService {
     private _afAuth: AngularFireAuth,
     private _alert: MxAlert,
     private _auth: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _cache: MxCache
   ) {
     this.current$ = this._afAuth.authState.pipe(
       switchMap(user => user ?
@@ -29,7 +30,8 @@ export class ClientsService {
       ),
       tap(user => {
         if (user) {
-          console.log( user )
+          console.log(user)
+          this._cache.updateData('user', user)
           this._afs.doc(`clientes/${user.uid}`)
             .update({lastAccess: new Date()})
         }

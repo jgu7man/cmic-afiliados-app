@@ -1,3 +1,4 @@
+
 <ng-container *ngIf="items$ |async as items; else empty">
   <div class="row">
     <div class="col s12" *ngIf="items.length > 0; else empty">
@@ -31,3 +32,20 @@
 <ng-template #empty >
   <p class="data-text">Aún no se han registrado miembros</p>
 </ng-template>
+
+
+<div class="row" *ngIf="!edit">
+  <div class="col s12">
+    <div *ngIf="listDoc">
+      <p><b>Lista de personal</b></p>
+      <g-file-viewer
+      [file]="listDoc"
+      ></g-file-viewer>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12">
+    <mat-divider></mat-divider>
+  </div>
+</div>

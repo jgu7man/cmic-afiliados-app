@@ -67,7 +67,7 @@ export class AdminAfiliadosTableComponent implements OnInit {
 
   onSelect(afiliado: AfiliadoModel) {
     this._cache.updateData('rfc',afiliado.datos_generales.RFC )
-    this._router.navigate(['/afiliados/perfil' ])
+    this._router.navigate(['/afiliados/perfil', afiliado.datos_generales.RFC  ])
   }
 
   onDownload() {

@@ -73,7 +73,9 @@ export class PerfilService {
     return
   }
 
-  public getInfoCollection<T>(col: SectionName) {
+  public getInfoCollection<T>(col: SectionName, rfc?: string,) {
+    this.RFC = this._cache.getDataKey('rfc') || this.RFC
+    if (rfc) this.RFC = rfc
     const ref = this._afs.collection<T>(`afiliados/${this.RFC}/${col}`)
     return ref.valueChanges({idField:'id'}).pipe(
       map(list => list.map((item: any) => {
@@ -158,6 +160,19 @@ export class PerfilService {
         resolve(form)
       })
     })
+  }
+
+
+  saveList(file: iUploadedFile, field: SectionName) {
+    const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
+    ref.update({ listas: { [field]: file } })
+    .then(() => this._alert.notify('Lista guardada'))
+  }
+
+  async getList(field: SectionName) {
+    const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
+    const file: iUploadedFile = await (await ref.get()).get(`listas.${field}`)
+    return file ? file : undefined
   }
 
 

@@ -1,6 +1,6 @@
   <div id="account-area" class="links-container">
     <div class="collection">
-      <a routerLinkActive="active" [routerLink]="['/afiliado/', RFC]" class="collection-item">Vista previa</a>
+      <a *ngIf="slug" routerLinkActive="active" [routerLink]="['/afiliado/', slug]" class="collection-item" >Vista previa</a>
       <mat-divider></mat-divider>
       <a routerLinkActive="active" [routerLink]="['/afiliados/editar-afiliado', RFC]" class="collection-item">Editar empresa</a>
       <mat-divider></mat-divider>

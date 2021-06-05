@@ -8,7 +8,12 @@
 
 #topbar-container {
   z-index: 15;
-  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  mat-drawer-content {
+    @media screen and (min-width: 768px){
+      overflow: hidden;
+    }
+  }
   mat-drawer {
     width: 100%;
     position: fixed;

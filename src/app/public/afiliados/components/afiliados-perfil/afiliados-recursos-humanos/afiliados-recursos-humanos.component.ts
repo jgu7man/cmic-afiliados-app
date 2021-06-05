@@ -2,7 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PerfilService } from '../../../services/perfil.service';
-import { emptyMember } from '../../../models/perfiles.model';
+import { emptyMember, MemberModel } from '../../../models/perfiles.model';
+import { iUploadedFile } from '@marxa/storage';
 
 @Component({
   templateUrl: './afiliados-recursos-humanos.component.html',
@@ -11,6 +12,8 @@ import { emptyMember } from '../../../models/perfiles.model';
 export class AfiliadosRecursosHumanosComponent implements OnInit {
 
   memberForm: FormGroup;
+  listDoc?: iUploadedFile
+  items: MemberModel[] = []
 
   constructor(
     public location_: Location,
@@ -24,6 +27,7 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
     })
 
     this.perfil_.initialize('recursos_humanos')
+    this.perfil_.getList('recursos_humanos').then(file => this.listDoc = file)
   }
 
   ngOnInit(): void {
@@ -32,6 +36,10 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
       this.memberForm.patchValue(item)
     })
 
+  }
+
+  onListUploaded(files: any) {
+    this.perfil_.saveList(files[0], 'recursos_humanos')
   }
 
   async onSaveItem() {

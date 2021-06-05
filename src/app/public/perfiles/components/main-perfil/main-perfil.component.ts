@@ -2,7 +2,7 @@ import { Title } from '@angular/platform-browser';
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAuth } from '@marxa/auth';
-import { MxAlert, MxResponsive } from '@marxa/devkit';
+import { MxAlert, MxCache, MxResponsive } from '@marxa/devkit';
 import { filter, take } from 'rxjs/operators';
 import { AfiliadoModel, emptyAfiliado, iAfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil, iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
@@ -35,13 +35,12 @@ export class MainPerfilComponent implements OnInit, OnDestroy {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _perfil: PerfilService,
-    private _afiliados: AfiliadosService,
     private _consultas: ConsultasService,
     public responsive: MxResponsive,
     private _auth: MxAuth,
     private _title: Title,
-    private _alert: MxAlert
+    private _alert: MxAlert,
+    private _cache: MxCache
   ) {
 
     this.authSubscription =
@@ -61,9 +60,10 @@ export class MainPerfilComponent implements OnInit, OnDestroy {
     this._consultas.consulta('slug', slug).subscribe(list => {
       if (list.length == 1) {
         let afiliado = list[0]
-
+        // console.log( afiliado )
         this.afiliado = afiliado
         this.RFC = afiliado.datos_generales.RFC
+        this._cache.updateData('rfc', this.RFC)
         this._title.setTitle(`CMIC - ${afiliado.datos_generales.comercial_nombre}`)
       }
     })

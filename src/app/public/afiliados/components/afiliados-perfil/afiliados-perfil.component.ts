@@ -45,10 +45,8 @@ export class AfiliadosPerfilComponent implements OnInit {
     public perfil_: PerfilService
   ) {
 
-    // let param = this._route.snapshot.params['RFC']
-    this.RFC = this._cache.getDataKey('rfc')
-      || this._cache.getDataKey<iManager>('user')?.RFC as string
-
+    this.RFC = this._route.snapshot.params['RFC']
+    this._cache.updateData('rfc', this.RFC)
     this.admin = this._cache.getDataKey<iAdmin>('admin')
 
     if (!this.RFC && !this.admin) {

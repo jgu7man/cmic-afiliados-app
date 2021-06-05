@@ -2,7 +2,7 @@
 
   <mat-drawer #sidenav mode="side" opened="true" id="sidenav"
   mxFix [topBreak]="76" [bottomSelector]="'#footer'"  >
-    <g-afiliado-sidebar></g-afiliado-sidebar>
+    <g-afiliado-sidebar [slug]="afiliado?.datos_generales?.slug"></g-afiliado-sidebar>
   </mat-drawer>
 
   <mat-drawer-content>

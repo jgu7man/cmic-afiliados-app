@@ -28,7 +28,7 @@ const routes: Routes = [
       { path: 'afiliacion/:RFC', component: AfiliacionFormComponent, data:{title: 'Formulario de afilación'}, },
       { path: 'elegir-actividades/:RFC', component: ActividadesFormComponent, data:{title: 'Formulario de actividades'}, },
       { path: '', component: AfiliadosAdminComponent, children:[
-        { path: 'perfil', component: AfiliadosPerfilComponent, data:{title: 'Perfil'}, },
+        { path: 'perfil/:RFC', component: AfiliadosPerfilComponent, data:{title: 'Perfil'}, },
         { path: 'experiencia', component: AfiliadosExperienciaComponent, data:{title: 'Experiencia'}, },
         { path: 'capacidad-contable', component: AfiliadosCapacidadContableComponent,data:{title: 'Capacidad contable'}, },
         { path: 'equipo-maquinaria', component: AfiliadosEquipoMaquinariaComponent, data:{title: 'Equipo y maquinaria'}, },

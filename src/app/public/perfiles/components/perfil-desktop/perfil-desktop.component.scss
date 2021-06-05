@@ -1,6 +1,22 @@
 #perfil-sidebar {
-  margin-top: 2em
+  width: 23vw;
+  margin-top: 2em;
+  border: none;
+  background: transparent;
+  ::ng-deep {
+    .mat-drawer-inner-container::-webkit-scrollbar {
+      width:10px !important;
+    }
+
+    .mat-drawer-inner-container::-webkit-scrollbar-thumb {
+      background: #cf3817 !important;
+      // box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.5);
+      border-radius: 1em;
+    }
+  }
 }
+
+
 ::ng-deep {
   mat-expansion-panel-header {
     height:fit-content !important;

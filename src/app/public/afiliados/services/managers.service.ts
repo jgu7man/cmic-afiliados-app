@@ -31,6 +31,7 @@ export class ManagersService {
       ),
       tap(user => {
         if (user) {
+          this._cache.updateData('user', user)
           this._afs.doc(`afiliados/${user.RFC}/managers/${user.uid}`)
             .update({lastAccess: new Date()})
       }})
@@ -143,7 +144,7 @@ export class ManagersService {
             this._router.navigate(['/afiliados/elegir-actividades', RFC]);
 
           } else {
-            this._router.navigate([ '/afiliados/perfil'])
+            this._router.navigate([ '/afiliados/perfil', RFC])
           }
 
         }
