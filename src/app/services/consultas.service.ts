@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
-import {switchMap } from 'rxjs/operators';
-import { ActividadQuery, QueryParam } from '../models/consultas.model';
+import {map, switchMap } from 'rxjs/operators';
+import { ActividadQuery, QueryParam, RequestItem } from '../models/consultas.model';
 import { AfiliadoModel } from '../public/afiliados/models/afiliados.model';
 import { MxLoading } from '@marxa/devkit';
 import { Observable } from 'rxjs';
@@ -31,7 +31,7 @@ export class ConsultasService {
     batch.commit()
   }
 
-  actividad(value: string, queryKey: 'codigo' | 'especialidad'): Observable<AfiliadoModel[]> {
+  actividad(value: string, queryKey: 'codigo' | 'especialidad'): Observable<RequestItem[]> {
     return this._afs.collectionGroup<ActividadQuery>('actividades',
       ref => ref.where(queryKey, '==', value))
       .get().pipe(
@@ -49,22 +49,25 @@ export class ConsultasService {
             let uniqAfiliados = uniqBy(afiliados, 'datos_generales.RFC')
             return uniqAfiliados
           }
-      }))
+          })).pipe(map<AfiliadoModel[], RequestItem[]>((list) =>
+            list.map(({ datos_generales, perfil }) => {
+              return <RequestItem>{datos_generales, perfil}
+          })))
   }
 
 
 
-  afiliado(value: string):Observable<AfiliadoModel[]> {
+  getAfiliadoBySlug(value: string):Observable<AfiliadoModel[]> {
     return this._afs.collectionGroup<AfiliadoModel>('afiliados',
       ref => ref.where('datos_generales.slug', '==', value)).valueChanges()
-    //   .pipe(filter(afiliado => !!afiliado))
+
   }
 
-  consulta(key: QueryParam, value: string): Observable<AfiliadoModel[]> {
+  consulta(key: QueryParam, value: string): Observable<RequestItem[]> {
     const index = {
       ['codigo']: this.actividad(value, 'codigo'),
       ['especialidad']: this.actividad(value, 'especialidad'),
-      ['slug']: this.afiliado(value),
+      // ['slug']: this.getAfiliadoBySlug(value),
     }
 
     return index[key]

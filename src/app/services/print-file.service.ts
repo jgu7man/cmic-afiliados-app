@@ -26,12 +26,14 @@ export class PrintFileService {
     }
    }
 
-  async downloadPDF() {
-    var node = document.getElementById('perfil-view') as HTMLElement;
+  async downloadPDF(idSelector: string, filename?: string) {
+    this._loading.toggleWaiting('open')
+    var node = document.getElementById(idSelector) as HTMLElement;
     var image: any;
     var imageData: any;
+    if (filename) this.filename = filename
 
-    domtoimage.toPng(node).then( async (dataUrl: string) => {
+    domtoimage.toPng(node, {bgcolor: '#fff'}).then( async (dataUrl: string) => {
 
       image = new Image();
       image.src = dataUrl;
@@ -81,15 +83,17 @@ export class PrintFileService {
         }
 
           // saveAs(imageData, this.filename + '.png');
-          doc.save(this.filename + '.pdf')
+        doc.save(this.filename + '.pdf')
+        this._loading.toggleWaiting('close')
 
       }
 
 
 
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.error(error);
+        this._loading.toggleWaiting('close')
       });
 
 

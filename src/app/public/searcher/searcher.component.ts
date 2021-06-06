@@ -93,14 +93,14 @@ export class SearcherComponent implements OnInit {
       this._afAuth.authState
         .pipe(takeWhile(user => !user, true))
         .subscribe(user => {
-        if (user) this._router.navigate(['/afiliado', slug])
-        else this._dialog.open(DialogClienteLoginComponent, {
-          width: '370px',
-          data: slug
-        }).afterClosed().subscribe(slug => {
-          if(slug) this._router.navigate(['/afiliado', slug])
+          if (user) this._router.navigate(['/afiliado', slug])
+          else this._dialog.open(DialogClienteLoginComponent, {
+              width: '370px',
+              data: slug
+            }).afterClosed().subscribe(slug => {
+              if(slug) this._router.navigate(['/afiliado', slug])
+            })
         })
-      })
     }
     else if ('codigo' in value) {
       this._router.navigate(['/consulta'], { queryParams: {codigo: value.codigo}})

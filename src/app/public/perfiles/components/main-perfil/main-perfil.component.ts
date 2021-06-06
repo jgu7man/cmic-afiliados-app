@@ -34,14 +34,15 @@ export class MainPerfilComponent implements OnInit, OnDestroy {
 
   authSubscription: Subscription
   constructor(
+    private _afiliados: AfiliadosService,
     private _route: ActivatedRoute,
     private _router: Router,
     private _consultas: ConsultasService,
-    public responsive: MxResponsive,
     private _auth: MxAuth,
     private _title: Title,
     private _alert: MxAlert,
     private _cache: MxCache,
+    public responsive: MxResponsive,
     public print: PrintFileService
   ) {
 
@@ -59,7 +60,7 @@ export class MainPerfilComponent implements OnInit, OnDestroy {
       }
     })
     let slug = this._route.snapshot.params['slug']
-    this._consultas.consulta('slug', slug).subscribe(list => {
+    this._consultas.getAfiliadoBySlug(slug).subscribe(list => {
       if (list.length == 1) {
         let afiliado = list[0]
         // console.log( afiliado )

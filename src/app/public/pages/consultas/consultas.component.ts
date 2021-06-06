@@ -1,7 +1,7 @@
 import { AfiliadoModel } from 'src/app/public/afiliados/models/afiliados.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QueryParam } from "src/app/models/consultas.model";
+import { QueryParam, RequestItem } from "src/app/models/consultas.model";
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { iPerfil } from '../../afiliados/models/perfiles.model';
 import { ActividadesService } from '../../afiliados/services/actividades.service';
@@ -10,6 +10,7 @@ import { MxAlert } from '@marxa/devkit';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogClienteLoginComponent } from '../../clientes/components/dialog-cliente-login/dialog-cliente-login.component';
 import { takeWhile } from 'rxjs/operators';
+import { PrintFileService } from 'src/app/services/print-file.service';
 
 @Component({
   templateUrl: './consultas.component.html',
@@ -19,7 +20,7 @@ export class ConsultasComponent implements OnInit {
 
   queryValue: string
   queryKey: QueryParam
-  afiliados?: AfiliadoModel[]
+  afiliados?: RequestItem[]
   especialidad: string = ''
   actividad: string = ''
 
@@ -30,7 +31,8 @@ export class ConsultasComponent implements OnInit {
     private _router: Router,
     private _afAuth: AngularFireAuth,
     private _alert: MxAlert,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    public print: PrintFileService
   ) {
     let queryParams = Object.keys(this._route.snapshot.queryParams) as QueryParam[]
     this.queryKey = queryParams[0]
@@ -48,10 +50,7 @@ export class ConsultasComponent implements OnInit {
     }
 
     let result =  this._consultas.consulta(this.queryKey, this.queryValue)
-    result.subscribe(data => {
-      console.log( data )
-      this.afiliados = data
-    })
+    result.subscribe(data => { this.afiliados = data })
 
    }
 
