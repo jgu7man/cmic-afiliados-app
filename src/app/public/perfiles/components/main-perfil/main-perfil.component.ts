@@ -10,6 +10,7 @@ import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.se
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { Subscription } from 'rxjs';
+import { PrintFileService } from 'src/app/services/print-file.service';
 
 @Component({
   selector: 'g-main-perfil',
@@ -40,7 +41,8 @@ export class MainPerfilComponent implements OnInit, OnDestroy {
     private _auth: MxAuth,
     private _title: Title,
     private _alert: MxAlert,
-    private _cache: MxCache
+    private _cache: MxCache,
+    public print: PrintFileService
   ) {
 
     this.authSubscription =
