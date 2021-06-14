@@ -1,6 +1,6 @@
 <mat-drawer-container>
   <!-- NAVIGATION SIDEBAR -->
-  <mat-drawer mode="side" [opened]="responsive.large || responsive.xLarge" position="end" id="navigation-bar" mxFix [topBreak]="76" [bottomSelector]="'#footer'" >
+  <mat-drawer mode="side" [opened]="responsive.large" position="end" id="navigation-bar" mxFix [topBreak]="76" [bottomSelector]="'#footer'" >
     <div class="container" id="catalogos" mxStrechHeight>
       <div class="row">
 
@@ -34,7 +34,7 @@
   <!-- PERFIL -->
   <mat-drawer-content>
     <div class="container" id="perfil-content">
-      <ng-container *ngIf="responsive.large ||responsive.xLarge; else mobile">
+      <ng-container *ngIf="responsive.large; else mobile">
         <g-perfil-desktop [afiliado]="afiliado"></g-perfil-desktop>
       </ng-container>
       <ng-template #mobile >

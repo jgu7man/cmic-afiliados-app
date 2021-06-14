@@ -40,7 +40,7 @@ export class PerfilExperienciaComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.responsive.large || this.responsive.xLarge) {
+    if (this.responsive.large || this.responsive.extraLarge) {
       this.expPanel?.openAll()
     }
   }

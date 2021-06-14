@@ -36,7 +36,7 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "lodash",
-              "ng2-pdf-viewer",
+              "ng2-pdf-viewer.js",
               "export-to-csv"
             ]
           },

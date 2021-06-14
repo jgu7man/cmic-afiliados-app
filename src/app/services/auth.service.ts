@@ -62,7 +62,7 @@ export class AuthService {
         if (error.code === "auth/email-already-in-use") {
           throw this._alert.message('No se pudo crear el usuario por que el correo ya está en uso')
         } else {
-          this._alert.sendError('No se pudo crear el usuario', error)
+          this._alert.error('No se pudo crear el usuario', error)
           throw { message: 'No se pudo crear el usuario', error }
         };
       });

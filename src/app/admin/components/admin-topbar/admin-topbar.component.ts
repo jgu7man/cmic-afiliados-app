@@ -28,7 +28,7 @@ export class AdminTopbarComponent implements OnInit {
   }
 
   onSingOut() {
-    this.auth_.singOut()
+    this.auth_.signOut()
     delete this.admin
   }
 

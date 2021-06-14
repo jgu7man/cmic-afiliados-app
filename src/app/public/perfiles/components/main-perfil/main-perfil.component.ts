@@ -51,8 +51,8 @@ export class MainPerfilComponent implements OnInit, OnDestroy {
       if (!user) {
         this._alert.request({
           message: 'Para ver el perfil, necesitas iniciar sesión primero.',
-          trueMsg: 'Iniciar como cliente',
-          falseMsg: 'Iniciar como afiliado'
+          trueLabel: 'Iniciar como cliente',
+          falseLabel: 'Iniciar como afiliado'
         }).subscribe(confirmation => {
           if (confirmation) this._router.navigate(['/clientes/login'])
           else this._router.navigate(['/afiliados/login'])

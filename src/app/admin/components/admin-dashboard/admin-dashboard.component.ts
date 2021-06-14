@@ -25,7 +25,7 @@ export class AdminDashboardComponent implements OnInit {
         .then(admin => {
           if (!admin) {
             this._alert.message('Esta no es una cuenta de administrador')
-            this.auth_.singOut()
+            this.auth_.signOut()
             this._router.navigate(['/admin/login']);
           }
           else this._cache.updateData('admin', admin);

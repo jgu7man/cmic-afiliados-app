@@ -66,7 +66,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   onSignOut() {
-    this.auth_.singOut()
+    this.auth_.signOut()
     this._router.navigateByUrl('/', { skipLocationChange: false })
       .then(() => { this._router.navigate(['/']) })
     delete this.logged

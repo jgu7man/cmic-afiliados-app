@@ -2,7 +2,6 @@
 listName="Slides"
 [selectTemplate]="select"
 [addTemplate]="add"
-[selectTemplate]="select"
 [height_vh]="90"
 (onAdd)="onAddSlide()"
 (onSave)="onUpdateSlide()"
@@ -12,10 +11,10 @@ mxStrechHeight
 >
     <ng-template #select let-slide="item" >
       <g-admin-slide (changes)="onChanges($event)" [slide]="slide"></g-admin-slide>
-      </ng-template>
+    </ng-template>
 
-      <ng-template #add>
-        <g-admin-slide (changes)="onChanges($event)"></g-admin-slide>
+    <ng-template #add>
+      <g-admin-slide (changes)="onChanges($event)"></g-admin-slide>
     </ng-template>
 
 </gdev-list-crud>
