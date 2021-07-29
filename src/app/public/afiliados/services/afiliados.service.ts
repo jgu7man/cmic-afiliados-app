@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { MxAlert } from '@marxa/devkit';
-import { MxCache } from '@marxa/devkit';
-import { iUploadedFile } from '@marxa/storage';
-import { Observable, of, throwError } from 'rxjs';
-import { debounceTime, flatMap, map, switchMap, take, tap } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
-import { AfiliadoModel, DatosGeneralesModel, iAfiliadoModel, iAfiliadoRequest, iManager, PartialAfiliado } from '../models/afiliados.model';
-import { ManagersService } from './managers.service';
+import { MxAlert, MxCache } from '@marxa/devkit';
+import { Observable } from 'rxjs';
+import { catchError, debounceTime, map, tap } from 'rxjs/operators';
+import { EmailsService } from 'src/app/admin/services/emails.service';
+import { AfiliadoModel, DatosGeneralesModel, iAfiliadoRequest, PartialAfiliado } from '../models/afiliados.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +18,7 @@ export class AfiliadosService {
     private _cache: MxCache,
     private _router: Router,
     private _alert: MxAlert,
-    private _auth: AuthService
+    private _mails: EmailsService
   ) {
 
   }
@@ -45,14 +41,22 @@ export class AfiliadosService {
       })
       .then(() => {
         console.log('Datos guardados');
-      });
+      } ).catch( ( error ) => {
+        this._alert.error('No se pudo actualizar la información', error)
+      })
   }
 
 
-  // 1 AFILIADO REQUEST
-  async registRequest(request: iAfiliadoRequest) {
+  //  1 SEND REQUEST OF AFILIADO
+  /**
+   * Genera una petición de registro de la empresa. Si la empresa ya existe, regresa error
+   *
+   * @param {iAfiliadoRequest} request
+   * @returns {*}  {Promise<void>}
+   */
+  async registRequest(request: iAfiliadoRequest): Promise<void> {
     const { RFC } = request.empresa;
-      try {
+    try {
       const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
       const afiliadoDoc = await afiliadoRef.get();
 
@@ -70,19 +74,24 @@ export class AfiliadosService {
           <p class="center">Se ha enviado la petición a los administradores. Ahora toca esperar el correo de confirmación.</p>
         `, 'html').subscribe(() => { this._router.navigate(['/']) })
       }
-    } catch (e) {
-      this._alert.message(e.message);
+    } catch ( e ) {
       console.error(e);
+      this._alert.error( e.message, e );
+      return
     }
 
   }
 
 
   // 2 ACEPT AFILIADO
-  /** Registra un afiliado cuando un RFC no se ha registrado antes y registra el manager que está registrando
+  /**
+   *Registra un afiliado cuando un RFC no se ha registrado antes y registra el manager que está registrando
    *
+   * @param {string} RFC El RFC de la empresa
+   * @param {boolean} acept guarda o elimina la data de la petición
+   * @returns {*}  {Promise<void>}
    */
-  async aceptRegist(RFC: string, acept: boolean) {
+  async aceptRegist(RFC: string, acept: boolean): Promise<void> {
     try {
       const requestRef = this._afs.doc<iAfiliadoRequest>(`afiliaciones/${RFC}`).ref
       const requestDoc = await requestRef.get()
@@ -94,14 +103,14 @@ export class AfiliadosService {
 
       if (requestDoc.exists) {
         let {empresa: afiliado, email, file } = requestDoc.data() as iAfiliadoRequest
-        if (acept) {
-          afiliadoRef.set({
+        if ( acept ) {
+
+          await afiliadoRef.set({
             datos_generales: afiliado,
             constancia: file,
             creado: new Date()
-          });
-
-          await this._afs.collection( 'mail' ).ref.add( {
+          } );
+          let mail = {
             to: email,
             message: {
               subject: `Petición aceptada`,
@@ -112,52 +121,99 @@ export class AfiliadosService {
 
               Si no has mandado una solicitud de registro, omite este correo`
             }
-          })
-          this._alert.notify('Correo enviado')
+          }
+          await this._mails.sendEmail( mail ).catch( error => {
+            console.log( error )
+            throw this._alert.error(`Se aceptó la solicitud de registro pero no pudo enviarse el correo de notificación.`, error, true)
+          } )
+
         }
-        requestRef.delete()
+
+        // Always remove request?
+        // await requestRef.delete()
+
       } else {
         throw { message: 'No se encontró esta petición quizá se perdió o ya se aceptó antes'}
       }
 
 
     } catch (e) {
-      this._alert.message(e.message);
-      console.error(e);
+      this._alert.error(e.message || e, e);
+      return console.error(e);
     }
   }
 
-
-  getPeticiones() {
+  /**
+   * Obtiene la peticiones de registro de los afiliados
+   * @returns {*}  {(Observable<(iAfiliadoRequest & { RFC: string; })[]>)}
+   */
+  getPeticiones(): Observable<(iAfiliadoRequest & { RFC: string; })[]> {
     return this._afs.collection<iAfiliadoRequest>('afiliaciones')
-    .valueChanges({ idField: 'RFC' })
+      .valueChanges( { idField: 'RFC' } ).pipe(
+        catchError( (error) => {
+          throw this._alert
+            .error( 'No se pudieron cargar las peticiones de afiliación', error )
+        } )
+    )
   }
 
-
+  /**
+   * Obtiene el perfil a través de la clave RFC solicitada.
+   * Si no se encuentra, retorna `undefined`
+   *
+   * @param {string} RFC
+   * @returns {*}  {(Observable<AfiliadoModel | undefined>)}
+   */
   getPerfil(RFC: string): Observable<AfiliadoModel | undefined>{
     return this._afs.collection('afiliados')
       .doc<AfiliadoModel>(RFC).valueChanges()
-      .pipe(debounceTime(500))
+      .pipe( debounceTime( 500 ),
+        catchError( error => {
+          throw this._alert.error( 'No se pudo conseguir el perfil', error )
+        })
+      )
   }
 
-
+  /**
+   * Obtiene los datos generales de las empresas afiliadas para mostrar en el index
+   *
+   * @returns {*}  {Observable<DatosGeneralesModel[]>}
+   */
   indexList(): Observable<DatosGeneralesModel[]> {
     return this._afs.collection<AfiliadoModel>('afiliados').valueChanges()
       .pipe(debounceTime(500),
         map<AfiliadoModel[], DatosGeneralesModel[]>(list => list.map(a => a.datos_generales)),
-        tap(list => this._cache.updateData('afiliadosList', list))
+        tap( list => this._cache.updateData( 'afiliadosList', list ) ),
+        catchError( (error) => {
+          throw this._alert.error( 'Error al cargar la lista de afiliados', error )
+        })
     )
   }
 
-
-  getFullList() {
+  /**
+   * Obtiene la lista completa de empresas afiliadas
+   *
+   * @returns {*}  {(Observable<(AfiliadoModel & { RFC: string; })[]>)}
+   */
+  getFullList(): Observable<(AfiliadoModel & { RFC: string; })[]> {
     return this._afs.collection<AfiliadoModel>('afiliados')
-    .valueChanges({ idField: 'RFC'})
+      .valueChanges( { idField: 'RFC' } ).pipe(
+        catchError( error => {
+        throw this._alert.error('No se pudo cargar la lista de los afiliados', error)
+      })
+    )
   }
 
-  getRecentAfiliados(cant: number = 6) {
+  /**
+   * Obtiene la lista de los afiliados recientemente registrados
+   *
+   * @param {number} [cant=6] Cantidad solicitada de perfiles
+   * @returns {*}  {Observable<AfiliadoModel[]>}
+   */
+  getRecentAfiliados(cant: number = 6): Observable<AfiliadoModel[]> {
     return this._afs.collection<AfiliadoModel>('afiliados',
-    ref => ref.orderBy('creado', 'desc').limit(cant)).valueChanges()
+      ref => ref.orderBy( 'creado', 'desc' ).limit( cant ) ).valueChanges()
+      .pipe(catchError( (error) => { throw this._alert.error('No se pudieron obtener los afiliados recientes', error, false, true)}))
   }
 
 

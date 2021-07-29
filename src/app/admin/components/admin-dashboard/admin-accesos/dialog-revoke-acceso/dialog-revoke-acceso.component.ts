@@ -19,7 +19,7 @@ export class DialogRevokeAccesoComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this._accesos.revoke(this.path)
+    this._accesos.revokeAdmin(this.path)
       .then(() => {this.dialog.close()})
   }
 

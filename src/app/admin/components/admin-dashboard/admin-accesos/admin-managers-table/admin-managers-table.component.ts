@@ -11,13 +11,15 @@ import { MxCache } from '@marxa/devkit';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
 import { take } from 'rxjs/operators';
 import firebase from 'firebase/app'
+import { Subscription } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'g-admin-managers-table',
   templateUrl: './admin-managers-table.component.html',
   styleUrls: ['./admin-managers-table.component.scss']
 })
-export class AdminManagersTableComponent implements OnInit, AfterViewInit {
+export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   managers: iManager[] = []
   displayedColumns = [
@@ -32,6 +34,7 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit {
   page: number = 1
 
   afiliadosIndex: DatosGeneralesModel[] = []
+  listSubscription: Subscription
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
@@ -39,6 +42,7 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit {
     private _cache: MxCache,
     private _afiliados: AfiliadosService
   ) {
+    this.listSubscription =
     this._managers.getCompleteList().subscribe(list => {
       this.managers = list
     })
@@ -80,6 +84,8 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit {
     })
   }
 
-
+  ngOnDestroy() {
+    this.listSubscription.unsubscribe()
+  }
 
 }

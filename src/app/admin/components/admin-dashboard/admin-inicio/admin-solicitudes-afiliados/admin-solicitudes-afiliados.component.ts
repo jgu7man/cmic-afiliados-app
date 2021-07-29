@@ -83,7 +83,6 @@ export class DialogAceptAfiliadoComponent implements OnInit {
     public afiliados: AfiliadosService
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

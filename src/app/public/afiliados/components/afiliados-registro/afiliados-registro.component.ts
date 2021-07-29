@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroupDirective,
@@ -8,8 +8,10 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatStepperIntl, MatVerticalStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
 import { MxStorage } from '@marxa/storage';
@@ -50,7 +52,7 @@ export class AfiliadosRegistroComponent implements OnInit {
     file: new FormControl('', [Validators.required])
   })
   privacy: boolean = false
-
+  @ViewChild('stepper') stepper!: MatVerticalStepper
 
   invitado: boolean = false
 
@@ -74,8 +76,21 @@ export class AfiliadosRegistroComponent implements OnInit {
   }
 
   onFileUploaded(event: any) {
-    this.storage.showDropzone = true
-    this.fileForm.patchValue({file: event})
+    this.storage.showDropzone$.next(false)
+    this.fileForm.patchValue( { file: event[0] } )
+    this.dialog.closeAll()
+  }
+
+  validateRegistered(btn: MatButton) {
+    let RFC = this.datosForm.value['RFC']
+    this._afiliadosService.getPerfil( RFC ).subscribe( ( data ) => {
+      if ( data ) {
+        this.dialog.open(DialogRegistered)
+        btn.disabled = true
+      } else {
+        this.stepper.next()
+      }
+    })
   }
 
   get validRequest() {
@@ -129,6 +144,13 @@ export class AfiliadosRegistroComponent implements OnInit {
   templateUrl: 'dialog-privacidad-registro.html',
 })
 export class DialogPrivacidadRegistro {
-  // REVIEW agregar las importaciones para el manejo de la data en el DIALOG
   constructor(public dialog_: MatDialogRef<DialogPrivacidadRegistro>) {}
+}
+
+@Component({
+  selector: 'dialog-privacidad',
+  templateUrl: 'dialog-registered.html',
+})
+export class DialogRegistered {
+  constructor(public dialog_: MatDialogRef<DialogRegistered>) {}
 }

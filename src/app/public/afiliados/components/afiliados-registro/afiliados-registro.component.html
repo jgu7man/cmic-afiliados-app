@@ -66,10 +66,10 @@
               <div class="col s12">
                 <button
                   mat-button
-                  matStepperNext
+                  #nextBtn="matButton"
                   color="secondary"
                   type="button"
-                  [disabled]="datosForm.invalid"
+                  (click)="validateRegistered(nextBtn)"
                 >
                   Siguiente
                 </button>

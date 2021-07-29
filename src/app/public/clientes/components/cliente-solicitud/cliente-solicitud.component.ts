@@ -81,7 +81,7 @@ export class ClienteSolicitudComponent implements OnInit {
 
   onFileUploaded(files: iUploadedFile[]) {
     let file = files[0]
-    this.storage_.showDropzone = true
+    this.storage_.showDropzone$.next(true)
     if (file.fileName?.includes('INEfile')) {
       this.INEfileForm.patchValue({ INEfile: file })
       this._alert.notify('INE Cargada')

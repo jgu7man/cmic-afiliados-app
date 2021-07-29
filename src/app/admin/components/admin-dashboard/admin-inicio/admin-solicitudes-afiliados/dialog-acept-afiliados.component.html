@@ -8,16 +8,28 @@
       <p>Email: <span class="data-text">
         {{peticion.email}}
       </span></p>
-
+      <p>Comprobante:</p>
     </div>
   </div>
   <div class="row">
     <div class="col s12">
-      <mat-grid-list cols="2" rowHeight="1:1" >
+      <ng-container *ngIf="peticion.file.format?.includes('image') ; else download">
+      <mat-grid-list cols="1" rowHeight="1:1" >
         <mat-grid-tile class="file-container">
-          <img [src]="peticion.file.url" [alt]="peticion.file.fileName">
-        </mat-grid-tile>
-      </mat-grid-list>
+            <img [src]="peticion.file.url" [alt]="peticion.file.fileName">
+          </mat-grid-tile>
+        </mat-grid-list>
+      </ng-container>
+      <ng-template #download >
+        <div class="not-image center">
+          Archivo en formato "{{peticion.file.format}}" <br>
+          Da click al botón para visualizar
+          <br>
+          <a mat-raised-button color='primary'
+          [href]="peticion.file.url" download target="_blank">Descargar</a>
+        </div>
+      </ng-template>
+
 
     </div>
   </div>

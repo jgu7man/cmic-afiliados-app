@@ -13,7 +13,7 @@ import { AfiliacionFormComponent, DialogPrivacidad, DialogRetencion } from './co
 import { ActividadesFormComponent } from './components/actividades-form/actividades-form.component';
 import { AfiliadosLoginComponent } from './components/afiliados-login/afiliados-login.component';
 import { MxAuthModule } from '@marxa/auth';
-import { AfiliadosRegistroComponent, DialogPrivacidadRegistro } from './components/afiliados-registro/afiliados-registro.component';
+import { AfiliadosRegistroComponent, DialogPrivacidadRegistro, DialogRegistered } from './components/afiliados-registro/afiliados-registro.component';
 import { AfiliadosPerfilComponent } from './components/afiliados-perfil/afiliados-perfil.component';
 import { AfiliadosAdminComponent } from './components/afiliados-admin/afiliados-admin.component';
 import { AfiliadosExperienciaComponent } from './components/afiliados-perfil/afiliados-experiencia/afiliados-experiencia.component';
@@ -75,6 +75,7 @@ import { AfiliadosCreateComponent } from './components/afiliados-create/afiliado
     ActividadesSelectorComponent,
     InteresesFormComponent,
     AfiliadosCreateComponent,
+    DialogRegistered
   ],
   imports: [
     CommonModule,

@@ -4,10 +4,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MxAlert, MxCache } from '@marxa/devkit';
 import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { iAdmin } from '../models/admin.model';
+import { iMail } from '../models/emial.model';
 import { iUser } from '../models/roles.model';
+import { EmailsService } from './emails.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,8 @@ export class AdminService {
     private _alert: MxAlert,
     private _auth: AuthService,
     private _router: Router,
-    private _cache: MxCache
+    private _cache: MxCache,
+    private _mails: EmailsService
   ) {
     this.current$ = this._afAuth.authState.pipe(
       switchMap(user => user ?
@@ -42,63 +45,102 @@ export class AdminService {
 
 
 
+  /**
+   * Obtiene el admistrador solicitado
+   *
+   * @param {string} email
+   * @returns {*}
+   */
   async retriveAdmin(email: string) {
-    const clients = await this._afs.collection('admins').ref
+    try {
+      const clients = await this._afs.collection('admins').ref
       .where('email', '==', email).get()
-    if (!clients.empty && clients.size < 2) {
-      return clients.docs[0].data() as iAdmin
-    } else {
+      if (!clients.empty && clients.size < 2) {
+        return clients.docs[0].data() as iAdmin
+      } else {
+        return null
+      }
+    } catch (error) {
+      this._alert.error('Error al obtener el administrador', error, false, true)
+      console.error( error )
       return null
     }
   }
 
-  async invite(email: string) {
-    let stored = await this.retriveAdmin(email);
-    const adminsRef = this._afs.collection('admins').ref
-    let urlSplited = window.location.href.split('/')
-    let currentURL = urlSplited[2].includes('localhost')
-      ? 'localhost:4200' : `https://${urlSplited[2]}`
-    if (!stored) {
-      adminsRef.doc(email).set({ email })
-      this._afs.collection( 'mail' ).ref.add( {
-        to: email,
-        message: {
-          subject: `Invitación a CMIC`,
-          text: `Se te ha invitado a registrarte como administrador de la plataforma de CMIC \n
+  /**
+   * Envia un email de invitación para ser administrador de la plataforma
+   *
+   * @param {string} email
+   * @returns {*}  {Promise<void>}
+   */
+  async invite(email: string): Promise<void> {
+    try {
+      let stored = await this.retriveAdmin(email);
+      const adminsRef = this._afs.collection('admins').ref
+      let urlSplited = window.location.href.split('/')
+      let currentURL = urlSplited[2].includes('localhost')
+        ? 'localhost:4200' : `https://${urlSplited[2]}`
+      if (!stored) {
+        await adminsRef.doc( email ).set( { email } );
+        let mail: iMail = {
+          to: email,
+          message: {
+            subject: `Invitación a CMIC`,
+            text: `Se te ha invitado a registrarte como administrador de la plataforma de CMIC \n
 
-          Por favor da click en el siguiente enlace:\n
-          ${currentURL}/admin/create?perfil=admin&email=${email}`
+            Por favor da click en el siguiente enlace:\n
+            ${currentURL}/admin/create?perfil=admin&email=${email}`
+          }
         }
-      } )
-      this._alert.notify('Correo enviado')
-      return
-    } else {
-      this._alert.message('Este correo ya está registrado en la plataforma')
+        await this._mails.sendEmail(mail)
+        return
+      } else {
+        this._alert.message('Este correo ya está registrado en la plataforma')
+      }
+    } catch (error) {
+      this._alert.error('Error al enviar invitación para el administrador', error)
+      console.error(error)
     }
   }
 
 
+  /**
+   * Crea cuenta de adminitrador
+   *
+   * @param {iUser} user Objeto de formato `iUser`
+   */
   async createAccount(user: iUser) {
-    let {email} = user
-    const adminsRef = this._afs.collection('admins').ref
-    const tempRef =  adminsRef.doc(email)
-    const tempDoc = await tempRef.get()
-    if (!tempDoc.exists) {
-      this._alert.message(`
-      <h2 class="center">Email incorrecto</h2>
-      <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
-    `, 'html')
-    } else {
-      this._auth.createAccount(user, 'admins')
-      tempRef.delete()
-      this._router.navigate(['/admin'])
+    try {
+      let {email} = user
+      const adminsRef = this._afs.collection('admins').ref
+      const tempRef =  adminsRef.doc(email)
+      const tempDoc = await tempRef.get()
+      if (!tempDoc.exists) {
+        this._alert.message(`
+        <h2 class="center">Email incorrecto</h2>
+        <p class="center">No esperamos ninguna petición de creación de cuenta para ${email}. <br> Por favor contacta con CMIC para cualquier error </p>
+      `, 'html')
+      } else {
+        this._auth.createAccount(user, 'admins')
+        tempRef.delete()
+        this._router.navigate(['/admin'])
+      }
+    } catch (error) {
+      console.error(error)
+      this._alert.error('Error intentado crear la cuenta de adminsitrador', error)
     }
   }
 
-
-  getList() {
+  /**
+   * Obtiene la lista de adminsitradores como Observable
+   *
+   * @returns {*}  {(Observable<(iAdmin & { uid: string; })[]>)}
+   */
+  getList(): Observable<(iAdmin & { uid: string; })[]> {
     return this._afs.collection<iAdmin>('admins')
-      .valueChanges({ idField: 'uid' })
+      .valueChanges( { idField: 'uid' } ).pipe(
+        catchError( ( error ) => { throw this._alert.error('No se pudo obtener la lista de administradores', error)})
+      )
   }
 
 }

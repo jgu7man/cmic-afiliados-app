@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { MxCache, MxLoading } from '@marxa/devkit';
+import { MxAlert, MxCache, MxLoading } from '@marxa/devkit';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
@@ -16,10 +16,12 @@ export class AppComponent {
     private _loading: MxLoading,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private _title: Title
+    private _title: Title,
+    private _alert: MxAlert,
   ) {
     this._cache.cacheTagName = 'cmic-data';
     this._cache.storage = 'local'
+    this._alert.storeError = true;
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       map(() => this.activatedRoute),
