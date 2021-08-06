@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { iMail, iMailResponse } from '../models/emial.model';
 import firebase from 'firebase/app'
-import { MxAlert } from '@marxa/devkit';
+import { MxAlert, MxLoading } from '@marxa/devkit';
 import { filter, map, pluck } from 'rxjs/operators';
 
 @Injectable({
@@ -13,7 +13,8 @@ export class EmailsService {
   mailCollection: string = 'mail'
   constructor (
     private _afs: AngularFirestore,
-    private _alert: MxAlert
+    private _alert: MxAlert,
+    private _loading: MxLoading,
   ) { }
 
 
@@ -25,6 +26,7 @@ export class EmailsService {
    */
   async sendEmail( mail: iMail ): Promise<void> {
     try {
+      this._loading.toggleWaiting('open')
       const mailsCol = this._afs.collection( this.mailCollection )
       const mailRef = await mailsCol.add(mail)
       const mailId = mailRef.id
@@ -38,8 +40,9 @@ export class EmailsService {
           }),
         ).subscribe( delivery => {
           console.log( delivery )
-          if( delivery ){
+          if ( delivery ) {
             if ( delivery.state == 'ERROR' || delivery.state == 'SUCCESS' ) {
+              this._loading.toggleWaiting('close')
               if ( delivery.state == 'ERROR' ) {
                 this._alert.notify( 'Error al enviar el correo' )
                 reject( {

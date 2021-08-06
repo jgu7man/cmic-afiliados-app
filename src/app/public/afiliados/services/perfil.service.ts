@@ -35,7 +35,7 @@ export class PerfilService {
   ) {
     this.extractCtrl = new FormControl('', [Validators.required])
     this.RFC = this._cache.getDataKey<string>('rfc') as string
-    const { email }: iManager = this._cache.getDataKey('user') as iManager
+    const { email } = this._cache.getDataKey('user') || {email:''}
     this.metadata = { RFC: this.RFC, email }
   }
 

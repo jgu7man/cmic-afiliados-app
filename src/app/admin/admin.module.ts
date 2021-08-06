@@ -16,7 +16,7 @@ import { DialogRevokeAccesoComponent } from './components/admin-dashboard/admin-
 import { AdminClientesTableComponent } from './components/admin-dashboard/admin-accesos/admin-clientes-table/admin-clientes-table.component';
 import { AdminsTableComponent } from './components/admin-dashboard/admin-accesos/admins-table/admins-table.component';
 import { AdminTopbarComponent } from './components/admin-topbar/admin-topbar.component';
-import { AdminAfiliadosTableComponent } from './components/admin-dashboard/admin-afiliados-table/admin-afiliados-table.component';
+import { AdminAfiliadosTableComponent, BottomAdminAfiliado } from './components/admin-dashboard/admin-afiliados-table/admin-afiliados-table.component';
 import { PublicModule } from '../public/public.module';
 import { AdminInicioComponent } from './components/admin-dashboard/admin-inicio/admin-inicio.component';
 import { CreateAdminAccountComponent } from './components/create-admin-account/create-admin-account.component';
@@ -61,7 +61,8 @@ import { AdminContactoComponent, DialogContactoMensajeComponent } from './compon
     AdminSlideComponent,
     AdminSolicitudesClientesComponent,
     AdminSolicitudesAfiliadosComponent,
-    AdminContactoComponent
+    AdminContactoComponent,
+    BottomAdminAfiliado
   ],
   imports: [
     CommonModule,

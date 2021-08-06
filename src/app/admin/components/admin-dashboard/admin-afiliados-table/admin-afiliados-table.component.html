@@ -46,8 +46,11 @@
             <ng-container matColumnDef="options">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
               <td mat-cell class="options" *matCellDef="let afiliado">
-                <i class="fas fa-external-link-alt green-text"
-                (click)="onSelect(afiliado)"></i>
+                <!-- <i class="fas fa-external-link-alt green-text"
+                (click)="onSelect(afiliado)"></i> -->
+                <button mat-icon-button (click)="onOptions(afiliado)">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
               </td>
             </ng-container>
 

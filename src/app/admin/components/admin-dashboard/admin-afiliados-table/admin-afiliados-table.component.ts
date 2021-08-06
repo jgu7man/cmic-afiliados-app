@@ -1,5 +1,5 @@
 import { MatDialog } from '@angular/material/dialog';
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,6 +9,10 @@ import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.se
 import { Router } from '@angular/router';
 import { MxCache } from '@marxa/devkit';
 import { MxStorage } from '@marxa/storage';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Inject } from '@angular/core';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -30,11 +34,11 @@ export class AdminAfiliadosTableComponent implements OnInit {
   page: number = 1
   constructor(
     private _paginator: MatPaginatorIntl,
-    private _dialog: MatDialog,
     private _afiliados: AfiliadosService,
     private _router: Router,
     private _cache: MxCache,
-    private _storage:MxStorage
+    private _storage: MxStorage,
+    private _bottom: MatBottomSheet
   ) {
     this._afiliados.getFullList().subscribe(list => {
       this.afiliados = list
@@ -72,6 +76,61 @@ export class AdminAfiliadosTableComponent implements OnInit {
 
   onDownload() {
     this._storage.downloadList(this.afiliados, 'Lista de afiliados')
+  }
+
+  onOptions(afiliado: AfiliadoModel) {
+    this._bottom.open( BottomAdminAfiliado, {
+      data: afiliado
+    })
+  }
+
+}
+
+
+
+@Component({
+  templateUrl: './bottom-options-afiliado.html',
+  styleUrls: ['./admin-afiliados-table.component.scss']
+})
+export class BottomAdminAfiliado implements OnInit, OnDestroy {
+
+  managers: iManager[] = [];
+  private managersSubscription: Subscription
+  constructor (
+    @Inject( MAT_BOTTOM_SHEET_DATA ) public afiliado: AfiliadoModel,
+    private sheet: MatBottomSheetRef<BottomAdminAfiliado>,
+    private _cache: MxCache,
+    private _router: Router,
+    private _afiliados: AfiliadosService,
+    private _managers: ManagersService
+  ) {
+    this.managersSubscription =
+    this._managers.getForAfiliado( this.afiliado.datos_generales.RFC )
+      .subscribe( list => {
+        this.managers = list
+    })
+   }
+
+  ngOnInit(): void { }
+
+  onSelect() {
+    this._cache.updateData('rfc', this.afiliado.datos_generales.RFC )
+    this._router.navigate(['/afiliados/perfil', this.afiliado.datos_generales.RFC  ])
+  }
+
+  sendEmailAcepted() {
+    console.log( this.managers )
+    this.managers.forEach( m => {
+      this._afiliados.sendAceptedMail(
+        m.email,
+        this.afiliado.datos_generales.RFC
+      )
+    } )
+    this.sheet.dismiss()
+  }
+
+  ngOnDestroy() {
+    this.managersSubscription.unsubscribe()
   }
 
 }

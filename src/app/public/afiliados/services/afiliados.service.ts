@@ -72,6 +72,7 @@ export class AfiliadosService {
         this._alert.message(`
           <h1 class="center">Petición enviada</h1>
           <p class="center">Se ha enviado la petición a los administradores. Ahora toca esperar el correo de confirmación.</p>
+          <p>Es posible que también tengas que revisar tu bandeja de spam</p>
         `, 'html').subscribe(() => { this._router.navigate(['/']) })
       }
     } catch ( e ) {
@@ -96,9 +97,7 @@ export class AfiliadosService {
       const requestRef = this._afs.doc<iAfiliadoRequest>(`afiliaciones/${RFC}`).ref
       const requestDoc = await requestRef.get()
       const afiliadoRef = this._afs.doc(`afiliados/${RFC}`).ref;
-      const splitDomain = window.location.href.split('/')
-      const domain = splitDomain[0] === 'localhost' ? splitDomain[0]
-        : 'https://' + splitDomain[2]
+
 
 
       if (requestDoc.exists) {
@@ -110,23 +109,11 @@ export class AfiliadosService {
             constancia: file,
             creado: new Date()
           } );
-          let mail = {
-            to: email,
-            message: {
-              subject: `Petición aceptada`,
-              text: `Se ha aceptado la petición para registrarte como afiliado en la plataforma de CMIC
-
-              Por favor da click en el siguiente enlace para continuar con el registro:
-              ${domain}/afiliados/create?email=${email}&rfc=${RFC}"
-
-              Si no has mandado una solicitud de registro, omite este correo`
-            }
-          }
-          await this._mails.sendEmail( mail ).catch( error => {
-            console.log( error )
-            throw this._alert.error(`Se aceptó la solicitud de registro pero no pudo enviarse el correo de notificación.`, error, true)
+          await afiliadoRef.collection( 'managers' ).add( {
+            email, RFC, registrado: new Date()
           } )
-
+          await this._alert.notify( 'Se agregó el afiliado' )
+          await this.sendAceptedMail(email, RFC)
         }
 
         // Always remove request?
@@ -141,6 +128,32 @@ export class AfiliadosService {
       this._alert.error(e.message || e, e);
       return console.error(e);
     }
+  }
+
+
+  async sendAceptedMail( email: string, RFC: string ) {
+    const splitDomain = window.location.href.split('/')
+    const domain = splitDomain[0] === 'localhost' ? splitDomain[0]
+      : 'https://' + splitDomain[2]
+    let mail = {
+      to: email,
+      message: {
+        subject: `Petición aceptada`,
+        html: `
+        <p>Se ha aceptado la petición para registrarte como afiliado en la plataforma de CMIC</p>
+        <br>
+        <p>Por favor da click en el siguiente enlace para continuar con el registro:
+        <a href="${domain }/afiliados/create?email=${ email }&rfc=${ RFC}">
+          ${domain }/afiliados/create?email=${ email }&rfc=${ RFC}
+        </a>
+        <br>
+        <p> Si no has mandado una solicitud de registro, omite este correo </p>
+        `
+      }
+    }
+    await this._mails.sendEmail( mail ).catch( error => {
+      throw this._alert.error(`No pudo enviarse el correo de notificación.`, error, true)
+    } )
   }
 
   /**

@@ -92,8 +92,8 @@ export class ManagersService {
   /** Obtiene los managers por RFC
    * @returns {*}  {(Observable<string | (iManager & { uid: string; })[]>)}
    */
-  getForAfiliado(): Observable<(iManager & { uid: string; })[]> {
-    let rfc = this._cache.getDataKey<string>('rfc')
+  getForAfiliado(RFC?: string): Observable<(iManager & { uid: string; })[]> {
+    let rfc = RFC || this._cache.getDataKey<string>('rfc')
     return this._afs.collection<iManager>( `afiliados/${ rfc }/managers` )
       .valueChanges( { idField: 'uid' } ).pipe(
         catchError( (error) => { throw this._alert.error('No se pudo obtener el afiliado', error)})
@@ -178,7 +178,6 @@ async add(email: string): Promise<void> {
             email, RFC, ...rest
           }
           await this._auth.createManagerAccount(manager)
-          emailRef.delete()
 
           if (!afiliado.contacto
             || !afiliado.domicilio

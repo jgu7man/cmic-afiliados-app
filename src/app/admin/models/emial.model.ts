@@ -8,7 +8,8 @@ export interface iMail {
 
 export interface iMailMessage{
   subject: string,
-  text: string;
+  text?: string;
+  html?: string;
 }
 
 export interface iMailResponse {
