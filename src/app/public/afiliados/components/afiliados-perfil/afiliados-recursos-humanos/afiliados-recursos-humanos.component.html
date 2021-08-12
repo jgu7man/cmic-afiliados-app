@@ -30,7 +30,7 @@
               </mat-form-field>
               <button mat-button [disabled]="perfil_.extractCtrl.invalid && perfil_.extractCtrl.pristine"
               (click)="perfil_.updateExtract('recursos_humanos')"
-              color="secondary"
+              color="primary"
               >Guardar</button>
               <mat-divider></mat-divider>
             </div>
@@ -100,7 +100,7 @@
 
               </mat-card-content>
               <mat-card-actions>
-                <button mat-raised-button color="secondary" [disabled]="memberForm.invalid && memberForm.pristine" (click)="onSaveItem()">Guardar</button>
+                <button mat-raised-button color="primary" [disabled]="memberForm.invalid && memberForm.pristine" (click)="onSaveItem()">Guardar</button>
               </mat-card-actions>
             </form>
             </mat-card>
