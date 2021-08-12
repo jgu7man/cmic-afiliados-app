@@ -41,6 +41,7 @@ import { MxResponsiveModule } from '@marxa/devkit';
 import { MxStorageModule } from '@marxa/storage';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AfiliadosCreateComponent } from './components/afiliados-create/afiliados-create.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { AfiliadosCreateComponent } from './components/afiliados-create/afiliado
   ],
   imports: [
     CommonModule,
+    FormsModule,
     AfiliadosRoutingModule,
     MaterialModule,
     FirebaseModule,

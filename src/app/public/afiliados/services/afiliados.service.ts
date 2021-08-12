@@ -40,7 +40,8 @@ export class AfiliadosService {
         [field]: typeof partialAafiliado != 'string' ?  { ...partialAafiliado } : partialAafiliado,
       })
       .then(() => {
-        console.log('Datos guardados');
+        console.log( 'Datos guardados' );
+        this._alert.notify('Datos guardados')
       } ).catch( ( error ) => {
         this._alert.error('No se pudo actualizar la información', error)
       })

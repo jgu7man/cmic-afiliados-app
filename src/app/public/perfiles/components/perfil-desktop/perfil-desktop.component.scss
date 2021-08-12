@@ -1,5 +1,8 @@
 #perfil-view {
   padding-left: 2em;
+  .mat-drawer-container {
+    min-height: 200vh;
+  }
 }
 
 #perfil-sidebar {

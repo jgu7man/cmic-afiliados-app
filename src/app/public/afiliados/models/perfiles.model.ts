@@ -7,7 +7,7 @@ export interface iPerfil {
   imgPerfil?: iUploadedFile,
   imgBanner?: iUploadedFile,
   servicios?: string[],
-  primerAfiliacion?: Date | firebase.firestore.Timestamp,
+  afiliacionYear?:number,
   capFinanciera?: number,
   updated?: Date | firebase.firestore.Timestamp
 }

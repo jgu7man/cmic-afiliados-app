@@ -1,15 +1,25 @@
 <div class="container full-width">
   <div class="row">
-    <div id="form" class="col s12 l5">
-      <mat-vertical-stepper [linear]="true" #stepper>
-        <mat-step>
+    <div class="col s2 l1" *ngIf="edit !== undefined">
+      <button  mat-icon-button (click)="location.back()">
+        <i class="fas fa-arrow-left fa-lg "></i>
+      </button>
+    </div>
+    <div class="col"
+    [ngClass]="{'s10 l3': edit !== undefined, 's12 l5': edit === undefined}">
+      <h2 class="center">Datos de afiliado</h2>
+    </div>
+  </div>
+  <div class="row">
 
-        </mat-step>
+    <div id="form" class="col s12 l5">
+      <mat-vertical-stepper [linear]="edit === undefined " #stepper class="mat-elevation-z3">
 
         <!-- DOMICILIO -->
-        <mat-step>
+        <mat-step aria-label="domicilio">
           <ng-template matStepLabel>Domicilio</ng-template>
           <g-direccion-form
+            [form]="afiliado.domicilio"
             (invalid)="direccionBtn.disabled = $event"
             (changes)="onChanges('domicilio', $event)"
           ></g-direccion-form>
@@ -29,10 +39,11 @@
         </mat-step>
 
         <!-- DATOS DE CONTACTO -->
-        <mat-step>
+        <mat-step aria-label="contacto">
           <ng-template matStepLabel>Datos de contacto</ng-template>
 
           <g-contacto-form
+          [form]="afiliado.contacto"
             (changes)="onChanges('contacto', $event)"
             (invalid)="contactoBtn.disabled = $event"
           ></g-contacto-form>
@@ -52,9 +63,10 @@
         </mat-step>
 
         <!-- REPRESENTANTE LEGAL -->
-        <mat-step>
+        <mat-step aria-label="representante">
           <ng-template matStepLabel>Datos de Representante Legal</ng-template>
           <g-representante-form
+          [form]="afiliado.representante_legal"
             (invalid)="representanteBtn.disabled = $event"
             (changes)="onChanges('representante_legal', $event)"
           ></g-representante-form>
@@ -79,7 +91,7 @@
         </mat-step>
 
         <!-- DIRECTOR GENERAL -->
-        <mat-step>
+        <mat-step aria-label="director">
           <ng-template matStepLabel>Datos de director general</ng-template>
           <mat-checkbox
             [checked]="director_igual_legal"
@@ -90,6 +102,7 @@
           >
           <div *ngIf="!director_igual_legal">
             <g-representante-form
+            [form]="afiliado.director"
               (changes)="onChanges('director', $event)"
               (invalid)="director_invalid = $event"
             ></g-representante-form>
@@ -100,8 +113,8 @@
               #directorBtn="matButton"
               (click)="
                 afiliados_.patch(
-                  'representante_legal',
-                  afiliado.representante_legal
+                  'director',
+                  afiliado.director
                 )
               "
               mat-button
@@ -117,20 +130,28 @@
 
         <!-- TÉRMINOS Y CONDICIONES -->
         <mat-step>
-          <ng-template matStepLabel>Continuar</ng-template>
-          <p>Ahora continuamos con tu registro</p>
-          <div>
-            <button mat-button matStepperPrevious>Atrás</button>
-            <button
-              mat-raised-button
-              color="accent"
-              type="button"
-              matStepperNext
-              [routerLink]="['/afiliados/elegir-actividades', RFC]"
-            >
-              Siguiente
-            </button>
-          </div>
+          <ng-container *ngIf="edit === undefined; else back">
+            <ng-template matStepLabel>Continuar</ng-template>
+            <p>Ahora continuamos con tu registro</p>
+            <div>
+              <button mat-button matStepperPrevious>Atrás</button>
+              <button
+                mat-raised-button
+                color="accent"
+                type="button"
+                matStepperNext
+                [routerLink]="['/afiliados/elegir-actividades', RFC]"
+              >
+                Siguiente
+              </button>
+            </div>
+          </ng-container>
+          <ng-template #back >
+            <ng-template matStepLabel>Has terminado</ng-template>
+            <p>Ahora puedes volver al perfil</p>
+            <button mat-raised-button color='primary'
+            (click)="location.back()" >Regresar</button>
+          </ng-template>
         </mat-step>
       </mat-vertical-stepper>
     </div>

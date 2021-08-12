@@ -53,19 +53,21 @@
     {{afiliado.representante_legal?.nombre}}
     {{afiliado.representante_legal?.apellido_pat}}
     {{afiliado.representante_legal?.apellido_mat}}
-  </span> </p>
-  <p *ngIf="afiliado.director?.nombre">
+  </span>
+  <i class="fas fa-pencil-alt blue-text text-lighten-4 go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]" [queryParams]="{'edit': '2'}"></i>
+ </p>
+  <p>
     Director: <span class="data-text">
     {{afiliado.director?.titulo}}
     {{afiliado.director?.nombre}}
     {{afiliado.director?.apellido_pat}}
     {{afiliado.director?.apellido_mat}}
-  </span> </p>
+  </span>
+  <i class="fas fa-pencil-alt blue-text text-lighten-4 go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]" [queryParams]="{'edit': '3'}"></i>
+</p>
   <p>Afiliado CMIC: <span class="data-text"> {{year}} </span> </p>
   <p>Afiliado desde:
-    <span class="data-text">{{
-      date_.toDate( afiliado.perfil?.primerAfiliacion) | date: 'yyyy'
-    }}</span>
+    <span class="data-text">{{ afiliado.perfil?.afiliacionYear }}</span>
     <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/editar-perfil', afiliado.datos_generales.RFC]"></i>
   </p>
 </article>
@@ -74,7 +76,7 @@
 
 <article>
   <p class="article-header" >Ubicación
-    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]"></i>
+    <i class="fas fa-pencil-alt blue-text text-lighten-4 go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]" [queryParams]="{'edit': '0'}"></i>
   </p>
   <p> Domicilio: <span class="data-text">
     {{ afiliado.domicilio?.publica?.calle }}
@@ -98,7 +100,7 @@
 </article>
 <article>
   <p class="article-header">Contacto
-    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]"></i>
+    <i class="fas fa-pencil-alt blue-text text-lighten-4 go-edit" [routerLink]="['/afiliados/afiliacion', afiliado.datos_generales.RFC]" [queryParams]="{'edit': '1'}"></i>
   </p>
   <p *ngIf="afiliado.contacto?.telefono">
     Tel. <span class="data-text">
@@ -117,11 +119,11 @@
 </article>
 <article>
   <p class="article-header">Personal
-    <i class="fas fa-pencil-alt blue-text go-edit" [routerLink]="['/afiliados/editar-perfil', afiliado.datos_generales.RFC]"></i>
+    <i class="fas fa-pencil-alt blue-text text-lighten-4 go-edit" [routerLink]="['/afiliados/editar-perfil', afiliado.datos_generales.RFC]" ></i>
   </p>
   <p>
-    Planta fija: <span class="data-text">{{personal.planta_fija}}</span> <br>
-    Cap. de contratación por proyecto <span class="data-text">{{personal.capacidad_proyecto}} </span>
+    Planta fija: <span class="data-text">{{afiliado.adicional?.personal?.planta_fija}}</span> <br>
+    Cap. de contratación por proyecto <span class="data-text">{{afiliado.adicional?.personal?.capacidad_proyecto}} </span>
 
   </p>
   <!-- <p>

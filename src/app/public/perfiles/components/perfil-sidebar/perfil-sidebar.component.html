@@ -36,7 +36,8 @@
       </span>
       </p>
     </ng-template>
-    <p>Representante: <span class="data-text">
+    <p *ngIf="afiliado.representante_legal?.nombre" >
+      Representante: <span class="data-text">
       {{afiliado.representante_legal?.titulo}}
       {{afiliado.representante_legal?.nombre}}
       {{afiliado.representante_legal?.apellido_pat}}
@@ -51,9 +52,7 @@
     </span> </p>
     <p>Afiliado CMIC: <span class="data-text"> {{year}} </span> </p>
     <p>Afiliado desde: <span class="data-text">
-      <span class="data-text">{{
-        date_.toDate( afiliado.perfil?.primerAfiliacion) | date: 'yyyy'
-      }}</span>
+      <span class="data-text">{{ afiliado.perfil?.afiliacionYear }}</span>
     </span> </p>
   </article>
 
@@ -99,13 +98,21 @@
   <article>
     <p class="article-header">Personal</p>
     <p>
-      Planta fija: <span class="data-text">{{personal.planta_fija}}</span> <br>
-      Cap. de contratación por proyecto <span class="data-text">{{personal.capacidad_proyecto}} </span>
+      Planta fija: <span class="data-text">{{afiliado.adicional?.personal?.planta_fija}}</span> <br>
+      Cap. de contratación por proyecto <span class="data-text">{{afiliado.adicional?.personal?.capacidad_proyecto}} </span>
     </p>
     <!-- <p>
       Del total de colaboradores, el 25% cuentan con estudios de especialización o posgrado
     </p> -->
   </article>
+
+  <article>
+    <p class="article-header">Extras</p>
+    <p>Capacidad Financiera: <span class="data-text">
+      {{afiliado.perfil?.capFinanciera}}
+    </span></p>
+  </article>
+
 
   <article>
     <p class="article-header">Servicios</p>
@@ -116,9 +123,3 @@
     </p>
   </article>
 
-  <article>
-    <p class="article-header">Extras</p>
-    <p>Capacidad Financiera: <span class="data-text">
-      {{afiliado.perfil?.capFinanciera}}
-    </span></p>
-  </article>

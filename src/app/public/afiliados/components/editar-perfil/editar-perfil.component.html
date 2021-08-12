@@ -21,12 +21,13 @@
               [fieldLabel]="'Año de afiliación al CMIC'"
               matTooltip="Presiona el ícono para elegir una fecha"
               (selected)="catchYear($event)"
-              [value]="perfilForm.value.primerAfiliacion"
+              [appearance]="'outline'"
+              [value]="perfilForm.value.afiliacionYear"
               ></gdev-year-selector>
             </div>
 
             <div class="col s12 m7">
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Capacidad financiera</mat-label>
                 <input
                 matInput
@@ -61,27 +62,29 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>Servicios</mat-card-title>
-          <mat-card-subtitle>Puedes agregar o quitar los servicios que ofrece tu empresa. Escribe el servicio y después presiona comma (,) para agregarlo.</mat-card-subtitle>
+          <mat-card-subtitle>Puedes agregar o quitar los servicios que ofrece tu empresa. Escribe el servicio y después presiona coma (,) para agregarlo.</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <mat-form-field class="example-chip-list">
+          <mat-form-field class="example-chip-list" appearance="outline">
             <mat-label>Servicios que ofrece</mat-label>
-            <mat-chip-list #chipList aria-label="Escribe un servicio y presiona enter o comma para agregarlo">
+            <mat-chip-list #chipList aria-label="Escribe un servicio y presiona enter o coma para agregarlo">
               <mat-chip *ngFor="let servicio of servicios" [selectable]="true"
                        [removable]="true" (removed)="remove(servicio)">
                 {{servicio}}
                 <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
               <input placeholder="Nuevo servicio..."
-                     [matChipInputFor]="chipList"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="false"
-                     (matChipInputTokenEnd)="add($event)">
+                    [formControl]="chipsInput"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="true"
+                    (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
           </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
           <button mat-raised-button color='primary'
+          [disabled]="chipsInput.pristine || servicios.length == 0"
           (click)="perfil_.updateInfoDoc('perfil.servicios', servicios)"
            >Guardar</button>
         </mat-card-actions>

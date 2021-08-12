@@ -63,9 +63,9 @@
           </div>
 
           <div class="col s12 m4" *ngIf="afiliado.perfil">
-              <p *ngIf="afiliado.perfil.primerAfiliacion">
+              <p *ngIf="afiliado.perfil.afiliacionYear">
               Afiliado desde: <span class="data-text">
-                {{afiliado.perfil.primerAfiliacion | toDate | date: 'yyyy'}}
+                {{afiliado.perfil.afiliacionYear }}
                 </span>
               </p>
           </div>

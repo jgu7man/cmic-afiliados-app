@@ -53,7 +53,7 @@ export class DireccionFormComponent implements OnInit {
   constructor() {
     this._form.pipe(
       distinctUntilKeyChanged('publica', (x,y) => x.calle == y.calle)
-    ).subscribe(form => {
+    ).subscribe( form => {
       this.direccionForm.setValue(form)
       if (form.correspondencia) {
         Object.keys(form.correspondencia).forEach(key => {

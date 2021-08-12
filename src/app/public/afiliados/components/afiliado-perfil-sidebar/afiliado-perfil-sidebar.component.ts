@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, AfterViewChecked, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, AfterViewChecked, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, interval, Observable, of } from 'rxjs';
+import { BehaviorSubject, interval, Observable, of, Subscription } from 'rxjs';
 import { MxUploadModalComponent } from '@marxa/storage';
 import { AfiliadoModel,  emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPersonal } from 'src/app/public/afiliados/models/perfiles.model';
@@ -18,7 +18,7 @@ import { MxDate } from '@marxa/devkit';
   templateUrl: './afiliado-perfil-sidebar.component.html',
   styleUrls: ['./afiliado-perfil-sidebar.component.scss']
 })
-export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
+export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public _afiliado: BehaviorSubject<AfiliadoModel> = new BehaviorSubject(
     emptyAfiliado
@@ -30,6 +30,7 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
   @ViewChild('img') imgContainer?: ElementRef;
   imgWidth?: number
   imgStyle: any
+  afiliadoSubs!: Subscription
 
   constructor(
     private dialog: MatDialog,
@@ -39,7 +40,9 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
   ) { }
 
   async ngOnInit() {
-    this._afiliado.pipe(debounceTime(500)).subscribe(data => {
+    this.afiliadoSubs =
+    this._afiliado.pipe( debounceTime( 500 ) ).subscribe( data => {
+      // console.log( data )
       this.afiliado = data
     })
 
@@ -95,6 +98,8 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit {
   }
 
 
-
+  ngOnDestroy() {
+    this.afiliadoSubs.unsubscribe()
+  }
 
 }

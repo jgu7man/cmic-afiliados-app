@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MxLoading } from '@marxa/devkit';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { iPersonal } from '../../../models/perfiles.model';
@@ -24,18 +25,22 @@ export class AfiliadosPersonalFormComponent implements OnInit {
 
   constructor(
     private _afiliados: AfiliadosService,
-    private _perfil: PerfilService
+    private _perfil: PerfilService,
+    private _loading: MxLoading
   ) {
     this._perfil.getInfoDoc('adicional.personal')
-      .then(data => {
+      .then( async data => {
         if (data) {
-          this.personalForm.patchValue(data)
+          this.personalForm.patchValue( data )
+          console.log( this.personalForm.pristine )
+          await this._loading.waitFor(2000)
           this.personalForm.markAsPristine()
+          console.log( this.personalForm.pristine )
         }
       })
-   }
+  }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
   }
 

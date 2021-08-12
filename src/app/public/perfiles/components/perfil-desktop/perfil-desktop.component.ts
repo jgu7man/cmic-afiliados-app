@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AfiliadoModel, emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil } from 'src/app/public/afiliados/models/perfiles.model';
@@ -8,13 +8,15 @@ import { iPerfil } from 'src/app/public/afiliados/models/perfiles.model';
   templateUrl: './perfil-desktop.component.html',
   styleUrls: ['./perfil-desktop.component.scss']
 })
-export class PerfilDesktopComponent implements OnInit {
+export class PerfilDesktopComponent implements OnInit, AfterViewInit {
 
   private _afiliado : BehaviorSubject<AfiliadoModel> = new BehaviorSubject(emptyAfiliado);
   @Input() set afiliado(afi: AfiliadoModel) { this._afiliado.next(afi); }
   get afiliado() { return this._afiliado.getValue()}
 
-  perfil: iPerfil = {somos:''}
+  perfil: iPerfil = { somos: '' }
+
+  sidebarHeight!: number
 
   constructor() { }
 
@@ -24,6 +26,9 @@ export class PerfilDesktopComponent implements OnInit {
         if (afiliado.perfil) this.perfil = afiliado.perfil  as iPerfil
       }
     })
+  }
+
+  ngAfterViewInit() {
   }
 
   get banner() {
