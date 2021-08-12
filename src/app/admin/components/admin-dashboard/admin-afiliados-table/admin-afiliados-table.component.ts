@@ -116,6 +116,7 @@ export class BottomAdminAfiliado implements OnInit, OnDestroy {
   onSelect() {
     this._cache.updateData('rfc', this.afiliado.datos_generales.RFC )
     this._router.navigate(['/afiliados/perfil', this.afiliado.datos_generales.RFC  ])
+    this.sheet.dismiss()
   }
 
   sendEmailAcepted() {

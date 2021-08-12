@@ -143,8 +143,8 @@ export class AfiliadosService {
         <p>Se ha aceptado la petición para registrarte como afiliado en la plataforma de CMIC</p>
         <br>
         <p>Por favor da click en el siguiente enlace para continuar con el registro:
-        <a href="${domain }/afiliados/create?email=${ email }&rfc=${ RFC}">
-          ${domain }/afiliados/create?email=${ email }&rfc=${ RFC}
+        <a href='${domain}/afiliados/create?email="${ email }"&rfc=${ RFC}'>
+          ${domain }/afiliados/create?email="${ email }"&rfc=${ RFC}
         </a>
         <br>
         <p> Si no has mandado una solicitud de registro, omite este correo </p>

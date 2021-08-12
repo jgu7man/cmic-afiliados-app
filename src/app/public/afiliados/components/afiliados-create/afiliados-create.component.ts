@@ -26,7 +26,7 @@ constructor(
   private _managers: ManagersService,
   private _afiliados: AfiliadosService
 ) {
-  let { email, RFC } = this._route.snapshot.queryParams
+  let { email, rfc: RFC } = this._route.snapshot.queryParams
 
   this.managerForm = this.formBuilder.group({
     RFC: [{value: '', disabled:true}],

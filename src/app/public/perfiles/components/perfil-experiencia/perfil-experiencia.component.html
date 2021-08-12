@@ -1,6 +1,6 @@
 
 <ng-container *ngIf="(items$ | async) as items; else empty" >
-  <div class="row">
+  <div class="row" *ngIf="items.length > 0; else empty">
     <div class="col s12">
         <div class="proyect-item"
         *ngFor="let item of items; index as i">
@@ -43,8 +43,8 @@
     </div>
 
   </div>
+</ng-container>
 
-  </ng-container>
 
 <ng-template #empty >
   <p class="data-text">Aún no hay experiecia registrada</p>
@@ -60,8 +60,8 @@
     </div>
   </div>
 </div>
-<div class="row">
+<!-- <div class="row">
   <div class="col s12">
     <mat-divider></mat-divider>
   </div>
-</div>
+</div> -->

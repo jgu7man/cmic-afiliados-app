@@ -128,7 +128,7 @@ async add(email: string): Promise<void> {
             \t ${perfil.comercial_nombre} \n
 
             Por favor da click en el siguiente enlace:\n
-            ${currentURL}/create?perfil=manager&email=${email}&rfc=${RFC}"`
+            ${currentURL}/create?perfil=manager&email="${email}"&rfc=${RFC}"`
           }
         }
         await this._mails.sendEmail(mail)

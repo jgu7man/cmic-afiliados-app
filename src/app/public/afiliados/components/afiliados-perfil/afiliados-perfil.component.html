@@ -63,13 +63,15 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Experiencia </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.extract?.experiencia}}
+              {{afiliado.adicional?.extract?.experiencia ||
+                'No se ha agregado esta infromación'}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-experiencia
           ></g-perfil-experiencia>
           <mat-action-row>
-            <a [routerLink]="['../experiencia']"
+            <p class="grey-text" [style.margin-right]="'1em'">Presiona "Editar" para cargar información</p>
+            <a [routerLink]="['/afiliados/experiencia/', RFC]"
             mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
 
@@ -83,12 +85,14 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Equipo y maquinaria </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.extract?.equipo_maquinaria}}
+              {{afiliado.adicional?.extract?.equipo_maquinaria ||
+                'No se ha agregado esta infromación'}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-equipo-maquinaria ></g-perfil-equipo-maquinaria>
           <mat-action-row>
-            <a [routerLink]="['../equipo-maquinaria']"
+            <p class="grey-text" [style.margin-right]="'1em'">Presiona "Editar" para cargar información</p>
+            <a [routerLink]="['/afiliados/equipo-maquinaria', RFC]"
             mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel>
@@ -98,13 +102,15 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Recursos Humanos </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.extract?.recursos_humanos}}
+              {{afiliado.adicional?.extract?.recursos_humanos ||
+                'No se ha agregado esta infromación'}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-recursos-humanos
           ></g-perfil-recursos-humanos>
           <mat-action-row>
-            <a [routerLink]="['../recursos-humanos']"
+            <p class="grey-text" [style.margin-right]="'1em'">Presiona "Editar" para cargar información</p>
+            <a [routerLink]="['/afiliados/recursos-humanos', RFC]"
             mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel>
@@ -114,13 +120,15 @@
           <mat-expansion-panel-header>
             <mat-panel-title> Certificaciones y especializaciones </mat-panel-title>
             <mat-panel-description>
-              {{afiliado.adicional?.extract?.certificaciones}}
+              {{afiliado.adicional?.extract?.certificaciones||
+                'No se ha agregado esta infromación'}}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <g-perfil-certificaciones
           ></g-perfil-certificaciones>
           <mat-action-row>
-            <a [routerLink]="['../certificaciones-especializaciones']"
+            <p class="grey-text" [style.margin-right]="'1em'">Presiona "Editar" para cargar información</p>
+            <a [routerLink]="['/afiliados/certificaciones-especializaciones', RFC]"
             mat-raised-button color='primary' >Editar</a>
           </mat-action-row>
         </mat-expansion-panel>

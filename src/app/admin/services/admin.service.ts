@@ -89,7 +89,7 @@ export class AdminService {
             text: `Se te ha invitado a registrarte como administrador de la plataforma de CMIC \n
 
             Por favor da click en el siguiente enlace:\n
-            ${currentURL}/admin/create?perfil=admin&email=${email}`
+            ${currentURL}/admin/create?perfil=admin&email="${email}"`
           }
         }
         await this._mails.sendEmail(mail)

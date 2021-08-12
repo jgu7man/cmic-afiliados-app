@@ -55,7 +55,7 @@ export class PerfilService {
   async updateInfoDoc( field: SectionName | string, data: any, ) {
     try {
       const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
-      await ref.update({ [field]: data, updated: new Date() })
+      await ref.update({ [field]: {...data}, updated: new Date() })
       this._alert.notify('Guardado')
       return
     } catch (error) {
