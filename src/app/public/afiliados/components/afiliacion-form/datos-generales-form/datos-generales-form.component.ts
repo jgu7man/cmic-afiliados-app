@@ -58,7 +58,7 @@ export class DatosGeneralesFormComponent implements OnInit, OnDestroy {
       // })
     ).subscribe(data => {
       if (data) {
-        console.log( data )
+        // console.log( data )
         this.RFC$.next(data.RFC)
         this.generalesForm.patchValue(data)
         this.generalesForm.markAsPristine()

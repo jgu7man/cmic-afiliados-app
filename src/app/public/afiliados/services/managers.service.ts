@@ -149,7 +149,7 @@ async add(email: string): Promise<void> {
    * @param {iManager} manager Objeto de tipo iManager
    * @returns {*}  {Promise<void>}
    */
-  async createManager({email, RFC, ...rest}:iManager): Promise<void> {
+  async   createManager({email, RFC, ...rest}:iManager): Promise<void> {
     try {
       const afiliadoRef = this._afs
         .collection<AfiliadoModel>( 'afiliados' ).doc( RFC ).ref;

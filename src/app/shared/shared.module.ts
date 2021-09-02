@@ -7,12 +7,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ListCrudModule } from './list-crud/list-crud.module';
 import { MxAuthModule } from '@marxa/auth';
 import { GdevSliderModule } from './slider/gdev-slider.module';
+import { VersionNotifierComponent } from './version-notifier/version-notifier.component';
 
 
 
 @NgModule({
   declarations: [
-    YearSelectorComponent
+    YearSelectorComponent,
+    VersionNotifierComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { GdevSliderModule } from './slider/gdev-slider.module';
     MxAuthModule,
     YearSelectorComponent,
     GdevSliderModule,
-    ListCrudModule
+    ListCrudModule,
+    VersionNotifierComponent
   ]
 })
 export class SharedModule { }

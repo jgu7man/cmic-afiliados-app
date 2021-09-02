@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MxAlert, MxCache, MxLoading } from '@marxa/devkit';
 import { filter, map } from 'rxjs/operators';
+import { VersionService } from './services/version.service';
 
 @Component({
   selector: 'g-root',
@@ -18,7 +19,9 @@ export class AppComponent {
     private activatedRoute: ActivatedRoute,
     private _title: Title,
     private _alert: MxAlert,
+    private _version: VersionService
   ) {
+    this._version.app_version = '0.1'
     this._cache.cacheTagName = 'cmic-data';
     this._cache.storage = 'local'
     this._alert.storeError = true;

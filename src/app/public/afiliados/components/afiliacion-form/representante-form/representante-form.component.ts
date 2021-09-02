@@ -58,8 +58,8 @@ export class RepresentanteFormComponent implements OnInit {
       this.changes.emit(this.representanteForm.value)
       this.invalid.emit(
         this.representanteForm.invalid || this.representanteForm.pristine
-
-      )
+        )
+        // console.log( this.representanteForm.invalid || this.representanteForm.pristine )
     })
   }
 

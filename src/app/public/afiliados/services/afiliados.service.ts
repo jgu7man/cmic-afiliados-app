@@ -70,11 +70,14 @@ export class AfiliadosService {
 
         await this._afs.collection('afiliaciones').doc(RFC)
           .set({...request, request: new Date()})
+
         this._alert.message(`
           <h1 class="center">Petición enviada</h1>
           <p class="center">Se ha enviado la petición a los administradores. Ahora toca esperar el correo de confirmación.</p>
           <p>Es posible que también tengas que revisar tu bandeja de spam</p>
-        `, 'html').subscribe(() => { this._router.navigate(['/']) })
+        `, 'html' ).subscribe( () => { this._router.navigate( [ '/' ] ) } )
+
+
       }
     } catch ( e ) {
       console.error(e);
@@ -110,7 +113,7 @@ export class AfiliadosService {
             constancia: file,
             creado: new Date()
           } );
-          await afiliadoRef.collection( 'managers' ).add( {
+          await afiliadoRef.collection( 'managers' ).doc(email).set( {
             email, RFC, registrado: new Date()
           } )
           await this._alert.notify( 'Se agregó el afiliado' )

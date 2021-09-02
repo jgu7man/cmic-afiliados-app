@@ -8,7 +8,9 @@
     "test": "ng build --prod && firebase hosting:channel:deploy muestra",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "update:marxa": "npm i -s @marxa/auth@latest @marxa/devkit@latest @marxa/storage@latest"
+    "update:marxa": "npm i -s @marxa/auth@latest @marxa/devkit@latest @marxa/storage@latest",
+    "build:hash": "ng build --prod --aot --outputHashing=all",
+    "deploy": "npm run build:hash && firebase deploy --only hosting"
   },
   "private": true,
   "dependencies": {
