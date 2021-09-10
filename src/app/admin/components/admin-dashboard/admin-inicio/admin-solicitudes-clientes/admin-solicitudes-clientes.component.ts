@@ -31,7 +31,7 @@ export class AdminSolicitudesClientesComponent implements OnInit {
     private _dialog: MatDialog,
     private _clientes: ClientsService,
   ) {
-    this._clientes.getPeticiones().subscribe(list => {
+    this._clientes.getSolicitudes().subscribe(list => {
       this.clientes = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"

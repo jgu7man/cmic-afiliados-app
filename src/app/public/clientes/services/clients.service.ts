@@ -53,8 +53,8 @@ export class ClientsService {
     try {
       const clients = await this._afs.collection<iCliente>('clientes').ref
       .where('email', '==', email).get()
-      const peticionesRef = this._afs.collection<iCliente>('peticiones').ref
-      const peticionRef = peticionesRef.doc(email)
+      const solicitudesRef = this._afs.collection<iCliente>('solicitudes').ref
+      const peticionRef = solicitudesRef.doc(email)
       const peticionDoc = await peticionRef.get()
 
       if (!clients.empty && clients.size < 2) {
@@ -138,7 +138,7 @@ export class ClientsService {
 async createSolicitud(client: iCliente): Promise<void> {
     try {
       let { email } = client
-      const peticionRef = this._afs.collection('peticiones').ref.doc(email)
+      const peticionRef = this._afs.collection('solicitudes').ref.doc(email)
       const peticionDoc = await peticionRef.get()
 
       await peticionRef.set({ ...client })
@@ -158,7 +158,7 @@ async createSolicitud(client: iCliente): Promise<void> {
   async responseRequest(client: iCliente, acept: boolean) {
     try {
       let { email } = client
-      const peticionRef = this._afs.collection('peticiones').ref.doc(email)
+      const peticionRef = this._afs.collection('solicitudes').ref.doc(email)
       const peticionDoc = await peticionRef.get()
       const clientRef = this._afs.collection<iCliente>('clientes').ref.doc(email)
       const splitDomain = window.location.href.split('/')
@@ -257,14 +257,14 @@ async createSolicitud(client: iCliente): Promise<void> {
   }
 
   /**
-   * Obtiene la lista de peticiones de clientes
+   * Obtiene la lista de solicitudes de clientes
    *
    * @returns {*}  Observable<(iPeticion & { id: string; })[]>
    */
-  getPeticiones(): Observable<(iPeticion & { id: string; })[]> {
-    return this._afs.collection<iPeticion>('peticiones')
+  getSolicitudes(): Observable<(iPeticion & { id: string; })[]> {
+    return this._afs.collection<iPeticion>('solicitudes')
       .valueChanges({ idField: 'id'}).pipe(
-        catchError( ( error ) => { throw this._alert.error('Error obteniendo la lista de peticiones de cliente', error, false, true)})
+        catchError( ( error ) => { throw this._alert.error('Error obteniendo la lista de solicitudes de cliente', error, false, true)})
       )
   }
 }

@@ -154,7 +154,10 @@ async add(email: string): Promise<void> {
       const afiliadoRef = this._afs
         .collection<AfiliadoModel>( 'afiliados' ).doc( RFC ).ref;
       const afiliadoDoc = await afiliadoRef.get()
-      const perfil = await this._getPerfil(RFC)
+      const perfil = await this._getPerfil( RFC )
+      email = email.replace( /\"/g, '' ).replace( /\//g, '' ).replace( /\'/g, '' ).replace( /\s/g, '' ).trim()
+
+      console.log( email )
 
       if (!RFC || !perfil) {
         this._alert.message(`

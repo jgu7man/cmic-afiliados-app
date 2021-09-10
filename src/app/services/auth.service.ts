@@ -29,7 +29,7 @@ export class AuthService {
       const userCredentials = await this._afAuth
         .createUserWithEmailAndPassword(email, contrasena ? contrasena :  '' )
         .catch((error) => {
-          throw { message: 'No se pudo crear el usuario', error };
+          throw { message: 'No se pudo crear el manager', error };
         });
 
       const userRef = afiliadoRef
@@ -41,12 +41,15 @@ export class AuthService {
         email, RFC,
         uid: userCredentials.user?.uid,
         registrado: new Date()
-      }).catch((error) => {
+      } ).then( () => {
+        afiliadoRef.collection('managers').doc(email).delete()
+      }).catch( ( error ) => {
         throw { message: 'No se pudo guardar en base de datos', error };
       });
 
+
       let uid = userCredentials.user?.uid;
-      this._alert.notify('Usuario registrado');
+      this._alert.notify('Manager registrado');
       this._cache.updateData('user', {...manager.personal_data, RFC, uid});
       this._cache.updateData('rfc', RFC);
 

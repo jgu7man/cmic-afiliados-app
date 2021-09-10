@@ -58,7 +58,7 @@ export class AfiliadosService {
   async registRequest(request: iAfiliadoRequest): Promise<void> {
     const { RFC } = request.empresa;
     try {
-      const afiliadoRef = this._afs.collection('afiliados').doc(RFC).ref;
+      const afiliadoRef = this._afs.collection('peticiones').doc(RFC).ref;
       const afiliadoDoc = await afiliadoRef.get();
 
       if (afiliadoDoc.exists) {
@@ -68,7 +68,7 @@ export class AfiliadosService {
         };
       } else {
 
-        await this._afs.collection('afiliaciones').doc(RFC)
+        await this._afs.collection('peticiones').doc(RFC)
           .set({...request, request: new Date()})
 
         this._alert.message(`
@@ -98,7 +98,7 @@ export class AfiliadosService {
    */
   async aceptRegist(RFC: string, acept: boolean): Promise<void> {
     try {
-      const requestRef = this._afs.doc<iAfiliadoRequest>(`afiliaciones/${RFC}`).ref
+      const requestRef = this._afs.doc<iAfiliadoRequest>(`peticiones/${RFC}`).ref
       const requestDoc = await requestRef.get()
       const afiliadoRef = this._afs.doc(`afiliados/${RFC}`).ref;
 
@@ -116,8 +116,12 @@ export class AfiliadosService {
           await afiliadoRef.collection( 'managers' ).doc(email).set( {
             email, RFC, registrado: new Date()
           } )
+
+
           await this._alert.notify( 'Se agregó el afiliado' )
-          await this.sendAceptedMail(email, RFC)
+          await this.sendAceptedMail( email, RFC )
+
+          await requestRef.delete()
         }
 
         // Always remove request?
@@ -165,7 +169,7 @@ export class AfiliadosService {
    * @returns {*}  {(Observable<(iAfiliadoRequest & { RFC: string; })[]>)}
    */
   getPeticiones(): Observable<(iAfiliadoRequest & { RFC: string; })[]> {
-    return this._afs.collection<iAfiliadoRequest>('afiliaciones')
+    return this._afs.collection<iAfiliadoRequest>('peticiones')
       .valueChanges( { idField: 'RFC' } ).pipe(
         catchError( (error) => {
           throw this._alert
