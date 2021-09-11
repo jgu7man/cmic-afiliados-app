@@ -1,7 +1,7 @@
 import { ContactoAfiliado } from './../../../models/afiliados.model';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { iContacto } from '../../../models/afiliados.model';
 import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { MxText } from '@marxa/devkit';
@@ -11,7 +11,7 @@ import { MxText } from '@marxa/devkit';
   templateUrl: './contacto-form.component.html',
   styleUrls: ['./contacto-form.component.scss']
 })
-export class ContactoFormComponent implements OnInit {
+export class ContactoFormComponent implements OnInit, OnDestroy {
 
   contactoForm: FormGroup = new FormGroup({
     area_tel: new FormControl(52),
@@ -30,12 +30,16 @@ export class ContactoFormComponent implements OnInit {
   @Output() changes: EventEmitter<ContactoAfiliado> = new EventEmitter()
   @Output() invalid: EventEmitter<boolean> = new EventEmitter()
 
+  private formSubscription: Subscription
+  private changesSubscription!: Subscription
+
   constructor(
     public text: MxText
   ) {
-    this._form.pipe(
+    this.formSubscription = this._form.pipe(
       distinctUntilKeyChanged('email')
-    ).subscribe(form => {
+    ).subscribe( form => {
+      // console.log( form )
       this.contactoForm.patchValue(form)
       this.contactoForm.markAsPristine()
       this.invalid.emit(true)
@@ -43,15 +47,21 @@ export class ContactoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contactoForm.valueChanges
+    this.changesSubscription = this.contactoForm.valueChanges
     .pipe(delay(1000), startWith(true))
-      .subscribe((changes) => {
+      .subscribe( ( changes ) => {
+        // console.log( changes )
       this.changes.emit(this.contactoForm.value)
       this.invalid.emit(
         this.contactoForm.invalid || this.contactoForm.pristine
 
       )
     })
+  }
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe()
+    this.changesSubscription.unsubscribe()
   }
 
 }

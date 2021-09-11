@@ -8,6 +8,7 @@ import { PerfilService } from '../../../services/perfil.service';
 import { iAdtionalInfo, CertificacionModel, emptyCert } from '../../../models/perfiles.model';
 import { MxStorage } from '@marxa/storage';
 import { iUploadedFile } from '@marxa/storage';
+import { Subscription } from 'rxjs';
 @Component({
   templateUrl: './afiliados-certificaciones-especializaciones.component.html',
   styleUrls: ['./afiliados-certificaciones-especializaciones.component.scss'],
@@ -18,6 +19,7 @@ export class AfiliadosCertificacionesEspecializacionesComponent
   certForm: FormGroup;
   listDoc?: iUploadedFile
   items: CertificacionModel[] = []
+  private fileSubscription!: Subscription;
 
   constructor(
     private _loading: MxLoading,
@@ -41,10 +43,13 @@ export class AfiliadosCertificacionesEspecializacionesComponent
   }
   ngOnInit(): void {
     this.perfil_.editSubscription = this.perfil_
-      .listenEditingItem.subscribe(item => {
+      .listenEditingItem.subscribe( item => {
+        // console.log( item )
       this.certForm.patchValue(item)
-      })
-      this.perfil_.getList('certificaciones').then(file => this.listDoc = file)
+      } )
+    this.fileSubscription = this.perfil_
+      .getListFile( 'certificaciones' )
+      .subscribe( file => this.listDoc = file ? file : undefined )
   }
 
   get now() {
@@ -84,5 +89,6 @@ export class AfiliadosCertificacionesEspecializacionesComponent
 
   ngOnDestroy() {
     this.perfil_.getOutSection()
+    this.fileSubscription.unsubscribe()
   }
 }

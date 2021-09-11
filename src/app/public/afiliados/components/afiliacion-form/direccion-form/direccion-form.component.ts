@@ -1,6 +1,7 @@
+import { OnDestroy } from '@angular/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { DireccionAfiliadoModel, iDireccion } from '../../../models/afiliados.model';
 
@@ -9,7 +10,7 @@ import { DireccionAfiliadoModel, iDireccion } from '../../../models/afiliados.mo
   templateUrl: './direccion-form.component.html',
   styleUrls: ['./direccion-form.component.scss']
 })
-export class DireccionFormComponent implements OnInit {
+export class DireccionFormComponent implements OnInit, OnDestroy {
 
 
   // DEFINING FORMS MODEL
@@ -49,11 +50,14 @@ export class DireccionFormComponent implements OnInit {
   addCorrespondencia: boolean = false
   @Output() changes: EventEmitter<DireccionAfiliadoModel> = new EventEmitter();
   @Output() invalid: EventEmitter<boolean> = new EventEmitter();
+  private formSubscription: Subscription
+  private changesSubscription!: Subscription
 
   constructor() {
-    this._form.pipe(
+    this.formSubscription = this._form.pipe(
       distinctUntilKeyChanged('publica', (x,y) => x.calle == y.calle)
     ).subscribe( form => {
+      // console.log( form )
       this.direccionForm.setValue(form)
       if (form.correspondencia) {
         Object.keys(form.correspondencia).forEach(key => {
@@ -68,9 +72,10 @@ export class DireccionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.direccionForm.valueChanges
+    this.changesSubscription = this.direccionForm.valueChanges
       .pipe(delay(1000), startWith(true))
-      .subscribe((changes) => {
+      .subscribe( ( changes ) => {
+        // console.log( changes )
       this.changes.emit(this.direccionForm.value)
       this.invalid.emit(
         this.direccionForm.invalid ||this.direccionForm.pristine
@@ -79,4 +84,9 @@ export class DireccionFormComponent implements OnInit {
     })
   }
 
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe()
+    this.changesSubscription.unsubscribe()
+  }
 }

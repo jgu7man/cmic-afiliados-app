@@ -77,7 +77,7 @@ export class ConsultasService {
             list.map(({ datos_generales, perfil }) => {
               return <RequestItem>{datos_generales, perfil}
             } ),
-            catchError( ( error ) => { throw this._alert.error(`No se pudieron obtener los datos generales`, error, false, true)})
+            catchError( ( error ) => { throw this._alert.error(`No se pudieron obtener los datos generales`, error, "consultas.service#actividad", false)})
           ) )
   }
 

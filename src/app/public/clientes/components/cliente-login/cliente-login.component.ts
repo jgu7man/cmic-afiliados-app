@@ -22,9 +22,16 @@ export class ClienteLoginComponent implements OnInit, OnDestroy {
     private _alert: MxAlert
   ) {
     this.errorSubscription = this._authService.listenForErros
-    .subscribe(err => { this._alert.message(err)})
-    this._authService.user$.pipe(takeWhile(user => !user)).subscribe(user => {
-      if (user) this._router.navigate(['/'])
+      .subscribe( err => {
+        // console.log( err )
+        this._alert.message( err )
+      } )
+
+    this._authService.user$.pipe(
+      takeWhile( user => !user ) )
+      .subscribe( user => {
+        // console.log( user )
+        if (user) this._router.navigate(['/'])
     })
    }
 
@@ -33,7 +40,7 @@ export class ClienteLoginComponent implements OnInit, OnDestroy {
 
   onSubmit(fields: MxLoginFields) {
     this._authService.emailSignIn(fields.email, fields.password)
-    .catch(error => { this._alert.error('No se pudo iniciar sesión como cliente', error, false, true)})
+    .catch(error => { this._alert.error('No se pudo iniciar sesión como cliente', error, "cliente-login.components#onSubmit",false, true)})
    }
 
   onRestorePwd(): void {

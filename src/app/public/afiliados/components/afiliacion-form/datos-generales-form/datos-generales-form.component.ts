@@ -70,7 +70,8 @@ export class DatosGeneralesFormComponent implements OnInit, OnDestroy {
 
   defineForm() {
     this.rfcSubscription =
-    this.RFC$.pipe(filter(rfc => !!rfc)).subscribe(rfc => {
+      this.RFC$.pipe( filter( rfc => !!rfc ) ).subscribe( rfc => {
+      // console.log( rfc )
       if (rfc && rfc.length === 13) {
         this.generalesForm.addControl(
           'fisica_nombre', new FormControl('', [Validators.required])
@@ -99,7 +100,8 @@ export class DatosGeneralesFormComponent implements OnInit, OnDestroy {
 
     return this.generalesForm.valueChanges
       .pipe(delay(1000),startWith(true))
-      .subscribe((changes) => {
+      .subscribe( ( changes ) => {
+        // console.log( changes )
         let nombre = this.generalesForm.get('comercial_nombre')
         if (nombre) {
           let slug = nombre.value.replace(/\s+/g, '-').toLowerCase();

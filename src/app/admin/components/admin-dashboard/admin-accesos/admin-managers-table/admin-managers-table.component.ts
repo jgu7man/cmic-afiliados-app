@@ -35,6 +35,7 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDes
 
   afiliadosIndex: DatosGeneralesModel[] = []
   listSubscription: Subscription
+  afiliadosSubscription!: Subscription
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
@@ -43,7 +44,8 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDes
     private _afiliados: AfiliadosService
   ) {
     this.listSubscription =
-    this._managers.getCompleteList().subscribe(list => {
+      this._managers.getCompleteList().subscribe( list => {
+      console.log( list )
       this.managers = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
@@ -57,11 +59,15 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDes
   }
 
   getAfiliadosList() {
-    this._cache.listenForChanges<DatosGeneralesModel[]>('afiliadosList')
-      .subscribe(list => { this.afiliadosIndex = list})
+    this.afiliadosSubscription = this._cache
+      .listenForChanges<DatosGeneralesModel[]>( 'afiliadosList' )
+      .subscribe( list => {
+        // console.log( list )
+        this.afiliadosIndex = list
+      } )
 
       if (!this._cache.getDataKey('afiliadosList')) {
-        this._afiliados.indexList().pipe(take(1)).subscribe()
+        this._afiliados.indexList().pipe(take(1)).subscribe(/*val => console.log( val ) */)
       }
   }
 
@@ -86,6 +92,7 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnDestroy() {
     this.listSubscription.unsubscribe()
+    this.afiliadosSubscription.unsubscribe()
   }
 
 }

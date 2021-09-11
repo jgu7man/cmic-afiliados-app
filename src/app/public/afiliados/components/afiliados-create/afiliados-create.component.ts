@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
+import { take } from 'rxjs/operators';
 import { AfiliadoModel } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 import { ManagersService } from '../../services/managers.service';
@@ -11,7 +12,7 @@ import { ManagersService } from '../../services/managers.service';
   templateUrl: './afiliados-create.component.html',
   styleUrls: ['./afiliados-create.component.scss']
 })
-export class AfiliadosCreateComponent implements OnInit {
+export class AfiliadosCreateComponent implements OnInit, OnDestroy {
 
   managerForm: FormGroup
   matcher = new MyErrorStateMatcher();
@@ -42,9 +43,19 @@ constructor(
 
   if (email && RFC) {
     this.managerForm.patchValue({ RFC, email })
-    this._afiliados.getPerfil(RFC).subscribe(data => this.empresa = data)
+    this._afiliados.getPerfil( RFC )
+      .pipe( take( 1 ) )
+      .subscribe( data => {
+        // console.log( data )
+        this.empresa = data
+      } )
   } else {
-    this._alert.message('No se encontró la cuenta. Revisa el enlace o ponte en contacto con la CMIC').subscribe(()=> { this._router.navigate(['/'])})
+    this._alert.message( 'No se encontró la cuenta. Revisa el enlace o ponte en contacto con la CMIC' )
+      .pipe(take(1))
+      .subscribe( ( val ) => {
+        // console.log( val )
+        this._router.navigate( [ '/' ] )
+      } )
   }
 
 }
@@ -61,6 +72,8 @@ constructor(
   onSubmit() {
     this._managers.createManager(this.managerForm.getRawValue())
   }
+
+  ngOnDestroy() {}
 
 }
 

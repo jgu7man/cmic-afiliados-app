@@ -22,10 +22,12 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
   ) {
     this._auth.onLoggedRedirectRoute = '/admin'
     this.errorSubscription =
-    this._auth.listenForErros.subscribe( error => {
+      this._auth.listenForErros.subscribe( error => {
+      // console.log( error )
       this._alert.message(error)
     })
-    this._auth.user$.pipe(take(1)).subscribe(user => {
+    this._auth.user$.pipe( take( 1 ) ).subscribe( user => {
+      console.log( user )
       if (user) {
         this._admin.retriveAdmin(user.email).then(admin => {
           if (admin) this._router.navigate(['/admin/'])
@@ -40,7 +42,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
   onSubmit(fields: MxLoginFields) {
 		this._auth.emailSignIn(fields.email,  fields.password)
       .catch( ( error ) => {
-        this._alert.error( 'No se pudo iniciar sesión como administrador', error, false, true )
+        this._alert.error( 'No se pudo iniciar sesión como administrador', error, "admin-login.component#onSubmit", false, true )
       } )
   }
 

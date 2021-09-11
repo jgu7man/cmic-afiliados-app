@@ -1,18 +1,19 @@
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogRevokeAccesoComponent } from '../dialog-revoke-acceso/dialog-revoke-acceso.component';
 import { iAdmin } from 'src/app/admin/models/admin.model';
 import { AdminService } from 'src/app/admin/services/admin.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'g-admins-table',
   templateUrl: './admins-table.component.html',
   styleUrls: ['./admins-table.component.scss']
 })
-export class AdminsTableComponent implements OnInit {
+export class AdminsTableComponent implements OnInit, OnDestroy {
   admins: iAdmin[] = []
   displayedColumns = [
     'email', 'lastAccess', 'access', 'options'
@@ -24,13 +25,18 @@ export class AdminsTableComponent implements OnInit {
   pageSize: number = 10
   first: number = 0
   page: number = 1
+
+  adminListSubscription: Subscription
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
     private _admins: AdminService
   ) {
-    this._admins.getList().subscribe(list => {
-      this.admins = list
+    this.adminListSubscription = this._admins
+      .getList()
+      .subscribe( list => {
+        // console.log( list )
+        this.admins = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
@@ -59,5 +65,9 @@ export class AdminsTableComponent implements OnInit {
     this._dialog.open(DialogRevokeAccesoComponent, {
       data: path
     })
+  }
+
+  ngOnDestroy() {
+    this.adminListSubscription.unsubscribe()
   }
 }

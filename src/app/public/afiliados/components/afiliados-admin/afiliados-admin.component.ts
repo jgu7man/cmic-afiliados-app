@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MxCache, MxLoading } from '@marxa/devkit';
-import { of } from 'rxjs';
-import { debounceTime, delay } from 'rxjs/operators';
+import { of, Subscription } from 'rxjs';
+import { debounceTime, delay, distinctUntilChanged, mergeMap } from 'rxjs/operators';
 import { AfiliadoModel } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 
@@ -10,21 +10,28 @@ import { AfiliadosService } from '../../services/afiliados.service';
   templateUrl: './afiliados-admin.component.html',
   styleUrls: ['./afiliados-admin.component.scss']
 })
-export class AfiliadosAdminComponent implements OnInit, AfterViewInit {
+export class AfiliadosAdminComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // invisible: boolean = true;
   afiliado?: AfiliadoModel
+  private afiliadoSubscription: Subscription;
   constructor(
     private _loading: MxLoading,
     private _cache: MxCache,
     private _afiliados: AfiliadosService
   ) {
-    this._loading.getRouteParams().subscribe(({RFC}) => {
-      this._cache.updateData('rfc', RFC)
-      this._afiliados.getPerfil(RFC).subscribe(afiliado => {
+    this.afiliadoSubscription = this._loading
+      .getRouteParams()
+      .pipe(
+        mergeMap( ( { RFC } ) => {
+          this._cache.updateData('rfc', RFC)
+          return this._afiliados.getPerfil( RFC )
+        } ),
+        distinctUntilChanged((x, y) => JSON.stringify(x) == JSON.stringify(y))
+    ).subscribe( ( afiliado ) => {
+        // console.log( afiliado )
         this.afiliado = afiliado
       })
-    })
    }
 
   async ngOnInit() {
@@ -33,6 +40,10 @@ export class AfiliadosAdminComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
+  }
+
+  ngOnDestroy() {
+    this.afiliadoSubscription.unsubscribe()
   }
 
 

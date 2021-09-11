@@ -81,7 +81,7 @@ export class ClientsService {
       await this._afs.doc( `clientes/${ uid }` ).update( { lastAccess: new Date() } )
       return
     } catch (error) {
-      this._alert.error('No se pudo guardar el último acceso del cliente', error, false, true)
+      this._alert.error('No se pudo guardar el último acceso del cliente', error, "clients.service#updateLastAccess", false, true)
       return console.error(error)
     }
   }
@@ -252,7 +252,7 @@ async createSolicitud(client: iCliente): Promise<void> {
   getList(): Observable<iCliente[]> {
     return this._afs.collection<iCliente>( 'clientes' )
       .valueChanges().pipe(
-        catchError( ( error ) => { throw this._alert.error('Error obteniendo la lista de clientes', error, false, true)})
+        catchError( ( error ) => { throw this._alert.error('Error obteniendo la lista de clientes', error, "clients.service#getList", false, true)})
       )
   }
 
@@ -264,7 +264,7 @@ async createSolicitud(client: iCliente): Promise<void> {
   getSolicitudes(): Observable<(iPeticion & { id: string; })[]> {
     return this._afs.collection<iPeticion>('solicitudes')
       .valueChanges({ idField: 'id'}).pipe(
-        catchError( ( error ) => { throw this._alert.error('Error obteniendo la lista de solicitudes de cliente', error, false, true)})
+        catchError( ( error ) => { throw this._alert.error('Error obteniendo la lista de solicitudes de cliente', error, "clients.service#getSolicitudes", false, true)})
       )
   }
 }

@@ -4,7 +4,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAuth } from '@marxa/auth';
 import { MxCache } from '@marxa/devkit';
-import { takeWhile } from 'rxjs/operators';
+import { take, takeWhile } from 'rxjs/operators';
 import { ActividadQuery, emptyActividadQuery } from 'src/app/models/consultas.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConsultasService } from 'src/app/services/consultas.service';
@@ -43,10 +43,13 @@ export class ActividadesFormComponent implements OnInit {
     private _managers: ManagersService
   ) {
     this.RFC = this._route.snapshot.params['RFC']
-    this._auth.user$.pipe(takeWhile(user => user)).subscribe(user => {
+    this._auth.user$.pipe( takeWhile( user => user ) ).subscribe( user => {
+      // console.log( user )
       if (!user) this._router.navigate(['/'])
-      else this._managers.retriveManager(user.email)
-        .subscribe(manager => {
+      else this._managers.retriveManager( user.email )
+        .pipe(take(1))
+        .subscribe( manager => {
+          // console.log( manager )
           if (!manager || manager.RFC != this.RFC) this._router.navigate(['/'])
         })
     })

@@ -53,7 +53,7 @@ export class ManagersService {
         } else  return null
       } ),
         catchError( (error, user) => {
-          this._alert.error( 'Error al cargar este usuario', error, false, true )
+          this._alert.error( 'Error al cargar este usuario', error, "managers.service#retriveManager",false, true )
           return user
         } )
       )
@@ -71,7 +71,7 @@ export class ManagersService {
         .update( { lastAccess: new Date() } )
       return
     } catch (error) {
-      this._alert.error(`Error cargando el último acceso de ${RFC}`, error, false, true)
+      this._alert.error(`Error cargando el último acceso de ${RFC}`, error, "managers.service#updateLastAccess", false, true)
       return console.error(error)
     }
   }
@@ -201,7 +201,7 @@ async add(email: string): Promise<void> {
 
     } catch (error) {
       console.error(error)
-      this._alert.error( 'No fue posible crear la cuenta', error, false, true )
+      this._alert.error( 'No fue posible crear la cuenta', error, "managers.service#createManager", false, true )
       this._alert.message('No fue posible crear la cuenta. Inténtalo después o puedes ponerte en contacto con la CMIC para cualquier duda.')
     }
   }
@@ -232,7 +232,7 @@ async add(email: string): Promise<void> {
       map(afiliado => afiliado.get('datos_generales') ),
     ).pipe(
       catchError( ( error ) => {
-        return this._alert.error(`No pudo obtenerse los datos generales de ${RFC}`, error, true, true)
+        return this._alert.error(`No pudo obtenerse los datos generales de ${RFC}`, error, "managers.service#_getPerfil", true, true)
       })
     ).toPromise()
   }

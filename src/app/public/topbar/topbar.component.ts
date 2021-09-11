@@ -56,7 +56,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
         mapTo('admin')
       )
 
-    ).subscribe(user => this.logged = user)
+    ).subscribe( user => {
+      // console.log( user )
+      this.logged = user
+    } )
   }
 
   openClientLogin() {

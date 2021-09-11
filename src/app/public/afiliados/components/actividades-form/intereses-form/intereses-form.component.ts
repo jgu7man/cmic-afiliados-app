@@ -29,7 +29,8 @@ export class InteresesFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.changesSubscription =
     this.contactoForm.valueChanges
-      .subscribe(data => {
+      .subscribe( data => {
+        // console.log( data )
       this.changes.emit(data)
     })
   }

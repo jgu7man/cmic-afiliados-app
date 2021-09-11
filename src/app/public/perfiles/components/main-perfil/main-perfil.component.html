@@ -1,6 +1,6 @@
-<mat-drawer-container>
+<mat-drawer-container id="main-perfil">
   <!-- NAVIGATION SIDEBAR -->
-  <mat-drawer mode="side" [opened]="responsive.large" position="end" id="navigation-bar" mxFix [topBreak]="76" [bottomSelector]="'#footer'" >
+  <mat-drawer mode="side" [opened]="responsive.large" position="end" id="navigation-bar" >
     <div class="container" id="catalogos" mxStrechHeight>
       <div class="row">
 
@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col s12">
           <button mat-raised-button color='primary'
-          (click)="print.downloadPDF('perfil-view')" >Descargar perfil</button>
+          (click)="print.downloadPDF('main-perfil')" >Descargar perfil</button>
         </div>
       </div>
     </div>

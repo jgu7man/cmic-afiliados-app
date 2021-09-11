@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MxAuth } from '@marxa/auth';
+import { Subscription } from 'rxjs';
 import { iAdmin } from '../../models/admin.model';
 import { AdminService } from '../../services/admin.service';
 
@@ -8,19 +9,22 @@ import { AdminService } from '../../services/admin.service';
   templateUrl: './admin-topbar.component.html',
   styleUrls: ['./admin-topbar.component.scss']
 })
-export class AdminTopbarComponent implements OnInit {
+export class AdminTopbarComponent implements OnInit, OnDestroy {
 
   admin?: iAdmin
+  private userSubscription: Subscription;
   constructor(
     public auth_: MxAuth,
     private _admins: AdminService,
   ) {
     this.auth_.unloggedPath = '/admin/login'
-    this.auth_.user$.subscribe(user => {
-      if (user) {
-        this._admins.retriveAdmin(user.email)
-          .then(admin => { if (admin) { this.admin = admin;} })
-      }
+    this.userSubscription = this.auth_.user$
+      .subscribe( user => {
+        // console.log( user )
+        if (user) {
+          this._admins.retriveAdmin(user.email)
+            .then(admin => { if (admin) { this.admin = admin;} })
+        }
     })
    }
 
@@ -30,6 +34,10 @@ export class AdminTopbarComponent implements OnInit {
   onSingOut() {
     this.auth_.signOut()
     delete this.admin
+  }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe()
   }
 
 }

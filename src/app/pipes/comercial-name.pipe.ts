@@ -19,10 +19,13 @@ export class ComercialNamePipe implements PipeTransform {
 
   getAfiliadosList() {
     this._cache.listenForChanges<DatosGeneralesModel[]>('afiliadosList')
-      .subscribe(list => { this.afiliadosIndex = list})
+      .subscribe( list => {
+        // console.log( list )
+        this.afiliadosIndex = list
+      } )
 
       if (!this._cache.getDataKey('afiliadosList')) {
-        this._afiliados.indexList().pipe(take(1)).subscribe()
+        this._afiliados.indexList().pipe(take(1)).subscribe(val => console.log( val ))
       }
   }
 

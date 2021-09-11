@@ -1,5 +1,5 @@
 import { MatTableDataSource } from '@angular/material/table';
-import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { iPeticion } from 'src/app/admin/models/roles.model';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
@@ -7,13 +7,14 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ClientsService } from 'src/app/public/clientes/services/clients.service';
 import firebase from 'firebase/app'
 import { iCliente } from 'src/app/public/clientes/models/cliente.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'g-admin-solicitudes-clientes',
   templateUrl: './admin-solicitudes-clientes.component.html',
   styleUrls: ['./admin-solicitudes-clientes.component.scss']
 })
-export class AdminSolicitudesClientesComponent implements OnInit {
+export class AdminSolicitudesClientesComponent implements OnInit, OnDestroy {
   clientes: iPeticion[] = []
   displayedColumns = [
     'comercial_nombre', 'email', 'request', 'options'
@@ -26,13 +27,18 @@ export class AdminSolicitudesClientesComponent implements OnInit {
   first: number = 0
   page: number = 1
 
+  private clientSolicitudesSubscription: Subscription
+
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
     private _clientes: ClientsService,
   ) {
-    this._clientes.getSolicitudes().subscribe(list => {
-      this.clientes = list
+    this.clientSolicitudesSubscription = this._clientes
+      .getSolicitudes()
+      .subscribe( list => {
+        // console.log( list )
+        this.clientes = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
@@ -66,6 +72,10 @@ export class AdminSolicitudesClientesComponent implements OnInit {
       minWidth: '50%',
       data,
     })
+  }
+
+  ngOnDestroy() {
+    this.clientSolicitudesSubscription.unsubscribe()
   }
 }
 

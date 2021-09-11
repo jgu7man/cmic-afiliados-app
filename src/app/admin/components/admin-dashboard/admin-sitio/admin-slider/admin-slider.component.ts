@@ -23,7 +23,10 @@ export class AdminSliderComponent implements OnInit, OnDestroy {
     private _alert: MxAlert
   ) {
     this.slidesSubscription = this._slider.getSlidesList('sitio')
-      .subscribe(list => {this.slides = list})
+      .subscribe( list => {
+        // console.log( list )
+        this.slides = list
+      } )
   }
 
   ngOnInit(): void {

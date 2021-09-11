@@ -16,7 +16,8 @@ export class BgImageDirective implements OnDestroy {
     private el: ElementRef,
   ) {
     this.imageSubscription =
-    this._gImageBg.subscribe(image => {
+      this._gImageBg.subscribe( image => {
+      // console.log( image )
       if (image) {
         this.el.nativeElement.style.background = `url(${image})`
         this.el.nativeElement.style.backgroundPosition = 'center'

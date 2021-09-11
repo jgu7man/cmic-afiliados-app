@@ -18,13 +18,20 @@ export class PrintFileService {
     private _afiliados: AfiliadosService,
     private _loading: MxLoading,
   ) {
+    this.getFilename()
+  }
+
+  async getFilename(): Promise<string | null> {
     let rfc = this._cache.getDataKey<string>('rfc')
     if (rfc) {
-      this._afiliados.getPerfil(rfc).subscribe(afiliado => {
-        if (afiliado) this.filename = afiliado.datos_generales.comercial_nombre
-      })
-    }
-   }
+      let afiliado = await this._afiliados.getPerfil( rfc ).toPromise()
+      if ( afiliado ) {
+        this.filename = afiliado.datos_generales.comercial_nombre
+        return this.filename
+      } else return null
+    } return null
+
+  }
 
   async downloadPDF(idSelector: string, filename?: string) {
     this._loading.toggleWaiting('open')

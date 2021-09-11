@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -10,15 +10,17 @@ import { PerfilService } from '../../../services/perfil.service';
 import { MxStorage } from '@marxa/storage';
 import { emptyMaqEquip, MaqEquipItem } from '../../../models/perfiles.model';
 import { iUploadedFile } from '@marxa/storage';
+import { Subscription } from 'rxjs';
 @Component({
   templateUrl: './afiliados-equipo-maquinaria.component.html',
   styleUrls: ['./afiliados-equipo-maquinaria.component.scss'],
 })
-export class AfiliadosEquipoMaquinariaComponent implements OnInit {
+export class AfiliadosEquipoMaquinariaComponent implements OnInit, OnDestroy {
 
   eqpmaqForm: FormGroup;
   listDoc?: iUploadedFile
   items: MaqEquipItem[] = []
+  private fileSubscription: Subscription;
 
   constructor(
     public location_: Location,
@@ -36,12 +38,18 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
     });
 
     this.perfil_.initialize('equipo_maquinaria')
-    this.perfil_.getList('equipo_maquinaria').then(file => this.listDoc = file)
+    this.fileSubscription = this.perfil_
+      .getListFile( 'equipo_maquinaria' )
+      .subscribe( file => {
+        // console.log( file )
+        this.listDoc = file ? file : undefined
+      } )
   }
 
   ngOnInit(): void {
     this.perfil_.editSubscription = this.perfil_
-      .listenEditingItem.subscribe(item => {
+      .listenEditingItem.subscribe( item => {
+        // console.log( item )
       this.eqpmaqForm.patchValue(item)
     })
    }
@@ -74,6 +82,7 @@ export class AfiliadosEquipoMaquinariaComponent implements OnInit {
 
   ngOnDestroy() {
     this.perfil_.getOutSection()
+    this.fileSubscription.unsubscribe()
   }
 
 }

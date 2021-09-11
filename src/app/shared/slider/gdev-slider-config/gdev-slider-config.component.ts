@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { GdevSliderService } from '../gdev-slider.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { Location } from '@angular/common';
 import { SliderConfig } from '../gdev-slide.model';
+import { Subscription } from 'rxjs';
 
 
 interface FX { value: string, display: string }
@@ -13,7 +14,7 @@ interface Orientacion { value: string, display: string }
   templateUrl: './gdev-slider-config.component.html',
   styleUrls: ['./gdev-slider-config.component.scss']
 })
-export class GdevSliderConfigComponent implements OnInit {
+export class GdevSliderConfigComponent implements OnInit, OnDestroy {
 
 
   SliderConfig: SliderConfig
@@ -33,6 +34,8 @@ export class GdevSliderConfigComponent implements OnInit {
 
   @Input() collection?: string
 
+  configSubscription!: Subscription
+
   constructor (
     private _slider: GdevSliderService,
     public location: Location
@@ -45,7 +48,9 @@ export class GdevSliderConfigComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._slider.$sliderConfig.subscribe( config => {
+    this.configSubscription = this._slider.$sliderConfig
+      .subscribe( config => {
+        // console.log( config )
       if ( config ) {
         this.SliderConfig = config
         this.timing = +config.timings.split('ms')[0]
@@ -89,6 +94,10 @@ export class GdevSliderConfigComponent implements OnInit {
 
     console.log( this.SliderConfig );
     this._slider.setSliderConfiguration(this.SliderConfig, this.collection)
+  }
+
+  ngOnDestroy() {
+    this.configSubscription.unsubscribe()
   }
 
 }

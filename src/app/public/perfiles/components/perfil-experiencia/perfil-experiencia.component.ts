@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit, ChangeDetectionStrategy, Input, AfterViewInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 import { Proyecto } from 'src/app/public/afiliados/models/perfiles.model';
 import { MxResponsive } from '@marxa/devkit';
@@ -12,7 +12,7 @@ import { iUploadedFile } from '@marxa/storage';
   styleUrls: ['./perfil-experiencia.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PerfilExperienciaComponent implements OnInit, AfterViewInit {
+export class PerfilExperienciaComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
@@ -24,16 +24,22 @@ export class PerfilExperienciaComponent implements OnInit, AfterViewInit {
   @ViewChild('expPanel') private expPanel?: MatAccordion
   listDoc?: iUploadedFile
   @Output() items: EventEmitter<Proyecto[]> = new EventEmitter()
+  private itemsSubscription: Subscription
+  private fileSubscription: Subscription;
 
   constructor(
     public perfil_: PerfilService,
     public responsive: MxResponsive
   ) {
-    this.items$ = this.perfil_.getInfoCollection<Proyecto>('experiencia')
-    this.items$.subscribe(items => this.items.emit(items))
-    this.perfil_.getList('experiencia').then(file => {
-      this.listDoc = file
-    })
+    this.items$ = this.perfil_.getInfoCollection<Proyecto>( 'experiencia' )
+    this.itemsSubscription =
+      this.items$.subscribe( items => {
+        // console.log( items )
+        this.items.emit( items )
+      } )
+    this.fileSubscription = this.perfil_
+      .getListFile( 'experiencia' )
+      .subscribe( file => this.listDoc = file ? file : undefined )
   }
 
   ngOnInit(): void {
@@ -50,4 +56,8 @@ export class PerfilExperienciaComponent implements OnInit, AfterViewInit {
     this.editingItem = index
   }
 
+  ngOnDestroy() {
+    this.itemsSubscription.unsubscribe()
+    this.fileSubscription.unsubscribe()
+  }
 }

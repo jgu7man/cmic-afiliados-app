@@ -15,7 +15,7 @@ import { MatStepperIntl, MatVerticalStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
 import { MxStorage } from '@marxa/storage';
-import { take } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 
 import { DatosGeneralesModel, iAfiliadoRequest, iManager } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
@@ -83,7 +83,10 @@ export class AfiliadosRegistroComponent implements OnInit {
 
   validateRegistered(btn: MatButton) {
     let RFC = this.datosForm.value['RFC']
-    this._afiliadosService.getPerfil( RFC ).subscribe( ( data ) => {
+    this._afiliadosService.getPerfil( RFC )
+      .pipe(first())
+      .subscribe( ( data ) => {
+        // console.log( data )
       if ( data ) {
         this.dialog.open(DialogRegistered)
         btn.disabled = true
@@ -112,7 +115,7 @@ export class AfiliadosRegistroComponent implements OnInit {
 
   OpenPrivacidadRegistro(): void {
     const dialogRef = this.dialog.open(DialogPrivacidadRegistro);
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(first()).subscribe((result) => {
       if (result) { this.privacy = true }
     });
   }

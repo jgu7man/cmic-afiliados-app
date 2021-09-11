@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
@@ -7,13 +7,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { iMensaje } from 'src/app/public/pages/contacto/mensajes.model';
 import firebase from 'firebase/app'
 import { MxAlert } from '@marxa/devkit';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'g-admin-contacto',
   templateUrl: './admin-contacto.component.html',
   styleUrls: ['./admin-contacto.component.scss']
 })
-export class AdminContactoComponent implements OnInit {
+export class AdminContactoComponent implements OnInit, OnDestroy {
 
   mensajes: iMensaje[] = []
   displayedColumns = [
@@ -26,15 +27,19 @@ export class AdminContactoComponent implements OnInit {
   pageSize: number = 10
   first: number = 0
   page: number = 1
+  private contactoListSubscription: Subscription
 
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
     private _afs: AngularFirestore,
   ) {
-    this._afs.collection<iMensaje>('contacto')
-      .valueChanges().subscribe(list => {
-      this.mensajes = list
+    this.contactoListSubscription = this._afs
+      .collection<iMensaje>( 'contacto' )
+      .valueChanges()
+      .subscribe( list => {
+        // console.log( list )
+        this.mensajes = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
@@ -68,6 +73,10 @@ export class AdminContactoComponent implements OnInit {
       minWidth: '50%',
       data,
     })
+  }
+
+  ngOnDestroy() {
+    this.contactoListSubscription.unsubscribe()
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter
 import { ActivatedRoute } from '@angular/router';
 import { orderBy } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, first, map, mergeMap } from 'rxjs/operators';
 import { iDeclaracion } from 'src/app/public/afiliados/models/perfiles.model';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 
@@ -27,17 +27,16 @@ export class PerfilCapContableComponent implements OnInit {
     private _perfil: PerfilService,
     private _route: ActivatedRoute
   ) {
-    this._rfc.pipe(filter(rfc => !!rfc)).subscribe(rfc => {
-
-      // this._perfil.getInfoDoc<iCapContable>(this.rfc, 'capacidad_financiera')
-      //   .then(data => {if (data){
-      //     this.capacidad = data
-      //     this.extract$.emit(data.extract)
-      //   }})
-      this._perfil.getInfoCollection<iDeclaracion>( 'capacidad_financiera')
-        .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
-        .subscribe(items => { this.declaraciones = items.splice(0,3) })
-    })
+    this._rfc.pipe(
+      filter( rfc => !!rfc ),
+      mergeMap( rfc => {
+        return this._perfil.getInfoCollection<iDeclaracion>( 'capacidad_financiera')
+          .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
+      })
+    ).subscribe( items => {
+      // console.log( items )
+      this.declaraciones = items.splice( 0, 3 )
+    } )
    }
 
   ngOnInit(): void {

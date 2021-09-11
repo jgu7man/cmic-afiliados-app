@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, HostListener } from '@angul
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
+import { take } from 'rxjs/operators';
 import { AdminService } from 'src/app/admin/services/admin.service';
 import { MyErrorStateMatcher } from '../../../public/afiliados/components/afiliados-registro/afiliados-registro.component';
 import { ManagersService } from '../../../public/afiliados/services/managers.service';
@@ -52,7 +53,7 @@ export class CreateAdminAccountComponent implements OnInit {
       this._alert.message(
         `<h1>Email no encontrado</h1>
           <p class="center"> Debes seguir el link que te llegó por email para crear una cuenta. <br> Si no has recibido un correo de invitación, ponete en contacto con la CMIC Colima </p>`
-      , 'html').subscribe(() => this._router.navigate(['/']))
+      , 'html').pipe(take(1)).subscribe(() => this._router.navigate(['/']))
     }
 
   }

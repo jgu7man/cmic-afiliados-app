@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MxCache } from '@marxa/devkit';
+import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
-import { map, startWith, take, takeWhile } from 'rxjs/operators';
+import { first, map, startWith, take, takeWhile } from 'rxjs/operators';
 import { ActividadQuery, AfiliadoQuery, EspecialidadQuery } from 'src/app/models/consultas.model';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { DatosGeneralesModel } from '../afiliados/models/afiliados.model';
@@ -18,13 +19,14 @@ import { DialogClienteLoginComponent } from '../clientes/components/dialog-clien
   templateUrl: './searcher.component.html',
   styleUrls: ['./searcher.component.scss']
 })
-export class SearcherComponent implements OnInit {
+export class SearcherComponent implements OnInit, OnDestroy {
 
   buscadorCtrl: FormControl = new FormControl('',);
   filteredActividades: Observable<(EspecialidadQuery | ActividadQuery | AfiliadoQuery)[]>;
   afiliadosIndex: AfiliadoQuery[] = []
 
   logged: boolean = false
+  afiliadosSubscription!: Subscription
 
   constructor(
     private _actividades: ActividadesService,
@@ -55,8 +57,11 @@ export class SearcherComponent implements OnInit {
   }
 
   getAfiliadosList() {
-    this._cache.listenForChanges<DatosGeneralesModel[]>('afiliadosList')
-      .subscribe(list => {
+
+    this.afiliadosSubscription = this._cache
+      .listenForChanges<DatosGeneralesModel[]>( 'afiliadosList' )
+      .subscribe( list => {
+        // console.log( list )
         list.forEach(afi => {
           if (afi) this.afiliadosIndex.push({
             nombre: afi.comercial_nombre, slug: afi.slug
@@ -65,7 +70,7 @@ export class SearcherComponent implements OnInit {
       })
 
     if (!this._cache.getDataKey('afiliadosList')) {
-      this._afiliados.indexList().pipe(take(1)).subscribe()
+      this._afiliados.indexList().pipe(take(1)).subscribe(/*val => console.log( val ) */)
     }
   }
 
@@ -92,12 +97,13 @@ export class SearcherComponent implements OnInit {
       let slug = value.slug
       this._afAuth.authState
         .pipe(takeWhile(user => !user, true))
-        .subscribe(user => {
+        .subscribe( user => {
+          // console.log( user )
           if (user) this._router.navigate(['/afiliado', slug])
           else this._dialog.open(DialogClienteLoginComponent, {
               width: '370px',
               data: slug
-            }).afterClosed().subscribe(slug => {
+            }).afterClosed().pipe(first()).subscribe(slug => {
               if(slug) this._router.navigate(['/afiliado', slug])
             })
         })
@@ -109,6 +115,10 @@ export class SearcherComponent implements OnInit {
       this._router.navigate(['/consulta'], { queryParams: {especialidad: value.nombre}})
     }
 
+  }
+
+  ngOnDestroy() {
+    this.afiliadosSubscription.unsubscribe()
   }
 
 

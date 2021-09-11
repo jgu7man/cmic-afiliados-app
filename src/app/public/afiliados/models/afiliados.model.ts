@@ -31,6 +31,7 @@ export class AfiliadoModel {
     public fuentes_de_trabajo?: ActividadEmpresa[],
     public servicios_profesionales?: ActividadEmpresa[],
     public tipos_de_obra?:ActividadEmpresa[],
+    public listas?: {[list:string]: iUploadedFile},
   ) {}
 }
 

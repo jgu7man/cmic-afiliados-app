@@ -29,6 +29,7 @@ export class VersionService {
             if ( cloud_ver > local_ver ) {
               throw this._alert.message( 'La aplicación se ha actualizado. Presiona aceptar para refrescar el sitio' ).pipe( take( 1 ) )
                 .subscribe( confirm => {
+                  // console.log( confirm )
                   if ( confirm ) {
                     window.location.reload()
                     this.update()

@@ -1,5 +1,5 @@
 import { MatTableDataSource } from '@angular/material/table';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 // import { iPeticion } from 'src/app/admin/models/roles.model';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
@@ -11,12 +11,13 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MxStorage } from '@marxa/storage';
 import { DialogAceptClientComponent } from '../admin-inicio/admin-solicitudes-clientes/admin-solicitudes-clientes.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './admin-clientes.component.html',
   styleUrls: ['./admin-clientes.component.scss']
 })
-export class AdminClientesComponent implements OnInit {
+export class AdminClientesComponent implements OnInit, OnDestroy {
 
   clientes: iCliente[] = []
   displayedColumns = [
@@ -32,6 +33,7 @@ export class AdminClientesComponent implements OnInit {
 
   @ViewChild('clientePanel') private clientePanel?: MatDrawer
   clientSelected?: iCliente
+  private clientListSubscription: Subscription
 
   constructor(
     private _paginator: MatPaginatorIntl,
@@ -39,8 +41,11 @@ export class AdminClientesComponent implements OnInit {
     private _clientes: ClientsService,
     private _storage: MxStorage
   ) {
-    this._clientes.getList().subscribe(list => {
-      this.clientes = list
+    this.clientListSubscription = this._clientes
+      .getList()
+      .subscribe( list => {
+        // console.log( list )
+        this.clientes = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
@@ -88,5 +93,9 @@ export class AdminClientesComponent implements OnInit {
 
   onDownload() {
     this._storage.downloadList(this.clientes, 'Lista de clientes')
+  }
+
+  ngOnDestroy() {
+    this.clientListSubscription.unsubscribe()
   }
 }

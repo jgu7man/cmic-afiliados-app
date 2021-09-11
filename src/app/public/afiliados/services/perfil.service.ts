@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { iAdtionalInfo, PerfilCol, SectionName } from '../models/perfiles.model';
 import firebase from 'firebase/app'
 import { identity, pickBy } from 'lodash';
@@ -10,8 +10,9 @@ import { MxStorage } from '@marxa/storage';
 import { iUploadedFile } from '@marxa/storage';
 import { MxLoading } from '@marxa/devkit';
 import { MxCache } from '@marxa/devkit';
-import { iManager } from '../models/afiliados.model';
+import { AfiliadoModel, iManager } from '../models/afiliados.model';
 import { Observable, of, Subject, Subscription } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,8 @@ export class PerfilService {
     private _alert: MxAlert,
     private _storage: MxStorage,
     private _loading: MxLoading,
-    private _cache: MxCache
+    private _cache: MxCache,
+    private _as: AngularFireStorage
   ) {
     this.extractCtrl = new FormControl('', [Validators.required])
     this.RFC = this._cache.getDataKey<string>('rfc') as string
@@ -56,7 +58,7 @@ export class PerfilService {
     try {
       const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
       await ref.update( {
-        [ field ]: Array.isArray(data) ? data : { ...data },
+        [ field ]:  typeof data === 'object' ? { ...data } : data,
         updated: new Date()
       } )
       this._alert.notify('Guardado')
@@ -169,7 +171,18 @@ export class PerfilService {
     try {
       let field = `adicional.extract.${fieldName}`
       let extract = await this.getInfoDoc<iAdtionalInfo>(field)
-      if (extract) this.extractCtrl.setValue(extract)
+      if ( extract ) {
+
+        //NOTE ESTO ES PROVISIONAL, QUITAR LAS CONDICIONALES
+        if ( typeof extract === 'object' ) {
+          const charts:string[] = []
+          Object.values( extract ).forEach( char => charts.push( char as string ) )
+          extract = charts.join( '' )
+          this.extractCtrl.setValue( extract )
+        } else {
+          this.extractCtrl.setValue( extract )
+        }
+      }
       return extract ? extract : ''
     } catch (error) {
       this._alert.error(`No se pudo obtener la informacion de ${fieldName}`, error)
@@ -245,19 +258,22 @@ export class PerfilService {
     return new Promise<FormGroup>((resolve, reject) => {
 
 
-      this._storage.upload().subscribe(async files => {
-        let evidencia = form.get('evidencia')?.value as any[]
+      this._storage.upload()
+        .pipe(
+          mergeMap( async files => {
+            let evidencia = form.get('evidencia')?.value as any[]
+            await this._loading.asyncForEach(
+            files, (file:iUploadedFile) => {
+              evidencia.push(file)
+            })
 
-        await this._loading.asyncForEach(
-        files, (file:iUploadedFile) => {
-          evidencia.push(file)
-        })
+            form.patchValue({ evidencia })
+            this._storage.showDropzone$.next(false)
 
-        form.patchValue({ evidencia })
-        this._storage.showDropzone$.next(false)
+            resolve(form)
 
-        resolve(form)
-      })
+          })
+        ).subscribe( /*val => console.log( val ) */)
     })
   }
 
@@ -270,10 +286,10 @@ export class PerfilService {
    */
   saveList(file: iUploadedFile, field: SectionName) {
     const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
-    ref.update({ listas: { [field]: file } })
+    ref.set({ listas: { [field]: file } }, { merge: true})
       .then( () => this._alert.notify( 'Lista guardada' ) )
       .catch( error => {
-      this._alert.error('No se pudo guardar la lista', error, true)
+      this._alert.error('No se pudo guardar la lista', error, "perfil.service#saveList", true)
     })
   }
 
@@ -283,15 +299,51 @@ export class PerfilService {
    * @param {SectionName} field
    * @returns {*}
    */
-  async getList(field: SectionName) {
+  getListFile(field: SectionName) {
+    return this._afs.doc<AfiliadoModel>( `afiliados/${ this.RFC }` )
+      .valueChanges().pipe(
+        catchError( error => {
+          this._alert.error( `No se pudo obtener el afiliado para obtener ${ field } de ${ this.RFC }`, error, 'perfil.service#getList' );
+          return of(null)
+        }),
+        map( afiliado => {
+          if ( afiliado ) {
+            if ( afiliado.listas ) {
+              console.log( afiliado.listas[ field ] )
+              return afiliado.listas[ field ]
+            } else return null
+          } else return null
+
+        } ),
+      )
+
+  }
+
+  async deleteListFile( field: SectionName ) {
+    const afiliadoDoc = await this._afs
+      .doc<AfiliadoModel>( `afiliados/${ this.RFC }` ).ref.get()
+
     try {
-      const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
-      const file: iUploadedFile = await (await ref.get()).get(`listas.${field}`)
-      return file ? file : undefined
+      if ( afiliadoDoc.exists ) {
+        const afiliado = afiliadoDoc.data()  as AfiliadoModel
+        const listas = afiliado.listas
+        if ( listas ) {
+          let file = listas[ field ]
+          let filePath = `${file.path}/${file.fileName}`
+          await this._as.ref(filePath).delete()
+          delete listas[ field ]
+          afiliadoDoc.ref.update({listas})
+        }
+      }
+
+
     } catch (error) {
-      this._alert.error(`No se pudo obtener la lista de información de ${field}`, error)
-      console.error( error )
-      return undefined
+      if ('message' in error) {
+        this._alert.error(error.message, error)
+      } else {
+        this._alert.error('No pudo borrarse el archivo', error)
+      }
+      return console.error(error)
     }
   }
 

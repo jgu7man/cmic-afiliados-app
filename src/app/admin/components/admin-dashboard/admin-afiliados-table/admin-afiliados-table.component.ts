@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './admin-afiliados-table.component.html',
   styleUrls: ['./admin-afiliados-table.component.scss']
 })
-export class AdminAfiliadosTableComponent implements OnInit {
+export class AdminAfiliadosTableComponent implements OnInit, OnDestroy {
 
   afiliados: AfiliadoModel[] = []
   displayedColumns = [
@@ -32,6 +32,8 @@ export class AdminAfiliadosTableComponent implements OnInit {
   pageSize: number = 10
   first: number = 0
   page: number = 1
+
+  afiliadosListSubscription: Subscription
   constructor(
     private _paginator: MatPaginatorIntl,
     private _afiliados: AfiliadosService,
@@ -40,8 +42,11 @@ export class AdminAfiliadosTableComponent implements OnInit {
     private _storage: MxStorage,
     private _bottom: MatBottomSheet
   ) {
-    this._afiliados.getFullList().subscribe(list => {
-      this.afiliados = list
+    this.afiliadosListSubscription = this._afiliados
+      .getFullList()
+      .subscribe( list => {
+        // console.log( list )
+        this.afiliados = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
@@ -84,6 +89,10 @@ export class AdminAfiliadosTableComponent implements OnInit {
     })
   }
 
+  ngOnDestroy() {
+    this.afiliadosListSubscription.unsubscribe
+  }
+
 }
 
 
@@ -107,6 +116,7 @@ export class BottomAdminAfiliado implements OnInit, OnDestroy {
     this.managersSubscription =
     this._managers.getForAfiliado( this.afiliado.datos_generales.RFC )
       .subscribe( list => {
+        // console.log( list )
         this.managers = list
     })
    }

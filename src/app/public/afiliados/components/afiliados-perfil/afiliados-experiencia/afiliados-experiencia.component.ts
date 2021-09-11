@@ -6,6 +6,7 @@ import { emptyProyecto, Proyecto } from '../../../models/perfiles.model';
 import { PerfilService } from '../../../services/perfil.service';
 import { iUploadedFile } from '@marxa/storage';
 import { MxText } from '@marxa/devkit';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
   proyectoForm: FormGroup;
   listDoc?: iUploadedFile
   items: Proyecto[] = []
+  private fileSubscription!: Subscription;
 
   constructor(
     public storage_: MxStorage,
@@ -49,10 +51,13 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
 
   async ngOnInit(){
     this.perfil_.editSubscription = this.perfil_
-      .listenEditingItem.subscribe(item => {
-      this.proyectoForm.patchValue(item)
+      .listenEditingItem.subscribe( item => {
+        // console.log( item )
+        this.proyectoForm.patchValue(item)
       })
-    this.listDoc = await this.perfil_.getList('experiencia')
+    this.fileSubscription = this.perfil_
+      .getListFile( 'experiencia' )
+      .subscribe( file => this.listDoc = file ? file : undefined )
   }
 
   get now() {
@@ -94,6 +99,7 @@ export class AfiliadosExperienciaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.perfil_.getOutSection()
+    this.fileSubscription.unsubscribe()
   }
 
 }

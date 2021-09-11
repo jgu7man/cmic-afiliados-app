@@ -2,9 +2,12 @@
   <div class="image-file">
     <img [src]="file?.url" [alt]="file?.fileName">
   </div>
+  <a [href]="file?.url" target="_blank"> Descargar archivo </a>
 </ng-container>
 <ng-template #notImage >
-  <p>{{file?.fileName}} </p>
+  <div class="file-figure">
+    <p>{{file?.fileName}} </p>
+    <a [href]="file?.url" target="_blank"> Descargar archivo </a>
+  </div>
 </ng-template>
-<a [href]="file?.url" target="_blank"> Descargar archivo </a>
 

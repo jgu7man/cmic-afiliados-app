@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
 import { MxCache } from '@marxa/devkit';
-import { take } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 import { iAdmin } from 'src/app/admin/models/admin.model';
 import { MxUploadModalComponent } from '@marxa/storage';
 import { iUploadedFile, iUploadOptions } from '@marxa/storage';
@@ -53,7 +53,10 @@ export class AfiliadosPerfilComponent implements OnInit {
       this._alert.message('Primero necesitas iniciar sesión como afiliado o administrador')
         this._router.navigate(['/afiliados/login'])
     } else {
-      this._afiliados.getPerfil(this.RFC).subscribe((data) => {
+      this._afiliados.getPerfil( this.RFC )
+        .pipe(first())
+        .subscribe( ( data ) => {
+          // console.log( data )
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
           if (data.datos_generales.fisica_nombre || data.datos_generales.moral_nombre) {
@@ -88,7 +91,7 @@ export class AfiliadosPerfilComponent implements OnInit {
       width: '40%',
       minHeight: '40%',
       data: options
-    }).afterClosed().subscribe((file: iUploadedFile[]) => {
+    }).afterClosed().pipe(first()).subscribe((file: iUploadedFile[]) => {
       this.perfil_.updateInfoDoc('perfil.imgBanner', file[0])
     })
 

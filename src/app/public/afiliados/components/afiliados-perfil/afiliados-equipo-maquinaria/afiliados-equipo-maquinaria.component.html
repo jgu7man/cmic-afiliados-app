@@ -18,7 +18,7 @@
         </mat-card-header>
         <mat-card-content>
           <div class="row">
-            <div class="col s12">
+            <div class="col s12" style="display: flex; justify-content:space-between">
               <mat-form-field appearance="outline">
                 <mat-label>Extracto</mat-label>
                 <textarea
@@ -38,16 +38,17 @@
               >
                 Guardar
               </button>
-              <mat-divider></mat-divider>
             </div>
           </div>
+
+          <mat-divider></mat-divider>
+
           <div class="row">
-            <div class="col s6" *ngIf="listDoc">
-              <g-file-viewer
-              [file]="listDoc"
-              ></g-file-viewer>
+            <div class="col s12 m6 list-file" *ngIf="listDoc">
+              <g-file-viewer [file]="listDoc" ></g-file-viewer>
+              <button mat-button color='primary' class="delete-list-file" (click)="perfil_.deleteListFile('equipo_maquinaria')">Eliminar archivo</button>
             </div>
-            <div class="col s6">
+            <div class="col s12 m6">
               <p>Agrega una lista de tu equipo o maquinaria</p>
               <mx-files-picker
               [maxFileSize]="2097152"

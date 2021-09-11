@@ -6,230 +6,329 @@
       </button>
     </div>
     <div class="col s12 m11">
-
       <mat-card>
         <mat-card-header>
           <mat-card-title>Experiencia de la empresa</mat-card-title>
           <mat-card-subtitle>
-            En este apartado, puedes agregar la experiencia que tiene tu empresa, de manera que tus clientes puedan
-            revisar tu trabajo.
+            En este apartado, puedes agregar la experiencia que tiene tu
+            empresa, de manera que tus clientes puedan revisar tu trabajo.
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div class="row">
-            <div class="col s12">
+
+            <div
+              class="col s12"
+              style="display: flex; justify-content: space-between"
+            >
               <mat-form-field appearance="outline">
                 <mat-label>Extracto</mat-label>
-                <textarea placeholder="Explica en breves palabras la experiencia que la empresa tiene" matInput type="text"
-                  name="name" [formControl]="perfil_.extractCtrl"></textarea>
+                <textarea
+                  placeholder="Explica en breves palabras la experiencia que la empresa tiene"
+                  matInput
+                  type="text"
+                  name="name"
+                  [formControl]="perfil_.extractCtrl"
+                ></textarea>
               </mat-form-field>
-              <button mat-button [disabled]="perfil_.extractCtrl.invalid" (click)="perfil_.updateExtract('experiencia')">Guardar</button>
-              <mat-divider></mat-divider>
+              <button
+                mat-button
+                color="primary"
+                [disabled]="perfil_.extractCtrl.invalid"
+                (click)="perfil_.updateExtract('experiencia')"
+              >
+                Guardar
+              </button>
             </div>
           </div>
+
+          <mat-divider></mat-divider>
+
           <div class="row">
-            <div class="col s6" *ngIf="listDoc">
-              <g-file-viewer
-              [file]="listDoc"
-              ></g-file-viewer>
+            <div class="col s12 m6 list-file" *ngIf="listDoc">
+              <g-file-viewer [file]="listDoc" ></g-file-viewer>
+              <button mat-button color='primary' class="delete-list-file" (click)="perfil_.deleteListFile('experiencia')">Eliminar archivo</button>
             </div>
-            <div class="col s6">
+            <div class="col s12 m6">
               <p>Agrega una lista de tus proyectos</p>
               <mx-files-picker
-              [maxFileSize]="2097152"
-              [path]="perfil_.filesPath"
-              [metadata]="perfil_.metadata"
-              toggleButtonLabel="Subir lista de proyectos"
-              [multiple]="false"
-              dropzoneLabel="Toca o arrastra los archivos hasta aquí para subir un archivo."
-              (uploadComplete)="onListUploaded($event)"
+                [maxFileSize]="2097152"
+                [path]="perfil_.filesPath"
+                [metadata]="perfil_.metadata"
+                toggleButtonLabel="Subir lista de proyectos"
+                [multiple]="false"
+                dropzoneLabel="Toca o arrastra los archivos hasta aquí para subir un archivo."
+                (uploadComplete)="onListUploaded($event)"
               ></mx-files-picker>
             </div>
           </div>
         </mat-card-content>
-
       </mat-card>
-
 
       <mat-card>
         <mat-card-header>
           <mat-card-title>Proyectos principales</mat-card-title>
-          <mat-card-subtitle>Agrega proyectos importantes a tu lista de experiencia</mat-card-subtitle>
+          <mat-card-subtitle
+            >Agrega proyectos importantes a tu lista de
+            experiencia</mat-card-subtitle
+          >
         </mat-card-header>
         <mat-card-content>
-
           <div class="row">
             <div class="col s12">
               <g-perfil-experiencia
-              [edit]="true"
-              (items)="items = $event"
+                [edit]="true"
+                (items)="items = $event"
               ></g-perfil-experiencia>
             </div>
           </div>
 
-
           <ng-container *ngIf="items.length <= 3; else full">
-          <form [formGroup]="proyectoForm">
-            <mat-card>
-              <mat-card-content>
-                <div class="row">
-                  <div class="col s12">
-                    <mat-form-field>
-                      <mat-label>Nombre del proyecto</mat-label>
-                      <input matInput type="text" name="nombre" formControlName="nombre">
-                      <mat-error *ngIf="proyectoForm.hasError('required', 'nombre')">
-                        Este dato es necesario
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col s12">
-                    <mat-form-field>
-                      <mat-label>Cliente</mat-label>
-                      <input matInput type="text" name="cliente" formControlName="cliente">
-                      <mat-error *ngIf="proyectoForm.hasError('required', 'cliente')">
-                        Este dato es necesario
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-
-
-                  <div class="col s12 m6">
-                    <mat-form-field>
-                      <mat-label>Monto</mat-label>
-                      <input matInput type="text" name="monto"
-                      (keypress)="text.onlyAllow(['numbers'], $event)"
-                      formControlName="monto">
-                      <span matPrefix>$&nbsp;</span>
-                      <span matSuffix>.00</span>
-                      <mat-error *ngIf="proyectoForm.hasError('required', 'monto')">
-                        Este dato es necesario
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-
-
-                  <div class="col s12 m6">
-                    <gdev-year-selector
-                    [value]="proyectoForm.value.fecha"
-                    (selected)="catchYear($event)"
-                    [max]="now"
-                    fieldLabel="Año del proyecto"
-                    ></gdev-year-selector>
-                  </div>
-
-                </div>
-
-                <!-- Ubicación del proyecto -->
-                <div class="row">
-                  <p>Ubicación:</p>
-                  <form formGroupName="ubicacion">
-                    <div class="col s12 l8">
-                      <mat-form-field>
-                        <mat-label>Calle</mat-label>
-                        <input matInput type="text" name="calle" formControlName="calle">
-                      </mat-form-field>
-                    </div>
-                    <div class="col s6 l2">
-                      <mat-form-field>
-                        <mat-label>Num. Ext.</mat-label>
-                        <input matInput type="text" name="num_ext" formControlName="num_ext">
-                      </mat-form-field>
-                    </div>
-
-                    <div class="col s6 l2">
-                      <mat-form-field>
-                        <mat-label>Num. Int.</mat-label>
-                        <input matInput type="text" name="num_int" formControlName="num_int">
-                      </mat-form-field>
-                    </div>
-
-                    <div class="col s8">
-                      <mat-form-field>
-                        <mat-label>Colonia</mat-label>
-                        <input matInput type="text" name="colonia" formControlName="colonia">
-                      </mat-form-field>
-                    </div>
-
-                    <div class="col s4">
-                      <mat-form-field>
-                        <mat-label>Código Postal</mat-label>
-                        <input matInput type="text" name="codigo_postal" formControlName="codigo_postal">
-                      </mat-form-field>
-                    </div>
-
+            <form [formGroup]="proyectoForm">
+              <mat-card>
+                <mat-card-content>
+                  <div class="row">
                     <div class="col s12">
                       <mat-form-field>
-                        <mat-label>Municipio</mat-label>
-                        <input matInput type="text" name="municipio" formControlName="municipio_alcaldia" required>
-                        <mat-error *ngIf="proyectoForm.hasError('required', 'ubicacion.municipio_alcaldia')">
-                          Al menos define el Municipio
+                        <mat-label>Nombre del proyecto</mat-label>
+                        <input
+                          matInput
+                          type="text"
+                          name="nombre"
+                          formControlName="nombre"
+                        />
+                        <mat-error
+                          *ngIf="proyectoForm.hasError('required', 'nombre')"
+                        >
+                          Este dato es necesario
                         </mat-error>
                       </mat-form-field>
                     </div>
 
                     <div class="col s12">
                       <mat-form-field>
-                        <mat-label>Entidad Federativa</mat-label>
-                        <input matInput type="text" name="entidad_federativa" formControlName="entidad_federativa" required>
-                        <mat-error *ngIf="proyectoForm.hasError('required', 'ubicacion.entidad_federativa')">
-                          Debes definir el Estado o entidad federativa
+                        <mat-label>Cliente</mat-label>
+                        <input
+                          matInput
+                          type="text"
+                          name="cliente"
+                          formControlName="cliente"
+                        />
+                        <mat-error
+                          *ngIf="proyectoForm.hasError('required', 'cliente')"
+                        >
+                          Este dato es necesario
                         </mat-error>
                       </mat-form-field>
                     </div>
 
-                  </form>
+                    <div class="col s12 m6">
+                      <mat-form-field>
+                        <mat-label>Monto</mat-label>
+                        <input
+                          matInput
+                          type="text"
+                          name="monto"
+                          (keypress)="text.onlyAllow(['numbers'], $event)"
+                          formControlName="monto"
+                        />
+                        <span matPrefix>$&nbsp;</span>
+                        <span matSuffix>.00</span>
+                        <mat-error
+                          *ngIf="proyectoForm.hasError('required', 'monto')"
+                        >
+                          Este dato es necesario
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
 
-                </div>
-
-                <div class="row">
-                  <div class="col s12">
-                    <mat-radio-group aria-label="Sector:" formControlName="sector">
-                      <mat-radio-button value="Público">Público</mat-radio-button>
-                      <mat-radio-button value="Privado">Privado</mat-radio-button>
-                    </mat-radio-group>
+                    <div class="col s12 m6">
+                      <gdev-year-selector
+                        [value]="proyectoForm.value.fecha"
+                        (selected)="catchYear($event)"
+                        [max]="now"
+                        fieldLabel="Año del proyecto"
+                      ></gdev-year-selector>
+                    </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="col s12 proyect-gallery">
-                    <ng-container *ngIf="evidencias && evidencias.length > 0">
-                      <mat-grid-list cols="3" rowHeight="4:3">
-                        <mat-grid-tile *ngFor="let img of evidencias; index as i">
-                          <button mat-icon-button color="warn" (click)="removeGalleryImg(i)" >
+                  <!-- Ubicación del proyecto -->
+                  <div class="row">
+                    <p>Ubicación:</p>
+                    <form formGroupName="ubicacion">
+                      <div class="col s12 l8">
+                        <mat-form-field>
+                          <mat-label>Calle</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            name="calle"
+                            formControlName="calle"
+                          />
+                        </mat-form-field>
+                      </div>
+                      <div class="col s6 l2">
+                        <mat-form-field>
+                          <mat-label>Num. Ext.</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            name="num_ext"
+                            formControlName="num_ext"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col s6 l2">
+                        <mat-form-field>
+                          <mat-label>Num. Int.</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            name="num_int"
+                            formControlName="num_int"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col s8">
+                        <mat-form-field>
+                          <mat-label>Colonia</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            name="colonia"
+                            formControlName="colonia"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col s4">
+                        <mat-form-field>
+                          <mat-label>Código Postal</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            name="codigo_postal"
+                            formControlName="codigo_postal"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col s12">
+                        <mat-form-field>
+                          <mat-label>Municipio</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            name="municipio"
+                            formControlName="municipio_alcaldia"
+                            required
+                          />
+                          <mat-error
+                            *ngIf="
+                              proyectoForm.hasError(
+                                'required',
+                                'ubicacion.municipio_alcaldia'
+                              )
+                            "
+                          >
+                            Al menos define el Municipio
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col s12">
+                        <mat-form-field>
+                          <mat-label>Entidad Federativa</mat-label>
+                          <input
+                            matInput
+                            type="text"
+                            name="entidad_federativa"
+                            formControlName="entidad_federativa"
+                            required
+                          />
+                          <mat-error
+                            *ngIf="
+                              proyectoForm.hasError(
+                                'required',
+                                'ubicacion.entidad_federativa'
+                              )
+                            "
+                          >
+                            Debes definir el Estado o entidad federativa
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s12">
+                      <mat-radio-group
+                        aria-label="Sector:"
+                        formControlName="sector"
+                      >
+                        <mat-radio-button value="Público"
+                          >Público</mat-radio-button
+                        >
+                        <mat-radio-button value="Privado"
+                          >Privado</mat-radio-button
+                        >
+                      </mat-radio-group>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s12 proyect-gallery">
+                      <ng-container *ngIf="evidencias && evidencias.length > 0">
+                        <mat-grid-list cols="3" rowHeight="4:3">
+                          <mat-grid-tile
+                            *ngFor="let img of evidencias; index as i"
+                          >
+                            <button
+                              mat-icon-button
+                              color="warn"
+                              (click)="removeGalleryImg(i)"
+                            >
                               <i class="fas fa-times"></i>
-                          </button>
-                          <img [src]="img.url" [alt]="img.fileName">
-                        </mat-grid-tile>
-                      </mat-grid-list>
-                    </ng-container>
-                    <mx-files-picker
-                    [maxFileSize]="2097152"
-                    [path]="perfil_.filesPath"
-                    [metadata]="perfil_.metadata"
-                    toggleButtonLabel="Subir evidencia"
-                    dropzoneLabel="Toca o arrastra los archivos hasta aquí para subirlos. MÁXIMO 3 ARCHIVOS"
-                    [uploadButton]="false">
-                    </mx-files-picker>
+                            </button>
+                            <img [src]="img.url" [alt]="img.fileName" />
+                          </mat-grid-tile>
+                        </mat-grid-list>
+                      </ng-container>
+                      <mx-files-picker
+                        [maxFileSize]="2097152"
+                        [path]="perfil_.filesPath"
+                        [metadata]="perfil_.metadata"
+                        toggleButtonLabel="Subir evidencia"
+                        dropzoneLabel="Toca o arrastra los archivos hasta aquí para subirlos. MÁXIMO 3 ARCHIVOS"
+                        [uploadButton]="false"
+                      >
+                      </mx-files-picker>
+                    </div>
                   </div>
-                </div>
-
-              </mat-card-content>
-              <mat-card-actions>
-                <button mat-raised-button color='primary' [disabled]="validateProjectForm" (click)="onSetProyecto()">Guardar</button>
-              </mat-card-actions>
-            </mat-card>
-          </form>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button
+                    mat-raised-button
+                    color="primary"
+                    [disabled]="validateProjectForm"
+                    (click)="onSetProyecto()"
+                  >
+                    Guardar
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            </form>
           </ng-container>
-          <ng-template #full >
+          <ng-template #full>
             <p class="center data-text">
               Sólo puedes agregar 3 proyectos como máximo
             </p>
           </ng-template>
-
         </mat-card-content>
       </mat-card>
-
     </div>
   </div>
 </div>

@@ -8,6 +8,7 @@ import { MxAlert } from '@marxa/devkit';
 import { Router } from '@angular/router';
 import { MxLoading } from '@marxa/devkit';
 import { iUploadedFile } from '@marxa/storage';
+import { first } from 'rxjs/operators';
 
 @Component({
   templateUrl: './cliente-solicitud.component.html',
@@ -110,7 +111,7 @@ export class ClienteSolicitudComponent implements OnInit {
       this._loading.toggleWaiting('close')
     } else {
       this._alert.message('Este correo ya está registrado en la plataforma.Te invitamos a iniciar sesión'
-      ).subscribe(confirmation => {
+      ).pipe(first()).subscribe( confirmation => {
         if (confirmation) this._router.navigate(['/clientes/login'])
       })
     }

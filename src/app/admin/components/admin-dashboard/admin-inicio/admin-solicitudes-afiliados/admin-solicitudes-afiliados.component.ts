@@ -8,13 +8,15 @@ import { ClientsService } from 'src/app/public/clientes/services/clients.service
 import firebase from 'firebase/app'
 import { iAfiliadoRequest } from 'src/app/public/afiliados/models/afiliados.model';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
+import { OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'g-admin-solicitudes-afiliados',
   templateUrl: './admin-solicitudes-afiliados.component.html',
   styleUrls: ['./admin-solicitudes-afiliados.component.scss']
 })
-export class AdminSolicitudesAfiliadosComponent implements OnInit {
+export class AdminSolicitudesAfiliadosComponent implements OnInit, OnDestroy {
 
   afiliados: iAfiliadoRequest[] = []
   displayedColumns = [
@@ -28,13 +30,18 @@ export class AdminSolicitudesAfiliadosComponent implements OnInit {
   first: number = 0
   page: number = 1
 
+  private peticionesSubscription: Subscription
+
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
     private _afiliados: AfiliadosService,
   ) {
-    this._afiliados.getPeticiones().subscribe(list => {
-      this.afiliados = list
+    this.peticionesSubscription = this._afiliados
+      .getPeticiones()
+      .subscribe( list => {
+        // console.log( list )
+        this.afiliados = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
@@ -67,6 +74,10 @@ export class AdminSolicitudesAfiliadosComponent implements OnInit {
       minWidth: '50%',
       data,
     })
+  }
+
+  ngOnDestroy() {
+    this.peticionesSubscription.unsubscribe()
   }
 
 }

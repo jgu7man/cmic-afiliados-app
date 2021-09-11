@@ -3,7 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { iMail, iMailResponse } from '../models/emial.model';
 import firebase from 'firebase/app'
 import { MxAlert, MxLoading } from '@marxa/devkit';
-import { filter, map, pluck } from 'rxjs/operators';
+import { filter, map, pluck, takeUntil, takeWhile } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -37,27 +38,31 @@ export class EmailsService {
             console.log( doc )
             if ( doc && doc.delivery ) return doc.delivery
             else return undefined
-          }),
-        ).subscribe( delivery => {
-          console.log( delivery )
-          if ( delivery ) {
-            if ( delivery.state == 'ERROR' || delivery.state == 'SUCCESS' ) {
-              this._loading.toggleWaiting('close')
-              if ( delivery.state == 'ERROR' ) {
-                this._alert.notify( 'Error al enviar el correo' )
-                reject( {
-                  message: 'Error al enviar el correo',
-                  state: delivery.state,
-                  error: delivery.error
-                } )
+          } ),
+          filter(delivery => delivery ? true:false),
+          map( (delivery: any) => {
+            // if ( delivery ) {
+              if ( delivery.state == 'ERROR' || delivery.state == 'SUCCESS' ) {
+                this._loading.toggleWaiting('close')
+                if ( delivery.state == 'ERROR' ) {
+                  this._alert.notify( 'Error al enviar el correo' )
+                  reject( {
+                    message: 'Error al enviar el correo',
+                    state: delivery.state,
+                    error: delivery.error
+                  } )
+                } else {
+                  resolve( this._alert.notify( 'Mail enviado con éxito' ) )
+                }
+                return true
               } else {
-                resolve( this._alert.notify( 'Mail enviado con éxito' ) )
+                  this._alert.notify( `Email status: ${ delivery.state }` )
+                  return false
               }
-          } else {
-              this._alert.notify(`Email status: ${delivery.state}`)
-          }
-          }
-        })
+            // }
+          } ),
+          takeWhile(notifier => notifier === true)
+        ).subscribe(/*val => console.log( val ) */ )
       })
     } catch (error) {
       this._alert.error('No se pudo enviar el correo', error)

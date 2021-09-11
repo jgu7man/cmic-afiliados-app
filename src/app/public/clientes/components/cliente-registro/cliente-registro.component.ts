@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
+import { first } from 'rxjs/operators';
 import { MyErrorStateMatcher } from 'src/app/public/afiliados/components/afiliados-registro/afiliados-registro.component';
 import { ClientsService } from '../../services/clients.service';
 
@@ -35,7 +36,7 @@ export class ClienteRegistroComponent implements OnInit {
     else this._alert.message(
       `<h1>Email no encontrado</h1>
         <p class="center"> Debes seguir el link que te llegó por email para crear una cuenta. <br> Si no has recibido un correo de invitación, ponete en contacto con la CMIC Colima </p>`
-    , 'html').subscribe(() => this._router.navigate(['/']))
+    , 'html').pipe(first()).subscribe(() => this._router.navigate(['/']))
    }
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ import { PerfilService } from '../../services/perfil.service';
 import { iAdtionalInfo, iPerfil, iPersonal } from '../../models/perfiles.model';
 import { MxCache } from '@marxa/devkit';
 import { Location } from '@angular/common';
+import { first } from 'rxjs/operators';
 
 @Component({
   templateUrl: './editar-perfil.component.html',
@@ -40,8 +41,10 @@ export class EditarPerfilComponent implements OnInit {
     public location_: Location  ,
   ) {
     this.RFC = this._cache.getDataKey<string>('rfc') as string;
-      this.afiliados_.getPerfil(this.RFC).subscribe((data) => {
-        console.log( data )
+    this.afiliados_.getPerfil( this.RFC )
+      .pipe(first())
+      .subscribe( ( data ) => {
+        // console.log( data )
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
           this.afiliado = data;

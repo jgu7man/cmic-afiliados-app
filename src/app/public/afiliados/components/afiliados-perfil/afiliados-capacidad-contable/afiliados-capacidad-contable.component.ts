@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormArrayName, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MxCache } from '@marxa/devkit';
 import { MxLoading } from '@marxa/devkit';
@@ -9,13 +9,14 @@ import { MxStorage } from '@marxa/storage';
 import { iUploadedFile } from '@marxa/storage';
 import { iManager } from '../../../models/afiliados.model';
 import { PerfilService } from '../../../services/perfil.service';
+import { Subscription } from 'rxjs';
 //import { StorageService } from 'Src/app/gdev/@marxa/storage';
 
 @Component({
   templateUrl: './afiliados-capacidad-contable.component.html',
   styleUrls: ['./afiliados-capacidad-contable.component.scss'],
 })
-export class AfiliadosCapacidadContableComponent implements OnInit {
+export class AfiliadosCapacidadContableComponent implements OnInit, OnDestroy {
   // CapacidadForm: FormGroup;
   extractCtrl: FormControl;
   declaracionesForm: FormGroup;
@@ -24,6 +25,7 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
   path: string
   metadata: any
   RFC: string
+  private itemsSubscription: Subscription
 
   constructor(
     private _loading: MxLoading,
@@ -69,10 +71,11 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
     //       this.capContableForm.setValue({ extract, capacidad })
     //     }
     //   })
-
+    this.itemsSubscription =
     this._perfil.getInfoCollection( 'capacidad_financiera')
       .pipe(map(items => orderBy(items, ['year'], ['desc'])) )
-      .subscribe(items => {
+      .subscribe( items => {
+        // console.log( items )
         items.forEach((item, i )=> {
           this.declaracionesList.at(i).patchValue(item)
           this.declaracionesList.at(i).markAsPristine()
@@ -107,5 +110,9 @@ export class AfiliadosCapacidadContableComponent implements OnInit {
   saveCapContable() {
     this._perfil.updateInfoDoc( 'capacidad_financiera', this.capContableForm.value)
     this.capContableForm.markAsPristine()
+  }
+
+  ngOnDestroy() {
+    this.itemsSubscription.unsubscribe()
   }
 }

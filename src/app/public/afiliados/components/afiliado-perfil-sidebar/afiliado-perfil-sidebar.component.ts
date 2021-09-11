@@ -8,7 +8,7 @@ import { iUploadedFile, iUploadOptions } from '@marxa/storage';
 import { AfiliadosService } from '../../services/afiliados.service';
 
 import { FormControl, Validators } from '@angular/forms';
-import { debounceTime, delay, map, mapTo, take, tap } from 'rxjs/operators';
+import { debounceTime, delay, distinctUntilChanged, map, mapTo, take, tap } from 'rxjs/operators';
 import { MxLoading } from '@marxa/devkit';
 import { PerfilService } from '../../services/perfil.service';
 import { MxDate } from '@marxa/devkit';
@@ -41,7 +41,10 @@ export class AfiliadoPerfilSidebarComponent implements OnInit, AfterViewInit, On
 
   async ngOnInit() {
     this.afiliadoSubs =
-    this._afiliado.pipe( debounceTime( 500 ) ).subscribe( data => {
+      this._afiliado.pipe(
+        distinctUntilChanged((x,y) => JSON.stringify(x) === JSON.stringify(y)),
+        debounceTime( 500 )
+      ).subscribe( data => {
       // console.log( data )
       this.afiliado = data
     })

@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, ViewChild, Input, ContentChild, TemplateRef, Output, EventEmitter, Injector, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, Input, ContentChild, TemplateRef, Output, EventEmitter, Injector, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'gdev-list-crud',
@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./list-crud.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListCrudComponent implements OnInit, AfterViewInit {
+export class ListCrudComponent implements OnInit, AfterViewInit, OnDestroy {
 
   itemSelected: any
   @Input() list: any[] = []
@@ -35,14 +35,16 @@ export class ListCrudComponent implements OnInit, AfterViewInit {
 
   @Output() onAdd: EventEmitter<any> = new EventEmitter()
   @Output() onSave: EventEmitter<any> = new EventEmitter()
-
+  private listSubscription!: Subscription
 
   constructor (
 
   ) { }
 
   ngOnInit(): void {
-    this._List.subscribe(list => {
+    this.listSubscription =
+      this._List.subscribe( list => {
+      // console.log( list )
       this.list = list
     })
   }
@@ -75,6 +77,10 @@ export class ListCrudComponent implements OnInit, AfterViewInit {
     this.addPanel?.close()
     this.onSave.emit()
 
+  }
+
+  ngOnDestroy() {
+    this.listSubscription.unsubscribe()
   }
 
 }

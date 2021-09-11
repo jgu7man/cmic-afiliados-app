@@ -29,7 +29,8 @@ export class AdminSlideComponent implements OnInit, OnDestroy {
     public storage: MxStorage
   ) {
     this.changesSubscription = this.slideForm.valueChanges
-      .subscribe(data => {
+      .subscribe( data => {
+        // console.log( data )
         this.changes.emit(data)
       })
    }

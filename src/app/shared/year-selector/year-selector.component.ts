@@ -6,7 +6,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { FormControl, Validators } from '@angular/forms';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, SubscriptionLike } from 'rxjs';
 import { MatFormField } from '@angular/material/form-field';
 // import * as moment from 'moment';
 const moment = _moment
@@ -55,13 +55,14 @@ export class YearSelectorComponent implements OnInit, OnDestroy{
   @Input() reqErrorLabel: string = 'Este dato es necesario'
   @Output() selected: EventEmitter<any> = new EventEmitter()
 
-  @ViewChild('field') field?: MatFormField
+  @ViewChild( 'field' ) field?: MatFormField
 
   constructor() {
     // this.field.
    }
 
   ngOnInit(): void {
+    this.valSubscription =
     this._value.subscribe(() => {
       if (this.value) {
         const date: Moment = this.yearCtrl.value

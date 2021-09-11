@@ -1,5 +1,5 @@
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,13 +8,14 @@ import { iAdmin } from 'src/app/admin/models/admin.model';
 import { AdminService } from 'src/app/admin/services/admin.service';
 import { iCliente } from 'src/app/public/clientes/models/cliente.model';
 import { ClientsService } from 'src/app/public/clientes/services/clients.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'g-admin-clientes-table',
   templateUrl: './admin-clientes-table.component.html',
   styleUrls: ['./admin-clientes-table.component.scss']
 })
-export class AdminClientesTableComponent implements OnInit {
+export class AdminClientesTableComponent implements OnInit, OnDestroy {
   clientes: iCliente[] = []
   displayedColumns = [
     'email', 'comercial_nombre', 'lastAccess', 'access', 'options'
@@ -26,14 +27,20 @@ export class AdminClientesTableComponent implements OnInit {
   pageSize: number = 10
   first: number = 0
   page: number = 1
+
+  clientsSubscription: Subscription
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
     private _clientes: ClientsService
   ) {
-    this._clientes.getList().subscribe(list => {
-      this.clientes = list
-    })
+    this.clientsSubscription = this._clientes
+      .getList()
+      .subscribe( list => {
+        // console.log( list )
+        this.clientes = list
+      } )
+
     this._paginator.itemsPerPageLabel="Elementos por página"
     this._paginator.lastPageLabel="Última página"
     this._paginator.nextPageLabel="Siguiente página"
@@ -61,5 +68,9 @@ export class AdminClientesTableComponent implements OnInit {
     this._dialog.open(DialogRevokeAccesoComponent, {
       data: path
     })
+  }
+
+  ngOnDestroy() {
+    this.clientsSubscription.unsubscribe()
   }
 }

@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MxAlert, MxCache } from '@marxa/devkit';
 import { Observable } from 'rxjs';
-import { catchError, debounceTime, map, tap } from 'rxjs/operators';
+import { catchError, debounceTime, first, map, tap } from 'rxjs/operators';
 import { EmailsService } from 'src/app/admin/services/emails.service';
 import { AfiliadoModel, DatosGeneralesModel, iAfiliadoRequest, PartialAfiliado } from '../models/afiliados.model';
 
@@ -75,7 +75,9 @@ export class AfiliadosService {
           <h1 class="center">Petición enviada</h1>
           <p class="center">Se ha enviado la petición a los administradores. Ahora toca esperar el correo de confirmación.</p>
           <p>Es posible que también tengas que revisar tu bandeja de spam</p>
-        `, 'html' ).subscribe( () => { this._router.navigate( [ '/' ] ) } )
+        `, 'html' ).pipe( first() ).subscribe( () => {
+          this._router.navigate( [ '/' ] )
+        } )
 
 
       }
@@ -160,7 +162,7 @@ export class AfiliadosService {
       }
     }
     await this._mails.sendEmail( mail ).catch( error => {
-      throw this._alert.error(`No pudo enviarse el correo de notificación.`, error, true)
+      throw this._alert.error(`No pudo enviarse el correo de notificación.`, error, "afiliados.service#sendAceptedMail")
     } )
   }
 
@@ -234,7 +236,7 @@ export class AfiliadosService {
   getRecentAfiliados(cant: number = 6): Observable<AfiliadoModel[]> {
     return this._afs.collection<AfiliadoModel>('afiliados',
       ref => ref.orderBy( 'creado', 'desc' ).limit( cant ) ).valueChanges()
-      .pipe(catchError( (error) => { throw this._alert.error('No se pudieron obtener los afiliados recientes', error, false, true)}))
+      .pipe(catchError( (error) => { throw this._alert.error('No se pudieron obtener los afiliados recientes', error,"afiliados.service#getRecentAfiliados", false)}))
   }
 
 

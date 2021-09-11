@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MxText } from '@marxa/devkit';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { RepresentanteAfiliado } from '../../../models/afiliados.model';
 
@@ -10,7 +10,7 @@ import { RepresentanteAfiliado } from '../../../models/afiliados.model';
   templateUrl: './representante-form.component.html',
   styleUrls: ['./representante-form.component.scss']
 })
-export class RepresentanteFormComponent implements OnInit {
+export class RepresentanteFormComponent implements OnInit, OnDestroy{
 
   representanteForm: FormGroup = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
@@ -37,14 +37,18 @@ export class RepresentanteFormComponent implements OnInit {
    }
 
    @Output() changes: EventEmitter<RepresentanteAfiliado> = new EventEmitter()
-   @Output() invalid: EventEmitter<boolean> = new EventEmitter()
+  @Output() invalid: EventEmitter<boolean> = new EventEmitter()
+
+  private formSubscription: Subscription
+  private changesSubscription!: Subscription
 
   constructor(
     public text: MxText
   ) {
-    this._form.pipe(
+    this.formSubscription = this._form.pipe(
       distinctUntilKeyChanged('nombre')
-    ).subscribe(form => {
+    ).subscribe( form => {
+      // console.log( form )
       this.representanteForm.patchValue(form)
       this.representanteForm.markAsPristine()
       this.invalid.emit(true)
@@ -52,15 +56,21 @@ export class RepresentanteFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.representanteForm.valueChanges
+    this.changesSubscription = this.representanteForm.valueChanges
     .pipe(delay(1000), startWith(true))
-      .subscribe((changes) => {
+      .subscribe( ( changes ) => {
+        // console.log( changes );
       this.changes.emit(this.representanteForm.value)
       this.invalid.emit(
         this.representanteForm.invalid || this.representanteForm.pristine
         )
         // console.log( this.representanteForm.invalid || this.representanteForm.pristine )
     })
+  }
+
+  ngOnDestroy() {
+    this.formSubscription.unsubscribe()
+    this.changesSubscription.unsubscribe()
   }
 
 }

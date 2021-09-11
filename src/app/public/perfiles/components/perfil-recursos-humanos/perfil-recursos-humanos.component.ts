@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { iUploadedFile } from '@marxa/storage';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MemberModel } from 'src/app/public/afiliados/models/perfiles.model';
 import { PerfilService } from 'src/app/public/afiliados/services/perfil.service';
 
@@ -10,7 +10,7 @@ import { PerfilService } from 'src/app/public/afiliados/services/perfil.service'
   styleUrls: ['./perfil-recursos-humanos.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PerfilRecursosHumanosComponent implements OnInit {
+export class PerfilRecursosHumanosComponent implements OnInit, OnDestroy {
 
 
   @Input() edit: boolean = false
@@ -18,17 +18,23 @@ export class PerfilRecursosHumanosComponent implements OnInit {
   items$?: Observable<MemberModel[]>
   listDoc?: iUploadedFile
   @Output() items: EventEmitter<MemberModel[]> = new EventEmitter()
+  private itemsSubscription: Subscription
+  private fileSubscription: Subscription;
 
   constructor(
     public perfil_: PerfilService,
   ) {
 
       this.items$ = this.perfil_.getInfoCollection
-      <MemberModel>('recursos_humanos')
-    this.items$.subscribe(items => this.items.emit(items))
-    this.perfil_.getList('recursos_humanos').then(file => {
-      this.listDoc = file
-    })
+      <MemberModel>( 'recursos_humanos' )
+    this.itemsSubscription =
+      this.items$.subscribe( items => {
+        // console.log( items )
+        this.items.emit( items )
+      } )
+    this.fileSubscription = this.perfil_
+      .getListFile( 'recursos_humanos' )
+      .subscribe( file => this.listDoc = file ? file : undefined )
 
    }
 
@@ -38,6 +44,11 @@ export class PerfilRecursosHumanosComponent implements OnInit {
   sendToEdit(item: MemberModel, index: number) {
     this.perfil_.onEditItem(item)
     this.editingItem = index
+  }
+
+  ngOnDestroy() {
+    this.itemsSubscription.unsubscribe()
+    this.fileSubscription.unsubscribe()
   }
 
 }

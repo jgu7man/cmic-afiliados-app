@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
 import { MxCache } from '@marxa/devkit';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 import { AfiliadoModel, AfiliadoProperty, emptyAfiliado, iAfiliadoModel, iManager, PartialAfiliado } from '../../models/afiliados.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 
@@ -29,7 +29,10 @@ export class EditarInformacionComponent implements OnInit {
   ) {
     this.RFC = this._route.snapshot.params['RFC']
     if (this.RFC) {
-      this._afiliados.getPerfil(this.RFC).subscribe((data) => {
+      this._afiliados.getPerfil( this.RFC )
+        .pipe(first())
+        .subscribe( ( data ) => {
+          // console.log( data )
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
           this.afiliado = data;

@@ -9,20 +9,23 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { MxAlert } from '@marxa/devkit';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogClienteLoginComponent } from '../../clientes/components/dialog-cliente-login/dialog-cliente-login.component';
-import { takeWhile } from 'rxjs/operators';
+import { first, takeWhile } from 'rxjs/operators';
 import { PrintFileService } from 'src/app/services/print-file.service';
+import { Subscription } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
 @Component({
   templateUrl: './consultas.component.html',
   styleUrls: ['./consultas.component.scss']
 })
-export class ConsultasComponent implements OnInit {
+export class ConsultasComponent implements OnInit, OnDestroy {
 
   queryValue: string
   queryKey: QueryParam
   afiliados?: RequestItem[]
   especialidad: string = ''
   actividad: string = ''
+  querySubscription: Subscription
 
   constructor(
     private _route: ActivatedRoute,
@@ -49,8 +52,12 @@ export class ConsultasComponent implements OnInit {
       this.especialidad = this.queryValue
     }
 
-    let result =  this._consultas.consulta(this.queryKey, this.queryValue)
-    result.subscribe(data => { this.afiliados = data })
+    let result = this._consultas.consulta( this.queryKey, this.queryValue )
+    this.querySubscription =
+      result.subscribe( data => {
+        // console.log( data )
+        this.afiliados = data
+      } )
 
    }
 
@@ -65,15 +72,20 @@ export class ConsultasComponent implements OnInit {
   goPerfil(slug: string) {
     this._afAuth.authState
       .pipe(takeWhile(user => !user, true))
-      .subscribe(user => {
-      if (user) this._router.navigate(['/afiliado', slug])
-      else this._dialog.open(DialogClienteLoginComponent, {
-        width: '370px',
-        data: slug
-      }).afterClosed().subscribe(slug => {
-        if(slug) this._router.navigate(['/afiliado', slug])
-      })
+      .subscribe( user => {
+        // console.log( user )
+        if (user) this._router.navigate(['/afiliado', slug])
+        else this._dialog.open(DialogClienteLoginComponent, {
+          width: '370px',
+          data: slug
+        }).afterClosed().pipe(first()).subscribe(slug => {
+          if(slug) this._router.navigate(['/afiliado', slug])
+        })
     })
+  }
+
+  ngOnDestroy() {
+    this.querySubscription.unsubscribe()
   }
 
 }

@@ -61,7 +61,7 @@ export class AdminService {
         return null
       }
     } catch (error) {
-      this._alert.error('Error al obtener el administrador', error, false, true)
+      this._alert.error('Error al obtener el administrador', error, "admin.service#retriveAdmin", false, true)
       console.error( error )
       return null
     }

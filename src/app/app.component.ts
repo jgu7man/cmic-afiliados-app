@@ -21,7 +21,7 @@ export class AppComponent {
     private _alert: MxAlert,
     private _version: VersionService
   ) {
-    this._version.app_version = '0.3'
+    this._version.app_version = '0.5'
     this._cache.cacheTagName = 'cmic-data';
     this._cache.storage = 'local'
     this._alert.storeError = true;
@@ -40,6 +40,6 @@ export class AppComponent {
         }
         this._title.setTitle(title)
       })
-    ).subscribe()
+    ).subscribe(/*val => console.log( val ) */)
   }
 }

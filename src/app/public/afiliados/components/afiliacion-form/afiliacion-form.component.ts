@@ -49,11 +49,13 @@ export class AfiliacionFormComponent implements OnInit, AfterViewInit {
     if (this.edit) this.edit = +this.edit
     console.log( this.edit )
 
-    this._auth.user$.pipe(takeWhile(user => user)).subscribe(user => {
+    this._auth.user$.pipe( takeWhile( user => user ) ).subscribe( user => {
+      // console.log( user )
       if (!user) this._router.navigate(['/'])
       else this._managers.retriveManager( user.email )
         .pipe(takeWhile(user => !user, true))
-        .subscribe(manager => {
+        .subscribe( manager => {
+          // console.log( manager )
           if ( !manager || manager.RFC != this.RFC ) {
             let admin = this._cache.getDataKey( 'admin' )
             if (!admin) this._router.navigate( [ '/' ] )
@@ -66,6 +68,7 @@ export class AfiliacionFormComponent implements OnInit, AfterViewInit {
     this.afiliados_.getPerfil( this.RFC )
       .pipe(first())
       .subscribe( ( data ) => {
+        // console.log( data )
         if ( data ) this.afiliado = data
       } )
     }

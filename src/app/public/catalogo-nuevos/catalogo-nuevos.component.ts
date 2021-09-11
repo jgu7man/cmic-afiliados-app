@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { iUploadedFile } from '@marxa/storage';
-import { takeWhile } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { first, takeWhile } from 'rxjs/operators';
 import { AfiliadoModel } from '../afiliados/models/afiliados.model';
 import { iPerfil } from '../afiliados/models/perfiles.model';
 import { AfiliadosService } from '../afiliados/services/afiliados.service';
@@ -14,17 +15,21 @@ import { DialogClienteLoginComponent } from '../clientes/components/dialog-clien
   templateUrl: './catalogo-nuevos.component.html',
   styleUrls: ['./catalogo-nuevos.component.scss']
 })
-export class CatalogoNuevosComponent implements OnInit {
+export class CatalogoNuevosComponent implements OnInit, OnDestroy {
 
   afiliados: AfiliadoModel[] = []
   @Input() cantidad: number = 4
+  private recentsSubscription: Subscription
   constructor(
     private _afiliados: AfiliadosService,
     private _afAuth: AngularFireAuth,
     private _router: Router,
     private _dialog: MatDialog
   ) {
-    this._afiliados.getRecentAfiliados(this.cantidad).subscribe(list => {
+    this.recentsSubscription =
+    this._afiliados.getRecentAfiliados( this.cantidad )
+      .subscribe( list => {
+        // console.log( list )
       this.afiliados = list
     })
    }
@@ -43,15 +48,21 @@ export class CatalogoNuevosComponent implements OnInit {
   goPerfil(slug: string) {
     this._afAuth.authState
       .pipe(takeWhile(user => !user, true))
-      .subscribe(user => {
-      if (user) this._router.navigate(['/afiliado', slug])
-      else this._dialog.open(DialogClienteLoginComponent, {
-        width: '370px',
-        data: slug
-      }).afterClosed().subscribe(slug => {
-        if(slug) this._router.navigate(['/afiliado', slug])
-      })
+      .subscribe( user => {
+        // console.log( user )
+        if (user) this._router.navigate(['/afiliado', slug])
+        else this._dialog.open(DialogClienteLoginComponent, {
+          width: '370px',
+          data: slug
+        } ).afterClosed().pipe( first() ).subscribe( slug => {
+          // console.log( slug )
+          if(slug) this._router.navigate(['/afiliado', slug])
+        })
     })
+  }
+
+  ngOnDestroy() {
+    this.recentsSubscription.unsubscribe()
   }
 
 }

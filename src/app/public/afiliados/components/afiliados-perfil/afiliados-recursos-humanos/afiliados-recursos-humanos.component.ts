@@ -1,19 +1,21 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PerfilService } from '../../../services/perfil.service';
 import { emptyMember, MemberModel } from '../../../models/perfiles.model';
 import { iUploadedFile } from '@marxa/storage';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './afiliados-recursos-humanos.component.html',
   styleUrls: ['./afiliados-recursos-humanos.component.scss'],
 })
-export class AfiliadosRecursosHumanosComponent implements OnInit {
+export class AfiliadosRecursosHumanosComponent implements OnInit, OnDestroy{
 
   memberForm: FormGroup;
   listDoc?: iUploadedFile
   items: MemberModel[] = []
+  private fileSubscription: Subscription;
 
   constructor(
     public location_: Location,
@@ -27,12 +29,15 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
     })
 
     this.perfil_.initialize('recursos_humanos')
-    this.perfil_.getList('recursos_humanos').then(file => this.listDoc = file)
+    this.fileSubscription = this.perfil_
+      .getListFile( 'recursos_humanos' )
+      .subscribe( file => this.listDoc = file ? file : undefined )
   }
 
   ngOnInit(): void {
     this.perfil_.editSubscription = this.perfil_
-      .listenEditingItem.subscribe(item => {
+      .listenEditingItem.subscribe( item => {
+        // console.log( item )
       this.memberForm.patchValue(item)
     })
 
@@ -51,6 +56,7 @@ export class AfiliadosRecursosHumanosComponent implements OnInit {
 
   ngOnDestroy() {
     this.perfil_.getOutSection()
+    this.fileSubscription.unsubscribe()
   }
 
 

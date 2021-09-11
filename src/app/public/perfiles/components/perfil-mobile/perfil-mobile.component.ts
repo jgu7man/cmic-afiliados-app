@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { AfiliadoModel, emptyAfiliado } from 'src/app/public/afiliados/models/afiliados.model';
 import { iPerfil } from 'src/app/public/afiliados/models/perfiles.model';
 
@@ -9,7 +9,7 @@ import { iPerfil } from 'src/app/public/afiliados/models/perfiles.model';
   templateUrl: './perfil-mobile.component.html',
   styleUrls: ['./perfil-mobile.component.scss']
 })
-export class PerfilMobileComponent implements OnInit, AfterViewInit {
+export class PerfilMobileComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _afiliado : BehaviorSubject<AfiliadoModel> = new BehaviorSubject(emptyAfiliado);
   @Input() set afiliado(afi: AfiliadoModel) { this._afiliado.next(afi); }
@@ -17,12 +17,15 @@ export class PerfilMobileComponent implements OnInit, AfterViewInit {
 
   perfil: iPerfil = { somos: '' }
 
-  @ViewChild('infoZone') private infoZone?: MatAccordion
+  @ViewChild( 'infoZone' ) private infoZone?: MatAccordion
+  private afiliadoSubscription!: Subscription
 
   constructor() { }
 
   ngOnInit(): void {
-    this._afiliado.subscribe(afiliado => {
+    this.afiliadoSubscription =
+      this._afiliado.subscribe( afiliado => {
+      // console.log( afiliado )
       if (afiliado) {
         if (afiliado.perfil) this.perfil = afiliado.perfil  as iPerfil
       }
@@ -38,6 +41,10 @@ export class PerfilMobileComponent implements OnInit, AfterViewInit {
     return this.afiliado.perfil?.imgBanner?.url ?
       this.afiliado.perfil?.imgBanner?.url :
       '/assets/img/cmic-perfil-banner.jpg'
+  }
+
+  ngOnDestroy() {
+    this.afiliadoSubscription.unsubscribe()
   }
 
 }

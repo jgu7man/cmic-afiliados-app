@@ -8,3 +8,23 @@
     width: 100%;
   }
 }
+
+.file-figure {
+  width: 200px;
+  height: 250px;
+  background: #ccc;
+  border-radius: 10px;
+  margin: auto;
+  box-shadow: 1px 1px 3px 2px rgb(0 0 0 / 40%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  overflow: hidden;
+  p {
+    white-space: break-spaces;
+    width: 100%;
+    text-align: center;
+  }
+}

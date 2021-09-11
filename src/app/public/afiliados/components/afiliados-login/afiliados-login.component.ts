@@ -22,10 +22,12 @@ export class AfiliadosLoginComponent implements OnInit, OnDestroy {
   ) {
     this.errorSubscription =
       this._authService.listenForErros.subscribe( error => {
+        // console.log( error )
         this._alert.message(error)
-      })
+      } )
+
     this._managers.current$.pipe(take(1)).subscribe(user => {
-      console.log( 'ejecucion' )
+      // console.log( 'ejecucion' )
       if (user) { this._router.navigate(['/afiliados']) }
     })
    }
@@ -38,8 +40,8 @@ export class AfiliadosLoginComponent implements OnInit, OnDestroy {
       .then(user => {
         if (user) {
           this._managers.retriveManager(user.email as string)
-          .pipe(take(1)).subscribe(
-            dataUser => {
+            .pipe( take( 1 ) ).subscribe( dataUser => {
+              // console.log( dataUser )
               if (dataUser) {
                 this._cache.updateData('user', dataUser)
                 this._cache.updateData('rfc', dataUser.RFC)
@@ -51,7 +53,7 @@ export class AfiliadosLoginComponent implements OnInit, OnDestroy {
         }
       } )
       .catch( ( error ) => {
-      this._alert.error('No se pudo iniciar sesión como afiliado', error, false, true)
+      this._alert.error('No se pudo iniciar sesión como afiliado', error, "afiliados-login.component#onSubmit", false, true)
     })
   }
 
