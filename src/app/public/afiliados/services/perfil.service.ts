@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 import { iAdtionalInfo, PerfilCol, SectionName } from '../models/perfiles.model';
 import firebase from 'firebase/app'
 import { identity, pickBy } from 'lodash';
@@ -56,9 +56,11 @@ export class PerfilService {
    */
   async updateInfoDoc( field: SectionName | string, data: any, ) {
     try {
-      const ref = this._afs.doc(`afiliados/${this.RFC}`).ref
+      const ref = this._afs.doc( `afiliados/${ this.RFC }` ).ref
       await ref.update( {
-        [ field ]:  typeof data === 'object' ? { ...data } : data,
+        [ field ]: typeof data === 'object'
+          ? !Array.isArray(data) ? { ...data }
+          : data : data,
         updated: new Date()
       } )
       this._alert.notify('Guardado')
@@ -68,8 +70,6 @@ export class PerfilService {
       return console.error(error)
     }
   }
-
-
 
   /**
    * Obtiene el documento de información de la empresa
@@ -302,6 +302,7 @@ export class PerfilService {
   getListFile(field: SectionName) {
     return this._afs.doc<AfiliadoModel>( `afiliados/${ this.RFC }` )
       .valueChanges().pipe(
+        distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y)),
         catchError( error => {
           this._alert.error( `No se pudo obtener el afiliado para obtener ${ field } de ${ this.RFC }`, error, 'perfil.service#getList' );
           return of(null)
@@ -337,7 +338,7 @@ export class PerfilService {
       }
 
 
-    } catch (error) {
+    } catch (error: any) {
       if ('message' in error) {
         this._alert.error(error.message, error)
       } else {

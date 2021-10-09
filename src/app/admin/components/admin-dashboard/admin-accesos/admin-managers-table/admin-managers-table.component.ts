@@ -9,7 +9,7 @@ import { DialogRevokeAccesoComponent } from '../dialog-revoke-acceso/dialog-revo
 import { ManagersService } from 'src/app/public/afiliados/services/managers.service';
 import { MxCache } from '@marxa/devkit';
 import { AfiliadosService } from 'src/app/public/afiliados/services/afiliados.service';
-import { take } from 'rxjs/operators';
+import { distinct, distinctUntilChanged, take } from 'rxjs/operators';
 import firebase from 'firebase/app'
 import { Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
@@ -35,7 +35,7 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDes
 
   afiliadosIndex: DatosGeneralesModel[] = []
   listSubscription: Subscription
-  afiliadosSubscription!: Subscription
+  afiliadosSubscription?: Subscription
   constructor(
     private _paginator: MatPaginatorIntl,
     private _dialog: MatDialog,
@@ -44,8 +44,9 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDes
     private _afiliados: AfiliadosService
   ) {
     this.listSubscription =
-      this._managers.getCompleteList().subscribe( list => {
-      console.log( list )
+      this._managers.getCompleteList().pipe(
+        distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+      ).subscribe( list => {
       this.managers = list
     })
     this._paginator.itemsPerPageLabel="Elementos por página"
@@ -92,7 +93,7 @@ export class AdminManagersTableComponent implements OnInit, AfterViewInit, OnDes
 
   ngOnDestroy() {
     this.listSubscription.unsubscribe()
-    this.afiliadosSubscription.unsubscribe()
+    if (this.afiliadosSubscription) this.afiliadosSubscription.unsubscribe()
   }
 
 }

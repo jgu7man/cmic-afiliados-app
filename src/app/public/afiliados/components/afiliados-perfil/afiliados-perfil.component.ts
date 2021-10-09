@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MxAlert } from '@marxa/devkit';
 import { MxCache } from '@marxa/devkit';
-import { first, take } from 'rxjs/operators';
+import { distinctUntilChanged, first, take } from 'rxjs/operators';
 import { iAdmin } from 'src/app/admin/models/admin.model';
 import { MxUploadModalComponent } from '@marxa/storage';
 import { iUploadedFile, iUploadOptions } from '@marxa/storage';
@@ -12,12 +12,13 @@ import { iPersonal } from '../../models/perfiles.model';
 import { AfiliadosService } from '../../services/afiliados.service';
 import { ManagersService } from '../../services/managers.service';
 import { PerfilService } from '../../services/perfil.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './afiliados-perfil.component.html',
   styleUrls: ['./afiliados-perfil.component.scss'],
 })
-export class AfiliadosPerfilComponent implements OnInit {
+export class AfiliadosPerfilComponent implements OnInit, OnDestroy {
   afiliado: AfiliadoModel = emptyAfiliado;
   somos: string = 'Escribe un contenido acerca de la empresa'
   RFC: string
@@ -33,7 +34,8 @@ export class AfiliadosPerfilComponent implements OnInit {
   }
 
   @ViewChild('img') private imgPerfil?: HTMLImageElement
-  // perfilHeight: number
+
+  private perfilSubs!: Subscription
 
   constructor(
     private _afiliados: AfiliadosService,
@@ -53,9 +55,9 @@ export class AfiliadosPerfilComponent implements OnInit {
       this._alert.message('Primero necesitas iniciar sesión como afiliado o administrador')
         this._router.navigate(['/afiliados/login'])
     } else {
-      this._afiliados.getPerfil( this.RFC )
-        .pipe(first())
-        .subscribe( ( data ) => {
+      this.perfilSubs = this._afiliados.getPerfil( this.RFC ).pipe(
+          distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+        ).subscribe( ( data ) => {
           // console.log( data )
         // TODO Poner un estado CARGANDO y apagarlo aquí
         if (data) {
@@ -99,6 +101,10 @@ export class AfiliadosPerfilComponent implements OnInit {
 
   get banner() {
     return this.afiliado.perfil?.imgBanner ? this.afiliado.perfil.imgBanner.url : '/assets/img/cmic-perfil-banner.jpg'
+  }
+
+  ngOnDestroy() {
+    this.perfilSubs.unsubscribe()
   }
 
 }

@@ -22,14 +22,14 @@ export class EditarInformacionComponent implements OnInit {
 
   constructor(
     private _cache: MxCache,
-    private _afiliados: AfiliadosService,
+    public afiliados: AfiliadosService,
     private _route: ActivatedRoute,
     private _alert: MxAlert,
     public location_: Location,
   ) {
     this.RFC = this._route.snapshot.params['RFC']
     if (this.RFC) {
-      this._afiliados.getPerfil( this.RFC )
+      this.afiliados.getPerfil( this.RFC )
         .pipe(first())
         .subscribe( ( data ) => {
           // console.log( data )
@@ -48,8 +48,12 @@ export class EditarInformacionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onChanges(form: AfiliadoProperty, data: any) {
-    this.afiliado[form] = data
+  onChanges( form: AfiliadoProperty, data: any ) {
+    this.afiliado[ form ] = data
+  }
+
+  onSubmit() {
+
   }
 
 }

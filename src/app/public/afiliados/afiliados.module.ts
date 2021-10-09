@@ -42,6 +42,7 @@ import { MxStorageModule } from '@marxa/storage';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AfiliadosCreateComponent } from './components/afiliados-create/afiliados-create.component';
 import { FormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { FormsModule } from '@angular/forms';
     ActividadesSelectorComponent,
     InteresesFormComponent,
     AfiliadosCreateComponent,
-    DialogRegistered
+    DialogRegistered,
+
   ],
   imports: [
     CommonModule,
@@ -91,7 +93,8 @@ import { FormsModule } from '@angular/forms';
     PerfilesModule,
     MomentDateModule,
     SharedModule,
-    MxResponsiveModule
+    MxResponsiveModule,
+    NgxMaskModule
   ],
   schemas: [
     // CUSTOM_ELEMENTS_SCHEMA

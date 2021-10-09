@@ -8,6 +8,11 @@ import { FirebaseModule } from 'src/shared/firebase.module';
 import { MaterialModule } from 'src/shared/material.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { SharedModule } from './shared/shared.module';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {
+  validation: false,
+};
+
 
 @NgModule({
   declarations: [
@@ -22,6 +27,7 @@ import { SharedModule } from './shared/shared.module';
     MaterialModule,
     PdfViewerModule,
     SharedModule,
+    NgxMaskModule.forRoot(options)
   ],
   providers: [],
   bootstrap: [AppComponent],

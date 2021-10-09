@@ -1,13 +1,19 @@
-mat-list-option {
-  cursor: pointer !important;
-  outline: none !important;
-  font-size: 12px !important;
-  height: inherit !important;
-  padding: 5px 0 !important;
-  line-height: 1.5 !important;
+.perfil-actividades{
+  ::ng-deep{
+    margin-bottom: 2em;
+    mat-list-option {
+      cursor: pointer;
+      outline: none;
+      font-size: 12px;
+      height: inherit;
+      padding: 5px 0;
+      line-height: 1.5;
+    }
+    .mat-line {
+      white-space: break-spaces;
+    }
+  }
 }
 
-mat-selection-list {
-  margin-bottom: 2em;
-}
+
 

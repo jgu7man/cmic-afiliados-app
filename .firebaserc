@@ -1,4 +1,7 @@
 {
+  "projects": {
+    "cmic": "cmic-platform"
+  },
   "targets": {
     "cmic-platform": {
       "hosting": {

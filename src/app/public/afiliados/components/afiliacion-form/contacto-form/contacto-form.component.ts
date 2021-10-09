@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { iContacto } from '../../../models/afiliados.model';
-import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
+import { delay, distinctUntilChanged, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { MxText } from '@marxa/devkit';
 
 @Component({
@@ -47,9 +47,11 @@ export class ContactoFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.changesSubscription = this.contactoForm.valueChanges
-    .pipe(delay(1000), startWith(true))
-      .subscribe( ( changes ) => {
+    this.changesSubscription = this.contactoForm.valueChanges.pipe(
+      delay( 1000 ),
+      startWith( true ),
+      distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+    ).subscribe( ( changes ) => {
         // console.log( changes )
       this.changes.emit(this.contactoForm.value)
       this.invalid.emit(

@@ -2,7 +2,7 @@ import { OnDestroy } from '@angular/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
+import { delay, distinctUntilChanged, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { DireccionAfiliadoModel, iDireccion } from '../../../models/afiliados.model';
 
 @Component({
@@ -72,9 +72,11 @@ export class DireccionFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.changesSubscription = this.direccionForm.valueChanges
-      .pipe(delay(1000), startWith(true))
-      .subscribe( ( changes ) => {
+    this.changesSubscription = this.direccionForm.valueChanges.pipe(
+      delay( 1000 ),
+      startWith( true ),
+      distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+    ).subscribe( ( changes ) => {
         // console.log( changes )
       this.changes.emit(this.direccionForm.value)
       this.invalid.emit(

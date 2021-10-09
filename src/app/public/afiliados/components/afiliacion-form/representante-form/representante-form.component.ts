@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MxText } from '@marxa/devkit';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { delay, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
+import { delay, distinctUntilChanged, distinctUntilKeyChanged, startWith, take } from 'rxjs/operators';
 import { RepresentanteAfiliado } from '../../../models/afiliados.model';
 
 @Component({
@@ -56,9 +56,11 @@ export class RepresentanteFormComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.changesSubscription = this.representanteForm.valueChanges
-    .pipe(delay(1000), startWith(true))
-      .subscribe( ( changes ) => {
+    this.changesSubscription = this.representanteForm.valueChanges.pipe(
+      delay( 1000 ),
+      startWith( true ),
+      distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+    ).subscribe( ( changes ) => {
         // console.log( changes );
       this.changes.emit(this.representanteForm.value)
       this.invalid.emit(

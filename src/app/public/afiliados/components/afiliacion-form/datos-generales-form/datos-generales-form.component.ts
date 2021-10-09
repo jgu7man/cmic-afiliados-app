@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, interval, of, Subject, Subscription } from 'rxjs';
-import { concatMap, delay, distinctUntilKeyChanged, filter, finalize, startWith, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { concatMap, delay, distinctUntilChanged, distinctUntilKeyChanged, filter, finalize, startWith, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { DatosGeneralesModel } from '../../../models/afiliados.model';
 
 @Component({
@@ -35,10 +35,7 @@ export class DatosGeneralesFormComponent implements OnInit, OnDestroy {
   formSubscription?: Subscription
 
   constructor() {
-
     this.defineForm()
-
-
   }
 
   ngOnInit(): void {
@@ -98,9 +95,11 @@ export class DatosGeneralesFormComponent implements OnInit, OnDestroy {
 
   subscribeOnChanges() {
 
-    return this.generalesForm.valueChanges
-      .pipe(delay(1000),startWith(true))
-      .subscribe( ( changes ) => {
+    return this.generalesForm.valueChanges.pipe(
+      delay( 1000 ),
+      startWith( true ),
+      distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+    ).subscribe( ( changes ) => {
         // console.log( changes )
         let nombre = this.generalesForm.get('comercial_nombre')
         if (nombre) {

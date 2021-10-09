@@ -1,9 +1,11 @@
 <p><b> {{catalogo.nombre}} </b></p>
 <mat-selection-list #actsPanel
+class="perfil-actividades"
 (selectionChange)="onSelectAct($event)"
 [multiple]="false"
 *ngIf="catalogo.actividades && catalogo.actividades.length > 0">
   <mat-list-option
+  class="actividad-option"
   *ngFor="let act of catalogo.actividades"
   [value]="act">
     <div mat-line><b>{{act.especialidad}}</b></div>

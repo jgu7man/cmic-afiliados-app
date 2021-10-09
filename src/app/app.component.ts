@@ -21,7 +21,7 @@ export class AppComponent {
     private _alert: MxAlert,
     private _version: VersionService
   ) {
-    this._version.app_version = '0.5'
+    this._version.app_version = '0.6'
     this._cache.cacheTagName = 'cmic-data';
     this._cache.storage = 'local'
     this._alert.storeError = true;

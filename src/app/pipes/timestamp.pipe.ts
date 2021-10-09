@@ -7,7 +7,7 @@ import firebase from 'firebase/app'
 export class TimestampPipe implements PipeTransform {
 
   transform(value: Date | firebase.firestore.Timestamp): Date {
-    return 'seconds' in value ? new Date(value.seconds * 1000) : value;
+    return value && 'seconds' in value ? new Date(value.seconds * 1000) : value;
   }
 
 }

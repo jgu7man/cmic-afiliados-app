@@ -21,7 +21,10 @@
               ></g-datos-generales-form>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button #datosGeneralesBtn="matButton" color="primary">Guardar</button>
+              <button mat-raised-button
+              #datosGeneralesBtn="matButton"
+              (click)="afiliados.patch('datos_generales', afiliado.datos_generales)"
+              color="primary">Guardar</button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -42,7 +45,12 @@
               ></g-direccion-form>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button #direccionBtn color="primary">Guardar</button>
+              <button
+              mat-raised-button
+              #direccionBtn
+              color="primary"
+              (click)="afiliados.patch('domicilio', afiliado.domicilio)"
+              >Guardar</button>
             </mat-card-actions>
           </mat-card>
 
@@ -63,7 +71,12 @@
               ></g-contacto-form>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button #contactoBtn color="primary">Guardar</button>
+              <button
+              mat-raised-button
+              #contactoBtn
+              color="primary"
+              (click)="afiliados.patch('contacto', afiliado.contacto)"
+              >Guardar</button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -83,7 +96,12 @@
             ></g-representante-form>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button #representanteBtn color="primary">Guardar</button>
+              <button
+              mat-raised-button
+              #representanteBtn
+              color="primary"
+              (click)="afiliados.patch('representante_legal', afiliado.representante_legal)"
+              >Guardar</button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -103,7 +121,12 @@
             ></g-representante-form>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button #directorBtn color="primary">Guardar</button>
+              <button
+              mat-raised-button
+              #directorBtn
+              color="primary"
+              (click)="afiliados.patch('director', afiliado.director)"
+              >Guardar</button>
             </mat-card-actions>
           </mat-card>
         </div>
