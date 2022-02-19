@@ -19,10 +19,10 @@ export class AdminDashboardComponent implements OnInit {
     private _cache: MxCache,
     private _alert: MxAlert,
   ) {
-    this.auth_.user$.pipe( takeWhile( user => user ) ).subscribe( user => {
+    this.auth_.user$.pipe( takeWhile( user => user !== undefined ) ).subscribe( user => {
       // console.log( user )
       if (!user) this._router.navigate(['/admin/login']);
-      this._admins.retriveAdmin(user.email)
+      this._admins.retriveAdmin(user!.email!)
         .then(admin => {
           if (!admin) {
             this._alert.message('Esta no es una cuenta de administrador')

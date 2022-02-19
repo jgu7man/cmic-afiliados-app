@@ -22,7 +22,7 @@ export class AdminTopbarComponent implements OnInit, OnDestroy {
       .subscribe( user => {
         // console.log( user )
         if (user) {
-          this._admins.retriveAdmin(user.email)
+          this._admins.retriveAdmin(user.email!)
             .then(admin => { if (admin) { this.admin = admin;} })
         }
     })

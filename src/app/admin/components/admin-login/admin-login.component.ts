@@ -29,7 +29,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     this._auth.user$.pipe( take( 1 ) ).subscribe( user => {
       console.log( user )
       if (user) {
-        this._admin.retriveAdmin(user.email).then(admin => {
+        this._admin.retriveAdmin(user.email!).then(admin => {
           if (admin) this._router.navigate(['/admin/'])
         })
       }

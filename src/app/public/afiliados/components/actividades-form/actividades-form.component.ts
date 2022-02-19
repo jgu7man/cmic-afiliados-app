@@ -43,10 +43,11 @@ export class ActividadesFormComponent implements OnInit {
     private _managers: ManagersService
   ) {
     this.RFC = this._route.snapshot.params['RFC']
-    this._auth.user$.pipe( takeWhile( user => user ) ).subscribe( user => {
+    this._auth.user$.pipe( takeWhile( user => user !== undefined ) )
+      .subscribe( user => {
       // console.log( user )
       if (!user) this._router.navigate(['/'])
-      else this._managers.retriveManager( user.email )
+      else this._managers.retriveManager( user.email! )
         .pipe(take(1))
         .subscribe( manager => {
           // console.log( manager )

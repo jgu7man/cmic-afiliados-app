@@ -49,10 +49,10 @@ export class AfiliacionFormComponent implements OnInit, AfterViewInit {
     if (this.edit) this.edit = +this.edit
     console.log( this.edit )
 
-    this._auth.user$.pipe( takeWhile( user => user ) ).subscribe( user => {
+    this._auth.user$.pipe( takeWhile( user => user !== undefined ) ).subscribe( user => {
       // console.log( user )
       if (!user) this._router.navigate(['/'])
-      else this._managers.retriveManager( user.email )
+      else this._managers.retriveManager( user.email! )
         .pipe(takeWhile(user => !user, true))
         .subscribe( manager => {
           // console.log( manager )
